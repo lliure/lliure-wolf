@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-lliure
-======
-=======
-lliure-wolf
-===========
-
 lliure wolf
->>>>>>> 6116cc938532d9e3d65c4dad66b3a4ed8a783532
+======
+
+Esta é uma versão de desenvolvimento do lliure, ou seja, uma versão não finalizada é bem possível encontrar bugs nessa versão apenas use-a se tiver certeza do que estiver fazendo
