@@ -1,0 +1,212 @@
+Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure),  Módulos e API nativas
+
+-- 6.0 (Shiba inu) (22/07/2013)
+
+-- 5.0 (Pasto Alemão) (21/07/2013)
+#[update] - Nova API integrada ao core "aplimo", uma APLI para criação de aplicativos de uma forma padronizada
+#[update] - Tabelas referentes ao core receberam o "prefixo" lliure ex: ll_admin passou para ll_lliure_admin
+#[update] - Foi criada nova pasta para armazenar aplicativos /app a pasta /plugin continua funciona nesta versão porem será depreciada nas próximas
+#[update] - Alteração do nome do arquivo "versoes.txt" para "changelog.txt"
+#[update] - Novo módulo de instalação de aplicativos
+#[update] - Definada pasta para armazenar aplicativos nativos do core, pasta "opt"
+#[update] - adicionada diretiva "sen_html" ao "mode_operacion", onde a forma normal é "kun_html"
+#[update] - Criado módulo NLI (not logged in)
+#[bug] - na instalação ao copiar o arquivo "thumbs.php"
+#[update] - alterada a forma de funcionamento do onServer e criada a variavel "$_ll['mode_operacion']" que irá controlar o modo de operação atual
+#[update] - criada a variavel "$llAppSenHtml" para mostrar app quando não há o html do index
+#[update] - Função jf_result foi alterada para receber mais de um valor e tratar como 'and'
+#[bug] - jf_insert não estava gravando NULL em mult-insert
+#[bug] - correção na função ll_alert
+#[bug] - ajustes na API navigi referentes ao clique duplo
+
+-- 4.10.4 (São Bernardo) (24/05/2013)
+# [bug] - Erro de compatibilidade dos jquery maskinput
+
+-- 4.10.3 (São Bernardo) (14/03/2013)
+#[bug] - Falta de instanciar $_ll no onserver.php
+#[bug][API] - Botão "del" era anulado pelo navigi
+
+-- 4.10.2 (São Bernardo) (13/03/2013)
+#[bug] - arquivo index.php não foi encontrado na pasta install
+
+-- 4.10.1 (São Bernardo) (07/03/2013)
+#[bug] - faltou a instrução css para alteração da "minha conta"
+#[bug] - instalação de aplicativos não estáva encontrando o arquivo config.ll
+
+-- 4.10.0 (São Bernardo) (04/03/2013)
+# [update] - criação da variavel (array) $_ll //váriavel para armazenar e centralizar dados utilizado pelo lliure
+# [update] - aceitação do arquivo "config.ll" ao invés do "config.plg" para configurações dos aplicativos
+# [update] - Retirado suporte a $_GET['plugin'], só será aceito $_GET['app']
+# [update] - instalado API "navigi" para substituir a jfnav
+# [update] - API jfnav foi removida do pacode de apis padrão
+# [update] - Reformulada a classe de gerenciamento de API
+
+-- 4.9.1 (São Bernardo) (24/05/2013)
+# [bug] - Faltando arquivo "index.php" na pasta install
+# [bug] - Erro de compatibilidade dos jquery maskinput
+
+
+-- 4.9.0 (São Bernardo) (27/02/2013)
+# [update] - Nova função jf_result(), adicionado ao pacote jf.funções
+# [update] - No processo de instalação agora é possivel deixar o campo senha vazio
+# [update] - A função jf_delete() agora aceita um array() na 2ª instrução (para o where) 
+# [bug] - na função ll_securyt() estava configurada para testar o $_GET['plugin'] o correto é $_GET['app']
+# [update] - na na biblioteca jf.funcoes
+# [BUG] - no thema do tyni MCE
+
+-- 4.8.1 (São Bernardo) (17/10/2012)
+# [bug][api][pm_mail] - A constante __DIR__ foi adiciona na versão 5 do php, então não funcionava nas anteriores
+# [bug] - em functions.php a função ll_dir dependia da constante __DIR__ que foi adiciona na versão 5 do php, então não funcionava nas anteriores
+
+-- 4.8.0 (São Bernardo) (25/09/2012)
+# [update] - Atualização nas funções do pacote jf.funcoes.php
+# [update] - Definição para login padrão com usuário remoto através do llconf.ll
+# [update] - Incluido sistema de trabalho OnServer
+# [update] - Incluidas variáveis padrão para trabalhar com aplicativos ($llAppHome, $llAppOnServer, $llAppPasta)
+# [update] - Atualização do css predifinidos.css e principal.css
+# [update] - Atualizado pacote JF funções
+# [update][API] - fileUp quando não encontra $_FILE retorna erro
+# [update] - Arquivo uploads/.htaccess e uploads/thumbs.php incluido na lista de arquivos para instalação
+# [update][API][fotos] - havia um problemas em alguns servidores ao gerar a thumb por conta dos retornos de pasta até selecionar a imagem desejada
+# [bug] - erro na forma da implementação da api jfnav no gerenciador de usuários (erro apenas nas novas  versões devido a atualização do PREFIXO)
+# [bug][API] - Problema encontrado quando não conseguia encontrar os dados de conexão com o smtp
+# [bug] - Falha na interpretação de array na função ll_tsecuryt()
+
+-- 4.7.1 (São Bernardo) (20/08/2012)
+# [bug][API][PHP Mailer] - problema ao detectar diretório na função pm_mail()
+
+-- 4.7.0 (São Bernardo) (16/08/2012)
+# [update] - Preparação de suporte a Temas
+# [update] - Removidos arquivos "mLfunctions.php" e "conection.php" da pasta includes
+# [update] - Removido indice ['tipo'] do session "logado"
+# [update] - Adiciona função gsqul(); em JS
+# [update][API][php_mailer] - Aprimoramento da API "php mailer" configurando o SMTP no arquivo llconf.ll você pode disparar e-mails usando a função pm_mail()
+# [bug] - erro na codificação do arquivo sobre.php que exibe os informações do lliure no "painel de controle"
+# [bug] - problema no arquivo includes/thumb.php
+# [anote] - Nova definição para atualizações do lliure onde 4.6.2 lê-se (Atualização com divergencia de compatibilidade a versão anterior).(Atualizações).(Correções)
+# [anote] - Nesta versão estamos instituindo apelidos para versões (primeiro número)
+
+/****************************************** DIVISÃO DA FORMA QUE NOMEIA AS VERSÕES */
+
+-- 4.6.2 (07/08/2012)
+# [update] - Adicionado mais 56 icones no pacote padrão
+# [bug][api][jfnav] -  - estava com problemas quando precionava a tecla "enter" quando não estivesse selecionado algum registro
+# [update][api][jfnav] - Atualização no layout de lista, cancelar edição com o "esc", modificado a forma de navegação
+# [bug] - Ao adicionar atalhos com espaço ou caracteres especiais
+
+-- 4.6.1 (04/08/2012)
+# [update/bug] - Liberado acesso para usuários do grupo "admin" ao painel de controle com restrições
+# [update] - Quando acessar uma página e não estiver logado, depois que logar será direcionado para aquela página
+# [anote] - Agora o lliure é definido como WAP "Plataforma de aplicações web" do inglês Web Application Platform
+# [update] - a Licença de uso passou para GPL v3.0
+
+-- 4.6.0 (20/07/2012)
+# [update][API] - Foi alterada a API fileUp para gravar mais de um arquivo por vez 
+# [update] - Controle de prefixo nas tabelas, ao fazer a instalação você define o prefixo que irá utilizar (PS: se for desenvolvedor utilize sempre "ll" que é o padrão, caso contrario seu aplicativo não poderá utilizar o instalador do lliure)
+# [update][API] - Adicionada a API phpmailer para envio de e-mails com o lliure
+
+# [update] - O estilo .form em predefinidos.css foi alterado e a função ajustaForm() para funcionar melhor no Chrome
+# [update] - O botão usuários foi movido para o painel de controle
+# [update] - Adicionado um botão para informações (sobre) do lliure no painel de controle
+# [update] - Arquivo painel/plugin.php foi removido
+
+
+-- 4.5.1 (24/05/2012)
+# [bug] - A função array2xml() da classe jf_xml{} estava com uma declaração depreciada
+
+-- 4.5.0 (16/05/2012)
+@ [update] - O GET ?plugin foi substituido por ?app
+@ [update] - Sistema de multi-linguagens
+@ [update] - Novo painel de controle, substituindo a página aplicativos
+@ [update] - Atualizada a função que controla o histórico de navegação dentro do lliure, agora ele abrange todas as páginas e não as relacionadas a aplivativos
+@ [update] - Layout da página de login
+# [update/bug] - Adicionado animação ao menu rápido, e alterada a função que adiciona e remove itens
+
+-- 4.4.4 (26/04/2012)
+# [update][API] - jfnav - Agora conta com um suporte para imagens independente para cada registro na exibição de icones
+
+-- 4.4.3 (20/04/2012)
+# [bug][API] - Foi detectado um problema na api de fotos, quando o usuário clicasse para renomear a imagem ficava com barras de rolagem na box e com botão de confirmar desconfigurado, além de um erro de variável
+# [bug][API] - FileUp - estafa ficando desconfigarada no chrome, e não fazia a quebra do conteúdo, assim quando em qualque contêiner não era respeitado paddings e margins do mesmo, e também não executava o o click no "input file"
+# [update] - Ajustes de layout
+
+-- 4.4.2 (14/04/2012)
+# [update] - Atualização no sistema de segurança interno
+# [update] - Alterada a forma de puxar os css para link ao invés de @import
+# [update] - Adicionado arquivo llconf.ll na pasta "etc" para gerenciar as configurações internas do lliure
+
+-- 4.4.1 (11/04/2012)
+# [bug] - Problemas no sistema de segurança quando logado com contas abaixo de "desenvolvedor"
+# [bug][API] - foto - não excluía foto, não marca como favorito
+
+-- 4.4.0 (05/04/2012)
+# [update] - Alteração de layout para lliure
+
+-- 4.3.3 (04/04/2012)
+# [bug/funcao] - jf_monta_link - ficou com alguns problemas na ultima atualização para php5
+# [update][API] - Novo themer para o Tyni MCE - lliure
+# [update][API] - Atualizada a api tyni MCE
+# [bug] - o arquivo .htaccess estava bloqueando abertura de arquivos htm e html, com isso pode ter havido problemas com alguns aplicativos e/ou APIs
+
+-- 4.3.2 (29/03/2012)
+# [update] - Adicionada uma nova função ao pacote jf a jf_stradd
+# [update] - As tabelas não chegavam a 100% na formatação padrão de formulários
+# [update][API] - jfnav - A função foi atualizada com novas funcionalidades e foi transformada em uma classe
+# [bug][API] - foto - devido a uma atualização a parte responsável pelo upload estava com uma configuração errada
+
+-- 4.3.1 (26/03/2012)
+# [BUG] - Por questões de segurança estava bloqueado acesso interno do sistema a arquivos swf
+# [BUG] - A função de segurança ll_secury() estava impedindo o acesso de usuários do tipo "user" mesmo com acesso "public"
+# [update/CSS] - formatação dos formulários padrões "classe form"
+# [update/CSS] - Adicionado reset de css
+
+-- 4.3.0 (22/03/2012)
+# [update/JS] - Os arquivos tb_tinymce.js.php e jquery.maskedinput-1.2.2.js
+# [update] - Na tabela "PREFIXO.admin" a coluna 'tipo' foi renomeada para 'grupo' e seus valores agora são varchar(10) atualmente podem ser preenchidos como 'dev', 'admin', 'user'
+# [update] - Adicionada função para testar o grupo do usuário logado função ll_tsecuryt()
+# [update] - Modificada a forma de edição de usuários, e criado link para editar a sua conta
+# [update] - Adicionada sistema de segurança para aplicativos função ll_securyt()
+# [update] - Inserido arquivo .htaccess para bloquear acessos direto a pastas
+# [update] - A pasta apt_files foi renomeado para /etc
+# [update] - O arquivo config.php foi transferido para pasta /etc e renomeado para bfconf.php
+# [update] - O instalador verifica antes da instalação a permissão da pasta /etc e se a pasta uploads está criada e com permição 777
+
+-- 4.2.7 (15/03/2012)
+# [update][API] - fileup - uma nova API para ajudar o upload de arquivos únicos 
+
+-- 4.2.6 (14/03/2012)
+# [updade][API] - jfnav - adiciona a função de exibição em lista a função também foi alterada para jfnav() a função jNavigator() continua funcionando, a função jNavigatorInner() foi depreciada
+
+-- 4.2.5 (13/03/2012)
+# [bug] - no instalador tinha restos do corner
+
+-- 4.2.4 (10/03/2012)
+# [bug][API] - jnav quando ela não é iniciada estava com erro em uma variável
+
+-- 4.2.3 (10/03/2012)
+# [bug][API] - jnav ao atualizar o nome de um registro não removia o input
+
+-- 4.2.2 (10/03/2012)
+# [update] - função jf_urlformat foi atualizada para utilizar preg_replace
+# [update] - função jf_monta_link, utilize 'true' para o formato de url amigavel
+# [update/install] - adiciona cópia do arquivo thumb.php na pasta uploads
+# [update/install] - adiciona pasta apt_files ao plugin, esta pasta será destinada a armazenar arquivo de configuração dos aplicativos
+
+-- 4.2.1 (10/03/2012)
+# [bug] - alterada a função e alerta no Desktop
+
+-- 4.2.0 (09/03/2012)
+# [update] - função que adiciona item ao desktop
+# [js/del/update] - inserida a função plg_load substituta da mLExectAjax que deixa de existir
+# [del] - removida a biblioteca corner (jquery), utilize border-radius por css 
+# [add] - a função app_bar foi convertida a uma api, a forma de utilizar continua a mesma
+
+-- 4.1.8 (09/03/2012)
+# [bug][API] - tiny_mce no plugin tinybrowser
+
+-- 4.1.7 (09/03/2012)
+# [bug/API/segurança] - na API tiny_mce no plugin tinybrowser
+
+-- 4.1.6 (07/03/2012)
+# [bug] - acusação de erro na instalação
+# [bug][API] - usar o botão delete na API jfnav

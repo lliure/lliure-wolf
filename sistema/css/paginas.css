@@ -1,0 +1,345 @@
+/**
+*
+* lliure WAP
+*
+* @Versão 6.0
+* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
+* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
+* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
+#jfboxLoad h1{
+	margin-bottom: 15px;
+	}
+
+/*******************************************		Desktop 					*****/
+div.bodyhome{
+	float: left;
+	z-index: 13;
+	position: relative;
+	width: 100%;
+	padding-top: 17px;
+	}
+	
+	div.bodyhome .listp{
+		cursor: pointer;
+		}
+
+		div.bodyhome .inter img{
+			width: 32px;
+			}
+			
+		.listp .inter a:hover{
+			color: #555;
+			}
+
+/*******************************************		Permição 					*****/
+#permicao{
+	text-align: center;
+	}
+	
+	#permicao .box{
+		width: 480px;
+		height: 200px;
+		margin: 0 auto;
+		background: #e7e7e7;
+		position: relative;
+		border-radius: 10px;
+		}
+		
+		#permicao .box img{
+			position: absolute;
+			left: 10px;
+			top: 30px;
+			}
+		#permicao .box span{
+			position: absolute;
+			font-size: 16px;
+			color: #777;
+			font-weight: bold;
+			left: 150px;
+			top: 75px;
+			width: 300px;
+			}
+
+
+/*******************************************		Painel de controle			*****/
+.painelCtrl{
+	
+	}
+
+	.painelCtrl .bloco{
+		clear: both;
+		margin-bottom: 20px;
+		float: left;
+		}
+		
+		div.listp {
+			padding: 4px;
+			margin-right: 4px;
+			z-index: 10;
+			position: relative;
+			float: left;
+			border-radius: 7px;
+			}
+
+			div.listp:hover{
+				background: #e7e7e7;
+				}
+
+
+			div.listp .inter{
+				width: 93px;
+				height: 67px;
+				float: left;
+				text-align: center;
+				font-size: 12px;
+				}
+
+				div.listp .inter span{
+					display: block;
+					margin: 5px 0 0 0;
+					height: 27px;
+					overflow: hidden;
+					line-height: 13px;
+					}
+
+				div.listp .inter input{
+					width: 92px;
+					padding: 3px 0px;
+					background: #f5f5f5;
+					border: none;
+					font-size: inherit;
+					color: #555;
+					}
+
+	.idiomaBox form{
+		padding-top: 20px;
+
+		float: left;
+		}
+
+		.idiomaBox form label{
+			font-weight: bold;
+			}
+	
+		.idiomaBox form.form div.botoes{
+			margin-top: -30px;
+			}
+/***************************		Install modal		*****/
+.install-box{
+	margin-top: 15px;
+	font-size: 12px;
+	}
+	
+	.install-box h2{
+		margin-bottom: 5px;
+		}
+	
+	.install-box .log{
+		background: #ddd;
+		padding: 10px;
+		border-radius: 10px;
+		}
+		
+		.install-box .log .padding{
+			width:100%;
+			height: 300px;
+			overflow: auto;
+			}
+	
+	.install-box form .fase{
+		border-bottom: 1px dotted #888;
+		padding-bottom: 10px;
+		margin-bottom: 10px;
+		float: left;
+		width: 100%;
+		}
+			
+	.install-box form .msm{
+		margin-bottom: 10px;
+		color: #0a0;
+		}
+			
+	.install-box form .msm.msmE{
+		color: #a00;
+		}
+			
+			
+	.install-box form .msmex{
+		color: #888;
+		margin: -10px 0 10px;
+		display: block;
+		font-size: 9px;
+		}
+			
+		.install-box form label{
+			float: left;
+			margin: 3px 5px 0 0;
+			}
+			
+		.install-box form input{
+			float: left;
+			padding: 2px;
+			font-size: 11px;
+			}
+			
+		.install-box form  .botao{
+			clear: both;
+			margin-top: 10px;
+			}
+
+/***************************		Acesso rápido		*****/
+.ARbox{
+	background: #ddd;
+	padding: 15px;
+	font-size: 12px;
+	margin-bottom: 20px;
+	border-radius: 5px;
+	}
+	
+	.ARbox span{
+		float: left;
+		position: relative;
+		margin: 0 7px;
+		}
+		
+		.ARbox span a{
+			display: none;
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			}
+			
+			
+/*******************************************		Sobre					*****/
+.llSobre_box{
+	
+	}
+		
+	#llSobre h1{
+		margin-bottom: 2px;
+		}	
+	
+	.llSobre_box .sigla{
+		display: block;
+		margin: 4px 0 20px;
+		font-size: 0.8em;
+		color: #777;
+		}
+	
+	.llSobre_box .versao{
+		display: block;
+		margin-bottom: 20px;
+		}
+	
+	.llSobre_box .desenvolvido{
+		font-size: 0.8em;
+		position: absolute;
+		bottom: 46px;
+		left: 25px;
+		color: #777;
+		}
+		
+	.llSobre_box .rodape{
+		background: #e7e7e7;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		border-radius: 0 0 4px 4px;
+		width: 100%;
+		border-top: 1px solid #bbb;
+		}	
+		
+		.llSobre_box .rodape .container{
+			padding: 12px 25px 25px;
+			}
+	
+			
+			.llSobre_box .rodape .container span.terco{
+				float: left;
+				width: 33.3%;
+				text-align: center;
+				}
+	
+/*********************		depreciadas		*********************/
+img#loadImg{
+		position: absolute; 
+		top: 236px;
+		left: 50%;
+		z-index: 60000;
+		}	
+	
+div#exectAjax{
+		width: 0;
+		height: 0;
+		}
+
+div#ajaxBoxfundo{
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		width: 100%;
+		height: 100%;
+		background: #fff;
+		z-index: 9000;
+		opacity:.70;
+		}
+	
+div#ajaxBoxGeral{
+		width: 100%;
+		position: absolute;
+		top: 35px;
+		left: 0;
+		z-index: 9001; 
+		text-align: left;
+		}
+	
+div#ajaxBoxAling{
+		width: 750px;
+		margin: 0 auto;
+		position: relative;
+		background: #000;
+		padding: 1px 0;
+		}
+	
+div#ajaxBox{
+		background:#fff;
+		display: block;
+		height: 350px;
+		margin: 0 1px;
+		overflow: auto;
+		}
+	
+a.ajaxBoxClose{
+		position: absolute;
+		right: 0;
+		top: -25px;
+		text-align: right;
+		}
+		
+		
+#mLAviso{
+		width: 100%;
+		position: absolute;
+		z-index: 9000;
+		text-align: center;
+		}
+		
+#mLAviso div{
+		padding: 8px 12px 10px 12px;
+		font-size: 12px;
+		border: 1px solid #ddd;
+		border-top: none;
+		background: #FCFDDE;
+		}
+		
+
+	#mLAviso a.close{
+		position: absolute;
+		font-weight: bold;
+		font-size: 12px;
+		top: 2px;
+		right: 4px;
+		}
+		

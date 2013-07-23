@@ -1,0 +1,303 @@
+/**
+*
+* lliure WAP
+*
+* @Versão 6.0
+* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
+* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
+* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+	text-decoration: none;
+	}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+	}
+		
+body {
+	line-height: 1;
+	}
+	
+ol, ul {
+	list-style: none;
+	}
+
+blockquote, q {
+	quotes: none;
+	}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+	}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	}
+		
+		
+/**********	Reset by Jeison **********/
+
+button::-moz-focus-inner {
+    border:0 !important;
+    padding:0 !important;
+	}
+
+strong{
+	font-weight: bold;
+	}
+	
+em{
+	font-style: italic;
+	}
+	
+.both {	clear:both;
+	}
+
+/***/		
+html, body {
+	width:100%;
+	height:100%;
+	font-family: "DejaVu Sans", Verdana, Tahoma,  "Ubuntu","Ubuntu Beta","Bitstream Vera Sans";
+	font-size: 12px;
+	} 
+	
+body{	
+	text-align:center;	
+	}
+	
+img{border: 0px;
+	}
+
+img.imge{
+	width: 0;
+	height: 0;
+	display: none;
+	}
+
+img.imgl{
+	float: left;
+	padding: 10px;
+	padding-left: 0;
+	}
+
+li{	list-style-type: none;
+	}
+
+a{
+	color:#555;
+	outline: none;
+	}
+
+a:hover {
+	color:#000;
+	}
+	
+
+a.link{	color:#02679c;
+	}
+
+a.link:hover {
+	color: #00344F;
+	text-decoration: underline;
+	}
+	
+h1	{	
+	font-size: 2em;
+	margin-bottom: 3px;
+	color: #a90037;
+	font-weight: bold;
+	}
+	
+	div.linhaFina{
+		font-size: 11px;
+		margin: -12px 0 16px;
+		}
+		
+h2{
+	font-size: 1.3em;
+	color: #9e0000;
+	margin-bottom: 15px;
+	font-weight: bold;
+	}
+			
+h3 {
+	font-size: 1em;
+	color: #444;
+	margin-bottom: 3px;
+	}
+
+		
+p{	margin: 0 0 8px 0;
+	line-height: 14px;
+	text-align: justify;
+	line-height: 140%;
+	}
+
+
+/* Formularios */
+fieldset{
+	border: none;
+	margin-bottom: 15px;
+	}
+
+label {	
+	display: block;
+	margin-bottom: 5px;
+	font-size: 1em;
+	}
+
+label span {
+	display: block;
+	float: left;
+	} 
+
+input, textarea, select {
+	color: #444;
+	padding: 3px;
+	outline: none;
+	font-family: "DejaVu Sans", Verdana, Tahoma,  "Ubuntu","Ubuntu Beta","Bitstream Vera Sans";
+	font-size: 1em;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	line-height: 1.5em;
+	
+	box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+	}
+
+select {	
+	width: auto;
+	}
+
+textarea {	
+	height: 100px;
+	overflow: auto;
+	}
+
+button {
+	background: #999;
+	color: #fff;
+	cursor: pointer;
+	border: none;
+	font-size: 0.8em;
+	margin: 0px;
+	padding: 8px;
+	font-family: "DejaVu Sans", Verdana, Tahoma,  "Ubuntu","Ubuntu Beta","Bitstream Vera Sans";
+	}
+	
+/**********************************************		PRE-CLASSES		*/
+.both {
+	clear:both;
+	}
+
+
+.border-box{	
+	box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+	}
+	
+span.botao {
+	float: left;
+	height: 32px;
+	}	
+	
+	span.botao button,
+	span.botao a{
+		float: left;
+		font-size: 0.916em;
+		background-color: #4F4F4F;
+		background-image: -moz-linear-gradient(center top , #4F4F4F, #404040);
+		border: 1px solid #353535;
+		color: #FFFFFF;
+		text-shadow: 0 1px rgba(0, 0, 0, 0.1);
+		border-radius: 3px;
+		line-height: 1.2em;
+		padding: 0.75em 1.2em;
+		margin-right: 3px;
+		
+		}
+		
+		span.botao.out button,
+		span.botao.out a{
+			background-color: #9E9E9E;
+			background-image: -moz-linear-gradient(center top , #bEbEbE, #b0b0b0);
+			border-color: #bebebe;
+			}
+		
+		span.botao.out button:hover,
+		span.botao.out a:hover{
+			background-color: #9E9E9E;
+			background-image: -moz-linear-gradient(center top , #b5b5b5, #a0a0a0);
+			border-color: #9e9e9e;
+			}
+		
+	span.botao button:hover,
+	span.botao a:hover{
+		background-color: #454545;
+		background-image: -moz-linear-gradient(center top , #454545, #303030);
+		border: 1px solid #111;
+		color: #FFFFFF;
+		text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+		text-decoration: none;
+		}
+			
+div.mensagem{
+	margin: 0 -2px 5px -2px;
+	padding: 8px;
+	padding-bottom: 3px;
+	display: block;
+	clear: both;
+	background: #FCFDDE;
+	border: 1px solid #ddd;
+	position: relative;
+	font-size: 12px;
+	color: #7D7D7D;
+	}
+			
+	div.mensagem span{
+		display: block;
+		margin-bottom: 5px;
+		}
+		
+	div.mensagem span.red{
+		display: inline;
+		color: #a00;
+		font-weight: bold;
+		}
+		
+	div.mensagem span.blue{
+		color: #00a;
+		}
+		
+	div.mensagem a{
+		font-weight: bold;
+		color: #3573A6;
+		}
+	

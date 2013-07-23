@@ -1,0 +1,59 @@
+/**
+*
+* lliure WAP
+*
+* @Versão 6.0
+* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
+* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
+* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
+#jfboxFundo {
+	position:absolute;
+	left:0;
+	top:0;
+	z-index:5000;
+	background: #000;
+	display:none;
+	}
+
+
+#jfboxMargin{
+	position:absolute;
+	display:none;
+	z-index:5001;
+	background: #fff;
+	text-align: left;
+	padding: 25px;
+	border-radius: 5px;
+	box-shadow: 0px 4px 16px #CCCCCC;
+	}
+		
+	#jfboxLoad{
+		left:0;
+		top:0;
+		overflow: auto;
+		}
+		
+#gifJfbox{
+	position: absolute;
+	top:0;
+	left: 0;
+	z-index:6000;
+	}
+	
+#jfAviso{
+	display: none;
+	position:absolute;
+	z-index:5002;
+	width: 420px;	
+	}
+	
+	#jfAviso .msm{
+		background: #ccc; 
+		box-shadow: 0 0 15px #ddd;
+		padding: 20px;
+		color: #717171;
+		font-size: 12px;
+		border-radius: 10px 10px 10px 10px;
+		}

@@ -1,0 +1,1 @@
+Adiciona um grupo de usuários. Parametros [grupo] [descricao] [[-safe] Cria uma cópia de segurança antes de realizar as alterações]
