@@ -1,2 +1,2 @@
-sistema/etc/*
-!.gitignore
+* 
+!.gitignore 
