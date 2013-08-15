@@ -62,7 +62,8 @@ jQuery.fn.extend({
 		
 		($(this).find('.navigi_tr')).bind({
 			click: function(event){
-				location = $(this).attr('dclick');
+				if($(this).attr('dclick') != '')
+					location = $(this).attr('dclick');
 			}
 		});
 		

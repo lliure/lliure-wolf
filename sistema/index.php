@@ -51,8 +51,7 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 	case 'app':
 		
 		if(!empty($_GET['app']) 
-			&& ((file_exists('plugins/'.$_GET['app']) && $pasta = 'plugins/'.$_GET['app'] ) 
-				|| (file_exists('app/'.$_GET['app']) && $pasta = 'app/'.$_GET['app'] ))){
+			&& (file_exists('app/'.$_GET['app']) && $pasta = 'app/'.$_GET['app'] )){
 					
 			$_ll['app']['home'] = 'index.php?app='.$_GET['app'];
 			$_ll['app']['onserver'] = 'onserver.php?app='.$_GET['app'];

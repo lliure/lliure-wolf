@@ -85,25 +85,13 @@ echo app_bar('Painel de controle', $botoes);
 		<?php
 		$appFolder = array();
 		$erroAbrirDir = false;
-		$consulta = "select * from ".PREFIXO."lliure_plugins";
+		$consulta = "select * from ".PREFIXO."lliure_apps";
 		$query = mysql_query($consulta);
 		
 		if(mysql_num_rows($query) > 0)
 			while($dados = mysql_fetch_array($query))
 			$aplicativos[$dados['pasta']] = $dados['nome'];
-		
-		/*****   será depreciado nas versões posteriores   *****/
-		if ($handle=opendir("plugins")) {
-			while (false !== ($file = readdir($handle))) 
-				if (strstr($file, '.') == false) 
-						$appFolder[] = $file;
-			 
-			closedir($handle);
-		} else {
-			$erroAbrirDir = true;
-		}
-		/**********/
-		
+				
 		if ($handle=opendir("app")) {
 			while (false !== ($file = readdir($handle))) 
 				if (strstr($file, '.') == false) 

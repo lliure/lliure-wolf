@@ -26,10 +26,13 @@ function navigi_tratamento($dados){
 		
 	$dados['coluna'] = $dados[$navigi['config'][$configSel]['coluna']];
 
-	$dados['click'] = (isset($navigi['config'][$configSel]['link_col']) 
-							? $dados[$navigi['config'][$configSel]['link_col']] 
-							: $navigi['config'][$configSel]['link'].$dados['id'] 
-					  );
+	$dados['click'] = null;
+	
+	if(isset($navigi['config'][$configSel]['link_col']))
+		$dados['click'] = $dados[$navigi['config'][$configSel]['link_col']];
+	elseif(isset($navigi['config'][$configSel]['link']))
+		$dados['click'] = $navigi['config'][$configSel]['link'].$dados['id'];
+		
 					  
 	$dados['ico'] = 'api/navigi/img/ico.png';
 	

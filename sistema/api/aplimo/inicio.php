@@ -115,12 +115,13 @@ class aplimo{
 		
 		$aktivigi_class = ' aktivigi ll_border-color ll_color';
 		
-		 if(!isset($_GET['apm'])){					
+		 if(!isset($_GET['apm'])){
 			$class = array_shift(array_keys($this->menu));		
 			
 			$class_li[$class] = $aktivigi_class;
 			
-			$_GET['apm'] = $this->menu[$class]['link'];
+			if(!is_array($this->menu[$class]['link']))
+				$_GET['apm'] = $this->menu[$class]['link'];
 		}
 		
 		if(isset($_GET['sapm']) && file_exists($_ll['app']['pasta'] . $_GET['apm'] . '/'. $_GET['sapm'] .'/header.php'))
@@ -268,9 +269,11 @@ class aplimo{
 							
 					$apm_load  = 'api/aplimo/ne_trovi.php';
 					
-					if(isset($_GET['sapm']) && file_exists($_ll['app']['pasta'] . $_GET['apm'] . '/'. $_GET['sapm'] .'/' . $_GET['sapm'] . '.php'))
+					if(!isset($_GET['sapm']) && file_exists($_ll['app']['pasta'] . 'home/home.php'))
+						$apm_load = $_ll['app']['pasta'] . 'home/home.php';
+					elseif(isset($_GET['sapm']) && file_exists($_ll['app']['pasta'] . $_GET['apm'] . '/'. $_GET['sapm'] .'/' . $_GET['sapm'] . '.php'))
 						$apm_load = $_ll['app']['pasta'] . $_GET['apm'] . '/'. $_GET['sapm'] .'/' . $_GET['sapm'] . '.php';
-					elseif(file_exists($_ll['app']['pasta'] . $_GET['apm'] . '/' . $_GET['apm'] . '.php'))
+					elseif(isset($_GET['apm']) && file_exists($_ll['app']['pasta'] . $_GET['apm'] . '/' . $_GET['apm'] . '.php'))
 						$apm_load = $_ll['app']['pasta'] . $_GET['apm'] . '/' . $_GET['apm'] . '.php';
 					
 					require_once($apm_load);

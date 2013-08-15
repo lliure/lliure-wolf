@@ -1,6 +1,10 @@
 Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure),  Módulos e API nativas
 
--- 6.0 (Shiba inu) (22/07/2013)
+-- 6.0 (Shiba inu) (15/08/2013)
+#[update] - Eliminação da pasta "plugin" e removido o suporte
+#[update] - Possibilidade de passar o link vazio para api Navigi na exibição lista
+#[bug] - Correções na api Aplimo
+#[update] - Alteração da pasta ll_lliure_plugins para ll_lliure_apps
 
 -- 5.0 (Pasto Alemão) (21/07/2013)
 #[update] - Nova API integrada ao core "aplimo", uma APLI para criação de aplicativos de uma forma padronizada
