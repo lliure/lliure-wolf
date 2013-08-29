@@ -51,166 +51,166 @@ Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure
 
 
 -- 4.9.0 (São Bernardo) (27/02/2013)
-# [update] - Nova fun��o jf_result(), adicionado ao pacote jf.fun��es
-# [update] - No processo de instala��o agora � possivel deixar o campo senha vazio
-# [update] - A fun��o jf_delete() agora aceita um array() na 2� instru��o (para o where) 
-# [bug] - na fun��o ll_securyt() estava configurada para testar o $_GET['plugin'] o correto � $_GET['app']
+# [update] - Nova função jf_result(), adicionado ao pacote jf.funções
+# [update] - No processo de instalação agora é possivel deixar o campo senha vazio
+# [update] - A função jf_delete() agora aceita um array() na 2ª instrução (para o where) 
+# [bug] - Na função ll_securyt() estava configurada para testar o $_GET['plugin'] o correto é $_GET['app']
 # [update] - na na biblioteca jf.funcoes
 # [BUG] - no thema do tyni MCE
 
--- 4.8.1 (S�o Bernardo) (17/10/2012)
-# [bug][api][pm_mail] - A constante __DIR__ foi adiciona na vers�o 5 do php, ent�o n�o funcionava nas anteriores
-# [bug] - em functions.php a fun��o ll_dir dependia da constante __DIR__ que foi adiciona na vers�o 5 do php, ent�o n�o funcionava nas anteriores
+-- 4.8.1 (São Bernardo) (17/10/2012)
+# [bug][api][pm_mail] - A constante __DIR__ foi adiciona na versão 5 do php, então não funcionava nas anteriores
+# [bug] - Em functions.php a função ll_dir dependia da constante __DIR__ que foi adiciona na versão 5 do php, ent�o n�o funcionava nas anteriores
 
--- 4.8.0 (S�o Bernardo) (25/09/2012)
-# [update] - Atualiza��o nas fun��es do pacote jf.funcoes.php
-# [update] - Defini��o para login padr�o com usu�rio remoto atrav�s do llconf.ll
+-- 4.8.0 (São Bernardo) (25/09/2012)
+# [update] - Atualização nas funções do pacote jf.funcoes.php
+# [update] - Definição para login padrão com usuário remoto através do llconf.ll
 # [update] - Incluido sistema de trabalho OnServer
-# [update] - Incluidas vari�veis padr�o para trabalhar com aplicativos ($llAppHome, $llAppOnServer, $llAppPasta)
-# [update] - Atualiza��o do css predifinidos.css e principal.css
-# [update] - Atualizado pacote JF fun��es
-# [update][API] - fileUp quando n�o encontra $_FILE retorna erro
-# [update] - Arquivo uploads/.htaccess e uploads/thumbs.php incluido na lista de arquivos para instala��o
+# [update] - Incluidas variáveis padrão para trabalhar com aplicativos ($llAppHome, $llAppOnServer, $llAppPasta)
+# [update] - Atualização do css predifinidos.css e principal.css
+# [update] - Atualizado pacote JF funções
+# [update][API] - fileUp quando não encontra $_FILE retorna erro
+# [update] - Arquivo uploads/.htaccess e uploads/thumbs.php incluido na lista de arquivos para instalação
 # [update][API][fotos] - havia um problemas em alguns servidores ao gerar a thumb por conta dos retornos de pasta at� selecionar a imagem desejada
-# [bug] - erro na forma da implementa��o da api jfnav no gerenciador de usu�rios (erro apenas nas novas  vers�es devido a atualiza��o do PREFIXO)
-# [bug][API] - Problema encontrado quando n�o conseguia encontrar os dados de conex�o com o smtp
-# [bug] - Falha na interpreta��o de array na fun��o ll_tsecuryt()
+# [bug] - Erro na forma da implementação da api jfnav no gerenciador de usuários (erro apenas nas novas  versões devido a atualização do PREFIXO)
+# [bug][API] - Problema encontrado quando não conseguia encontrar os dados de conexão com o smtp
+# [bug] - Falha na interpretação de array na função ll_tsecuryt()
 
--- 4.7.1 (S�o Bernardo) (20/08/2012)
-# [bug][API][PHP Mailer] - problema ao detectar diret�rio na fun��o pm_mail()
+-- 4.7.1 (São Bernardo) (20/08/2012)
+# [bug][API][PHP Mailer] - problema ao detectar diret�rio na função pm_mail()
 
--- 4.7.0 (S�o Bernardo) (16/08/2012)
-# [update] - Prepara��o de suporte a Temas
+-- 4.7.0 (São Bernardo) (16/08/2012)
+# [update] - Preparação de suporte a Temas
 # [update] - Removidos arquivos "mLfunctions.php" e "conection.php" da pasta includes
 # [update] - Removido indice ['tipo'] do session "logado"
-# [update] - Adiciona fun��o gsqul(); em JS
-# [update][API][php_mailer] - Aprimoramento da API "php mailer" configurando o SMTP no arquivo llconf.ll voc� pode disparar e-mails usando a fun��o pm_mail()
-# [bug] - erro na codifica��o do arquivo sobre.php que exibe os informa��es do lliure no "painel de controle"
-# [bug] - problema no arquivo includes/thumb.php
-# [anote] - Nova defini��o para atualiza��es do lliure onde 4.6.2 l�-se (Atualiza��o com divergencia de compatibilidade a vers�o anterior).(Atualiza��es).(Corre��es)
-# [anote] - Nesta vers�o estamos instituindo apelidos para vers�es (primeiro n�mero)
+# [update] - Adiciona função gsqul(); em JS
+# [update][API][php_mailer] - Aprimoramento da API "php mailer" configurando o SMTP no arquivo llconf.ll você pode disparar e-mails usando a função pm_mail()
+# [bug] - Erro na codificação do arquivo sobre.php que exibe os informações do lliure no "painel de controle"
+# [bug] - Problema no arquivo includes/thumb.php
+# [anote] - Nova definição para atualizações do lliure onde 4.6.2 lê-se (Atualização com divergencia de compatibilidade a versão anterior).(Atualizações).(Correções)
+# [anote] - Nesta versão estamos instituindo apelidos para versões (primeiro número)
 
-/****************************************** DIVIS�O DA FORMA QUE NOMEIA AS VERS�ES */
+/****************************************** DIVISÃO DA FORMA QUE NOMEIA AS VERSÕES */
 
 -- 4.6.2 (07/08/2012)
-# [update] - Adicionado mais 56 icones no pacote padr�o
-# [bug][api][jfnav] -  - estava com problemas quando precionava a tecla "enter" quando n�o estivesse selecionado algum registro
-# [update][api][jfnav] - Atualiza��o no layout de lista, cancelar edi��o com o "esc", modificado a forma de navega��o
-# [bug] - Ao adicionar atalhos com espa�o ou caracteres especiais
+# [update] - Adicionado mais 56 icones no pacote padrão
+# [bug][api][jfnav] -  - estava com problemas quando precionava a tecla "enter" quando não estivesse selecionado algum registro
+# [update][api][jfnav] - Atualização no layout de lista, cancelar edição com o "esc", modificado a forma de navega��o
+# [bug] - Ao adicionar atalhos com espaço ou caracteres especiais
 
 -- 4.6.1 (04/08/2012)
-# [update/bug] - Liberado acesso para usu�rios do grupo "admin" ao painel de controle com restri��es
-# [update] - Quando acessar uma p�gina e n�o estiver logado, depois que logar ser� direcionado para aquela p�gina
-# [anote] - Agora o lliure � definido como WAP "Plataforma de aplica��es web" do ingl�s Web Application Platform
-# [update] - a Licen�a de uso passou para GPL v3.0
+# [update/bug] - Liberado acesso para usuários do grupo "admin" ao painel de controle com restrições
+# [update] - Quando acessar uma página e não estiver logado, depois que logar sera direcionado para aquela página
+# [anote] - Agora o lliure é definido como WAP "Plataforma de aplicações web" do inglês Web Application Platform
+# [update] - a Licença de uso passou para GPL v3.0
 
 -- 4.6.0 (20/07/2012)
 # [update][API] - Foi alterada a API fileUp para gravar mais de um arquivo por vez 
-# [update] - Controle de prefixo nas tabelas, ao fazer a instala��o voc� define o prefixo que ir� utilizar (PS: se for desenvolvedor utilize sempre "ll" que � o padr�o, caso contrario seu aplicativo n�o poder� utilizar o instalador do lliure)
+# [update] - Controle de prefixo nas tabelas, ao fazer a instalação você define o prefixo que irá utilizar (PS: se for desenvolvedor utilize sempre "ll" que é o padrão, caso contrario seu aplicativo não poderá utilizar o instalador do lliure)
 # [update][API] - Adicionada a API phpmailer para envio de e-mails com o lliure
 
-# [update] - O estilo .form em predefinidos.css foi alterado e a fun��o ajustaForm() para funcionar melhor no Chrome
-# [update] - O bot�o usu�rios foi movido para o painel de controle
-# [update] - Adicionado um bot�o para informa��es (sobre) do lliure no painel de controle
+# [update] - O estilo .form em predefinidos.css foi alterado e a função ajustaForm() para funcionar melhor no Chrome
+# [update] - O botão usuários foi movido para o painel de controle
+# [update] - Adicionado um bot�o para informações (sobre) do lliure no painel de controle
 # [update] - Arquivo painel/plugin.php foi removido
 
 
 -- 4.5.1 (24/05/2012)
-# [bug] - A fun��o array2xml() da classe jf_xml{} estava com uma declara��o depreciada
+# [bug] - A função array2xml() da classe jf_xml{} estava com uma declaração depreciada
 
 -- 4.5.0 (16/05/2012)
 @ [update] - O GET ?plugin foi substituido por ?app
 @ [update] - Sistema de multi-linguagens
-@ [update] - Novo painel de controle, substituindo a p�gina aplicativos
-@ [update] - Atualizada a fun��o que controla o hist�rico de navega��o dentro do lliure, agora ele abrange todas as p�ginas e n�o as relacionadas a aplivativos
-@ [update] - Layout da p�gina de login
-# [update/bug] - Adicionado anima��o ao menu r�pido, e alterada a fun��o que adiciona e remove itens
+@ [update] - Novo painel de controle, substituindo a página aplicativos
+@ [update] - Atualizada a função que controla o hist�rico de navegação dentro do lliure, agora ele abrange todas as páginas e não as relacionadas a aplivativos
+@ [update] - Layout da página de login
+# [update/bug] - Adicionado animação ao menu rápido, e alterada a função que adiciona e remove itens
 
 -- 4.4.4 (26/04/2012)
-# [update][API] - jfnav - Agora conta com um suporte para imagens independente para cada registro na exibi��o de icones
+# [update][API] - jfnav - Agora conta com um suporte para imagens independente para cada registro na exibição de icones
 
 -- 4.4.3 (20/04/2012)
-# [bug][API] - Foi detectado um problema na api de fotos, quando o usu�rio clicasse para renomear a imagem ficava com barras de rolagem na box e com bot�o de confirmar desconfigurado, al�m de um erro de vari�vel
-# [bug][API] - FileUp - estafa ficando desconfigarada no chrome, e n�o fazia a quebra do conte�do, assim quando em qualque cont�iner n�o era respeitado paddings e margins do mesmo, e tamb�m n�o executava o o click no "input file"
+# [bug][API] - Foi detectado um problema na api de fotos, quando o usuário clicasse para renomear a imagem ficava com barras de rolagem na box e com bot�o de confirmar desconfigurado, al�m de um erro de variável
+# [bug][API] - FileUp - estafa ficando desconfigarada no chrome, e n�o fazia a quebra do conteúdo, assim quando em qualque contâiner não era respeitado paddings e margins do mesmo, e tamb�m n�o executava o o click no "input file"
 # [update] - Ajustes de layout
 
 -- 4.4.2 (14/04/2012)
-# [update] - Atualiza��o no sistema de seguran�a interno
-# [update] - Alterada a forma de puxar os css para link ao inv�s de @import
-# [update] - Adicionado arquivo llconf.ll na pasta "etc" para gerenciar as configura��es internas do lliure
+# [update] - Atualização no sistema de segurança interno
+# [update] - Alterada a forma de puxar os css para link ao invés de @import
+# [update] - Adicionado arquivo llconf.ll na pasta "etc" para gerenciar as configurações internas do lliure
 
 -- 4.4.1 (11/04/2012)
-# [bug] - Problemas no sistema de seguran�a quando logado com contas abaixo de "desenvolvedor"
-# [bug][API] - foto - n�o exclu�a foto, n�o marca como favorito
+# [bug] - Problemas no sistema de segurança quando logado com contas abaixo de "desenvolvedor"
+# [bug][API] - foto - não excluía foto, nâo marca como favorito
 
 -- 4.4.0 (05/04/2012)
-# [update] - Altera��o de layout para lliure
+# [update] - Alteração de layout para lliure
 
 -- 4.3.3 (04/04/2012)
-# [bug/funcao] - jf_monta_link - ficou com alguns problemas na ultima atualiza��o para php5
+# [bug/funcao] - jf_monta_link - ficou com alguns problemas na ultima atualização para php5
 # [update][API] - Novo themer para o Tyni MCE - lliure
 # [update][API] - Atualizada a api tyni MCE
 # [bug] - o arquivo .htaccess estava bloqueando abertura de arquivos htm e html, com isso pode ter havido problemas com alguns aplicativos e/ou APIs
 
 -- 4.3.2 (29/03/2012)
-# [update] - Adicionada uma nova fun��o ao pacote jf a jf_stradd
-# [update] - As tabelas n�o chegavam a 100% na formata��o padr�o de formul�rios
-# [update][API] - jfnav - A fun��o foi atualizada com novas funcionalidades e foi transformada em uma classe
-# [bug][API] - foto - devido a uma atualiza��o a parte respons�vel pelo upload estava com uma configura��o errada
+# [update] - Adicionada uma nova função ao pacote jf a jf_stradd
+# [update] - As tabelas não chegavam a 100% na formatação padrão de formulários
+# [update][API] - jfnav - A função foi atualizada com novas funcionalidades e foi transformada em uma classe
+# [bug][API] - foto - devido a uma atualização a parte responsável pelo upload estava com uma configuração errada
 
 -- 4.3.1 (26/03/2012)
-# [BUG] - Por quest�es de seguran�a estava bloqueado acesso interno do sistema a arquivos swf
-# [BUG] - A fun��o de seguran�a ll_secury() estava impedindo o acesso de usu�rios do tipo "user" mesmo com acesso "public"
-# [update/CSS] - formata��o dos formul�rios padr�es "classe form"
+# [BUG] - Por questões de segurança estava bloqueado acesso interno do sistema a arquivos swf
+# [BUG] - A função de segurança ll_secury() estava impedindo o acesso de usuários do tipo "user" mesmo com acesso "public"
+# [update/CSS] - formatação dos formulários padrões "classe form"
 # [update/CSS] - Adicionado reset de css
 
 -- 4.3.0 (22/03/2012)
 # [update/JS] - Os arquivos tb_tinymce.js.php e jquery.maskedinput-1.2.2.js
-# [update] - Na tabela "PREFIXO.admin" a coluna 'tipo' foi renomeada para 'grupo' e seus valores agora s�o varchar(10) atualmente podem ser preenchidos como 'dev', 'admin', 'user'
-# [update] - Adicionada fun��o para testar o grupo do usu�rio logado fun��o ll_tsecuryt()
-# [update] - Modificada a forma de edi��o de usu�rios, e criado link para editar a sua conta
-# [update] - Adicionada sistema de seguran�a para aplicativos fun��o ll_securyt()
+# [update] - Na tabela "PREFIXO.admin" a coluna 'tipo' foi renomeada para 'grupo' e seus valores agora são varchar(10) atualmente podem ser preenchidos como 'dev', 'admin', 'user'
+# [update] - Adicionada função para testar o grupo do usuário logado função ll_tsecuryt()
+# [update] - Modificada a forma de edição de usuários, e criado link para editar a sua conta
+# [update] - Adicionada sistema de segurança para aplicativos função ll_securyt()
 # [update] - Inserido arquivo .htaccess para bloquear acessos direto a pastas
 # [update] - A pasta apt_files foi renomeado para /etc
 # [update] - O arquivo config.php foi transferido para pasta /etc e renomeado para bfconf.php
-# [update] - O instalador verifica antes da instala��o a permiss�o da pasta /etc e se a pasta uploads est� criada e com permi��o 777
+# [update] - O instalador verifica antes da instalação a permissão da pasta /etc e se a pasta uploads está criada e com permição 777
 
 -- 4.2.7 (15/03/2012)
-# [update][API] - fileup - uma nova API para ajudar o upload de arquivos �nicos 
+# [update][API] - fileup - uma nova API para ajudar o upload de arquivos únicos 
 
 -- 4.2.6 (14/03/2012)
-# [updade][API] - jfnav - adiciona a fun��o de exibi��o em lista a fun��o tamb�m foi alterada para jfnav() a fun��o jNavigator() continua funcionando, a fun��o jNavigatorInner() foi depreciada
+# [updade][API] - jfnav - adiciona a função de exibição em lista a função também foi alterada para jfnav() a função jNavigator() continua funcionando, a função jNavigatorInner() foi depreciada
 
 -- 4.2.5 (13/03/2012)
 # [bug] - no instalador tinha restos do corner
 
 -- 4.2.4 (10/03/2012)
-# [bug][API] - jnav quando ela n�o � iniciada estava com erro em uma vari�vel
+# [bug][API] - jnav quando ela não é iniciada estava com erro em uma variável
 
 -- 4.2.3 (10/03/2012)
-# [bug][API] - jnav ao atualizar o nome de um registro n�o removia o input
+# [bug][API] - jnav ao atualizar o nome de um registro não removia o input
 
 -- 4.2.2 (10/03/2012)
-# [update] - fun��o jf_urlformat foi atualizada para utilizar preg_replace
-# [update] - fun��o jf_monta_link, utilize 'true' para o formato de url amigavel
-# [update/install] - adiciona c�pia do arquivo thumb.php na pasta uploads
-# [update/install] - adiciona pasta apt_files ao plugin, esta pasta ser� destinada a armazenar arquivo de configura��o dos aplicativos
+# [update] - função jf_urlformat foi atualizada para utilizar preg_replace
+# [update] - função jf_monta_link, utilize 'true' para o formato de url amigavel
+# [update/install] - adiciona cópia do arquivo thumb.php na pasta uploads
+# [update/install] - adiciona pasta apt_files ao plugin, esta pasta será destinada a armazenar arquivo de configuração dos aplicativos
 
 -- 4.2.1 (10/03/2012)
-# [bug] - alterada a fun��o e alerta no Desktop
+# [bug] - alterada a função e alerta no Desktop
 
 -- 4.2.0 (09/03/2012)
-# [update] - fun��o que adiciona item ao desktop
-# [js/del/update] - inserida a fun��o plg_load substituta da mLExectAjax que deixa de existir
+# [update] - função que adiciona item ao desktop
+# [js/del/update] - inserida a função plg_load substituta da mLExectAjax que deixa de existir
 # [del] - removida a biblioteca corner (jquery), utilize border-radius por css 
-# [add] - a fun��o app_bar foi convertida a uma api, a forma de utilizar continua a mesma
+# [add] - a função app_bar foi convertida a uma api, a forma de utilizar continua a mesma
 
 -- 4.1.8 (09/03/2012)
 # [bug][API] - tiny_mce no plugin tinybrowser
 
 -- 4.1.7 (09/03/2012)
-# [bug/API/seguran�a] - na API tiny_mce no plugin tinybrowser
+# [bug/API/segurança] - na API tiny_mce no plugin tinybrowser
 
 -- 4.1.6 (07/03/2012)
-# [bug] - acusa��o de erro na instala��o
-# [bug][API] - usar o bot�o delete na API jfnav
+# [bug] - acusação de erro na instalação
+# [bug][API] - usar o botão delete na API jfnav
