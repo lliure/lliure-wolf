@@ -28,7 +28,7 @@ Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure
 
 -- 4.10.3 (São Bernardo) (14/03/2013)
 #[bug] - Falta de instanciar $_ll no onserver.php
-#[bug][API] - Bot�o "del" era anulado pelo navigi
+#[bug][API] - Botão "del" era anulado pelo navigi
 
 -- 4.10.2 (São Bernardo) (13/03/2013)
 #[bug] - arquivo index.php não foi encontrado na pasta install
@@ -54,13 +54,13 @@ Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure
 # [update] - Nova função jf_result(), adicionado ao pacote jf.funções
 # [update] - No processo de instalação agora é possivel deixar o campo senha vazio
 # [update] - A função jf_delete() agora aceita um array() na 2ª instrução (para o where) 
-# [bug] - Na função ll_securyt() estava configurada para testar o $_GET['plugin'] o correto é $_GET['app']
+# [bug] - na função ll_securyt() estava configurada para testar o $_GET['plugin'] o correto é $_GET['app']
 # [update] - na na biblioteca jf.funcoes
 # [BUG] - no thema do tyni MCE
 
 -- 4.8.1 (São Bernardo) (17/10/2012)
 # [bug][api][pm_mail] - A constante __DIR__ foi adiciona na versão 5 do php, então não funcionava nas anteriores
-# [bug] - Em functions.php a função ll_dir dependia da constante __DIR__ que foi adiciona na versão 5 do php, ent�o n�o funcionava nas anteriores
+# [bug] - em functions.php a função ll_dir dependia da constante __DIR__ que foi adiciona na versão 5 do php, então não funcionava nas anteriores
 
 -- 4.8.0 (São Bernardo) (25/09/2012)
 # [update] - Atualização nas funções do pacote jf.funcoes.php
@@ -71,13 +71,13 @@ Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure
 # [update] - Atualizado pacote JF funções
 # [update][API] - fileUp quando não encontra $_FILE retorna erro
 # [update] - Arquivo uploads/.htaccess e uploads/thumbs.php incluido na lista de arquivos para instalação
-# [update][API][fotos] - havia um problemas em alguns servidores ao gerar a thumb por conta dos retornos de pasta at� selecionar a imagem desejada
-# [bug] - Erro na forma da implementação da api jfnav no gerenciador de usuários (erro apenas nas novas  versões devido a atualização do PREFIXO)
+# [update][API][fotos] - havia um problemas em alguns servidores ao gerar a thumb por conta dos retornos de pasta até selecionar a imagem desejada
+# [bug] - erro na forma da implementação da api jfnav no gerenciador de usuários (erro apenas nas novas  versões devido a atualização do PREFIXO)
 # [bug][API] - Problema encontrado quando não conseguia encontrar os dados de conexão com o smtp
 # [bug] - Falha na interpretação de array na função ll_tsecuryt()
 
 -- 4.7.1 (São Bernardo) (20/08/2012)
-# [bug][API][PHP Mailer] - problema ao detectar diret�rio na função pm_mail()
+# [bug][API][PHP Mailer] - problema ao detectar diretório na função pm_mail()
 
 -- 4.7.0 (São Bernardo) (16/08/2012)
 # [update] - Preparação de suporte a Temas
@@ -85,8 +85,8 @@ Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure
 # [update] - Removido indice ['tipo'] do session "logado"
 # [update] - Adiciona função gsqul(); em JS
 # [update][API][php_mailer] - Aprimoramento da API "php mailer" configurando o SMTP no arquivo llconf.ll você pode disparar e-mails usando a função pm_mail()
-# [bug] - Erro na codificação do arquivo sobre.php que exibe os informações do lliure no "painel de controle"
-# [bug] - Problema no arquivo includes/thumb.php
+# [bug] - erro na codificação do arquivo sobre.php que exibe os informações do lliure no "painel de controle"
+# [bug] - problema no arquivo includes/thumb.php
 # [anote] - Nova definição para atualizações do lliure onde 4.6.2 lê-se (Atualização com divergencia de compatibilidade a versão anterior).(Atualizações).(Correções)
 # [anote] - Nesta versão estamos instituindo apelidos para versões (primeiro número)
 
@@ -95,12 +95,12 @@ Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure
 -- 4.6.2 (07/08/2012)
 # [update] - Adicionado mais 56 icones no pacote padrão
 # [bug][api][jfnav] -  - estava com problemas quando precionava a tecla "enter" quando não estivesse selecionado algum registro
-# [update][api][jfnav] - Atualização no layout de lista, cancelar edição com o "esc", modificado a forma de navega��o
+# [update][api][jfnav] - Atualização no layout de lista, cancelar edição com o "esc", modificado a forma de navegação
 # [bug] - Ao adicionar atalhos com espaço ou caracteres especiais
 
 -- 4.6.1 (04/08/2012)
 # [update/bug] - Liberado acesso para usuários do grupo "admin" ao painel de controle com restrições
-# [update] - Quando acessar uma página e não estiver logado, depois que logar sera direcionado para aquela página
+# [update] - Quando acessar uma página e não estiver logado, depois que logar será direcionado para aquela página
 # [anote] - Agora o lliure é definido como WAP "Plataforma de aplicações web" do inglês Web Application Platform
 # [update] - a Licença de uso passou para GPL v3.0
 
@@ -111,7 +111,7 @@ Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure
 
 # [update] - O estilo .form em predefinidos.css foi alterado e a função ajustaForm() para funcionar melhor no Chrome
 # [update] - O botão usuários foi movido para o painel de controle
-# [update] - Adicionado um bot�o para informações (sobre) do lliure no painel de controle
+# [update] - Adicionado um botão para informações (sobre) do lliure no painel de controle
 # [update] - Arquivo painel/plugin.php foi removido
 
 
@@ -122,7 +122,7 @@ Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure
 @ [update] - O GET ?plugin foi substituido por ?app
 @ [update] - Sistema de multi-linguagens
 @ [update] - Novo painel de controle, substituindo a página aplicativos
-@ [update] - Atualizada a função que controla o hist�rico de navegação dentro do lliure, agora ele abrange todas as páginas e não as relacionadas a aplivativos
+@ [update] - Atualizada a função que controla o histórico de navegação dentro do lliure, agora ele abrange todas as páginas e não as relacionadas a aplivativos
 @ [update] - Layout da página de login
 # [update/bug] - Adicionado animação ao menu rápido, e alterada a função que adiciona e remove itens
 
@@ -130,8 +130,8 @@ Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure
 # [update][API] - jfnav - Agora conta com um suporte para imagens independente para cada registro na exibição de icones
 
 -- 4.4.3 (20/04/2012)
-# [bug][API] - Foi detectado um problema na api de fotos, quando o usuário clicasse para renomear a imagem ficava com barras de rolagem na box e com bot�o de confirmar desconfigurado, al�m de um erro de variável
-# [bug][API] - FileUp - estafa ficando desconfigarada no chrome, e n�o fazia a quebra do conteúdo, assim quando em qualque contâiner não era respeitado paddings e margins do mesmo, e tamb�m n�o executava o o click no "input file"
+# [bug][API] - Foi detectado um problema na api de fotos, quando o usuário clicasse para renomear a imagem ficava com barras de rolagem na box e com botão de confirmar desconfigurado, além de um erro de variável
+# [bug][API] - FileUp - estafa ficando desconfigarada no chrome, e não fazia a quebra do conteúdo, assim quando em qualque contêiner não era respeitado paddings e margins do mesmo, e também não executava o o click no "input file"
 # [update] - Ajustes de layout
 
 -- 4.4.2 (14/04/2012)
@@ -141,7 +141,7 @@ Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure
 
 -- 4.4.1 (11/04/2012)
 # [bug] - Problemas no sistema de segurança quando logado com contas abaixo de "desenvolvedor"
-# [bug][API] - foto - não excluía foto, nâo marca como favorito
+# [bug][API] - foto - não excluía foto, não marca como favorito
 
 -- 4.4.0 (05/04/2012)
 # [update] - Alteração de layout para lliure
