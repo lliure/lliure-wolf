@@ -1,216 +1,217 @@
-Neste aquivo est√£o descritas todas atualiza√ß√µes do lliure core (l√™-se lhiure),  M√≥dulos e API nativas
+Neste aquivo est„o descritas todas atualizaÁıes do lliure core (lÍ-se lhiure),  MÛdulos e API nativas
 
--- 6.0 (Shiba inu) (15/08/2013)
-#[update] - Elimina√ß√£o da pasta "plugin" e removido o suporte
-#[update] - Possibilidade de passar o link vazio para api Navigi na exibi√ß√£o lista
-#[bug] - Corre√ß√µes na api Aplimo
-#[update] - Altera√ß√£o da pasta ll_lliure_plugins para ll_lliure_apps
+-- 6.0 (Shiba inu) (11/03/2013)
+#[update] - AlteraÁ„o na API Navigi para receber botıes acicionais na exibiÁ„o lista
+#[update] - EliminaÁ„o da pasta "plugin" e removido o suporte
+#[update] - Possibilidade de passar o link vazio para api Navigi na exibiÁ„o lista
+#[bug] - CorreÁıes na api Aplimo
+#[update] - AlteraÁ„o da tabela ll_lliure_plugins para ll_lliure_apps
 
--- 5.0 (Pastor Alem√£o) (21/07/2013)
-#[update] - Nova API integrada ao core "aplimo", uma APLI para cria√ß√£o de aplicativos de uma forma padronizada
+-- 5.0 (Pasto Alem„o) (21/07/2013)
+#[update] - Nova API integrada ao core "aplimo", uma APLI para criaÁ„o de aplicativos de uma forma padronizada
 #[update] - Tabelas referentes ao core receberam o "prefixo" lliure ex: ll_admin passou para ll_lliure_admin
-#[update] - Foi criada nova pasta para armazenar aplicativos /app a pasta /plugin continua funciona nesta vers√£o porem ser√° depreciada nas pr√≥ximas
-#[update] - Altera√ß√£o do nome do arquivo "versoes.txt" para "changelog.txt"
-#[update] - Novo m√≥dulo de instala√ß√£o de aplicativos
+#[update] - Foi criada nova pasta para armazenar aplicativos /app a pasta /plugin continua funciona nesta vers„o porem ser· depreciada nas prÛximas
+#[update] - AlteraÁ„o do nome do arquivo "versoes.txt" para "changelog.txt"
+#[update] - Novo mÛdulo de instalaÁ„o de aplicativos
 #[update] - Definada pasta para armazenar aplicativos nativos do core, pasta "opt"
-#[update] - adicionada diretiva "sen_html" ao "mode_operacion", onde a forma normal √© "kun_html"
-#[update] - Criado m√≥dulo NLI (not logged in)
-#[bug] - na instala√ß√£o ao copiar o arquivo "thumbs.php"
-#[update] - alterada a forma de funcionamento do onServer e criada a variavel "$_ll['mode_operacion']" que ir√° controlar o modo de opera√ß√£o atual
-#[update] - Criada a variavel "$llAppSenHtml" para mostrar app quando n√£o h√° o html do index
-#[update] - Fun√ß√£o jf_result foi alterada para receber mais de um valor e tratar como 'and'
-#[bug] - jf_insert n√£o estava gravando NULL em mult-insert
-#[bug] - Corre√ß√£o na fun√ß√£oo ll_alert
-#[bug] - Ajustes na API navigi referentes ao clique duplo
+#[update] - adicionada diretiva "sen_html" ao "mode_operacion", onde a forma normal È "kun_html"
+#[update] - Criado mÛdulo NLI (not logged in)
+#[bug] - na instalaÁ„o ao copiar o arquivo "thumbs.php"
+#[update] - alterada a forma de funcionamento do onServer e criada a variavel "$_ll['mode_operacion']" que ir· controlar o modo de operaÁ„o atual
+#[update] - criada a variavel "$llAppSenHtml" para mostrar app quando n„o h· o html do index
+#[update] - FunÁ„o jf_result foi alterada para receber mais de um valor e tratar como 'and'
+#[bug] - jf_insert n„o estava gravando NULL em mult-insert
+#[bug] - correÁ„o na funÁ„o ll_alert
+#[bug] - ajustes na API navigi referentes ao clique duplo
 
--- 4.10.4 (S√£o Bernardo) (24/05/2013)
+-- 4.10.4 (S„o Bernardo) (24/05/2013)
 # [bug] - Erro de compatibilidade dos jquery maskinput
 
--- 4.10.3 (S√£o Bernardo) (14/03/2013)
+-- 4.10.3 (S„o Bernardo) (14/03/2013)
 #[bug] - Falta de instanciar $_ll no onserver.php
-#[bug][API] - Bot√£o "del" era anulado pelo navigi
+#[bug][API] - Bot„o "del" era anulado pelo navigi
 
--- 4.10.2 (S√£o Bernardo) (13/03/2013)
-#[bug] - arquivo index.php n√£o foi encontrado na pasta install
+-- 4.10.2 (S„o Bernardo) (13/03/2013)
+#[bug] - arquivo index.php n„o foi encontrado na pasta install
 
--- 4.10.1 (S√£o Bernardo) (07/03/2013)
-#[bug] - faltou a instru√ß√£o css para altera√ß√£o da "minha conta"
-#[bug] - instala√ß√£o de aplicativos n√£o est√°va encontrando o arquivo config.ll
+-- 4.10.1 (S„o Bernardo) (07/03/2013)
+#[bug] - faltou a instruÁ„o css para alteraÁ„o da "minha conta"
+#[bug] - instalaÁ„o de aplicativos n„o est·va encontrando o arquivo config.ll
 
--- 4.10.0 (S√£o Bernardo) (04/03/2013)
-# [update] - cria√ß√£o da variavel (array) $_ll //v√°riavel para armazenar e centralizar dados utilizado pelo lliure
-# [update] - aceita√ß√£o do arquivo "config.ll" ao inv√©s do "config.plg" para configura√ß√µes dos aplicativos
-# [update] - Retirado suporte a $_GET['plugin'], s√≥ ser√° aceito $_GET['app']
+-- 4.10.0 (S„o Bernardo) (04/03/2013)
+# [update] - criaÁ„o da variavel (array) $_ll //v·riavel para armazenar e centralizar dados utilizado pelo lliure
+# [update] - aceitaÁ„o do arquivo "config.ll" ao invÈs do "config.plg" para configuraÁıes dos aplicativos
+# [update] - Retirado suporte a $_GET['plugin'], sÛ ser· aceito $_GET['app']
 # [update] - instalado API "navigi" para substituir a jfnav
-# [update] - API jfnav foi removida do pacode de apis padr√£o
+# [update] - API jfnav foi removida do pacode de apis padr„o
 # [update] - Reformulada a classe de gerenciamento de API
 
--- 4.9.1 (S√£o Bernardo) (24/05/2013)
+-- 4.9.1 (S„o Bernardo) (24/05/2013)
 # [bug] - Faltando arquivo "index.php" na pasta install
 # [bug] - Erro de compatibilidade dos jquery maskinput
 
 
--- 4.9.0 (S√£o Bernardo) (27/02/2013)
-# [update] - Nova fun√ß√£o jf_result(), adicionado ao pacote jf.fun√ß√µes
-# [update] - No processo de instala√ß√£o agora √© possivel deixar o campo senha vazio
-# [update] - A fun√ß√£o jf_delete() agora aceita um array() na 2¬™ instru√ß√£o (para o where) 
-# [bug] - na fun√ß√£o ll_securyt() estava configurada para testar o $_GET['plugin'] o correto √© $_GET['app']
+-- 4.9.0 (S„o Bernardo) (27/02/2013)
+# [update] - Nova funÁ„o jf_result(), adicionado ao pacote jf.funÁıes
+# [update] - No processo de instalaÁ„o agora È possivel deixar o campo senha vazio
+# [update] - A funÁ„o jf_delete() agora aceita um array() na 2™ instruÁ„o (para o where) 
+# [bug] - na funÁ„o ll_securyt() estava configurada para testar o $_GET['plugin'] o correto È $_GET['app']
 # [update] - na na biblioteca jf.funcoes
 # [BUG] - no thema do tyni MCE
 
--- 4.8.1 (S√£o Bernardo) (17/10/2012)
-# [bug][api][pm_mail] - A constante __DIR__ foi adiciona na vers√£o 5 do php, ent√£o n√£o funcionava nas anteriores
-# [bug] - em functions.php a fun√ß√£o ll_dir dependia da constante __DIR__ que foi adiciona na vers√£o 5 do php, ent√£o n√£o funcionava nas anteriores
+-- 4.8.1 (S„o Bernardo) (17/10/2012)
+# [bug][api][pm_mail] - A constante __DIR__ foi adiciona na vers„o 5 do php, ent„o n„o funcionava nas anteriores
+# [bug] - em functions.php a funÁ„o ll_dir dependia da constante __DIR__ que foi adiciona na vers„o 5 do php, ent„o n„o funcionava nas anteriores
 
--- 4.8.0 (S√£o Bernardo) (25/09/2012)
-# [update] - Atualiza√ß√£o nas fun√ß√µes do pacote jf.funcoes.php
-# [update] - Defini√ß√£o para login padr√£o com usu√°rio remoto atrav√©s do llconf.ll
+-- 4.8.0 (S„o Bernardo) (25/09/2012)
+# [update] - AtualizaÁ„o nas funÁıes do pacote jf.funcoes.php
+# [update] - DefiniÁ„o para login padr„o com usu·rio remoto atravÈs do llconf.ll
 # [update] - Incluido sistema de trabalho OnServer
-# [update] - Incluidas vari√°veis padr√£o para trabalhar com aplicativos ($llAppHome, $llAppOnServer, $llAppPasta)
-# [update] - Atualiza√ß√£o do css predifinidos.css e principal.css
-# [update] - Atualizado pacote JF fun√ß√µes
-# [update][API] - fileUp quando n√£o encontra $_FILE retorna erro
-# [update] - Arquivo uploads/.htaccess e uploads/thumbs.php incluido na lista de arquivos para instala√ß√£o
-# [update][API][fotos] - havia um problemas em alguns servidores ao gerar a thumb por conta dos retornos de pasta at√© selecionar a imagem desejada
-# [bug] - erro na forma da implementa√ß√£o da api jfnav no gerenciador de usu√°rios (erro apenas nas novas  vers√µes devido a atualiza√ß√£o do PREFIXO)
-# [bug][API] - Problema encontrado quando n√£o conseguia encontrar os dados de conex√£o com o smtp
-# [bug] - Falha na interpreta√ß√£o de array na fun√ß√£o ll_tsecuryt()
+# [update] - Incluidas vari·veis padr„o para trabalhar com aplicativos ($llAppHome, $llAppOnServer, $llAppPasta)
+# [update] - AtualizaÁ„o do css predifinidos.css e principal.css
+# [update] - Atualizado pacote JF funÁıes
+# [update][API] - fileUp quando n„o encontra $_FILE retorna erro
+# [update] - Arquivo uploads/.htaccess e uploads/thumbs.php incluido na lista de arquivos para instalaÁ„o
+# [update][API][fotos] - havia um problemas em alguns servidores ao gerar a thumb por conta dos retornos de pasta atÈ selecionar a imagem desejada
+# [bug] - erro na forma da implementaÁ„o da api jfnav no gerenciador de usu·rios (erro apenas nas novas  versıes devido a atualizaÁ„o do PREFIXO)
+# [bug][API] - Problema encontrado quando n„o conseguia encontrar os dados de conex„o com o smtp
+# [bug] - Falha na interpretaÁ„o de array na funÁ„o ll_tsecuryt()
 
--- 4.7.1 (S√£o Bernardo) (20/08/2012)
-# [bug][API][PHP Mailer] - problema ao detectar diret√≥rio na fun√ß√£o pm_mail()
+-- 4.7.1 (S„o Bernardo) (20/08/2012)
+# [bug][API][PHP Mailer] - problema ao detectar diretÛrio na funÁ„o pm_mail()
 
--- 4.7.0 (S√£o Bernardo) (16/08/2012)
-# [update] - Prepara√ß√£o de suporte a Temas
+-- 4.7.0 (S„o Bernardo) (16/08/2012)
+# [update] - PreparaÁ„o de suporte a Temas
 # [update] - Removidos arquivos "mLfunctions.php" e "conection.php" da pasta includes
 # [update] - Removido indice ['tipo'] do session "logado"
-# [update] - Adiciona fun√ß√£o gsqul(); em JS
-# [update][API][php_mailer] - Aprimoramento da API "php mailer" configurando o SMTP no arquivo llconf.ll voc√™ pode disparar e-mails usando a fun√ß√£o pm_mail()
-# [bug] - erro na codifica√ß√£o do arquivo sobre.php que exibe os informa√ß√µes do lliure no "painel de controle"
+# [update] - Adiciona funÁ„o gsqul(); em JS
+# [update][API][php_mailer] - Aprimoramento da API "php mailer" configurando o SMTP no arquivo llconf.ll vocÍ pode disparar e-mails usando a funÁ„o pm_mail()
+# [bug] - erro na codificaÁ„o do arquivo sobre.php que exibe os informaÁıes do lliure no "painel de controle"
 # [bug] - problema no arquivo includes/thumb.php
-# [anote] - Nova defini√ß√£o para atualiza√ß√µes do lliure onde 4.6.2 l√™-se (Atualiza√ß√£o com divergencia de compatibilidade a vers√£o anterior).(Atualiza√ß√µes).(Corre√ß√µes)
-# [anote] - Nesta vers√£o estamos instituindo apelidos para vers√µes (primeiro n√∫mero)
+# [anote] - Nova definiÁ„o para atualizaÁıes do lliure onde 4.6.2 lÍ-se (AtualizaÁ„o com divergencia de compatibilidade a vers„o anterior).(AtualizaÁıes).(CorreÁıes)
+# [anote] - Nesta vers„o estamos instituindo apelidos para versıes (primeiro n˙mero)
 
-/****************************************** DIVIS√ÉO DA FORMA QUE NOMEIA AS VERS√ïES */
+/****************************************** DIVIS√O DA FORMA QUE NOMEIA AS VERS’ES */
 
 -- 4.6.2 (07/08/2012)
-# [update] - Adicionado mais 56 icones no pacote padr√£o
-# [bug][api][jfnav] -  - estava com problemas quando precionava a tecla "enter" quando n√£o estivesse selecionado algum registro
-# [update][api][jfnav] - Atualiza√ß√£o no layout de lista, cancelar edi√ß√£o com o "esc", modificado a forma de navega√ß√£o
-# [bug] - Ao adicionar atalhos com espa√ßo ou caracteres especiais
+# [update] - Adicionado mais 56 icones no pacote padr„o
+# [bug][api][jfnav] -  - estava com problemas quando precionava a tecla "enter" quando n„o estivesse selecionado algum registro
+# [update][api][jfnav] - AtualizaÁ„o no layout de lista, cancelar ediÁ„o com o "esc", modificado a forma de navegaÁ„o
+# [bug] - Ao adicionar atalhos com espaÁo ou caracteres especiais
 
 -- 4.6.1 (04/08/2012)
-# [update/bug] - Liberado acesso para usu√°rios do grupo "admin" ao painel de controle com restri√ß√µes
-# [update] - Quando acessar uma p√°gina e n√£o estiver logado, depois que logar ser√° direcionado para aquela p√°gina
-# [anote] - Agora o lliure √© definido como WAP "Plataforma de aplica√ß√µes web" do ingl√™s Web Application Platform
-# [update] - a Licen√ßa de uso passou para GPL v3.0
+# [update/bug] - Liberado acesso para usu·rios do grupo "admin" ao painel de controle com restriÁıes
+# [update] - Quando acessar uma p·gina e n„o estiver logado, depois que logar ser· direcionado para aquela p·gina
+# [anote] - Agora o lliure È definido como WAP "Plataforma de aplicaÁıes web" do inglÍs Web Application Platform
+# [update] - a LicenÁa de uso passou para GPL v3.0
 
 -- 4.6.0 (20/07/2012)
 # [update][API] - Foi alterada a API fileUp para gravar mais de um arquivo por vez 
-# [update] - Controle de prefixo nas tabelas, ao fazer a instala√ß√£o voc√™ define o prefixo que ir√° utilizar (PS: se for desenvolvedor utilize sempre "ll" que √© o padr√£o, caso contrario seu aplicativo n√£o poder√° utilizar o instalador do lliure)
+# [update] - Controle de prefixo nas tabelas, ao fazer a instalaÁ„o vocÍ define o prefixo que ir· utilizar (PS: se for desenvolvedor utilize sempre "ll" que È o padr„o, caso contrario seu aplicativo n„o poder· utilizar o instalador do lliure)
 # [update][API] - Adicionada a API phpmailer para envio de e-mails com o lliure
 
-# [update] - O estilo .form em predefinidos.css foi alterado e a fun√ß√£o ajustaForm() para funcionar melhor no Chrome
-# [update] - O bot√£o usu√°rios foi movido para o painel de controle
-# [update] - Adicionado um bot√£o para informa√ß√µes (sobre) do lliure no painel de controle
+# [update] - O estilo .form em predefinidos.css foi alterado e a funÁ„o ajustaForm() para funcionar melhor no Chrome
+# [update] - O bot„o usu·rios foi movido para o painel de controle
+# [update] - Adicionado um bot„o para informaÁıes (sobre) do lliure no painel de controle
 # [update] - Arquivo painel/plugin.php foi removido
 
 
 -- 4.5.1 (24/05/2012)
-# [bug] - A fun√ß√£o array2xml() da classe jf_xml{} estava com uma declara√ß√£o depreciada
+# [bug] - A funÁ„o array2xml() da classe jf_xml{} estava com uma declaraÁ„o depreciada
 
 -- 4.5.0 (16/05/2012)
 @ [update] - O GET ?plugin foi substituido por ?app
 @ [update] - Sistema de multi-linguagens
-@ [update] - Novo painel de controle, substituindo a p√°gina aplicativos
-@ [update] - Atualizada a fun√ß√£o que controla o hist√≥rico de navega√ß√£o dentro do lliure, agora ele abrange todas as p√°ginas e n√£o as relacionadas a aplivativos
-@ [update] - Layout da p√°gina de login
-# [update/bug] - Adicionado anima√ß√£o ao menu r√°pido, e alterada a fun√ß√£o que adiciona e remove itens
+@ [update] - Novo painel de controle, substituindo a p·gina aplicativos
+@ [update] - Atualizada a funÁ„o que controla o histÛrico de navegaÁ„o dentro do lliure, agora ele abrange todas as p·ginas e n„o as relacionadas a aplivativos
+@ [update] - Layout da p·gina de login
+# [update/bug] - Adicionado animaÁ„o ao menu r·pido, e alterada a funÁ„o que adiciona e remove itens
 
 -- 4.4.4 (26/04/2012)
-# [update][API] - jfnav - Agora conta com um suporte para imagens independente para cada registro na exibi√ß√£o de icones
+# [update][API] - jfnav - Agora conta com um suporte para imagens independente para cada registro na exibiÁ„o de icones
 
 -- 4.4.3 (20/04/2012)
-# [bug][API] - Foi detectado um problema na api de fotos, quando o usu√°rio clicasse para renomear a imagem ficava com barras de rolagem na box e com bot√£o de confirmar desconfigurado, al√©m de um erro de vari√°vel
-# [bug][API] - FileUp - estafa ficando desconfigarada no chrome, e n√£o fazia a quebra do conte√∫do, assim quando em qualque cont√™iner n√£o era respeitado paddings e margins do mesmo, e tamb√©m n√£o executava o o click no "input file"
+# [bug][API] - Foi detectado um problema na api de fotos, quando o usu·rio clicasse para renomear a imagem ficava com barras de rolagem na box e com bot„o de confirmar desconfigurado, alÈm de um erro de vari·vel
+# [bug][API] - FileUp - estafa ficando desconfigarada no chrome, e n„o fazia a quebra do conte˙do, assim quando em qualque contÍiner n„o era respeitado paddings e margins do mesmo, e tambÈm n„o executava o o click no "input file"
 # [update] - Ajustes de layout
 
 -- 4.4.2 (14/04/2012)
-# [update] - Atualiza√ß√£o no sistema de seguran√ßa interno
-# [update] - Alterada a forma de puxar os css para link ao inv√©s de @import
-# [update] - Adicionado arquivo llconf.ll na pasta "etc" para gerenciar as configura√ß√µes internas do lliure
+# [update] - AtualizaÁ„o no sistema de seguranÁa interno
+# [update] - Alterada a forma de puxar os css para link ao invÈs de @import
+# [update] - Adicionado arquivo llconf.ll na pasta "etc" para gerenciar as configuraÁıes internas do lliure
 
 -- 4.4.1 (11/04/2012)
-# [bug] - Problemas no sistema de seguran√ßa quando logado com contas abaixo de "desenvolvedor"
-# [bug][API] - foto - n√£o exclu√≠a foto, n√£o marca como favorito
+# [bug] - Problemas no sistema de seguranÁa quando logado com contas abaixo de "desenvolvedor"
+# [bug][API] - foto - n„o excluÌa foto, n„o marca como favorito
 
 -- 4.4.0 (05/04/2012)
-# [update] - Altera√ß√£o de layout para lliure
+# [update] - AlteraÁ„o de layout para lliure
 
 -- 4.3.3 (04/04/2012)
-# [bug/funcao] - jf_monta_link - ficou com alguns problemas na ultima atualiza√ß√£o para php5
+# [bug/funcao] - jf_monta_link - ficou com alguns problemas na ultima atualizaÁ„o para php5
 # [update][API] - Novo themer para o Tyni MCE - lliure
 # [update][API] - Atualizada a api tyni MCE
 # [bug] - o arquivo .htaccess estava bloqueando abertura de arquivos htm e html, com isso pode ter havido problemas com alguns aplicativos e/ou APIs
 
 -- 4.3.2 (29/03/2012)
-# [update] - Adicionada uma nova fun√ß√£o ao pacote jf a jf_stradd
-# [update] - As tabelas n√£o chegavam a 100% na formata√ß√£o padr√£o de formul√°rios
-# [update][API] - jfnav - A fun√ß√£o foi atualizada com novas funcionalidades e foi transformada em uma classe
-# [bug][API] - foto - devido a uma atualiza√ß√£o a parte respons√°vel pelo upload estava com uma configura√ß√£o errada
+# [update] - Adicionada uma nova funÁ„o ao pacote jf a jf_stradd
+# [update] - As tabelas n„o chegavam a 100% na formataÁ„o padr„o de formul·rios
+# [update][API] - jfnav - A funÁ„o foi atualizada com novas funcionalidades e foi transformada em uma classe
+# [bug][API] - foto - devido a uma atualizaÁ„o a parte respons·vel pelo upload estava com uma configuraÁ„o errada
 
 -- 4.3.1 (26/03/2012)
-# [BUG] - Por quest√µes de seguran√ßa estava bloqueado acesso interno do sistema a arquivos swf
-# [BUG] - A fun√ß√£o de seguran√ßa ll_secury() estava impedindo o acesso de usu√°rios do tipo "user" mesmo com acesso "public"
-# [update/CSS] - formata√ß√£o dos formul√°rios padr√µes "classe form"
+# [BUG] - Por questıes de seguranÁa estava bloqueado acesso interno do sistema a arquivos swf
+# [BUG] - A funÁ„o de seguranÁa ll_secury() estava impedindo o acesso de usu·rios do tipo "user" mesmo com acesso "public"
+# [update/CSS] - formataÁ„o dos formul·rios padrıes "classe form"
 # [update/CSS] - Adicionado reset de css
 
 -- 4.3.0 (22/03/2012)
 # [update/JS] - Os arquivos tb_tinymce.js.php e jquery.maskedinput-1.2.2.js
-# [update] - Na tabela "PREFIXO.admin" a coluna 'tipo' foi renomeada para 'grupo' e seus valores agora s√£o varchar(10) atualmente podem ser preenchidos como 'dev', 'admin', 'user'
-# [update] - Adicionada fun√ß√£o para testar o grupo do usu√°rio logado fun√ß√£o ll_tsecuryt()
-# [update] - Modificada a forma de edi√ß√£o de usu√°rios, e criado link para editar a sua conta
-# [update] - Adicionada sistema de seguran√ßa para aplicativos fun√ß√£o ll_securyt()
+# [update] - Na tabela "PREFIXO.admin" a coluna 'tipo' foi renomeada para 'grupo' e seus valores agora s„o varchar(10) atualmente podem ser preenchidos como 'dev', 'admin', 'user'
+# [update] - Adicionada funÁ„o para testar o grupo do usu·rio logado funÁ„o ll_tsecuryt()
+# [update] - Modificada a forma de ediÁ„o de usu·rios, e criado link para editar a sua conta
+# [update] - Adicionada sistema de seguranÁa para aplicativos funÁ„o ll_securyt()
 # [update] - Inserido arquivo .htaccess para bloquear acessos direto a pastas
 # [update] - A pasta apt_files foi renomeado para /etc
 # [update] - O arquivo config.php foi transferido para pasta /etc e renomeado para bfconf.php
-# [update] - O instalador verifica antes da instala√ß√£o a permiss√£o da pasta /etc e se a pasta uploads est√° criada e com permi√ß√£o 777
+# [update] - O instalador verifica antes da instalaÁ„o a permiss„o da pasta /etc e se a pasta uploads est· criada e com permiÁ„o 777
 
 -- 4.2.7 (15/03/2012)
-# [update][API] - fileup - uma nova API para ajudar o upload de arquivos √∫nicos 
+# [update][API] - fileup - uma nova API para ajudar o upload de arquivos ˙nicos 
 
 -- 4.2.6 (14/03/2012)
-# [updade][API] - jfnav - adiciona a fun√ß√£o de exibi√ß√£o em lista a fun√ß√£o tamb√©m foi alterada para jfnav() a fun√ß√£o jNavigator() continua funcionando, a fun√ß√£o jNavigatorInner() foi depreciada
+# [updade][API] - jfnav - adiciona a funÁ„o de exibiÁ„o em lista a funÁ„o tambÈm foi alterada para jfnav() a funÁ„o jNavigator() continua funcionando, a funÁ„o jNavigatorInner() foi depreciada
 
 -- 4.2.5 (13/03/2012)
 # [bug] - no instalador tinha restos do corner
 
 -- 4.2.4 (10/03/2012)
-# [bug][API] - jnav quando ela n√£o √© iniciada estava com erro em uma vari√°vel
+# [bug][API] - jnav quando ela n„o È iniciada estava com erro em uma vari·vel
 
 -- 4.2.3 (10/03/2012)
-# [bug][API] - jnav ao atualizar o nome de um registro n√£o removia o input
+# [bug][API] - jnav ao atualizar o nome de um registro n„o removia o input
 
 -- 4.2.2 (10/03/2012)
-# [update] - fun√ß√£o jf_urlformat foi atualizada para utilizar preg_replace
-# [update] - fun√ß√£o jf_monta_link, utilize 'true' para o formato de url amigavel
-# [update/install] - adiciona c√≥pia do arquivo thumb.php na pasta uploads
-# [update/install] - adiciona pasta apt_files ao plugin, esta pasta ser√° destinada a armazenar arquivo de configura√ß√£o dos aplicativos
+# [update] - funÁ„o jf_urlformat foi atualizada para utilizar preg_replace
+# [update] - funÁ„o jf_monta_link, utilize 'true' para o formato de url amigavel
+# [update/install] - adiciona cÛpia do arquivo thumb.php na pasta uploads
+# [update/install] - adiciona pasta apt_files ao plugin, esta pasta ser· destinada a armazenar arquivo de configuraÁ„o dos aplicativos
 
 -- 4.2.1 (10/03/2012)
-# [bug] - alterada a fun√ß√£o e alerta no Desktop
+# [bug] - alterada a funÁ„o e alerta no Desktop
 
 -- 4.2.0 (09/03/2012)
-# [update] - fun√ß√£o que adiciona item ao desktop
-# [js/del/update] - inserida a fun√ß√£o plg_load substituta da mLExectAjax que deixa de existir
+# [update] - funÁ„o que adiciona item ao desktop
+# [js/del/update] - inserida a funÁ„o plg_load substituta da mLExectAjax que deixa de existir
 # [del] - removida a biblioteca corner (jquery), utilize border-radius por css 
-# [add] - a fun√ß√£o app_bar foi convertida a uma api, a forma de utilizar continua a mesma
+# [add] - a funÁ„o app_bar foi convertida a uma api, a forma de utilizar continua a mesma
 
 -- 4.1.8 (09/03/2012)
 # [bug][API] - tiny_mce no plugin tinybrowser
 
 -- 4.1.7 (09/03/2012)
-# [bug/API/seguran√ßa] - na API tiny_mce no plugin tinybrowser
+# [bug/API/seguranÁa] - na API tiny_mce no plugin tinybrowser
 
 -- 4.1.6 (07/03/2012)
-# [bug] - acusa√ß√£o de erro na instala√ß√£o
-# [bug][API] - usar o bot√£o delete na API jfnav
+# [bug] - acusaÁ„o de erro na instalaÁ„o
+# [bug][API] - usar o bot„o delete na API jfnav

@@ -141,7 +141,7 @@ class navigi{
 		}
 		
 		$navigi['config'] = $this->config;
-		
+	
 		$navigi = serialize($navigi);
 		
 		$encriptado = jf_encode($_ll['user']['token'], $navigi);

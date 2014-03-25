@@ -16,7 +16,7 @@ $(function() {
 
 
 
-function navigi_start(){	
+function navigi_start(){
 	navigi_limpAllEvent();
 	
 	$('#navigi').html('<span class="load"><img src="api/navigi/img/load.gif" alt=""/></span>');
@@ -73,6 +73,18 @@ jQuery.fn.extend({
 				event.stopPropagation();
 			
 				navigi_apaga(id);
+			}
+		});
+		
+		
+		($(this).find('.navigi_bmod')).bind({			
+			click: function(event){
+				var href = $(this).attr('href');
+				var tamanho = $(this).attr('rel');				
+				tamanho = tamanho.split("x")
+				
+				$().jfbox({carrega: href, width: tamanho[0], height: tamanho[1]});
+				return false;
 			}
 		});
 		
@@ -170,6 +182,7 @@ $('html').jfkey('enter', function(){
 $('html').jfkey('esc', function(){	
 	navigi_limpAllEvent();
 });
+
 
 /***************************************			FUNÇÕES			***************************************/
 

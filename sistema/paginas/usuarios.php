@@ -38,10 +38,10 @@ if(!empty($_POST)){
 }
 
 if(empty($_GET['usuarios'])){
-	$botoes[] =	array('href' => $backReal, 'img' => $plgIcones.'br_prev.png', 'title' => $backNome);
-	$botoes[] =	array('href' => 'paginas/ajax.novo_usuario.php', 'img' => $plgIcones.'user.png', 'title' => 'Criar usuário', 'attr' => 'class="criar"');
+	$botoes[] =	array('href' => $backReal, 'img' => $_ll['tema']['icones'].'br_prev.png', 'title' => $backNome);
+	$botoes[] =	array('href' => 'paginas/ajax.novo_usuario.php', 'img' => $_ll['tema']['icones'].'user.png', 'title' => 'Criar usuário', 'attr' => 'class="criar"');
 } else {
-	$botoes[] =	array('href' => '?'.(isset($_GET['minhaconta']) ? 'desk' : 'usuarios') , 'img' => $plgIcones.'br_prev.png', 'title' => 'Voltar');
+	$botoes[] =	array('href' => '?'.(isset($_GET['minhaconta']) ? 'desk' : 'usuarios') , 'img' => $_ll['tema']['icones'].'br_prev.png', 'title' => 'Voltar');
 }
 
 echo app_bar('Painel de usuários', $botoes);

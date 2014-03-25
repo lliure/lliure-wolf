@@ -11,6 +11,8 @@
 */
 
 /* NLI (not logged in) */
+if(!file_exists("etc/bdconf.php"))
+	header('location: index.php;');
 
 require_once("etc/bdconf.php"); 
 require_once("includes/jf.funcoes.php"); 

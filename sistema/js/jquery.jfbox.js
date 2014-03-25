@@ -98,9 +98,7 @@ $(function(){
 			return true;
 		}
 	
-		function abreJfbox(){
-			
-			
+		function abreJfbox(){			
 			var scrollX = 0;
 			
 			if(options.height == 'auto') {

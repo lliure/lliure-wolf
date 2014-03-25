@@ -21,7 +21,7 @@ function navigi_tratamento($dados){
 
 	$configSel = 0;
 	
-	if($navigi['configSel']  != false)
+	if($navigi['configSel'] != false)
 		$configSel = $dados[$navigi['configSel']];
 		
 	$dados['coluna'] = $dados[$navigi['config'][$configSel]['coluna']];
@@ -49,7 +49,7 @@ function navigi_tratamento($dados){
 	
 	$per_ren = $navigi['rename'];
 	$per_del = $navigi['delete'];
-	
+		
 	if(isset($navigi['config'][$configSel]['rename']) && $navigi['config'][$configSel]['rename']){
 		$dados['rename'] = true; 
 		$per_ren = 1;
@@ -59,8 +59,13 @@ function navigi_tratamento($dados){
 		$dados['delete'] = true; 
 		$per_del = 1;
 	}
-	$dados['permicao'] = $per_ren.$per_del;
 	
+	if(isset($navigi['config'][$configSel]['botao'])){
+		$dados['botao'] = $navigi['config'][$configSel]['botao'];
+	}
+	
+	$dados['permicao'] = $per_ren.$per_del;
+		
 	return $dados;	
 }
 
@@ -75,6 +80,7 @@ $navigi['delete'] = ($navigi['delete'] ? 1 : 0);
 
 if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 	while($dados = mysql_fetch_assoc($query)){
+
 		$dados = navigi_tratamento($dados);
 		
 	
@@ -100,32 +106,59 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 		$ico = (isset($ico['ico']) ? true : false);
 	}
 	
+	// colspan
+	
+		
+	$tableColspan = 0;
+	$linhas = array();
+	
+	
+	while($dados = mysql_fetch_array($query)){
+		$dados['rename'] = null;
+		$dados['delete'] = null;
+		$dados['botoes'] = null;
+		
+		$dados = navigi_tratamento($dados);		
+		$colspan = 0;
+		
+		if($navigi['rename'] || $dados['rename']){
+			$dados['rename'] = '<td class="navigi_ren"><img src="api/navigi/img/rename.png"></td>';
+			$colspan++;
+		}
+		
+		if($navigi['delete'] || $dados['delete']){
+			$dados['delete'] = '<td class="navigi_del"><img src="api/navigi/img/trash.png"></td>';
+			$colspan++;
+		}
+		
+		if(isset($dados['botao'])){
+			$dados['botoes'] = '';
+			foreach($dados['botao'] as $key => $valor){
+				$dados['botoes'] .= '<td><a href="'.str_replace('#ID', $dados['id'], $valor['link']).'" '.(isset($valor['modal']) ? 'class="navigi_bmod" rel="'.$valor['modal'].'"' : '').'><img src="'.$valor['ico'].'"></a></td>'."\n";
+				$colspan++;
+			}
+		}
+		
+		/* Para calcular o colspan dinâmico */
+		$dados['colspan'] = $colspan;		
+		$tableColspan = ($tableColspan > $colspan ? $tableColspan : $colspan);
+		
+		$linhas[] = $dados;
+	}
+		
 	echo '<table class="table navigi_list">'
 			.'<tr>'
 				.($ico == true ? '<th class="ico"></th>' : '' )
 				.'<th class="cod">Cod.</th>'
-				.'<th></th>'
-				.'<th class="ico"></th>'
-				.'<th class="ico"></th>';
-		
-		while($dados = mysql_fetch_array($query)){
-			$dados = navigi_tratamento($dados);
-			
-			$colspan = 3;
-			$rename = null;
-			$delete = null;
-			
-			if($navigi['rename'] || $dados['rename']){
-				$rename = '<td class="navigi_ren"><img src="api/navigi/img/rename.png"></td>';
-				$colspan--;
-			}
-			
-			if($navigi['delete'] || $dados['delete']){
-				$delete = '<td class="navigi_del"><img src="api/navigi/img/trash.png"></td>';
-				$colspan--;
-			}
-			
-			echo '<tr class="navigi_tr" '
+				.'<th></th>';
+	/* Para criar no top os th necessários para exibição dos botões a baixo */			
+	for($i = 1; $i <= $tableColspan; $i++)
+		echo 	 '<th class="ico"></th>';
+	
+	echo	 '</tr>';
+	
+	foreach($linhas as $chave => $dados){
+		echo '<tr class="navigi_tr" '
 					.'id="item_'.$dados['id'].'" ' 
 					.'as_id = "'.$dados['as_id'].'" ' 
 					.'dclick="'.$dados['click'].'" '
@@ -136,15 +169,17 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 					.($ico == true ? '<td><img src="'.$dados['ico'].'" alt="'.$dados['coluna'].'" /></td>' : '' )
 					
 					.'<td>'.str_pad($dados['as_id'], 7, 0, STR_PAD_LEFT).'</td>'
-					.'<td colspan="'.$colspan.'"><div class="navigi_nome">'.$dados['coluna'].'</div></td>'
-			
-					.$rename
-					.$delete
+					.'<td colspan="'.($tableColspan-$dados['colspan']).'"><div class="navigi_nome">'.$dados['coluna'].'</div></td>'
+					
+					.$dados['botoes']
+					
+					.$dados['rename']
+					.$dados['delete']
 
 				.'</tr>';
-		}
+	}
 		
-		echo '</table>';
+	echo '</table>';
 		
 }
 ?>

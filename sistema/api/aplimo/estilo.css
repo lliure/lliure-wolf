@@ -216,7 +216,6 @@
 					}
 				
 					
-					
 	/***/
 	
 		.corpo .menu ul li.aktivigi{
@@ -228,6 +227,15 @@
 			.corpo .menu ul li.aktivigi a{
 				color: inherit;
 				}
+				
+				
+/*--------------*/
+.corpo h3{
+	font-weight: bold;
+	font-size: 13px;
+	color: #666666;
+	margin-bottom: 10px;
+	}
 
 
 /**************************************************			HC MENU		**/
@@ -262,6 +270,7 @@
 		
 	.aplm_botao.alg_right{
 		float: right;
+		margin-left: 10px;
 		}
 	
 	.aplm_botao:hover{

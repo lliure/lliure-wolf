@@ -92,22 +92,85 @@ class aplimo{
 	function sub_menu_item($titulo, $url, $mark = null){
 		
 		$this->menu[$this->smalt]['link'][] = array(
-						'titu' => $titulo,
-						'link' => $url,
-						'mark' => (!empty($mark) ? explode(',', $mark.','.$url)  : array($url))
-						);
+					'titu' => $titulo,
+					'link' => $url,
+					'mark' => (!empty($mark) ? explode(',', $mark.','.$url)  : array($url))
+					);
 	}
 	
-	function hc_menu($texto, $mod, $tipo = 'botao', $orientacao = 'right', $class = null, $compl = null){
-		$this->hc_menu[] = array(
-						'texto' => $texto,
-						'mod' => $mod,
-						'tipo' => $tipo,
-						'orientacao' => $orientacao,
-						'class' => $class,
-						'compl' => $compl
-						);
-		return array_shift(array_keys($this->menu));
+	function hc_menu($texto, $mod, $tipo = 'botao', $orientacao = null, $class = null, $compl = null){
+		$name = null;
+		$mod = null;
+		
+		switch($tipo){
+		case 'botao':
+			$mod = '"url": "'.$mod.'",';
+			break;
+		
+		case 'input':
+			$name = '"name": "'.$class.'",';
+		case 'botao_js':
+			$mod = '"js": "'.$mod.'",';
+			break;
+		}
+		
+		$data = '{	"texto": "'.$texto.'", 
+					'.$mod.$name.'
+					"orientacao": "'.$orientacao.'",
+					"adjunct": "'.$class.'"
+				}';
+
+		
+		$this->hc_menu_item($tipo, $data);
+	}
+	
+	function hc_menu_item($type = 'a', $data = null){
+			
+			/*	$data = '{"texto": "teste", "url": "http://google.com",[...] "adjunct":5}';	*/
+			
+			$data = json_decode($data, true);
+			
+			$this->hc_menu[] = array(
+					'tipo' => $type,
+					'texto' => $data['texto'],
+					'url' => isset($data['url']) ? $data['url'] : null,
+					'align' => isset($data['align']) ? $data['align'] : 'right',
+					'class' => isset($data['class']) ? $data['class'] : null,
+					'adjunct' => isset($data['adjunct']) ? $data['adjunct'] : null,
+					'name' => isset($data['name']) ? $data['name'] : null,
+					'js' => isset($data['js']) ? $data['js'] : null
+					);
+	
+			$tmp_menu = array_keys($this->menu);				
+			return array_shift($tmp_menu);
+		}
+		
+	function monta_hc_menu(){
+	
+		echo '<div class="aplm_subheader">';		
+		
+		foreach($this->hc_menu as $key => $valor){
+			switch($valor['tipo']){
+				case 'botao':
+				case 'a':
+					echo '<a href="'.$valor['url'].'" class="alg_'.$valor['align'].' aplm_botao '.$valor['class'].'">'.$valor['texto'].'</a>';
+					break;
+					
+				case 'botao_js':
+					echo '<a href="javascript: void(0)" '.$valor['compl'].' class="alg_'.$valor['align'].' aplm_botao '.$valor['class'].'">'.$valor['texto'].'</a>';
+					
+					$this->js .= $valor['js'];
+					break;
+					
+				case 'input':
+					echo '<form action="'.$valor['url'].'" autocomplete="off" method="post" class="alg_'.$valor['align'].'  '.$valor['class'].' aplm_input"><input class=" aplm_input_'.$key.'" rel="'.$valor['texto'].'" name="'.$valor['name'].'" value="'.(isset($_GET[$valor['name']]) ? $_GET[$valor['name']] : '').'"/></form>';
+					
+					$this->js .= $valor['js'];
+					$this->js .= '$(".aplm_input_'.$key.'").jf_inputext();';
+					break;
+			}
+		}
+		echo '</div>';	
 	}
 	
 	function header(){
@@ -115,8 +178,9 @@ class aplimo{
 		
 		$aktivigi_class = ' aktivigi ll_border-color ll_color';
 		
-		 if(!isset($_GET['apm'])){
-			$class = array_shift(array_keys($this->menu));		
+		 if(!isset($_GET['apm'])){			
+			$tmp_menu = array_keys($this->menu);
+			$class = array_shift($tmp_menu);				
 			
 			$class_li[$class] = $aktivigi_class;
 			
@@ -152,8 +216,6 @@ class aplimo{
 				
 		$class_sub = null;
 		$class_li = null;
-		
-
 		
 		foreach($this->menu as $key => $valor){
 			if(is_array($valor['link'])){
@@ -238,34 +300,8 @@ class aplimo{
 			<div class="centro">
 				<div class="align">			
 					<?php
-					if(!empty($this->hc_menu)){					
-						echo '<div class="aplm_subheader">';
-
-						foreach($this->hc_menu as $key => $valor){
-							switch($valor['tipo']){
-								case 'botao':
-									echo '<a href="'.$valor['mod'].'" class="alg_'.$valor['orientacao'].' aplm_botao '.$valor['class'].'">'.$valor['texto'].'</a>';
-									break;
-									
-								case 'botao_js':
-									echo '<a href="javascript: void(0)" '.$valor['compl'].' class="alg_'.$valor['orientacao'].' aplm_botao '.$valor['class'].'">'.$valor['texto'].'</a>';
-									
-									$this->js .= $valor['mod'];
-									break;
-									
-								case 'input':
-									echo '<form action="'.$valor['compl'].'" method="post" class="alg_'.$valor['orientacao'].'  '.$valor['class'].' aplm_input"><input class=" aplm_input_'.$key.'" rel="'.$valor['texto'].'" name="'.$valor['class'].'" value="'.(isset($_GET[$valor['class']]) ? $_GET[$valor['class']] : '').'"/></form>';
-									
-									$this->js .= $valor['mod'];
-									$this->js .= '$(".aplm_input_'.$key.'").jf_inputext();';
-									break;
-								
-							}
-						}					
-							
-						echo '</div>';
-					}
-					
+					if(!empty($this->hc_menu))		/**************************		Monta menu superior	**/		
+						$this->monta_hc_menu();					
 							
 					$apm_load  = 'api/aplimo/ne_trovi.php';
 					

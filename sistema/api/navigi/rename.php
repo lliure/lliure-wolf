@@ -23,11 +23,10 @@ if($navigi['rename'] || (isset($navigi['config'][$seletor]['rename']) && $navigi
 	$_POST = jf_iconv2($_POST);
 			
 	$tabela = $navigi['config'][$seletor]['tabela'];
-	$texto[$navigi['config'][$seletor]['coluna']] = mysql_real_escape_string($_POST['texto']);
+	$dados[$navigi['config'][$seletor]['coluna']] = mysql_real_escape_string($_POST['texto']);
 	$id = mysql_real_escape_string($_POST['id']);
 
-
-	jf_update($tabela, $texto, array('id' => $id));
+	jf_update($tabela, $dados, array('id' => $id));
 } else{
 	echo 403;
 }

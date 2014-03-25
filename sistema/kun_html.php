@@ -45,7 +45,7 @@
 			<?php
 			if(!empty($_GET) &&  ll_tsecuryt()){
 				$keyGet = array_keys($_GET);
-				if(($keyGet['0'] == 'plugin' || $keyGet['0'] == 'app') && (!empty($_GET['plugin']) || !empty($_GET['app']))){
+				if($keyGet['0'] == 'app' && !empty($_GET['app'])){
 					?>
 					<a href="javascript: void(0);" class="addDesktop" title="Adicionar essa página ao desktop"><img src="imagens/layout/add_desktop.png" alt="" /></a>
 					<?php 
@@ -72,24 +72,18 @@
 				$consulta = "select b.* from 
 							".PREFIXO."lliure_start as a
 							
-							left join ".PREFIXO."lliure_plugins as b
+							left join ".PREFIXO."lliure_apps as b
 							on a.idPlug = b.id	";
 				$query = mysql_query($consulta);
 				
 				?>
-				<div class="start" id="menu_rapido"  <?php echo mysql_num_rows($query) == 0 ? 'style="display: none;"' : '' ;?>>
+				<div class="start" id="menu_rapido"  <?php echo (mysql_num_rows($query) == 0 ? 'style="display: none;"' : '' );?>>
 					<div class="width">
 						<span class="icone"></span>
 						<ul id="appRapido">
 							<?php
-							while($dados = mysql_fetch_array($query)){
-								
+							while($dados = mysql_fetch_array($query)){								
 								$icone = 'app/'.$dados['pasta'].'/sys/ico.png';
-			
-								/***/
-								if(!file_exists($icone))
-									$icone = 'plugins/'.$dados['pasta'].'/sys/ico.png';			
-								/***/
 								
 								?>
 								<li id="appR-<?php echo $dados['id']?>">

@@ -48,7 +48,6 @@ function ll_dir(){
 
 	
 function ll_historico($mods = null, $modsQnt = 1){
-
 	global $backReal;
 	global $backNome ;
 

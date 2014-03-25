@@ -29,12 +29,14 @@ function jf_file_get_contents($url, $timeout = 10) {
 }
 
 //	Anti injection
+//	Anti injection
 function jf_anti_injection($sql) {
 	if(is_array($sql)){
 		foreach($sql as $chave => $valor)
 			$sql[$chave] = jf_anti_injection($valor);
 	} else {
-		$sql = preg_replace(sql_regcase("/(%0a|%0d|Content-Type:|bcc:|to:|cc:|Autoreply:|from|select|insert|delete|where|drop table|show tables|\\\\)/"), "", $sql);
+		$sql = get_magic_quotes_gpc() ? stripslashes($sql) : $sql;
+        $sql = function_exists('mysql_real_escape_string') ? mysql_real_escape_string($sql) : mysql_escape_string($sql);
 		$sql = trim($sql); # Remove espaços vazios.
 		$sql = addslashes($sql); # Adiciona barras invertidas à uma string.
 	}
@@ -259,7 +261,6 @@ function jf_delete($tabela, $alter){
 
 //	Gerencia o array $haystack, e retira o $needle (pode ser um array também) caso exista em $haystack e retorna em modo de link
 define("JF_URL_AMIGAVEL", "URL_AMIGAVEL");
-
 function jf_monta_link($haystack, $needle = null, $amigavel = false){
 	/*
 	 * caso passe a constante JF_URL_AMIGAVEL para $amigavel retorna o link em formato de url amigável
