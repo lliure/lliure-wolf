@@ -39,19 +39,18 @@ echo app_bar('Painel de controle', $botoes);
 					<a href="" onclick="abrepopup();"><span>Terminal</span></a>
 				</div>
 			</div>
-			
-						
-			<script>
-			function abrepopup(){
-				var width = 725;
-				var height = 500;
 
-				var left = 99;
-				var top = 99;
-				window.open('opt/terminal/terminal.php','Console', 'width='+width+', height='+height+', top='+top+', left='+left+', scrollbars=yes, status=no, toolbar=no, location=no, directories=no, menubar=no, resizable=no, fullscreen=yes');
-				
-				return false;
-			}
+			<script>
+				function abrepopup(){
+					var width = 725;
+					var height = 500;
+
+					var left = 99;
+					var top = 99;
+					window.open('opt/terminal/terminal.php','Console', 'width='+width+', height='+height+', top='+top+', left='+left+', scrollbars=yes, status=no, toolbar=no, location=no, directories=no, menubar=no, resizable=no, fullscreen=yes');
+					
+					return false;
+				}
 			</script>
 			<?php
 

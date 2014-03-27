@@ -49,7 +49,7 @@ $_ll['app']['pagina'] = "paginas/permissao.php";
 $get = array_keys($_GET);
 switch(isset($get[0]) ? $get[0] : 'desk' ){
 	case 'app':
-		if(!empty($_GET['app']) 
+		if(!empty($_GET['app'])
 			&& (file_exists('app/'.$_GET['app']))){
 			
 			$_ll['app']['home'] = 'index.php?app='.$_GET['app'];
@@ -95,14 +95,14 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 		$_GET['usuarios'] = $_ll['user']['id'];
 		$_ll['css'][] = 'css/usuarios.css';
 		
-		$_ll['app']['header'] = 'paginas/usuarios.header.php';
-		$_ll['app']['pagina'] = 'paginas/usuarios.php';
+		$_ll['app']['header'] = 'opt/user/usuarios.header.php';
+		$_ll['app']['pagina'] = 'opt/user/usuarios.php';
 		break;
 
 	case 'usuarios':
 		if(ll_tsecuryt('admin')){
-			$_ll['app']['pagina'] = 'paginas/usuarios.php';
-			$_ll['app']['header'] = 'paginas/usuarios.header.php';
+			$_ll['app']['pagina'] = 'opt/user/usuarios.php';
+			$_ll['app']['header'] = 'opt/user/usuarios.header.php';
 			
 			$_ll['css'][] = 'css/usuarios.css';
 		}
@@ -120,8 +120,8 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 		if(isset($_ll['conf']->desktop->$_ll['user']['grupo']))
 			header('location: '.$_ll['conf']->desktop->$_ll['user']['grupo']);
 			
-		$_ll['app']['pagina'] = "paginas/desktop.php";
-		$_ll['app']['header'] = 'paginas/desktop.header.php';
+		$_ll['app']['pagina'] = "opt/desktop/desktop.php";
+		$_ll['app']['header'] = 'opt/desktop/desktop.header.php';
 		break;
 
 	default:

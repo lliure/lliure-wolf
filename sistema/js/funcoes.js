@@ -143,5 +143,5 @@ function ll_addDesk(){
 	var	nome = prompt("Qual será a identificação dessa página em seu desktop?");
 	
 	if (nome != null && nome != "")
-		ll_load('includes/desktop.php', {nome: nome});
+		ll_load('opt/desktop/sen_html.php?ac=addDesktop', {nome: nome});
 }

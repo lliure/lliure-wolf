@@ -311,7 +311,7 @@ class aplimo{
 						$apm_load = $_ll['app']['pasta'] . $_GET['apm'] . '/'. $_GET['sapm'] .'/' . $_GET['sapm'] . '.php';
 					elseif(isset($_GET['apm']) && file_exists($_ll['app']['pasta'] . $_GET['apm'] . '/' . $_GET['apm'] . '.php'))
 						$apm_load = $_ll['app']['pasta'] . $_GET['apm'] . '/' . $_GET['apm'] . '.php';
-					
+				
 					require_once($apm_load);
 					?>
 

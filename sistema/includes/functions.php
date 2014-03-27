@@ -172,11 +172,15 @@ function ll_tsecuryt($grupo = null){
 	if(ll_tsecuryt()) // se estiver logado como desenvolvedor irá retornar true
 	if(ll_tsecuryt('admin')) // se estiver logado como admin irá retornar true
 	if(ll_tsecuryt('user')) // se estiver logado como user irá retornar true
-	if(ll_tsecuryt(array('user', 'admin'))) ou if(ll_tsecuryt('user,admin')) // se estiver logado como user ou como admin irá retornar true
+	if(ll_tsecuryt(array('user', 'admin'))) ou if(ll_tsecuryt('user,admin')) ou if(ll_tsecuryt('user','admin'))// se estiver logado como user ou como admin irá retornar true
 	*/
 	
-	if(!is_array($grupo) && strpos($grupo, ','))
-		$grupo = explode(',', $grupo);
+	if(func_num_args() > 1){
+		$grupo = func_get_args();
+	} else {
+		if(!is_array($grupo) && strpos($grupo, ','))
+			$grupo = explode(',', $grupo);
+	}
 	
 	$grupo_user = $_SESSION['logado']['grupo'];
 	switch($grupo_user){

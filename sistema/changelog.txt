@@ -6,6 +6,11 @@ Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure),  
 #[update] - Possibilidade de passar o link vazio para api Navigi na exibição lista
 #[bug] - Correções na api Aplimo
 #[update] - Alteração da tabela ll_lliure_plugins para ll_lliure_apps
+#[update] - na função ll_tsecuryt() para aceitar argmentos separado por virgula ex: ll_tsecuryt('user','admin')
+#[update] - alterado funcionamento da ferramenta de criar atalhos, foi adicionada com um opt
+#[update] - desktop foi alterado para ser um opt
+#[update] - gerenciador de usuário foi alterado para ser um opt
+
 
 -- 5.0 (Pasto Alemão) (21/07/2013)
 #[update] - Nova API integrada ao core "aplimo", uma APLI para criação de aplicativos de uma forma padronizada
