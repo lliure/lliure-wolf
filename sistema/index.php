@@ -10,6 +10,7 @@
 *
 */
 
+require_once './sys/autoload/autoload.php';
 
 if(!file_exists("etc/bdconf.php"))
 	header('location: install/index.php');
@@ -90,6 +91,24 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 		}
 		
 		break;
+        
+    case 'opt':
+        
+        if(!empty($_GET['opt']) && (is_dir(($dir = 'opt/'.$_GET['opt'])))){
+			
+			$_ll['app']['home'] = 'index.php?opt='.$_GET['opt'];
+			$_ll['app']['onserver'] = 'onserver.php?opt='.$_GET['opt'];
+			$_ll['app']['sen_html'] = 'sen_html.php?opt='.$_GET['opt'];
+			$_ll['app']['pasta'] = $dir. '/';
+            
+            $_ll['app']['pagina'] = $_ll['app']['pasta'].'start.php';
+
+            if(file_exists($_ll['app']['pasta'].'header.php'))
+                $_ll['app']['header'] = $_ll['app']['pasta'].'header.php';	
+            
+        }
+        
+    break;
 
 	case 'minhaconta':
 		$_GET['usuarios'] = $_ll['user']['id'];
@@ -129,56 +148,76 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 }
 /*****/
 
+ob_start();
 
-/*******************************		On Server		*/
+    layout::start();
 
-if($_ll['mode_operacion'] == 'onserver'){
-	
-	require_once($_ll['app']['pasta'].'/onserver.php');	
-	die();
-}
+    /*******************************		On Server		*/
 
-/*******************************		Sen HTML		*/
+    if($_ll['mode_operacion'] == 'onserver'){
 
-if($_ll['mode_operacion'] == 'sen_html'){
-	require_once($_ll['app']['pasta'].'/sen_html.php');	
-	die();
-}
+        require_once($_ll['app']['pasta'].'/onserver.php');
+        echo ob_get_clean();
+        die();
+    }
 
-/****/
+    /*******************************		Sen HTML		*/
 
-lliure::loadJs('js/jquery.js');
-lliure::loadJs('api/tiny_mce/tiny_mce.js');
-lliure::loadJs('js/jquery-ui.js');
-lliure::loadJs('js/funcoes.js');
-lliure::loadJs('js/jquery.jfkey.js');
-lliure::loadJs('js/jquery.easing.js');
-lliure::loadJs('js/jquery.jfbox.js');
+    if($_ll['mode_operacion'] == 'sen_html'){
+        require_once($_ll['app']['pasta'].'/sen_html.php');	
+        echo ob_get_clean();
+        die();
+    }
 
-lliure::loadCss('css/base.css');
-lliure::loadCss('css/principal.css');
-lliure::loadCss('css/paginas.css');
-lliure::loadCss('css/predifinidos.css');
-lliure::loadCss('css/jfbox.css');
+    /****/
+    
+    lliure::loadJs('js/jquery.js');
+    lliure::loadJs('api/tiny_mce/tiny_mce.js');
+    lliure::loadJs('js/jquery-ui.js');
+    lliure::loadJs('js/funcoes.js');
+    lliure::loadJs('js/jquery.jfkey.js');
+    lliure::loadJs('js/jquery.easing.js');
+    lliure::loadJs('js/jquery.jfbox.js');
 
-$apigem = new api; 
-$apigem->iniciaApi('appbar');
-$apigem->iniciaApi('fileup');
+    lliure::loadCss('css/base.css');
+    lliure::loadCss('css/principal.css');
+    lliure::loadCss('css/paginas.css');
+    lliure::loadCss('css/predifinidos.css');
+    lliure::loadCss('css/jfbox.css');
 
-if($_ll['app']['header'] != null)
-	require_once($_ll['app']['header']);
+    $apigem = new api; 
+    $apigem->iniciaApi('appbar');
+    $apigem->iniciaApi('fileup');
 
-//Inicia o histórico
-ll_historico('inicia');
+    if($_ll['app']['header'] != null)
+        require_once($_ll['app']['header']);
 
-//Inicia o Tema atual 	
+    //Inicia o histórico
+    ll_historico('inicia');
 
-if(($ll_tema = @simplexml_load_file('temas/'.$_ll['user']['tema'].'/dados.ll'))){
-	$_ll['tema'] = (array) $ll_tema;
-	$ll_icones = $_ll['tema']['icones'];
-	$plgIcones = $ll_icones;
-}
-// 
+    //Inicia o Tema atual 	
+
+    if(($ll_tema = @simplexml_load_file('temas/'.$_ll['user']['tema'].'/dados.ll'))){
+        $_ll['tema'] = (array) $ll_tema;
+        $ll_icones = $_ll['tema']['icones'];
+        $plgIcones = $ll_icones;
+    }
+
+    layout::addDocHead('temas/'. $_ll['tema']['id']. '/estilo.css');
+    
+	if (isset($_ll['app']['pasta']) 
+    && (!empty($_ll['app']['pasta']))
+    && (file_exists($_ll['app']['pasta'].'estilo.css')))
+        layout::addDocHead($_ll['app']['pasta'].'estilo.css');
+
+    $carrega = 'opt/stirpanelo/ne_trovi.php';
+    if(file_exists($_ll['app']['pagina']))
+        $carrega = $_ll['app']['pagina'];
+
+    require_once($carrega);
+    
+$conteudo = ob_get_clean();
+layout::content($conteudo);
 
 require_once('kun_html.php');
 ?>

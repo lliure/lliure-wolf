@@ -110,7 +110,7 @@ case 'instalar':
 	$erro = false;
 	
 	if(!file_exists('../etc/bdconf.php')){				
-		if(empty($_POST['host']) || empty($_POST['login']) || empty($_POST['tabela']) || !isset($_POST['uploads']) || !isset($_POST['etc']) || jf_token($_POST['token']) != true){
+		if(empty($_POST['host']) || empty($_POST['login']) || empty($_POST['tabela']) || /*!isset($_POST['uploads']) ||*/ !isset($_POST['etc']) || jf_token($_POST['token']) != true){
 			echo 'Por favor preencha todos os campos, <a href="index.php">voltar</a>';
 			break;
 		}

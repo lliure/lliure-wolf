@@ -10,11 +10,14 @@
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
-class lliure {
+class lliure extends layout{
 	public static $apps = array();
 		
 	public static function loadCss($css = null, $ecoa=true){
-		global $_ll;
+		
+        self::addDocHead($css);
+        
+        /*global $_ll;
 		
 		if(!empty($css)){
 			if(!in_array($css, $_ll['css']))
@@ -30,11 +33,14 @@ class lliure {
 				echo $ret;
 			else
 				return $ret;
-		}
+		}*/
 	}
 	
 	public static function loadJs($js = null, $ecoa = true){
-		global $_ll;
+        
+        self::addDocHead($js);
+        
+		/*global $_ll;
 		
 		if(!empty($js)){
 			if(!in_array($js, $_ll['js']))
@@ -49,7 +55,7 @@ class lliure {
 				echo $ret;
 			else
 				return $ret;
-		}
+		}*/
 	}
 	
 	public static function iniciaApi($api){

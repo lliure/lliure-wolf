@@ -33,10 +33,20 @@ if(isset($_GET['d'])){
 if(isset($_GET['a'])){
 	jf_insert(PREFIXO.'lliure_start', array('idPlug' => $_GET['a']));
 	
-	$dados = mysql_fetch_array(mysql_query('select * 
-						from '.PREFIXO.'lliure_plugins 
-						where id = "'.$_GET['a'].'"
-						limit 1'));
+	$dados = mysql_fetch_array(mysql_query('
+        select 
+            * 
+
+        from 
+            '.PREFIXO.'lliure_apps
+
+        where 
+            id = "'.$_GET['a'].'"
+
+        limit 
+            1
+    '));
+    
 	?>
 	<script type="text/javascript">
 		$(function(){
@@ -54,20 +64,25 @@ if(isset($_GET['a'])){
 <h2>Na Barra</h2>
 <div class="ARTem ARbox">
 	<?php
-	$query = mysql_query('select b.*
-						from '.PREFIXO.'lliure_start a
-						
-						left join '.PREFIXO.'lliure_plugins b
-						on b.id = a.idPlug
-						order by b.nome');
+	$query = mysql_query('
+        select 
+            b.*
+            
+        from 
+            '.PREFIXO.'lliure_start a
+
+            left join '.PREFIXO.'lliure_apps b
+                on b.id = a.idPlug
+                
+        order 
+            by b.nome
+    ');
 	if(mysql_num_rows($query) > 0){
 		while($dados = mysql_fetch_array($query)){
 			$icone = 'app/'.$dados['pasta'].'/sys/ico.png';
 			
-			/***/
-			if(!file_exists('../../'.$icone))
-				$icone = 'plugins/'.$dados['pasta'].'/sys/ico.png';			
-			/***/
+            if(!file_exists($icone))
+                $icone = 'opt/stirpanelo/icon_defaulto.png';
 			
 			?>
 			<span class="app">
@@ -88,18 +103,34 @@ if(isset($_GET['a'])){
 <h2>Disponíveis</h2>
 <div class="ARTem ARbox">
 	<?php
-	$query = mysql_query('select * 
-						from '.PREFIXO.'lliure_plugins 
-						where id not in((select idPlug from '.PREFIXO.'lliure_start))
-						order by nome');
+	$query = mysql_query('
+        select 
+            * 
+		
+        from 
+            '.PREFIXO.'lliure_apps
+        
+		where 
+            id not in((
+            
+                select 
+                    idPlug 
+                    
+                from 
+                    '.PREFIXO.'lliure_start
+
+            ))
+                
+		order 
+            by nome
+    ');
 	if(mysql_num_rows($query) > 0){
 		while($dados = mysql_fetch_array($query)){
 			$icone = 'app/'.$dados['pasta'].'/sys/ico.png';
 			
-			/***/
-			if(!file_exists('../../'.$icone))
-				$icone = 'plugins/'.$dados['pasta'].'/sys/ico.png';			
-			/***/
+            if(!file_exists($icone))
+                $icone = 'opt/stirpanelo/icon_defaulto.png';
+            
 			?>
 			<span class="app">
 				<img src="<?php echo $icone;?>" alt="" />
