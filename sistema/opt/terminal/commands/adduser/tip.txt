@@ -1,1 +1,0 @@
-﻿Adiciona um usuário. Parâmetros: [login]

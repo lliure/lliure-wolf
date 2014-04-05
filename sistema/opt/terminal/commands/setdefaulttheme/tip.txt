@@ -1,1 +1,0 @@
-Altera o tema padrão do painel.Parametros [tema] [[-safe] Cria uma cópia de segurança antes de realizar as alterações]
