@@ -1,0 +1,438 @@
+/**
+*
+* lliure WAP
+*
+* @Versão 6.0
+* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
+* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
+* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
+input.edna{
+	padding: 1px 0;
+	font-size: 9px;
+	width: 100%;
+	text-align: center;
+	}
+		
+div.allhome{
+	z-index: 4;
+	position: absolute;
+	left: 0;
+	height: 300px;
+	width: 100%;
+	background: #f00;
+	}	 
+		
+div.boxCenter{
+	width: 600px;
+	margin: 0 auto;
+	}
+
+div.boxCenter900{
+	width: 960px;
+	margin: 0 auto;
+	}
+	
+	
+/**********************			SUB			**********************/
+div.subBar{
+	text-align: right;
+	clear: both;
+	}
+	
+.link {
+	width: auto;
+	height: auto;
+	background: none;
+	cursor: pointer;
+	margin-left: 2px;
+	}
+	
+a.link{
+	margin: 0 4px;
+	}
+
+/**********************			FORM			**********************/
+form.form{
+	float: left;
+	width: 100%;
+	font-size: 1em; 
+	}
+	
+form.form fieldset{
+	clear: both;
+	}
+
+	
+	form.form fieldset legend{
+		font-size: 14px;
+		margin-bottom: 10px;
+		font-weight: bold;
+		color: #444;
+		}
+
+	form.form fieldset div {
+		margin-bottom: 20px;
+		display: block;
+		clear: both;
+		}
+
+		form.form fieldset div > table{
+			border-collapse: separate;
+			border-spacing: 5px 0px;			
+			/*margin: 0 -11px 0 -5px;*/
+			width: 100%;
+			}
+			
+			form.form fieldset div > table tbody{
+				width: 100%;
+				}
+
+				form.form fieldset div > table tbody tr{
+					width: 100%;
+					}
+					
+					form.form fieldset div > table tbody tr td{
+						vertical-align: top;
+						width: auto;
+						}
+			
+		form.form fieldset div label{
+			float: none;
+			margin-bottom: 4px;
+			color: #555;
+			font-size: 1em;
+			display: block;
+			}
+			
+		form.form fieldset div label.required{
+			font-weight: bold;
+			}
+			
+		form.form fieldset div label.error{
+			font-size: 10px;
+			margin-top: 4px;
+			color: #999;
+			}
+				
+		
+		form.form fieldset div input, 
+		form.form fieldset div textarea, 
+		form.form fieldset div select{
+			display: block;
+			float: none;
+			border: 1px solid #CCC;
+			border-color: #C0C0C0 #D9D9D9 #D9D9D9;
+			width: 100%;
+			padding: 0 6px;
+			height: 30px;
+			color: #666;
+			border-radius: 3px;
+			background: #fff;
+			font-size: 1em;
+			
+			box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			}
+			
+		form.form fieldset div textarea{
+			min-height: 100px;
+			max-height: 150px;
+						
+			width: 100%;
+			min-width: 100%;
+			max-width: 100px;
+			}
+			
+		form.form fieldset div input:focus,
+		form.form fieldset div textarea:focus, 
+		form.form fieldset div select:focus{
+			box-shadow: 0px 0px 3px #ccc;
+			}
+		
+		form.form fieldset div input.error,
+		form.form fieldset div textarea.error,
+		form.form div fieldset select.error{
+			border-color: #777;
+			}
+		
+		 form.form fieldset div select{
+			width: 100%;
+			padding: 0;
+			padding: 6px 0; 
+			}	
+		
+			form.form fieldset div select option{
+				padding: 4px 4px;
+				background: #eee;
+				}
+
+		form.form fieldset div input.inatv,
+		form.form div fieldset textarea.inatv,
+		form.form div fieldset select.inatv{
+			background: #e7e7e7;
+			color: #999;
+			}
+			
+					
+		form.form fieldset div span{
+			float: none;
+			clear: both;
+			display: block;
+			margin: 2px 0 3px;
+			}
+		
+		form.form fieldset div span.ex{			
+			margin-top: 2px;
+			padding: 5px 8px;
+			background: #e7e7e7;
+			border-bottom: 1px solid #ddd;			
+			width: 100%;
+			color: #aaa;
+			font-size: 10px;
+			border-radius: 0 0 5px 5px;
+			
+			box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+			}
+			
+			form.form fieldset div span label{
+				font-weight: normal;
+				display: inline;
+				float: none;
+				}
+				
+				form.form fieldset div span label input{
+					width: 16px;
+					vertical-align: text-bottom;
+					display: inline;
+					float: none;
+					margin: 0;
+					}
+
+			
+	form.form div.label textarea.editor{
+		height: 500px;
+		}
+		
+	
+	.mceEditor{
+		display: block;
+		margin-right: -6px;
+		}	
+
+form.form a.a{
+	float: right;
+	margin: 10px;
+	margin-top: 0;
+	}
+
+form.form div.botoes {
+	margin-top: -15px;
+	height: 31px;
+	}
+
+	form.form div.botoes button,
+	form.form div.botoes a{
+		font-size: 0.916em;		
+		border-radius: 3px;
+		line-height: 30px;
+		height: 30px;
+		padding: 0 1.2em;
+		margin: 0;
+		margin-right: 3px;
+		font-weight: bold;
+		
+		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;	
+		display: inline-block; 	
+		}
+		
+	form.form div.botoes button:hover,
+	form.form div.botoes a:hover{
+		text-decoration: none;
+		}
+		
+		
+	/******		COMUM	******/
+	form.form div.botoes button,
+	form.form div.botoes a{
+		background-image: -moz-linear-gradient(center top , #F5F5F5, #F1F1F1);
+		background-color: #F5F5F5;
+		border: 1px solid #ccc;
+		color: #444444;
+		}
+		
+	form.form div.botoes button:hover,
+	form.form div.botoes a:hover{
+		border-color: #888;
+		box-shadow: 0 0 2px #ddd;
+		}
+		
+	/******		COMFIRM	******/
+	form.form div.botoes button.confirm,
+	form.form div.botoes a.confirm{
+		background-image: -moz-linear-gradient(center top, #4D90FE, #4787ED);
+		background-color: #4D90FE;
+		border: 1px solid #3079ED;
+		color: #fff;
+		}
+		
+	form.form div.botoes button.confirm:hover,
+	form.form div.botoes a.confirm:hover{
+	background-image: -moz-linear-gradient(center top, #4D90FE, #357e8);
+		border-color: #2f5bb7;
+		box-shadow: 0 0 2px #ddd;
+		}
+
+/*************		HORIZONTAL		*************/
+form.form.hrt fieldset{	
+	width: auto;
+	float: left;
+	clear: none;
+	}
+
+form.form.hrt fieldset div {
+	width: auto;
+	float: left;
+	clear: none;
+	margin-right: 10px;
+	}
+	
+form.form.hrt div.botoes{
+	width: auto;
+	float: left;
+	clear: none;
+	margin-top: 2px;
+	}
+
+/**********************			MENU SUPERIOR		**********************/
+.menuSub{
+	display: block;
+	background: url(../imagens/layout/topmenu.png) repeat-x;
+	margin: 0 -10px;
+	padding: 0 30px;
+	height: 45px;
+	}
+	
+.menuSub a, .menuSub button{
+	float: left;
+	margin: 3px 5px 0px 5px;
+	padding: 6px 7px 9px 7px;
+	}
+	
+.menuSub a img, .menuSub button img{
+	float: left;
+	margin-top: 4px;
+	}
+.menuSub a span, .menuSub button span {
+	float: left;
+	margin: 5px 0 0 5px;
+	} 
+	.menuSub button span {
+		color: #fff;
+		font-size: 12px;
+		margin-top: 3px;
+	}
+	
+.menuSub a:hover, .menuSub button:hover{
+	background: url(../imagens/layout/topmenu_hover.png) repeat-x;
+	}
+
+
+	
+	
+/**********************			TABELA			**********************/
+table.table{
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+	clear: both;
+	}
+
+
+	table.table tr.alterna1{
+		background: #eee;
+		}	
+
+		table.table tr th{
+			font-weight: bold;
+			font-size: 13px;
+			color: #555;
+			padding: 0.7em 8px;
+			background: #ddd;
+			
+			border-bottom: 1px solid #ccc;
+			}			
+			
+		table.table tr th.ico{
+			width: 20px;
+			text-align: center;
+			}		
+			
+		table.table tr td{
+			padding: 10px 8px;
+			font-size: 12px;
+			border: none;
+			vertical-align: middle;
+
+			border-bottom: 1px solid #ddd;
+			}
+
+		table.table tr:hover td{
+			background: #f5f5f5;
+			}
+			
+		table.table tr td img{
+			text-align: center;
+			margin: -8px;
+			padding: 4px 8px;
+			}
+	
+/**********************			PAGINACAO			**********************/
+div.paginacao{
+	}
+	
+div.paginacao span{
+	color: #ddd;
+	}
+
+
+.paginacao{
+	padding-top: 20px;
+	}
+	
+	.paginacao li{
+		float: left;
+		margin-right: 5px;
+		}
+	
+		.paginacao li a{
+			float: left;
+			min-width: 16px;
+			line-height: 35px;
+			background: #ccc;
+			text-align: center;
+			border-radius: 3px;
+						
+			padding: 0 10px;
+			
+			box-sizing: content-box;
+			-moz-box-sizing: content-box;
+			-webkit-box-sizing: content-box;
+			}
+			
+			
+		.paginacao li a.current{
+			background: #4F4F4F;
+			color: #fff;
+			}
+				
+/**********************			JFBOX			**********************/
+#jfboxLoad h1{
+	font-size: 1.5em;
+	}
