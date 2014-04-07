@@ -124,9 +124,8 @@ class aplimo{
 		$this->hc_menu_item($tipo, $data);
 	}
 	
-	function hc_menu_item($type = 'a', $data = null){
-			
-			/*	$data = '{"texto": "teste", "url": "http://google.com",[...] "adjunct":5}';	*/
+	function hc_menu_item($type = 'a', $data = null){			
+			/*	$this->hc_menu_item('a', '{"texto": "teste", "url": "http://google.com"}');	*/
 			
 			$data = json_decode($data, true);
 			
@@ -145,8 +144,7 @@ class aplimo{
 			return array_shift($tmp_menu);
 		}
 		
-	function monta_hc_menu(){
-	
+	function monta_hc_menu(){	
 		echo '<div class="aplm_subheader">';		
 		
 		foreach($this->hc_menu as $key => $valor){

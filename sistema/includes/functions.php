@@ -116,8 +116,9 @@ function ll_historico($mods = null, $modsQnt = 1){
 
 // função que testa a segurança de uma página
 function ll_securyt($app){
+	global $_ll;
 	/*
-	No aquivo config.plg contido na pasta sys do aplicativo você insere a url de onde estára o arquivo de configuração de segurança, que normalmente estára em etc/nome_do_aplicativo/segur.ll
+	No aquivo config.plg contido na pasta sys do aplicativo você insere a url de onde estára o arquivo de configuração de segurança, que normalmente estára em etc/nome_do_aplicativo/seguranca.ll
 	
 	Exemplo de um arquivo de segurança:
 	
@@ -130,14 +131,23 @@ function ll_securyt($app){
 
 	<sguranca> é o container onde estáram as diretrizes
 	<user> é o nome do grupo que tera permissão para acessar a url
-		para configurar coloque a chave do get depois o valor, caso possa acessar qualquer valor dentro deste get utilize '$' como valor
+		
+		para configurar coloque a chave do get depois o valor <chave>valor</chave>
 		exemplos para as urls:
-		app=teste&p=usuarios			=	<user> <p>usuarios</p> </user>
-		app=teste&p=modulos			=	<user> <p>modulos</p> </user>
-		app=teste&p=usuarios&id=5	=	<user> <p>usuarios</p> <id>$</id> </user>
-		app=teste&p=usuarios&id=10	=	<user> <p>usuarios</p> <id>$</id></user>
-		app=teste					=	<user></user>
-	como você pode verificar não é necessário setar o primeiro get, no caso o que aponta para o aplicativo em questão
+			app=teste&p=usuarios		=	<user> <p>usuarios</p> </user>
+			app=teste&p=modulos			=	<user> <p>modulos</p> </user>
+		
+		
+		caso possa acessar qualquer valor dentro deste get utilize '%'
+			app=teste&p=usuarios&id=5	=	<user> <p>usuarios</p> <id>%</id> </user>
+			app=teste&p=usuarios&id=10	=	<user> <p>usuarios</p> <id>%</id></user>
+		
+		utilize "$" como id do usuário logado
+			app=teste&p=usuarios&user=10&ac=editar	=	<user> <p>usuarios</p> <id>$</id> <ac>editar</ac></user>
+			// nesse caso se o usuário logado não possuir o id 10 ele não terá acesso a essa tela
+		
+		como você pode verificar não é necessário setar o primeiro get, no caso o que aponta para o aplicativo em questão
+			app=teste	=	<user></user>
 	*/
 
 	$grupo = $_SESSION['logado']['grupo'];
@@ -151,7 +161,12 @@ function ll_securyt($app){
 			$permissao[$i] = array('app' => $_GET['app']);
 			
 			foreach((array) $urls as $indice => $valor)
-				$permissao[$i][$indice] = ((!isset($valor) || $valor == '$') && isset($_GET[$indice]) ? $_GET[$indice] : $valor );
+				$permissao[$i][$indice] = (
+							isset($_GET[$indice]) && 
+							(!isset($valor) || 
+								$valor == '%' || 
+								($valor == '$' && $_GET[$indice] == $_ll['user']['id'])
+							) ? $_GET[$indice] : $valor );
 			
 			$final = array_merge(array_diff($_GET, $permissao[$i]), array_diff($permissao[$i], $_GET));
 				if(empty($final))
