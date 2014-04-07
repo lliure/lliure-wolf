@@ -2,9 +2,8 @@ lliure wolf
 =========
 > 6.0 (Shiba inu) 
 
----
-
----
+<br>
+<br>
 
 ####(4/01/2013)
 - [update] - Alteração na API Navigi para receber botões acicionais na exibição lista
