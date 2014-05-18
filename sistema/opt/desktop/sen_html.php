@@ -27,9 +27,9 @@ case 'addDesktop':
 	$dados['link'] = $url;
 	$dados['imagem'] = "app/".$pasta."/sys/ico.png";
 
-	if(!file_exists('../'.$dados['imagem']))
+	if(!file_exists('../../'.$dados['imagem']))
 		$dados['imagem'] = "opt/stirpanelo/icon_defaulto.png";
-
+		
 	jf_insert($tabela, $dados);
 	?>
 
