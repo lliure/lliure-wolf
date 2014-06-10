@@ -143,3 +143,67 @@ table.navigi_list{
 				margin-bottom: 10px;
 				height: 30px;
 				}
+
+				
+/******		paginacao	*******/
+#nvg_paginacao{
+			float: left;
+			padding-top: 20px;
+			}			
+			
+		#nvg_paginacao span a{
+			float: left;
+			text-align: center;
+			width: 26px;
+			line-height: 32px;
+			margin-right: 10px;
+			border: 1px solid #E0E0E0;
+			font-weight: bold;
+			font-size: 0.909em;
+			
+			border-radius: 2px;
+			
+			
+			background-image: linear-gradient(bottom, #DCDCDC 12%, #FAFAFA 56%);
+			background-image: -o-linear-gradient(bottom, #DCDCDC 12%, #FAFAFA 56%);
+			background-image: -moz-linear-gradient(bottom, #DCDCDC 12%, #FAFAFA 56%);
+			background-image: -webkit-linear-gradient(bottom, #DCDCDC 12%, #FAFAFA 56%);
+			background-image: -ms-linear-gradient(bottom, #DCDCDC 12%, #FAFAFA 56%);
+
+			background-image: -webkit-gradient(
+				linear,
+				left bottom,
+				left top,
+				color-stop(0.12, #DCDCDC),
+				color-stop(0.56, #FAFAFA)
+			);
+			
+			border-color: #CCCCCC #CCCCCC #AAAAAA;
+			box-shadow: 0 0 1px #FFFFFF inset;
+			text-shadow: 0 1px 0 #FFFFFF;
+			}
+			
+		#nvg_paginacao span a:hover{
+			box-shadow: 0 0 4px #bbb;
+			}
+			
+		#nvg_paginacao span.atual a{
+		
+			background-image: linear-gradient(top, #C8C8C8 0%, #E6E6E6 100%);
+			background-image: -o-linear-gradient(top, #C8C8C8 0%, #E6E6E6 100%);
+			background-image: -moz-linear-gradient(top, #C8C8C8 0%, #E6E6E6 100%);
+			background-image: -webkit-linear-gradient(top, #C8C8C8 0%, #E6E6E6 100%);
+			background-image: -ms-linear-gradient(top, #C8C8C8 0%, #E6E6E6 100%);
+
+			background-image: -webkit-gradient(
+				linear,
+				left top,
+				left bottom,
+				color-stop(0, #C8C8C8),
+				color-stop(1, #E6E6E6)
+			);
+			border-color: #888888 #AAAAAA #CCCCCC;
+			
+			box-shadow: 0 1px 5px #bbb inset;
+			color: #555;
+			}			

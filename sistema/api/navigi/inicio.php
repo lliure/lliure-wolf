@@ -108,6 +108,7 @@ class navigi{
 	var $delete = false;
 	var $rename = false;
 	var $configSel = false;
+	var $paginacao = false;
 
 	function monta(){
 		global $_ll;
@@ -117,6 +118,25 @@ class navigi{
 			unset($this->config['campo']);
 		}
 		
+		if($this->paginacao != false){
+			$pAtual = 1;
+			if (isset($_GET['nvg_pg']) && !empty($_GET['nvg_pg'])) 
+				$pAtual = $_GET['nvg_pg'];
+				
+			$inicio = $pAtual - 1;
+			$inicio = $inicio * $this->paginacao;
+				
+			$tReg = mysql_query($this->query);
+			$tReg = mysql_num_rows($tReg);
+				
+			$tPaginas = ceil($tReg / $this->paginacao);
+				
+			$this->query = $this->query.' limit '.$inicio.','.$this->paginacao;
+			
+			$url = jf_monta_link($_GET, 'nvg_pg');
+			$this->paginacao = array('pAtual' => $pAtual,'tPaginas' => $tPaginas, 'tReg' => $tReg, 'url' => $url);
+		}
+				
 		$navigi = array(
 						'tabela' => $this->tabela,
 						'query' => $this->query,
@@ -124,9 +144,12 @@ class navigi{
 						'delete' => ($this->delete ? true : false ),
 						'rename' => ($this->rename ? true : false ),
 						'configSel' => $this->configSel,
+						'paginacao' => $this->paginacao,
 						'exibicao' => $this->exibicao
-						);						
-
+						);
+		
+		
+		
 		if(isset($_ll['app']['pasta']))
 			$this->pasta = $_ll['app']['pasta'];
 

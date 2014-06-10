@@ -11,6 +11,7 @@ Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure),  
 #[update] - desktop foi alterado para ser um opt
 #[update] - gerenciador de usuário foi alterado para ser um opt
 #[update] - alterações no funcionamento da função ll_securyt(), adicionado parametro "%" e alterada ação de "$"
+#[update] - adicionado paginação a api navigi
 
 
 -- 5.0 (Pasto Alemão) (21/07/2013)

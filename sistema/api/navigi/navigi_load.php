@@ -179,7 +179,30 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 				.'</tr>';
 	}
 		
-	echo '</table>';
-		
+	echo '</table>';	
 }
+
+echo '<div id="nvg_paginacao">';				
+		$anterior = $navigi['paginacao']['pAtual'] -1;
+		$proximo = $navigi['paginacao']['pAtual'] +1;
+				
+		
+		
+		if($navigi['paginacao']['tPaginas'] > 1){
+			$navigi['paginacao']['tReg'] = 3;
+			
+			$ini = $navigi['paginacao']['pAtual']-$navigi['paginacao']['tReg'];
+			if($ini < 1){
+				$ini = 1;
+			}
+
+			$ult = $navigi['paginacao']['pAtual']+$navigi['paginacao']['tReg'];
+			if($ult > $navigi['paginacao']['tPaginas']){
+				$ult = $navigi['paginacao']['tPaginas'];
+			}
+
+			for($i = $ini; $i <= $ult; $i++)
+				echo '<span '.($i == $navigi['paginacao']['pAtual']?"class='atual'":"").'><a href="'.(empty($navigi['paginacao']['url'])?'':$navigi['paginacao']['url'].'&')."nvg_pg=".$i.'">'.$i.'</a></span>';
+		}  
+echo '</div>';
 ?>
