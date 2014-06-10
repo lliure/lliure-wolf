@@ -15,7 +15,7 @@ if (!empty($_FILES)) {
 	$ext = array_pop($nome);
 	
 	$nome_limpo = implode('_', $nome);
-	$nome = jf_urlformat(substr($nome_limpo, 0, 12).'_'.substr(uniqid(md5(time()), true), -5)).'.'.$ext;
+	$nome = mb_strtolower(jf_urlformat(substr($nome_limpo, 0, 12).'_'.substr(uniqid(md5(time()), true), -5)).'.'.$ext);
 	
 	$targetFile =  str_replace('//','/',$targetPath) . $nome ;
 		

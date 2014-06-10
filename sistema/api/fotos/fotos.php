@@ -68,7 +68,7 @@ if(mysql_num_rows($query) == 0){
 			</div>
 			
 			<a href="api/fotos/refotos.php?tabela=<?php echo $tabela?>&amp;dir=<?php echo $dir?>&amp;foto=<?php echo $idFoto?>" class="renomeiaFoto" title="editar">			
-				<img src="<?php echo '../uploads/'.$dir.'/70-60-c/'.$dados['foto'];?>" class="img" />
+				<img src="<?php echo '../uploads/'.$dir.'/70-60-c/'.mb_strtolower($dados['foto']);?>" class="img" />
 			</a>			
 		</div>
 		<?php
