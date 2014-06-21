@@ -31,9 +31,8 @@ function navigi_tratamento($dados){
 	if(isset($navigi['config'][$configSel]['link_col']))
 		$dados['click'] = $dados[$navigi['config'][$configSel]['link_col']];
 	elseif(isset($navigi['config'][$configSel]['link']))
-		$dados['click'] = $navigi['config'][$configSel]['link'].$dados['id'];
-		
-					  
+		$dados['click'] = $navigi['config'][$configSel]['link'].$dados['id'].(isset($navigi['paginacao']['pAtual']) ? '&nvg_pg='.$navigi['paginacao']['pAtual'] : '' );		
+	
 	$dados['ico'] = 'api/navigi/img/ico.png';
 	
 	if(isset($navigi['config'][$configSel]['ico']))
@@ -93,7 +92,7 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 					.'nome="'.$dados['coluna'].'"> '
 					 
 				.'<span class="navigi_ico"><span><img src="'.$dados['ico'].'" alt="'.$dados['coluna'].'" /></span></span>'
-				.'<span id="nome_'.$dados['id'].'" class="navigi_nome">'.$dados['coluna'].'</span>'
+				.'<span id="nome_'.$dados['id'].'" class="navigi_nome">'.htmlspecialchars($dados['coluna']).'</span>'
 			.'</div>';
 
 	}
@@ -169,7 +168,7 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 					.($ico == true ? '<td><img src="'.$dados['ico'].'" alt="'.$dados['coluna'].'" /></td>' : '' )
 					
 					.'<td>'.str_pad($dados['as_id'], 7, 0, STR_PAD_LEFT).'</td>'
-					.'<td colspan="'.($tableColspan-$dados['colspan']).'"><div class="navigi_nome">'.$dados['coluna'].'</div></td>'
+					.'<td colspan="'.($tableColspan-$dados['colspan']).'"><div class="navigi_nome">'.htmlspecialchars($dados['coluna']).'</div></td>'
 					
 					.$dados['botoes']
 					
