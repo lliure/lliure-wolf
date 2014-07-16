@@ -29,7 +29,6 @@ function jf_file_get_contents($url, $timeout = 10) {
 }
 
 //	Anti injection
-//	Anti injection
 function jf_anti_injection($sql) {
 	if(is_array($sql)){
 		foreach($sql as $chave => $valor)
@@ -101,7 +100,7 @@ function jf_insert($tabela, $dados, $print = false){
 	//Descrição
 	jf_insert(string $tabela, array $dados)
 	monta e execulta uma query de insert em mysql	
-		
+
 	// Parametros
 	$table
 	nome da tabela que estará sendo feito o insert
@@ -134,12 +133,13 @@ function jf_insert($tabela, $dados, $print = false){
 				$colunas [$chave1] = '`'.$chave1.'`';
 			}
 		}
-
+		
 		$valores = '';
 		foreach($dados as $chave => $valor){
 			$unicValores = '';
-			foreach($colunas as $coluna){
-				$unicValores .= (empty($unicValores)? '': ', ') . (isset($valor[$coluna]) && $valor[$coluna] != null && $valor[$coluna] != 'null' && $valor[$coluna] != 'NULL'? '"' . addslashes($valor[$coluna]) . '"': 'NULL');
+			
+			foreach($colunas as $coluna => $d){
+				$unicValores .= (empty($unicValores)? '': ', ') . (isset($valor[$coluna]) && $valor[$coluna] !== null && $valor[$coluna] !== 'null' && $valor[$coluna] !== 'NULL'? '"' . addslashes($valor[$coluna]) . '"': 'NULL');
 			}
 			$valores .= (empty($valores)? '': ', ') . '(' . $unicValores . ')';
 		}
