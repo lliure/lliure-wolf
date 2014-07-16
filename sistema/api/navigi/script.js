@@ -143,7 +143,7 @@ $('html').jfkey('right', function(e){
 	}
 });
 
-$('html').jfkey('delete', function(){
+$('html').jfkey('delete,osxdelete', function(){
 	if($('#navigi_inp_ren, #navigi_inp_lis_ren').length == 1){
 		return true;
 	} else if(navigi_selecionado != null && ($('#'+navigi_selecionado).attr('permicao') == 11 || $('#'+navigi_selecionado).attr('permicao') == 01)){
