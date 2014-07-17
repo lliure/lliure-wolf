@@ -3,12 +3,11 @@ lliure wolf
 > 6.0 (Shiba inu) 
 
 <br>
-<br>
 
 #### 6.0 Shiba inu (17/07/2014)
 - [update] - Alteração na API Navigi para receber botões acicionais na exibição lista
 - [update] - Eliminação da pasta "plugin" e removido o suporte
-- [update] - Possibilidade de passar o link vazio para api Navigi na exibição lista
+- [update] - Possibilidade de passar o link vazio para api navigi na exibição lista
  -[bug] - Correções na api Aplimo
 - [update] - Alteração da tabela ll_lliure_plugins para ll_lliure_apps
 - [update] - na função ll_tsecuryt() para aceitar argmentos separado por virgula ex: ll_tsecuryt('user','admin')
