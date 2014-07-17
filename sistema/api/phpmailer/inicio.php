@@ -8,28 +8,14 @@
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
+* @revisao 16/07/2014 Rodrigo Dechen: colocaçao de Type Casting nas configurações de host de disparo
 */
 
 require_once("class.phpmailer.php");
 
 if(!defined('ll_dir')){
-	$dir_c = dirname(__FILE__);
-	
-	if(strstr($dir_c , '/'))
-		$dir = explode('/', $dir_c);
-	else 
-		$dir = explode('\\', $dir_c);
-
-	array_pop($dir);
-	array_pop($dir);
-
-	if(strstr($dir_c , '/'))
-		$dir = implode('/', $dir).'/';
-	else 
-		$dir = implode('\\', $dir).'\\';
-
-	define("ll_dir", $dir);
-	}
+	define("ll_dir", (realpath(dirname(__FILE__). DIRECTORY_SEPARATOR. '..'. DIRECTORY_SEPARATOR. '..'. DIRECTORY_SEPARATOR). DIRECTORY_SEPARATOR));
+}
 
 function limpaMail($in){
 	if(strstr($in, '<')){
@@ -52,16 +38,7 @@ function pm_mail($destinatario = null, $assunto = null, $menssagem = null, $head
 	
 	if(!empty($conf)){		
 		$smtp = (object) $conf;
-		
-		/*
-		$conf = array(
-			'host' => 'mail.newsmade.com.br',
-			'usuario' => 'syn+newsmade.com.br',
-			'usuario' => '102030',
-			'autenticacao' => true,
-			'porta' => 25
-			)
-		*/
+        
 	} else {
 		if(($llconf = simplexml_load_file(ll_dir . 'etc/llconf.ll')) == false)
 			return 'Nao foi possível encontrar as configurações de smtp';
@@ -69,25 +46,28 @@ function pm_mail($destinatario = null, $assunto = null, $menssagem = null, $head
 			$smtp = $llconf->smtp;
 	}
 	
-	
 	$mail = new PHPMailer();
 
-	$mail->IsSMTP(); 
-	$mail->Host = $smtp->host;	
-		
+	$mail->IsSMTP();
+	
+    /** configura se o email vai ter validaçao smtp ou nao */
 	if(isset($smtp->autenticacao))
-		$mail->SMTPAuth = (boolean) $smtp->autenticacao;	
-	
-	
+    $mail->SMTPAuth = (bool) $smtp->autenticacao;
+
+    /** o protocolo de conversao do altenticador */
+	if(isset($smtp->seguranca))
+	$mail->SMTPSecure = (string) $smtp->seguranca;
+    
+    /** o ospedador do serviso smtp */
+	$mail->Host = (string) $smtp->host;
+    
+    /** a porta de convesacao do servco */
 	if(isset($smtp->porta))
-		$mail->Port = (int) $smtp->porta;	
-		
-	/*
-	//if(isset($smtp->seguranca))
-		//$mail->SMTPSecure = $smtp->seguranca;	
-	*/
-	$mail->Username = $smtp->usuario;
-	$mail->Password = $smtp->senha;
+	$mail->Port = (int) $smtp->porta;		
+	
+    /** usuario e senha */
+	$mail->Username = (string) $smtp->usuario;
+	$mail->Password = (string) $smtp->senha;
 	
 
 	// remetente

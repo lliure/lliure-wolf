@@ -5,7 +5,7 @@ lliure wolf
 <br>
 <br>
 
-####(21/06/2014)
+#### 6.0 Shiba inu (17/07/2014)
 - [update] - Alteração na API Navigi para receber botões acicionais na exibição lista
 - [update] - Eliminação da pasta "plugin" e removido o suporte
 - [update] - Possibilidade de passar o link vazio para api Navigi na exibição lista
@@ -18,3 +18,5 @@ lliure wolf
 - [update] - alterações no funcionamento da função ll_securyt(), adicionado parametro "%" e alterada ação de "$"
 - [update] - adicionado paginação a api navigi
 - [update] - adicionado htmlspecialchars() na listagem do navigi
+- [update] - adicionado htmlspecialchars() na listagem do navigi
+- [update] - adicionado opção de etiquetas na api navigi
