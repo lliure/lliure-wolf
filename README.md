@@ -15,7 +15,7 @@ lliure wolf
 - [update] - alterado funcionamento da ferramenta de criar atalhos, foi adicionada com um opt
 - [update] - desktop foi alterado para ser um opt
 - [update] - gerenciador de usuário foi alterado para ser um opt
-- [update] - alterações no funcionamento da função ll_securyt(), adicionado parametro "%" e alterada ação de "$"
+- [update] - alterações na função ll_securyt(), adicionado parametro "%" e alterada ação de "$"
 - [update] - adicionado paginação a api navigi
 - [update] - adicionado htmlspecialchars() na listagem do navigi
 - [update] - adicionado htmlspecialchars() na listagem do navigi
