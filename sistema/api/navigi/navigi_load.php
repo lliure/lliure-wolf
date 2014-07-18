@@ -151,12 +151,13 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 		}
 			
 		/** puxando os campos que foram setados nas etiquetas	***/
-		if(!empty($navigi['cell'])){
-			$cell = '';
+		$cell = '';
+		
+		if(!empty($navigi['cell']))
 			foreach($navigi['cell'] as $key => $valor)
 				$cell .= '<td>'.$dados[$key].'</td>'."\n";
 			
-		}
+		
 		
 		/* Para calcular o colspan dinâmico */
 		$dados['colspan'] = $colspan;		
@@ -172,8 +173,9 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 				.'<th class="cod">'.$navigi['etiqueta']['id'][0].'</th>'
 				.'<th style="width: '.$navigi['etiqueta']['coluna'][1].';">'.$navigi['etiqueta']['coluna'][0].'</th>';
 				
-	foreach($navigi['cell'] as $key => $valor)
-			echo '<th style="width: '.$valor[1].';">'.$valor[0].'</th>';
+	if(!empty($navigi['cell']))
+		foreach($navigi['cell'] as $key => $valor)
+				echo '<th style="width: '.$valor[1].';">'.$valor[0].'</th>';
 
 		
 	/** Para criar no top os th necessários para exibição dos botões a baixo */			
