@@ -204,6 +204,11 @@ class navigi{
 			$this->pasta = $_ll['app']['pasta'];
 		*/
 		
+		/** AJUSTA O PADRAO PARA CONFIGURACAO DE BOTOES */
+		if(isset($this->config['botao']) && !isset($this->config['botao'][0]) && isset($this->config['botao']['link']))
+			$this->config['botao'] = array(0 => $this->config['botao']);
+		
+		
 		if($this->configSel === false)
 			$this->config = array($this->config);
 		
@@ -214,7 +219,7 @@ class navigi{
 			$this->config[$chave]['id'] = (isset($this->config[$chave]['id']) ? $this->config[$chave]['id'] : 'id');
 			$this->config[$chave]['tabela'] = (isset($this->config[$chave]['tabela']) ? $this->config[$chave]['tabela'] : $this->tabela);
 		}
-			
+				
 		$navigi['config'] = $this->config;
 		
 		
@@ -235,6 +240,8 @@ class navigi{
 		
 		$navigi['etiqueta'] = $this->etiqueta;
 		$navigi['cell'] = $this->cell;
+		/**/
+		
 		
 		if($this->debug == true)
 			echo '<pre>'.print_r($navigi ,true).'</pre>';

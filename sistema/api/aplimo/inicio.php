@@ -302,13 +302,13 @@ class aplimo{
 						$this->monta_hc_menu();					
 							
 					$apm_load  = 'api/aplimo/ne_trovi.php';
-					
-					if(!isset($_GET['sapm']) && file_exists($_ll['app']['pasta'] . 'home/home.php'))
-						$apm_load = $_ll['app']['pasta'] . 'home/home.php';
-					elseif(isset($_GET['sapm']) && file_exists($_ll['app']['pasta'] . $_GET['apm'] . '/'. $_GET['sapm'] .'/' . $_GET['sapm'] . '.php'))
+                    
+                    if(isset($_GET['sapm']) && file_exists($_ll['app']['pasta'] . $_GET['apm'] . '/'. $_GET['sapm'] .'/' . $_GET['sapm'] . '.php'))
 						$apm_load = $_ll['app']['pasta'] . $_GET['apm'] . '/'. $_GET['sapm'] .'/' . $_GET['sapm'] . '.php';
 					elseif(isset($_GET['apm']) && file_exists($_ll['app']['pasta'] . $_GET['apm'] . '/' . $_GET['apm'] . '.php'))
 						$apm_load = $_ll['app']['pasta'] . $_GET['apm'] . '/' . $_GET['apm'] . '.php';
+					elseif(!isset($_GET['sapm']) && file_exists($_ll['app']['pasta'] . 'home/home.php'))
+						$apm_load = $_ll['app']['pasta'] . 'home/home.php';
 				
 					require_once($apm_load);
 					?>
