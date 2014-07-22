@@ -122,6 +122,7 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 	$tableColspan = 0;
 	$linhas = array();
 	
+	$cell = '';
 	
 	while($dados = mysql_fetch_array($query)){
 		$dados['rename'] = null;
@@ -150,12 +151,10 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 			}
 		}
 			
-		/** puxando os campos que foram setados nas etiquetas	***/
-		$cell = '';
-		
+		/** puxando os campos que foram setados nas etiquetas	***/		
 		if(!empty($navigi['cell']))
 			foreach($navigi['cell'] as $key => $valor)
-				$cell .= '<td>'.$dados[$key].'</td>'."\n";
+				$cell[$dados['id']] = '<td>'.$dados[$key].'</td>'."\n";
 			
 		
 		
@@ -198,7 +197,7 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 					.'<td>'.str_pad($dados['as_id'], 7, 0, STR_PAD_LEFT).'</td>'
 					.'<td colspan="'.($tableColspan-$dados['colspan']).'"><div class="navigi_nome">'.htmlspecialchars($dados['coluna']).'</div></td>'
 					
-					.$cell
+					.$cell[$dados['id']]
 					
 					.$dados['botoes']
 					
