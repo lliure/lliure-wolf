@@ -150,11 +150,11 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 				$colspan++;
 			}
 		}
-			
+		$cell[$dados['id']] = '';
 		/** puxando os campos que foram setados nas etiquetas	***/		
 		if(!empty($navigi['cell']))
 			foreach($navigi['cell'] as $key => $valor)
-				$cell[$dados['id']] = '<td>'.$dados[$key].'</td>'."\n";
+				$cell[$dados['id']] .= '<td>'.$dados[$key].'</td>'."\n";
 			
 		
 		
