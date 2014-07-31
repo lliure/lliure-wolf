@@ -155,7 +155,7 @@ class aplimo{
 					break;
 					
 				case 'botao_js':
-					echo '<a href="javascript: void(0)" '.$valor['compl'].' class="alg_'.$valor['align'].' aplm_botao '.$valor['class'].'">'.$valor['texto'].'</a>';
+					echo '<a href="javascript: void(0)" '.$valor['adjunct'].' class="alg_'.$valor['align'].' aplm_botao '.$valor['class'].'">'.$valor['texto'].'</a>';
 					
 					$this->js .= $valor['js'];
 					break;
