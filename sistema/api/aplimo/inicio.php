@@ -100,7 +100,7 @@ class aplimo{
 	
 	function hc_menu($texto, $mod, $tipo = 'botao', $orientacao = null, $class = null, $compl = null){
 		$name = null;
-		$mod = null;
+		//$mod = null;
 		
 		switch($tipo){
 		case 'botao':
@@ -109,15 +109,17 @@ class aplimo{
 		
 		case 'input':
 			$name = '"name": "'.$class.'",';
+			
 		case 'botao_js':
-			$mod = '"js": "'.$mod.'",';
+			$mod = '"js": "'.jf_encode('aplimo', $mod).'",';
 			break;
 		}
 		
 		$data = '{	"texto": "'.$texto.'", 
 					'.$mod.$name.'
 					"orientacao": "'.$orientacao.'",
-					"adjunct": "'.$class.'"
+					"adjunct": "'.$compl.'",
+					"class": "'.$class.'"
 				}';
 
 		
@@ -156,8 +158,8 @@ class aplimo{
 					
 				case 'botao_js':
 					echo '<a href="javascript: void(0)" '.$valor['adjunct'].' class="alg_'.$valor['align'].' aplm_botao '.$valor['class'].'">'.$valor['texto'].'</a>';
-					
-					$this->js .= $valor['js'];
+									
+					$this->js .= trim(jf_decode('aplimo', $valor['js']));					
 					break;
 					
 				case 'input':

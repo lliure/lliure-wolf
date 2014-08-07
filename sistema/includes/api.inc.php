@@ -24,6 +24,6 @@ $aplicativo->setNome('appbar')
 $aplicativo->setNome('aplimo')
 			->setCaminho('api/aplimo/inicio.php')
 			->css('api/aplimo/estilo.css')
-			->css('api/aplimo/script.js')
+			->js('api/aplimo/script.js')
 			->addApp();
 ?>
