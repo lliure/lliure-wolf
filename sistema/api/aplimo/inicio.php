@@ -150,6 +150,11 @@ class aplimo{
 		echo '<div class="aplm_subheader">';		
 		
 		foreach($this->hc_menu as $key => $valor){
+			if(isset($valor['js']))
+			$valor['js'] = trim(jf_decode('aplimo', $valor['js']));
+			
+			echo $this->js;
+			
 			switch($valor['tipo']){
 				case 'botao':
 				case 'a':
@@ -158,15 +163,16 @@ class aplimo{
 					
 				case 'botao_js':
 					echo '<a href="javascript: void(0)" '.$valor['adjunct'].' class="alg_'.$valor['align'].' aplm_botao '.$valor['class'].'">'.$valor['texto'].'</a>';
-									
-					$this->js .= trim(jf_decode('aplimo', $valor['js']));					
+					
+					$this->js .= $valor['js'];					
 					break;
 					
 				case 'input':
 					echo '<form action="'.$valor['url'].'" autocomplete="off" method="post" class="alg_'.$valor['align'].'  '.$valor['class'].' aplm_input"><input class=" aplm_input_'.$key.'" rel="'.$valor['texto'].'" name="'.$valor['name'].'" value="'.(isset($_GET[$valor['name']]) ? $_GET[$valor['name']] : '').'"/></form>';
 					
-					$this->js .= $valor['js'];
-					$this->js .= '$(".aplm_input_'.$key.'").jf_inputext();';
+					$this->js .= $valor['js'];	
+					
+					$this->js .= '$(".aplm_input_'.$key.'").jf_inputext();';				
 					break;
 			}
 		}
