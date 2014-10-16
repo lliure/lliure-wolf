@@ -3,7 +3,7 @@
 *
 * gerenciamento de APIs - lliure
 *
-* @Versão 6.0
+* @Versão 6.1
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Colaboração Carlos Alberto Carucci
 * @Entre em contato com o desenvolvedor <jomadee@glliure.com.br> http://www.lliure.com.br/

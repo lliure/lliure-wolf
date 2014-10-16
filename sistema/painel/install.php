@@ -47,7 +47,7 @@ default:
 									echo '<div class="fase"><div class="msm">O aplicativo possui um arquivo de configuração de permições</div></div>
 										<input name="segur" type="hidden" value="../app/'.$_GET['app'].'/sys/seguranca.ll" />';
 								else
-									echo '<div class="fase"><div class="msm msmE">Não foi possivel encontrar o arquivo de com as configuraçõs de permições ('.$arqseg.')</div></div>';
+									echo '<div class="fase"><div class="msm msmE">Não foi possivel encontrar o arquivo de com as configuraçõs de permições (../app/'.$_GET['app'].'/sys/seguranca.ll)</div></div>';
 							}
 								
 							

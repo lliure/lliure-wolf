@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 6.0
+* @Versão 6.2
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -95,7 +95,7 @@ function jf_result($tabela, $dados, $coluna){
 	return $var;
 }
 
-function jf_insert($tabela, $dados, $print = false){
+function jf_insert($tabela, $dados = null, $print = false){
 	/*
 	//Descrição
 	jf_insert(string $tabela, array $dados)
@@ -122,51 +122,53 @@ function jf_insert($tabela, $dados, $print = false){
 	*/
 	
 	$return = null;
-
-	$chaves = array_keys($dados);
-
-	if (is_array($dados[$chaves[0]])){
-
-		$colunas = null;
-		foreach($dados as $chave => $valor){
-			foreach($valor as $chave1 => $valor1){
-				$colunas [$chave1] = '`'.$chave1.'`';
-			}
-		}
+	if(!empty($dados)){
+		$chaves = array_keys($dados);
 		
-		$valores = '';
-		foreach($dados as $chave => $valor){
-			$unicValores = '';
+		if (is_array($dados[$chaves[0]])){
+
+			$colunas = null;
+			foreach($dados as $chave => $valor){
+				foreach($valor as $chave1 => $valor1){
+					$colunas [$chave1] = '`'.$chave1.'`';
+				}
+			}
 			
-			foreach($colunas as $coluna => $d){
-				$unicValores .= (empty($unicValores)? '': ', ') . (isset($valor[$coluna]) && $valor[$coluna] !== null && $valor[$coluna] !== 'null' && $valor[$coluna] !== 'NULL'? '"' . addslashes($valor[$coluna]) . '"': 'NULL');
+			$valores = '';
+			foreach($dados as $chave => $valor){
+				$unicValores = '';
+				
+				foreach($colunas as $coluna => $d){
+					$unicValores .= (empty($unicValores)? '': ', ') . (isset($valor[$coluna]) && $valor[$coluna] !== null && $valor[$coluna] !== 'null' && $valor[$coluna] !== 'NULL'? '"' . addslashes($valor[$coluna]) . '"': 'NULL');
+				}
+				$valores .= (empty($valores)? '': ', ') . '(' . $unicValores . ')';
 			}
-			$valores .= (empty($valores)? '': ', ') . '(' . $unicValores . ')';
-		}
 
-		$colunas = implode(', ', $colunas);
+			$colunas = implode(', ', $colunas);
+			
+		}else{
 		
-	}else{
-	
-		$valores = '';
-		$colunas = '';
-		foreach($dados as $chave => $valor){
-			$valor = ($valor != 'NULL' ? '"'.addslashes($valor).'"' : 'NULL');
-			$valores .= (empty($valores)? '' : ', ').$valor;
-			$colunas .= (empty($colunas)? '' : ', ').$chave;
+			$valores = '';
+			$colunas = '';
+			foreach($dados as $chave => $valor){
+				$valor = ($valor != 'NULL' ? '"'.addslashes($valor).'"' : 'NULL');
+				$valores .= (empty($valores)? '' : ', ').$valor;
+				$colunas .= (empty($colunas)? '' : ', ').$chave;
+			}
+			$valores = '(' . $valores . ')';
+			
 		}
-		$valores = '(' . $valores . ')';
 		
+		$dados = ' (' . $colunas . ') values ' . $valores;
+	}else{
+		$dados = ' value()';
 	}
-	
-	
-	$executa = 'INSERT INTO ' . $tabela . ' (' . $colunas . ') values ' . $valores;
-	if(mysql_query($executa) != false){
-		global $ml_ultmo_id;
-		global $jf_ultimo_id;
 		
+	
+	$executa = 'INSERT INTO ' . $tabela . $dados;
+	if(mysql_query($executa) != false){
+		global $jf_ultimo_id;		
 		$jf_ultimo_id = mysql_insert_id();
-		$ml_ultmo_id = $jf_ultimo_id;
 
 	} else {
 		$return = '<strong>Query:</strong> '.htmlentities($executa).'  <strong>Erro:</strong> '.htmlentities(mysql_error());
@@ -200,7 +202,7 @@ function jf_update($tabela, $dados, $alter, $mod = null, $print = false){
 	*/
 	$return = null;
  	$valores = '';
-	foreach($dados as $chaves => $valor){
+	foreach($dados as $chaves => $valor){		
 		$valor = ($valor != 'NULL' ? '"'.addslashes($valor).'"' : 'NULL');
 		$valores .= (empty($valores)?' ':', ').'`'.$chaves.'` = '.$valor;
 	}

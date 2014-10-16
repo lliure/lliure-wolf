@@ -77,6 +77,10 @@ em{
 	
 .both {	clear:both;
 	}
+	
+pre{
+	text-align: left !important;
+	}
 
 /***/		
 html, body {

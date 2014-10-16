@@ -115,8 +115,8 @@
 	</div>
 	
 	
-	<div id="rodape">
-		<a href="http://www.lliure.com.br"><img src="imagens/layout/logo_inf.png" alt="" /></a>
+	<div id="ll_rodape">
+		<a href="http://www.lliure.com.br">lliure 6 Shiba-inu</a>
 	</div> 
 </div> 
 </body>

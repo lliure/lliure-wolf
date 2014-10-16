@@ -3,7 +3,7 @@
 *
 * API navigi - lliure
 *
-* @Versão 6.0
+* @Versão 6.4
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@glliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -172,9 +172,11 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 				.'<th class="cod">'.$navigi['etiqueta']['id'][0].'</th>'
 				.'<th style="width: '.$navigi['etiqueta']['coluna'][1].';">'.$navigi['etiqueta']['coluna'][0].'</th>';
 				
+	
+	
 	if(!empty($navigi['cell']))
 		foreach($navigi['cell'] as $key => $valor)
-				echo '<th style="width: '.$valor[1].';">'.$valor[0].'</th>';
+				echo '<th style="width: '.$valor[1].';" class="'.$key.'">'.$valor[0].'</th>';
 
 		
 	/** Para criar no top os th necessários para exibição dos botões a baixo */			

@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 6.0
+* @Versão 6.4
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -17,8 +17,10 @@ if(!file_exists('etc/llconf.ll')){
 	$in = '<?xml version="1.0" encoding="iso-8859-1"?>'."\n"
 			.'<configuracoes>'."\n"
 				."\t".'<idiomas>'."\n"
-					."\t"."\t".'<nativo>pt_br</nativo>'."\n"
+					."\t"."\t".'<nativo>pt_br</nativo>'."\n"					
 				."\t".'</idiomas>'."\n"
+				."\t".'<temoDefaulto>shiba-inu</temoDefaulto>'."\n"
+				."\t".'<versao>6.4 Shiba-inu</versao>'."\n"
 			.'</configuracoes>';
 	
 
@@ -27,7 +29,9 @@ if(!file_exists('etc/llconf.ll')){
 		
 	fclose($fp);
 	
-	chmod('etc/llconf.ll', 0777); 
+	chmod('etc/llconf.ll', 0777);
+	
+	$_SESSION['logado']['tema'] = 'shiba-inu';
 }
 
 

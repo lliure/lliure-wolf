@@ -1,0 +1,47 @@
+h1, h2{
+	color: #eea60d !important;
+	}
+	
+		
+.ll_border-color{
+	border-color: #eea60d !important;
+	}	
+	
+.ll_color{
+	color: #eea60d !important;
+	}
+		
+.ll_background{
+	background-color: #eea60d !important;
+	}
+	
+	
+/* ELEMENTOS */
+#topo{
+	background: #eea60d !important;
+	}
+
+#topo .borda-esquerda,
+#topo .borda-direita,
+#topo .right div.start .icone{
+	background-image: url('lliure_elementos.png') !important;
+	}
+	
+#topo .left .logoSistema{
+	background-image: url('logo_mini.png') !important;
+	width: 71px;
+	height: 18px;
+	position: absolute;
+	left: 30px;
+	top: 7px;
+	z-index: 50;
+	}
+	
+	
+#topo .right div.menu ul li a{
+	color: #fff;
+	}
+	
+#topo .right div.menu ul li a:hover{
+	background: #cf910c;
+	}

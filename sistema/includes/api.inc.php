@@ -26,4 +26,10 @@ $aplicativo->setNome('aplimo')
 			->css('api/aplimo/estilo.css')
 			->js('api/aplimo/script.js')
 			->addApp();
+			
+$aplicativo->setNome('tags')
+			->setCaminho('api/tags/inicio.php')
+			->css('api/tags/estilo.css')
+			->js('api/tags/script.js')
+			->addApp();
 ?>

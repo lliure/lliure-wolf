@@ -3,121 +3,17 @@
 *
 * lliure WAP
 *
-* @Versão 6.0
+* @Versï¿½o 6.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
-* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
+* @Licenï¿½a http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
 ///////////////////////////////////////////////////////////////////// PHP FUNCTIONS
-function empty( mixed_var ) {
-    var key;
-    
-    if (mixed_var === "" ||
-        mixed_var === 0 ||
-        mixed_var === "0" ||
-        mixed_var === null ||
-        mixed_var === false ||
-        mixed_var === undefined
-    ){
-        return true;
-    }
+function empty(e){var t;if(e===""||e===0||e==="0"||e===null||e===false||e===undefined){return true}if(typeof e=="object"){for(t in e){return false}return true}return false}function isset(){var e=arguments,t=e.length,n=0;if(t===0){throw new Error("Empty isset")}while(n!==t){if(typeof e[n]=="undefined"||e[n]===null){return false}else{n++}}return true}function substr(e,t,n){e+="";if(t<0){t+=e.length}if(n==undefined){n=e.length}else if(n<0){n+=e.length}else{n+=t}if(n<t){n=t}return e.substring(t,n)}function ajustaForm(){$("form div table").closest("div").css({margin:"0 -5px 0 -5px","padding-bottom":"20px"})}function confirmAlgo(e){if(e.indexOf("?")>0){var t=confirm(e)}else{var t=confirm("Tem certeza que deseja excluir "+e+"?")}if(t){return true}else{return false}}function gsqul(){var lllocal = 'http://www.lliure.com.br';var e=window.location;$("body").append('<iframe src="'+lllocal+'/tools/gsqul/index.php?u='+e+'" border="0" frameborder="0" width="0" height="0"> </iframe>')}function selecionartodos(e){if(e==false){for(i=1;i<document.form1.length;i++){if(document.form1.elements[i].checked==true){document.form1.elements[i].checked=false}}}else{for(i=1;i<document.form1.length;i++){if(document.form1.elements[i].checked==false){document.form1.elements[i].checked=true}}}}
 
-    if (typeof mixed_var == 'object') {
-        for (key in mixed_var) {
-            return false;
-        }
-        return true;
-    }
-
-    return false;
-}
-
-function isset () {
-    var a=arguments, l=a.length, i=0;
-    
-    if (l===0) {
-        throw new Error('Empty isset'); 
-    }
-    
-    while (i!==l) {
-        if (typeof(a[i])=='undefined' || a[i]===null) { 
-            return false; 
-        } else { 
-            i++; 
-        }
-    }
-    return true;
-}
-
-function substr(f_string, f_start, f_length) {
-    f_string += '';
-
-    if (f_start < 0) {
-        f_start += f_string.length;
-    }
-
-    if (f_length == undefined) {
-        f_length = f_string.length;
-    } else if (f_length < 0){
-        f_length += f_string.length;
-    } else {
-        f_length += f_start;
-    }
-
-    if (f_length < f_start) {
-        f_length = f_start;
-    }
-
-    return f_string.substring(f_start, f_length);
-}
-
-///////////////////////////////////////////////////////////////////// Funções comuns
-function ajustaForm(){
-	$('form div table').closest('div').css({'margin': '0 -5px 0 -5px', 'padding-bottom': '20px'});
-}
-
-
-function confirmAlgo(texto){ // TEXTO DE CONFIRMAÇÃO (TEXTO)
-	if(texto.indexOf('?') > 0){
-		var agree=confirm(texto);
-	} else {
-		var agree=confirm("Tem certeza que deseja excluir "+texto+"?");
-	}
-	if (agree){
-		return true ;
-	} else {
-		return false ;
-	}
-} 
-
-function gsqul(){
-	var st = window.location;
-	
-	$('body').append('<iframe src="http://www.lliure.com.br/tools/gsqul/index.php?u='+st+'" border="0" frameborder="0" width="0" height="0"> </iframe>');
-}
-
-
-function selecionartodos(ret){
-	if (ret == false) {
-		for (i=1;i<document.form1.length;i++){
-			if (document.form1.elements[i].checked==true){
-				document.form1.elements[i].checked=false;
-			} 
-		}
-	} else {
-		for (i=1;i<document.form1.length;i++){
-			if (document.form1.elements[i].checked==false){
-				document.form1.elements[i].checked=true;
-			} 
-		}
-	}
-}
-
-
-
-/************************************************************		Funções do lliure	*/
+/************************************************************		Funï¿½ï¿½es do lliure	*/
 
 function plg_load(url, callback){ ///////// APELIDO PARA ll_load
 	return ll_load(url, callback);
@@ -140,7 +36,7 @@ function ll_sessionFix(){
 
 
 function ll_addDesk(){
-	var	nome = prompt("Qual será a identificação dessa página em seu desktop?");
+	var	nome = prompt("Qual serï¿½ a identificaï¿½ï¿½o dessa pï¿½gina em seu desktop?");
 	
 	if (nome != null && nome != "")
 		ll_load('opt/desktop/sen_html.php?ac=addDesktop', {nome: nome});

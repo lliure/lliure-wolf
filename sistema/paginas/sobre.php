@@ -11,13 +11,16 @@
 */
 
 header("Content-Type: text/html; charset=ISO-8859-1",true);
-$versao = str_replace('* @Versão ', '', '* @Versão 6.0'); //Apenas para poupar trabalho nas trocas de versão
+require_once '../includes/functions.php';
+
+if(($_ll = lltoObject('../etc/llconf.ll')) == false)
+	$_ll->versao = 'erro ao ler llconf';
 ?>
 
 <div id="llSobre">
 	<h1><img src="imagens/layout/logo_sobre.png" alt="lliure" /></h1>
 	<span class="sigla">Web Application Platform</span>
-	<span class="versao">Versão <?php echo $versao?></span>
+	<span class="versao">Versão <?php echo $_ll->versao;?></span>
 	
 	<h2>Obrigado por escolher o lliure</h2>	
 	

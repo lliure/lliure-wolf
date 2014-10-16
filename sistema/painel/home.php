@@ -23,6 +23,13 @@ echo app_bar('Painel de controle', $botoes);
 	<div class="bloco">
 		<h2>Configurações</h2>
 		
+		<div class="listp">
+			<div class="inter">
+				<a href="?usuarios"><img src="imagens/layout/users.png" alt="" /></a>
+				<a href="?usuarios"><span>Usuários</span></a>
+			</div>
+		</div>	
+		
 		<?php
 		if(ll_tsecuryt()) {
 			?>
@@ -32,36 +39,9 @@ echo app_bar('Painel de controle', $botoes);
 					<a href="painel/idiomas.php"><span>Idiomas</span></a>
 				</div>
 			</div>
-			
-			<div class="listp">
-				<div class="inter link_idioma">
-					<a href="" onclick="abrepopup();"><img src="imagens/layout/terminal.png" alt="" /></a>
-					<a href="" onclick="abrepopup();"><span>Terminal</span></a>
-				</div>
-			</div>
-
-			<script>
-				function abrepopup(){
-					var width = 725;
-					var height = 500;
-
-					var left = 99;
-					var top = 99;
-					window.open('opt/terminal/terminal.php','Console', 'width='+width+', height='+height+', top='+top+', left='+left+', scrollbars=yes, status=no, toolbar=no, location=no, directories=no, menubar=no, resizable=no, fullscreen=yes');
-					
-					return false;
-				}
-			</script>
 			<?php
-
 		}
-		?>
-		<div class="listp">
-			<div class="inter">
-				<a href="paginas/sobre.php" class="llSobre"><img src="imagens/layout/info.png" alt="" /></a>
-				<a href="paginas/sobre.php" class="llSobre"><span>Sobre</span></a>
-			</div>
-		</div>	
+		?>	
 		
 		<div class="listp">
 			<div class="inter menu_rapido">
@@ -69,13 +49,14 @@ echo app_bar('Painel de controle', $botoes);
 				<a href="painel/menu-rapido.php"><span>Acesso rápido</span></a>
 			</div>
 		</div>
-		
+			
+	
 		<div class="listp">
 			<div class="inter">
-				<a href="?usuarios"><img src="imagens/layout/users.png" alt="" /></a>
-				<a href="?usuarios"><span>Usuários</span></a>
+				<a href="paginas/sobre.php" class="llSobre"><img src="imagens/layout/info.png" alt="" /></a>
+				<a href="paginas/sobre.php" class="llSobre"><span>Sobre</span></a>
 			</div>
-		</div>		
+		</div>	
 			
 	</div>
 	

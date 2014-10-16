@@ -2,19 +2,26 @@
 *
 * jf_box
 *
-* @Versão 2.0
+* @VersÃ£o 3.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
-* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
+* @LicenÃ§a http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
 $(function(){
-	$('body').append('<div id="jfboxMargin"><span id="jfboxX"></span> <div id="jfboxBar"> <div id="jfboxLoad"></div> </div> </div>'
-				+'<div id="jfboxFundo"></div><span id="gifJfbox" style="display: none;"></span>'
+	$('body').append('<div id="jfboxScroll"> <div id="jfboxMargin"><span id="jfboxX"></span> <div id="jfboxBar"> <div id="jfboxLoad"></div> </div> </div></div>'
+				+'<span id="gifJfbox" style="display: none;">Carregando...</span>'
 				+'<div id="jfAviso"></div>');
 
-	$('#jfboxFundo').click(function () {
+	$('#jfboxMargin').bind({
+		click: function(event){
+			event.stopPropagation();
+		}
+	});
+	
+	$('#jfboxScroll').click(function () {
+		
 		fechaJfbox();
 		return false;
 	});
@@ -41,7 +48,7 @@ $(function(){
 			manaFermi: false
 		}
 		
-		//função do jquery que substitui os parametros que não foram informados pelos defaults
+		//funÃ§Ã£o do jquery que substitui os parametros que nï¿½o foram informados pelos defaults
 		var options = jQuery.extend(sDefaults, parametros);		
 		
 		$(this).bind({
@@ -57,7 +64,6 @@ $(function(){
 			click: function() {
 				if(typeof $(this).attr('href') !== "undefined" && $(this).attr('href')){
 					var carrega = $(this).attr('href');
-					
 					loadJfbox(carrega, null, options.abreBox, this);
 
 					return false;
@@ -76,11 +82,22 @@ $(function(){
 
 			
 			nthis = nthis != 'undefined' ? nthis : null;
-			gifJfbox();
-
+			
+			
+			$('#jfboxScroll').show(0, function(){
+				
+				$('body').css('overflow','hidden');
+				gifJfbox();
+				//$('#jfboxScroll').animate({ 'background-color': 'rgba(0, 0, 0, 0.25)' }, 500);
+				$('#jfboxScroll').css({ 'background-color': 'rgba(0, 0, 0, 0.25)' });
+				
+			});		
+			
+			
 			$('#jfboxLoad').load(carrega, campos, function(response, status, xhr) {
+				
 				if (status == "error")
-					$("#jfboxLoad").html('Houve um erro ao carregar essa página:' + xhr.status + " " + xhr.statusText);
+					$("#jfboxLoad").html('Houve um erro ao carregar essa pï¿½gina:' + xhr.status + " " + xhr.statusText);
 				
 				jfboxVars.abreBox = false
 				$("#jfboxLoad  .jfbox").jfbox(jfboxVars);
@@ -89,26 +106,18 @@ $(function(){
 				if($('#jfboxMargin').css('display') == 'none' && abreBox == true)
 					abreJfbox();	
 
-				if(typeof callback == 'function') //checa se o retorno é uma função
+				if(typeof callback == 'function') //checa se o retorno ï¿½ uma funï¿½ï¿½o
 					callback.call(this, nthis); // executa
-					
-				//jfboxBar = $('#jfboxBar').jScrollPane({	contentWidth: '0px'	}).data('jsp');
 			});
 			
 			return true;
 		}
 	
-		function abreJfbox(){			
-			var scrollX = 0;
-			
-			if(options.height == 'auto') {
-				$('html, body').animate({scrollTop: 0}, 500);
-			}else{
-				scrollX = $(window).scrollTop();
-			}
-			
+		function abreJfbox(){	
+			$('#jfboxScroll').scrollTop('0');
+						
 			$('#jfboxBar').css({width: (jfboxVars.width != undefined ? jfboxVars.width : options.width), height: options.height});
-
+		
 			//Carrega o height e width da Janela
 			var winH = $(window).height();
 			var winW = $(window).width();
@@ -117,31 +126,32 @@ $(function(){
 			
 			if(options.addClass != '')
 				$('#jfboxLoad').addClass(options.addClass);
-			
 			if((jfboxVars.position != undefined ? jfboxVars.position : options.position) == false){
-				var top = ((winH-($('#jfboxMargin').height()+50))/2)+scrollX;
-				top = top < 20 ? 20 :  top ;
-				$('#jfboxMargin').css({'top': top, 'left': winW/2-($('#jfboxMargin').width()+35)/2, 'right': 'auto', 'button': 'auto'});
+				var top = ((winH-($('#jfboxMargin').height())-40)/2);
+				var left = winW/2-($('#jfboxMargin').width()+35)/2;
+				top = top < 20 ?  0 : top;	
 				
-			} else {
-				(options.position[2] == 'button' 
-						? $('#jfboxMargin').css({'top':  'auto', 'button': options.position[0]})
-						: $('#jfboxMargin').css({'top':  options.position[0], 'button': 'auto'})
-				);
+				$('#jfboxMargin').css({'top': top, 'left': left, 'right': 'auto', 'button': 'auto'});
 				
-				(options.position[3] == 'right' 
-						? $('#jfboxMargin').css({'right':  options.position[1], 'left': 'auto'})
-						: $('#jfboxMargin').css({'right':  'auto', 'left': options.position[1]})
-				);
+			} else {	
+				if(options.position == 'maximized'){
+					$('#jfboxMargin').css({'top':  '15px', 'bottom':  '15px', 'right':'15px', 'left': '15px'});
+					$('#jfboxBar').css({'width':'100%', 'height':'100%'});
+				} else {					
+					(options.position[2] == 'button' 
+							? $('#jfboxMargin').css({'top':  'auto', 'button': options.position[0]})
+							: $('#jfboxMargin').css({'top':  options.position[0], 'button': 'auto'})
+					);
+					
+					(options.position[3] == 'right' 
+							? $('#jfboxMargin').css({'right':  options.position[1], 'left': 'auto'})
+							: $('#jfboxMargin').css({'right':  'auto', 'left': options.position[1]})
+					);
+				}
 			}
 
-			$('#jfboxMargin').fadeIn(150);
-
-			var maskHeight = $(document).height();
-			var maskWidth = $(window).width();
-
-			$('#jfboxFundo').css({'width':maskWidth,'height':maskHeight, 'background': '#efefef'});
-			$('#jfboxFundo').fadeTo(300,0.75);
+			$('#jfboxMargin').fadeIn(300);
+			
 		}
 		
 		$('#fermi').click(function(){
@@ -150,7 +160,7 @@ $(function(){
 		});
 	},	
 	
-	jfaviso: function (texto, tempo){	/************************************************************	EXTENÃO DE AVISO	*/
+	jfaviso: function (texto, tempo){	/************************************************************	EXTENï¿½O DE AVISO	*/
 		jfAlert(texto, tempo);
 	}
 
@@ -245,7 +255,7 @@ function fechaJfbox(force){
 			});
 		
 			if(temtexto == true){
-				if(confirm("Você preencheu alguns campos nesta página, tem certeza que deseja fechá-la?")) {
+				if(confirm("VocÃª preencheu alguns campos nesta pï¿½gina, tem certeza que deseja fechï¿½-la?")) {
 					jfboxVars.inputTest = false;
 					fechaJfbox();
 				} else {
@@ -257,10 +267,15 @@ function fechaJfbox(force){
 			}
 				
 		
-		} else {		
-			$('#jfboxMargin').fadeOut(150);
-			$('#jfboxFundo').fadeOut(300);
-			$('#jfboxLoad').html('');
+		} else {			
+			$('#jfboxScroll').fadeOut('150', function(){
+				$('body').css('overflow','visible');
+				$('#jfboxMargin').hide();
+				$('#jfboxMargin').css({'top': 'auto', 'bottom':  'auto', 'right': 'auto', 'left': 'auto'});
+				$('#jfboxLoad').html('');				
+				$('#jfboxScroll').css({'background-color': 'rgba(0, 0, 0, 0)' });
+			});
+			
 			
 			jfboxVars();
 		}	

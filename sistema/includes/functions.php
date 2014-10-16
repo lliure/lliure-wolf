@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 6.0
+* @Versão 6.4
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -23,6 +23,21 @@ function navig_historic(){
 
 
 ///***///
+function lltoObject($file){
+	$file = @get_include_contents($file);
+	$file = @simplexml_load_string($file, 'SimpleXMLElement', LIBXML_NOCDATA);
+
+	return $file;
+}
+
+function get_include_contents($filename) {
+    if (is_file($filename)) {
+        ob_start();
+        include $filename;
+        return ob_get_clean();
+    }
+    return false;
+}
 
 // define a constante ll_dir com o diretório atual de onde está o sistema
 function ll_dir(){
@@ -57,7 +72,7 @@ function ll_historico($mods = null, $modsQnt = 1){
 	case 'inicia':
 		if(!empty($_GET)){
 			$keyGet = array_keys($_GET);
-			
+
 			$pageatual = '?'.$_SERVER['QUERY_STRING'];
 			if(isset($_SESSION['historicoNav']) && !empty($_SESSION['historicoNav'])){
 				$count = count($_SESSION['historicoNav']);

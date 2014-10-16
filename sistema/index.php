@@ -3,20 +3,18 @@
 *
 * lliure WAP
 *
-* @Versão 6.0
+* @Versão 6.4
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
-
 if(!file_exists("etc/bdconf.php"))
 	header('location: install/index.php');
 
 require_once("etc/bdconf.php"); 
 require_once("includes/functions.php");
-
 
 /* Identifica o diretório atual do sistema */
 ll_dir();
@@ -46,6 +44,7 @@ require_once("api/gerenciamento_de_api.php");
 $_ll['app']['header'] = null;
 $_ll['app']['pagina'] = "paginas/permissao.php";
 
+
 $get = array_keys($_GET);
 switch(isset($get[0]) ? $get[0] : 'desk' ){
 	case 'app':
@@ -62,29 +61,48 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 			$llAppSenHtml = $_ll['app']['sen_html'];			
 			$llAppPasta = $_ll['app']['pasta'];
 			
-			$ll_segok = false;
+			/**		Controle de abertura de páginas		**/			
+			switch($_ll['mode_operacion']){
+				
+			case 'onserver':
+				$_ll['app']['pagina'] = $_ll['app']['pasta'].'onserver.php';
+				$_ll['app']['header'] = $_ll['app']['pasta'].'header.php';
+				break;
+				
+			case 'sen_html':
+				$_ll['app']['pagina'] = $_ll['app']['pasta'].'sen_html.php';
+				$_ll['app']['header'] = $_ll['app']['pasta'].'header.php';
+				break;
 			
-			if(ll_tsecuryt() == false){
-				if(($config = @simplexml_load_file($_ll['app']['pasta'].'/sys/config.ll')) !== false){
-					
-					if($config->seguranca != 'public' && (ll_securyt($_GET['app']) == true))
+			case 'kun_html':
+				$ll_segok = false;
+				
+				if(ll_tsecuryt() == false){
+					if(($config = @simplexml_load_file($_ll['app']['pasta'].'/sys/config.ll')) !== false){
+						
+						if($config->seguranca != 'public' && (ll_securyt($_GET['app']) == true))
+							$ll_segok = true;
+						elseif($config->seguranca == 'public')
+							$ll_segok = true;
+	
+					} else {
 						$ll_segok = true;
-					elseif($config->seguranca == 'public')
-						$ll_segok = true;
-
+					}
 				} else {
 					$ll_segok = true;
 				}
-			} else {
-				$ll_segok = true;
-			}	
-			
-			if($ll_segok){
-				$_ll['app']['pagina'] = $_ll['app']['pasta'].'start.php';
 				
-				if(file_exists($_ll['app']['pasta'].'header.php'))
-					$_ll['app']['header'] = $_ll['app']['pasta'].'header.php';			
-			}			
+				if($ll_segok){
+					$_ll['app']['pagina'] = $_ll['app']['pasta'].'start.php';
+					
+					if(file_exists($_ll['app']['pasta'].'header.php'))
+						$_ll['app']['header'] = $_ll['app']['pasta'].'header.php';			
+				}	
+				
+				break;			
+			}
+			
+			
 		} elseif(ll_tsecuryt('admin')) {
 			$_ll['app']['pagina'] = "painel/plugins.php";
 		}
@@ -94,7 +112,7 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 	case 'minhaconta':
 		$_GET['usuarios'] = $_ll['user']['id'];
 		$_ll['css'][] = 'css/usuarios.css';
-		
+		$_ll['app']['home'] = '?minhaconta';
 		$_ll['app']['header'] = 'opt/user/usuarios.header.php';
 		$_ll['app']['pagina'] = 'opt/user/usuarios.php';
 		break;
@@ -103,7 +121,7 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 		if(ll_tsecuryt('admin')){
 			$_ll['app']['pagina'] = 'opt/user/usuarios.php';
 			$_ll['app']['header'] = 'opt/user/usuarios.header.php';
-			
+			$_ll['app']['home'] = '?painel';
 			$_ll['css'][] = 'css/usuarios.css';
 		}
 		break;
@@ -112,6 +130,7 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 		if(ll_tsecuryt('admin')){
 			$_ll['app']['header'] = 'painel/header.php';
 			$_ll['app']['pagina'] = 'painel/index.php';
+			$_ll['app']['home'] = '?painel';
 		}
 
 		break;
@@ -129,54 +148,53 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 }
 /*****/
 
+if($_ll['mode_operacion'] == 'kun_html'){
+	lliure::loadJs('js/jquery.js');
+	lliure::loadJs('api/tiny_mce/tiny_mce.js');
+	lliure::loadJs('js/jquery-ui.js');
+	lliure::loadJs('js/funcoes.js');
+	lliure::loadJs('js/jquery.jfkey.js');
+	lliure::loadJs('js/jquery.easing.js');
+	lliure::loadJs('js/jquery.jfbox.js');
 
-/*******************************		On Server		*/
+	lliure::loadCss('css/base.css');
+	lliure::loadCss('css/principal.css');
+	lliure::loadCss('css/paginas.css');
+	lliure::loadCss('css/predifinidos.css');
+	lliure::loadCss('css/jfbox.css');
 
-if($_ll['mode_operacion'] == 'onserver'){
-	
-	require_once($_ll['app']['pasta'].'/onserver.php');	
-	die();
+	$apigem = new api;
+	$apigem->iniciaApi('appbar');
+	$apigem->iniciaApi('fileup');
 }
 
-/*******************************		Sen HTML		*/
-
-if($_ll['mode_operacion'] == 'sen_html'){
-	require_once($_ll['app']['pasta'].'/sen_html.php');	
-	die();
-}
-
-/****/
-
-lliure::loadJs('js/jquery.js');
-lliure::loadJs('api/tiny_mce/tiny_mce.js');
-lliure::loadJs('js/jquery-ui.js');
-lliure::loadJs('js/funcoes.js');
-lliure::loadJs('js/jquery.jfkey.js');
-lliure::loadJs('js/jquery.easing.js');
-lliure::loadJs('js/jquery.jfbox.js');
-
-lliure::loadCss('css/base.css');
-lliure::loadCss('css/principal.css');
-lliure::loadCss('css/paginas.css');
-lliure::loadCss('css/predifinidos.css');
-lliure::loadCss('css/jfbox.css');
-
-$apigem = new api; 
-$apigem->iniciaApi('appbar');
-$apigem->iniciaApi('fileup');
-
+/*******************************		Header			*/
 if($_ll['app']['header'] != null)
 	require_once($_ll['app']['header']);
 
+
+/*******************************		On Server		*/
+if($_ll['mode_operacion'] == 'onserver'){	
+	require_once($_ll['app']['pagina']);	
+	die();
+}
+
+
+
+/*******************************		Sen HTML		*/
+if($_ll['mode_operacion'] == 'sen_html'){
+	require_once($_ll['app']['pagina']);	
+	die();
+}
+	
 //Inicia o histórico
 ll_historico('inicia');
-
 //Inicia o Tema atual 	
-
-if(($ll_tema = @simplexml_load_file('temas/'.$_ll['user']['tema'].'/dados.ll'))){
+if(($ll_tema = lltoObject('temas/'.$_ll['user']['tema'].'/dados.ll')) != false){
 	$_ll['tema'] = (array) $ll_tema;
 	$ll_icones = $_ll['tema']['icones'];
 	$plgIcones = $ll_icones;
+	
 }
 // 
 

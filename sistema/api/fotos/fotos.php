@@ -16,6 +16,7 @@ require_once('../../includes/jf.funcoes.php');
 extract($_GET);
 
 $sql = "SELECT * FROM ".PREFIXO.$tabela." WHERE ".$campo."='".$id."'";
+
 $query = mysql_query($sql);
 
 

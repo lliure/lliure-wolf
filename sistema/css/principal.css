@@ -145,7 +145,7 @@
 	}
 	
 		
-#rodape {
+#ll_rodape {
 	width:	100%;
 	position: absolute;
 	bottom: 0; 
@@ -155,8 +155,12 @@
 	z-index: 200;
 	}
 		
-	#rodape  a{
+	#ll_rodape  a{
 		position: absolute;
 		right: 10px;
 		bottom: 10px;
+		font-size: 10px;
+		color: #CCC;
 		}
+		
+
