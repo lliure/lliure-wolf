@@ -4,8 +4,9 @@ lliure wolf
 
 <br>
 
-#### 6.4 Shiba inu (04/10/2014)
+#### 6.4 Shiba inu (29/10/2014)
 - [bug] - correções de acessos para arquivos
+- [bug] - api Tag correção de funcionamento
 - [update] - adequação no navigi para receber as classe conforme a denominação das etiquetas
 - [update] - criada a função lltoobject() para fazer o carregamento de arquivos ll
 - [update] - acrescentada api tags

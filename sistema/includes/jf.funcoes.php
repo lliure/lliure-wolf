@@ -596,6 +596,32 @@ function jf_decode($key, $data){
 	return $return;
 	
 }
+
+/******	FUNCOES PARA MANIPULAÇÃO DE FORMULARIOS SIMPLES	*/
+function jf_input($name, $data = array(), $class = null){
+	return '<input class="'.$class.'" name="'.$name.'" value="'.$data[$name].'"/>';
+}
+
+function jf_textarea($name, $data, $class = null){
+	return '<textarea name="'.$name.'"  class="'.$class.'">'.$data[$name].'</textarea>';
+}
+
+function jf_select($name, $data = array(), $options = array(), $class = null){
+	$selected = $data[$name];
+
+	$select = '<select name="'.$name.'" class="'.$class.'">';
+	foreach($options as $value => $data)
+		$select .= '<option value="'.$value.'" '.($value == $selected ? 'selected' : '').'>'.$data.'</option>';
+		
+	$select .= '</select>';
+	return $select;
+}
+/*************/
+
+
+
+
+
 /*******************************	APELIDO DE FUNÇÕES	*/
 
 function mlDUnix($data){

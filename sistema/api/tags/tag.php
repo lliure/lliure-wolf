@@ -43,7 +43,7 @@ class tag_gets implements tag_interface{
         
     }
 
-    public function query() {
+    public function query(){
         
         global $dados;
         
@@ -67,7 +67,7 @@ class tag_gets implements tag_interface{
         if(($erro = jf_delete($dados['tabela'], array('id' => jf_anti_injection($_GET['del'])))))
             return array('erro' => $erro);
         
-        return 'ok';
+        return array('status' => 'ok');
         
     }
 
@@ -94,8 +94,8 @@ class tag_gets implements tag_interface{
             }
 
         }
-        
-        return 'ok';
+		
+        return array('id' => mysql_insert_id(), 'tag' => $_GET['set']);
         
     }
 

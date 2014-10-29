@@ -42,9 +42,10 @@ if(!isset($require) || isset($_GET['r'])){
 		$temo = (string) $_ll['conf']->temoDefaulto;
 		
 	if(!isset($require)){		
+		/*
 		if (!in_array("mod_rewrite", apache_get_modules()))
 			echo '<div class="mensagem"><span><strong>mod_rewrite</strong> não está ativo nesse servidor, por favor ative para que a segurança do lliure funcione corretamente</span></div>';
-		
+		*/
 		$require = 'temas/'.$temo.'/login.php';
 	}
 }

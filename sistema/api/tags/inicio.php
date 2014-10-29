@@ -179,29 +179,24 @@ interface tag_interface{
 
 class tag_server{
     
-    final public static function rum($obj){
-        
-        /* @var $tag tag_abstract */
-        $tag = new $obj;
+    final public static function rum(tag_interface $obj){
         
         switch ($_GET['tag']){
 
             case 'get':
-                $r = $tag->get();
-                //echo '<pre>'. print_r($r, true). '</pre>';
-                echo self::lista($r);
+                echo self::lista($obj->get());
             break;
 
             case 'query':
-                echo self::opcoes($tag->query());
+                echo self::opcoes($obj->query());
             break;
 
             case 'del':
-                echo json_encode(self::preparaParaJson($tag->del()));
+                echo json_encode(self::preparaParaJson($obj->del()));
             break;
 
             case 'set':
-                echo json_encode(self::preparaParaJson($tag->set()));
+                echo json_encode(self::preparaParaJson($obj->set()));
             break;
 
         }
@@ -213,16 +208,16 @@ class tag_server{
                 $array[self::preparaParaJson($key)] = self::preparaParaJson($value);
             }
         }else{
-            return rawurlencode($value);
+            return rawurlencode($array);
         }
         return $array;
     }
     
-    final private static function opcoes($array){
+    final private static function opcoes(array $array){
         $r = '';
         foreach($array as $key => $value){
             $r .= '
-                <a class="topico" href="" data-id="'. $key. '" data-tag="'. $value. '">'. $value. '</a>'
+                <a class="topico" href="" data-id="'. $value['id']. '" data-tag="'. $value['tag']. '">'. $value['tag']. '</a>'
             ;
         }
         return $r;
@@ -232,10 +227,11 @@ class tag_server{
         $r = '';
         foreach($array as $key => $value){
             $r .= '
-                <div class="ajax-topicos">
-                    <span><a data-del="'.$value['id'].'"><img src="imagens/icones/delete.png" alt="excluir"></a>'.$value['tag'].'</span>
-                </div>'
-            ;
+				<span class="tag-adedida" data-id="'.$value['id'].'" data-tag="'.$value['tag'].'">
+					<a class="tag-bot-del"><img src="imagens/icones/delete.png" alt="excluir"></a>
+					<div class="tag-content">'.$value['tag'].'</div>
+				</span>		
+			';
         }
         return $r;
     }

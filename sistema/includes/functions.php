@@ -24,17 +24,20 @@ function navig_historic(){
 
 ///***///
 function lltoObject($file){
-	$file = @get_include_contents($file);
-	$file = @simplexml_load_string($file, 'SimpleXMLElement', LIBXML_NOCDATA);
+	//$file = @get_include_contents($file);
+	$file = @simplexml_load_file($file, 'SimpleXMLElement', LIBXML_NOCDATA);
 
 	return $file;
 }
 
 function get_include_contents($filename) {
     if (is_file($filename)) {
-        ob_start();
-        include $filename;
-        return ob_get_clean();
+		ob_start();
+        include 'etc/llconf.ll';
+        $var = ob_get_contents();
+		ob_end_clean();
+		
+		return $var;
     }
     return false;
 }

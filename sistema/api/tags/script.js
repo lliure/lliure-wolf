@@ -9,185 +9,64 @@
 *
 */
 
+bufferCarregamentoOpcoes = 0;
+
 tag = {};
 
 tag.loadTopicos = function(contexto){
-    var action = contexto.attr('action');
-    
-    contexto.find('.sugestao')
-    .delegate('a', 'click', function (){
-        tag.tagSugestaoCele(contexto, this);
+	
+	var action = contexto.attr('action');
+	
+    $('.sugestao', contexto)
+    .on( 'click', 'a', function (){
+        tag.tagSugestaoCele(contexto, action, this);
         return false;
     })
-    .delegate('a', 'hover', function (){
+    .on('mouseenter', 'a', function (){
+		console.log('aqui');
         $('.sugestao a', contexto).removeClass('cele')
         $(this).addClass('cele');
     });
-                
-//    contexto.find('.relacionados').load(action + '&tag=get', function (retorno){
-//        tag.desenhaTopicos(contexto, retorno)
-//    });
-                
-    contexto.find('.relacionados')
-    .delegate('a', 'click', function(){
+	
+	$('.relacionados', contexto)
+    .on('click', 'a', function(){
+		
+		var dele = $(this).closest('span');
         
-        console.log('ola');
-        
-//        $.getJSON(action + '&tag=del&del=' + $(this).attr('data-del'), function(retorno){
-//            tag.desenhaTopicos(contexto, retorno);
-//        });
+		if($(dele).attr('data-deletando') != 'true'){
+			$(dele).attr('data-deletando', 'true');
+			$('img', this).attr('src', 'api/tags/ajax-loader.gif');
+			$('div.tag-content', dele).css('text-decoration', 'line-through');
+
+			$.getJSON(action + '&tag=del&del=' + $(dele).attr('data-id'), function(retorno){
+				if(retorno.status == 'ok'){
+					$(dele).remove();
+				}else{
+					$('img', this).attr('src', 'imagens/icones/delete.png');
+					$('div.tag-content', dele).removeAttr('style');
+				}
+			});
+		}
         return false;
     })
-    .load(action + '&tag=get');
-};
 
-tag.desenhaTopicos = function(contexto, lista){
-    var action = contexto.find('.topicosForm').attr('action');
-
-    $('.relacionados', contexto).html('').prepend(
-        $('<div>', {
-            class: 'ajax-topicos'
-        })
-    );
-    $.each(lista, function(key, value){
-        $('.relacionados .ajax-topicos', contexto).append(
-            $('<span>', {
-                html: " " + unescape(value.tag)
-            }).prepend(
-                $('<a>', {
-                    href: action+ '&tag=del&del='+ value.id,
-                    click: function(){
-                        $.getJSON($(this).attr('href'), function(retorno){
-                            tag.desenhaTopicos(contexto, retorno);
-                        });
-                        return false;
-                    }
-                }).append(
-                    $('<img>', {
-                        src: 'imagens/icones/delete.png',
-                        alt: 'excluir'
-                    })
-                )
-            )
-        );
-    });
-}
-
-tag.achaCele = function(lista){
-    var cele = null;
-    lista.each(function (index, unid){
-        if ($(unid).hasClass('cele') && cele === null){
-            cele = index;
-        }
-        $(unid).removeClass('cele');
-    });
-    return cele;
-}
-
-tag.tagSugestaoCele = function(contexto, cele){
-    var action = $('.topicosForm', contexto).attr('action');
-    var tag = $(cele).attr('data-tag');
-    var id = $(cele).attr('data-id');
-
-    $.getJSON(action + '&tag=set&set='+ tag+ '&id='+ id, function(retorno){
-        desenhaTopicos(contexto, retorno);
-        $('.pesquisa', contexto).val('');
-        $('.sugestao', contexto).hide().html('');
-    });
-
-    $('.pesquisa', contexto).val('');
-    $('.sugestao', contexto).removeAttr('style').fadeOut(500, function (){$('.sugestao', contexto).html('')});
-    return false;
-}
-
-tag.tagSubmit = function(contexto){
-
-    if($(contexto).attr('data-novos') == 'false')
-        return false;
-
-    var action = $('.topicosForm', contexto).attr('action');
-    var tag = $('.pesquisa', contexto).val();
-
-    $.getJSON(action + '&tag=set&set='+ tag, function(retorno){
-        desenhaTopicos(contexto, retorno);
-        $('.pesquisa', contexto).val('');
-        $('.sugestao', contexto).removeAttr('style').hide().html('');
-    });
-    return false;
-};
-
-bufferCarregamentoOpcoes = false;
-
-tag.carregaSugestoes = function(contexto, termo, event){
-
-    if($(contexto).attr('data-sugestoes') == 'false')
-        return false;
-
-    this.lestQuery = (this.lestQuery == undefined? $.ajax(): this.lestQuery);
-
-    event.stopPropagation();
-
-    var action = $('.topicosForm', contexto).attr('action');
-
-    this.lestQuery.abort();
-
-    bufferCarregamentoOpcoes = true;
-    $('.sugestao', contexto).fadeIn(500);
-    //console.log('add = ' + bufferCarregamentoOpcoes);
-
-    this.lestQuery = $.ajax({
-        type: "GET",
-        url: action + "&tag=query&query=" + termo,
-        dataType: "json"
-    }).done(function(retorno){
-        bufferCarregamentoOpcoes = false;
-        //console.log('down = ' + bufferCarregamentoOpcoes);
-        $('.sugestao', contexto).css('background-image', 'none');
-        if(retorno.length > 0){
-            $('.sugestao', contexto).html('');
-            $.each(retorno, function (key, value){
-                $('.sugestao', contexto).append(
-                    $('<a>', {
-                        class: 'topico',
-                        href: '',
-                        'data-id': value.id,
-                        'data-tag': unescape(value.tag),
-                        html: unescape(value.tag),
-                        click: function (){
-                            tag.tagSugestaoCele(contexto, this);
-                            return false;
-                        },
-                        hover: function (){
-                            $('.sugestao a', contexto).removeClass('cele')
-                            $(this).addClass('cele');
-                        }
-                    })
-                );
-            });
-        }else
-            $('.sugestao', contexto).removeAttr('style').hide().html('');
-    });
-}
-
-
-$(function(){
-
-    $('.pesquisa').keydown(function (event){
-
-        var contexto = $(this).parent().parent().parent().parent();
+    $('.pesquisa', contexto).keydown(function (event){
+		
         var lista = $('.sugestao a', contexto);
         var cele = null;
 
         if (event.keyCode === 13){
 
-            if(bufferCarregamentoOpcoes == false){
+            if(bufferCarregamentoOpcoes == 0){
+				
                 cele = tag.achaCele(lista);
-
+				
                 if ($('.sugestao', contexto).css('display') === 'block' && cele !== null){
-                    tag.tagSugestaoCele(contexto, lista.eq(cele));
+                    tag.tagSugestaoCele(contexto, action, lista.eq(cele));
                 }else{
-                    tag.tagSubmit(contexto);
+                    tag.tagSubmit(contexto, action);
                 }
+				
             }
 
             event.isPropagationStopped();
@@ -219,6 +98,7 @@ $(function(){
                 break;
 
                 case 27:
+					bufferCarregamentoOpcoes = 0;
                     event.isPropagationStopped();
                     $('.sugestao', contexto).removeAttr('style').fadeOut(500, function (){$(this).html('')});
                     return false;
@@ -230,24 +110,137 @@ $(function(){
 
     }).keyup(function(event){
 
-        var contexto = $(this).parent().parent().parent().parent();
-
         if(event.keyCode != 13 && event.keyCode != 32 && event.keyCode != 38 && event.keyCode != 40 && event.keyCode != 27){
 
             var termo = new Array();
 
-            termo = $(this).val().split(',').reverse();
-            termo = termo[0].replace(/^\s+|\s+$/g,"").replace(/ /gi, '+');
+            termo = $(this).val().replace(/^\s+|\s+$/g,"").replace(/ /gi, '+');
 
             if(termo.length > 2 && termo != ''){
 
-                tag.carregaSugestoes(contexto, termo, event);
+                tag.carregaSugestoes(contexto, action, termo);
 
             }else{
                 $('.sugestao', contexto).removeAttr('style').hide().html('');
                 return false;
             }
         }
+		
     });
+	
+	
+	
+	$.get(action + "&tag=get", function(retorno){
+		$('.relacionados', contexto).html(retorno);
+	});
+	
+}
 
-});
+tag.achaCele = function(lista){
+    var cele = null;
+    lista.each(function (index, unid){
+        if ($(unid).hasClass('cele') && cele === null){
+            cele = index;
+        }
+        $(unid).removeClass('cele');
+    });
+    return cele;
+}
+
+tag.carregaSugestoes = function(contexto, action, termo){
+
+    if($(contexto).attr('data-sugestoes') == 'false')
+        return false;
+
+    bufferCarregamentoOpcoes += 1;
+	
+	$('.sugestao', contexto).html('').css('background-image', 'url(api/tags/ajax-loader.gif)').fadeIn(500);
+
+	$.get(action + "&tag=query&query=" + termo, function(retorno){
+		bufferCarregamentoOpcoes -= 1;
+		if(bufferCarregamentoOpcoes <= 0){
+			
+			bufferCarregamentoOpcoes = 0;
+			
+			if(retorno.length)
+				$('.sugestao', contexto).html(retorno).css('background-image', 'none');
+			
+			else
+				$('.sugestao', contexto).css('background-image', 'none').fadeOut(500, function (){$(this).html('')});
+			
+		}
+	});
+	
+}
+
+tag.adedida = function(contexto, tag){
+	var achou = false;
+	$('.relacionados .tag-adedida', contexto).each(function(index, value){
+		achou = ($(value).attr('data-tag') == tag? true: achou);
+	});
+	return achou;
+};
+
+tag.tagSubmit = function(contexto, action){
+	
+    if($(contexto).attr('data-novos') == 'false')
+        return false;
+
+    var add = $('.pesquisa', contexto).val();
+	
+	
+	if(!tag.adedida(contexto, add)){
+		
+		tag.addTag(contexto, action, add);
+		
+		$('.pesquisa', contexto).val('');
+		$('.sugestao', contexto).removeAttr('style').hide().html('');
+		
+	}
+
+    return false;
+};
+
+tag.tagSugestaoCele = function(contexto, action, cele){
+	
+    var add = $(cele).attr('data-tag');
+    var id = $(cele).attr('data-id');
+    var value = $(cele).html();
+
+    tag.addTag(contexto, action, add, id, value);
+	
+    $('.pesquisa', contexto).val('');
+    $('.sugestao', contexto).removeAttr('style').fadeOut(500, function (){$(this).html('')});
+	
+    return false;
+	
+}
+
+tag.addTag = function(contexto, action, add, id, value){
+
+	var span = 
+	$('<span>', {class: 'tag-adedida', 'data-id': (id !== undefined? id: 'NULL'), 'data-tag': add}).append([
+		$('<a>', {class: 'tag-bot-del'}).append([
+			$('<img>', {src: 'api/tags/ajax-loader.gif'})
+		]),
+		$('<div>', {class: 'tag-content'}).html(
+			(value !== undefined? value: add)
+		)
+	]);
+
+	$('.relacionados', contexto).append(span);
+
+	$.getJSON(action + '&tag=set&set='+ add+ (id !== undefined? '&id='+ id: ''), function(retorno){
+
+		$(span).attr('data-id', retorno.id);
+		$(span).attr('data-tag', retorno.tag);
+
+		if(retorno.value != undefined)
+			$('div.tag-content', span).html(retorno.value);
+
+		$('a.tag-bot-del img', span).attr('src', 'imagens/icones/delete.png');
+
+		console.log(retorno);
+	});
+	
+}
