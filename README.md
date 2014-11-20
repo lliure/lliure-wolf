@@ -4,16 +4,17 @@ lliure wolf
 
 <br>
 
-#### 6.4 Shiba inu (29/10/2014)
+#### 7.0 Wolf (15/11/2014)
 - [bug] - correções de acessos para arquivos
-- [bug] - api Tag correção de funcionamento
 - [update] - adequação no navigi para receber as classe conforme a denominação das etiquetas
 - [update] - criada a função lltoobject() para fazer o carregamento de arquivos ll
 - [update] - acrescentada api tags
 - [update] - header é requerido nos modos onserver e em sen_html
 - [update] - desta versão em diante o lliure tera seu tema alterado conforme a versão corrente
 - [update] - api appbar, titulo do app direciona para home do app quando logado como dev ou adm
-
+- [update] - Arquivo thumbs.php alterado com função "Manual" e "Ajustado"
+- [update] - updates de funcionamento no jfbox
+- [update] - criação da api "mídias"
 
 #### 6.3 Shiba inu (03/10/2014)
 - [bug] - corrigido acesso direto por nli

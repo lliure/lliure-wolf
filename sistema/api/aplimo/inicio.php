@@ -173,7 +173,7 @@ class aplimo{
 		
 		foreach($this->hc_menu as $key => $valor){			
 			$valor = jf_iconv2($valor);
-			if(isset($valor['js']))
+			if(isset($valor['js']) && !empty($valor['js']))
 				$valor['js'] = trim(jf_decode('aplimo', $valor['js']));
 
 			switch($valor['tipo']){
