@@ -253,10 +253,10 @@ class aplimo{
 	function onserver(){
 		global $_ll;
 		
-		if(isset($_GET['sapm']) && file_exists($_ll['app']['pasta'] . $_GET['apm'] . '/'. $_GET['sapm'] .'/onserver.php'))
-			$apm_load = $_ll['app']['pasta'] . $_GET['apm'] . '/'. $_GET['sapm'] .'/onserver.php';
-		elseif(file_exists($_ll['app']['pasta'] . $_GET['apm'] . '/onserver.php'))
-			$apm_load = $_ll['app']['pasta'] . $_GET['apm'] . '/onserver.php';
+		if(isset($_GET['sapm']) && file_exists(self::$basePath  . $_GET['apm'] . '/'. $_GET['sapm'] .'/onserver.php'))
+			$apm_load = self::$basePath  . $_GET['apm'] . '/'. $_GET['sapm'] .'/onserver.php';
+		elseif(file_exists(self::$basePath  . $_GET['apm'] . '/onserver.php'))
+			$apm_load = self::$basePath  . $_GET['apm'] . '/onserver.php';
 		
 		require_once($apm_load);
 	}

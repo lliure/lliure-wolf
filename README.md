@@ -1,11 +1,12 @@
 lliure wolf
 =========
-> 6.0 (Shiba inu) 
+> 7.0 (Wolf) 
 
 <br>
 
 #### 7.0 Wolf (15/11/2014)
 - [bug] - correções de acessos para arquivos
+- [bug] - correções de funcionamento na api aplimo
 - [update] - adequação no navigi para receber as classe conforme a denominação das etiquetas
 - [update] - criada a função lltoobject() para fazer o carregamento de arquivos ll
 - [update] - acrescentada api tags

@@ -1,7 +1,8 @@
 Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure),  Módulos e API nativas
 
-#### 7.0 Wolf (15/11/2014)
+#### 7.0 Wolf (21/11/2014)
 - [bug] - correções de acessos para arquivos
+- [bug] - correções de funcionamento na api aplimo
 - [update] - adequação no navigi para receber as classe conforme a denominação das etiquetas
 - [update] - criada a função lltoobject() para fazer o carregamento de arquivos ll
 - [update] - acrescentada api tags
