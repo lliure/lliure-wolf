@@ -41,7 +41,7 @@ if(!empty($_POST)){
 	?>	
 	
 	<div class="ediFoto">
-		<img src="includes/thumb.php?i=../<?php echo $dir.$foto?>:325:230:c" />
+		<img src="../uploads/<?php echo $dir.'284-180-c/'.$foto?>" />
 		
 		<form method="post" class=" jfbox" action="api/fotos/refotos.php?tabela=<?php echo $_GET['tabela']?>&amp;foto=<?php echo $_GET['foto']?>">
 			<input type="text" name="descricao" value="<?php echo $nome?>">

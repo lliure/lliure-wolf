@@ -9,9 +9,7 @@
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
-header("Content-Type: text/html; charset=ISO-8859-1",true);
-$_ll['mode_operacion'] = 'sen_html';
-require_once('index.php');
+
+
+lliure::inicia('navigi');
 ?>
-
-

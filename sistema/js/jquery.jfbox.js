@@ -97,7 +97,7 @@ $(function(){
 			$('#jfboxLoad').load(carrega, campos, function(response, status, xhr) {
 				
 				if (status == "error")
-					$("#jfboxLoad").html('Houve um erro ao carregar essa pï¿½gina:' + xhr.status + " " + xhr.statusText);
+					$("#jfboxLoad").html('Houve um erro ao carregar essa página:' + xhr.status + " " + xhr.statusText);
 				
 				jfboxVars.abreBox = false
 				$("#jfboxLoad  .jfbox").jfbox(jfboxVars);
@@ -135,7 +135,7 @@ $(function(){
 				
 			} else {	
 				if(options.position == 'maximized'){
-					$('#jfboxMargin').css({'top':  '15px', 'bottom':  '15px', 'right':'15px', 'left': '15px'});
+					$('#jfboxMargin').css({'top':  '15px', 'bottom':  '15px', 'right':'15px', 'left': '15px', padding: '0'});
 					$('#jfboxBar').css({'width':'100%', 'height':'100%'});
 				} else {					
 					(options.position[2] == 'button' 
@@ -255,7 +255,7 @@ function fechaJfbox(force){
 			});
 		
 			if(temtexto == true){
-				if(confirm("VocÃª preencheu alguns campos nesta pï¿½gina, tem certeza que deseja fechï¿½-la?")) {
+				if(confirm("Você preencheu alguns campos nesta página, tem certeza que deseja fechar?")) {
 					jfboxVars.inputTest = false;
 					fechaJfbox();
 				} else {

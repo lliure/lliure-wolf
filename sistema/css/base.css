@@ -161,6 +161,16 @@ p{	margin: 0 0 8px 0;
 	text-align: justify;
 	line-height: 140%;
 	}
+	
+pre{
+	text-align: left;
+	padding: 10px;
+	background-color: #fff;
+	display: block;
+	border: 1px solid #CCC;
+	font-family: monospace;
+	font-size: 14px;
+}
 
 
 /* Formularios */

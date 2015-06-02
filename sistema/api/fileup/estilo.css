@@ -33,7 +33,7 @@
 
 		.fileUpItem .fileup_botao{
 			background: #444;
-			height: 31px;
+			height: 30px;
 			width: 143px;
 			float: left;
 			color: #ddd;
@@ -46,3 +46,20 @@
 			color: #ddd;
 			background: #606060;
 			}
+			
+		div.fileUpItem span.flup_apagar{
+			float: left;
+			clear: none; 
+			margin-left: 20px;
+			}
+			
+			div.fileUpItem span.flup_apagar strong{
+				float: left;
+				font-weight: 100;
+				margin-top: 5px;
+				}
+			
+			div.fileUpItem span.flup_apagar input{
+				margin: 5px 0 0 5px;
+				float: left;
+				}

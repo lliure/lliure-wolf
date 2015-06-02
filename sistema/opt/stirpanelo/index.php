@@ -9,9 +9,11 @@
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
-header("Content-Type: text/html; charset=ISO-8859-1",true);
-$_ll['mode_operacion'] = 'sen_html';
-require_once('index.php');
+
+
+$pagina = 'home';
+if(!empty($_GET['painel']) && file_exists('painel/'.$_GET['painel'].'.php'))
+	$pagina = $_GET['painel'];
+	
+require_once('opt/stirpanelo/'.$pagina.'.php');
 ?>
-
-

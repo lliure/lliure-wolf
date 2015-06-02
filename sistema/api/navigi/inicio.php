@@ -172,7 +172,10 @@ class navigi{
 			$inicio = $inicio * $this->paginacao;
 				
 			$tReg = mysql_query($this->query);
-			$tReg = mysql_num_rows($tReg);
+			if($error = mysql_error())
+				echo '<pre>Erro na consulta SQL: <strong>'.$error.'</strong></pre>';
+			
+			$tReg = @mysql_num_rows($tReg);
 				
 			$tPaginas = ceil($tReg / $this->paginacao);
 				

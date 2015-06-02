@@ -32,8 +32,8 @@ function jf_file_get_contents($url, $timeout = 10) {
 function jf_anti_injection($sql) {
 	if(is_array($sql)){
 		foreach($sql as $chave => $valor)
-			$sql[$chave] = jf_anti_injection($valor);
-	} else {
+			$sql[jf_anti_injection($chave)] = jf_anti_injection($valor);
+	} elseif(is_string($sql)) {
 		$sql = get_magic_quotes_gpc() ? stripslashes($sql) : $sql;
         $sql = function_exists('mysql_real_escape_string') ? mysql_real_escape_string($sql) : mysql_escape_string($sql);
 		$sql = trim($sql); # Remove espaços vazios.
@@ -203,7 +203,7 @@ function jf_update($tabela, $dados, $alter, $mod = null, $print = false){
 	$return = null;
  	$valores = '';
 	foreach($dados as $chaves => $valor){		
-		$valor = ($valor != 'NULL' ? '"'.addslashes($valor).'"' : 'NULL');
+		$valor = ($valor == 'NULL' || $valor == NULL? 'NULL': '"'.addslashes($valor).'"');
 		$valores .= (empty($valores)?' ':', ').'`'.$chaves.'` = '.$valor;
 	}
 	
@@ -310,22 +310,23 @@ function jf_substr($texto, $final = 100, $complemento = ''){
 }
 
 //	Gerencia multiplos botoes submit em um form
+/*
+Para usar
+switch (jf_form_actions('arg1', 'arg2', ..., 'argN')){
+	case 'arg1':
+	break;
+	
+	case 'arg2':
+	break;
+	
+	...
+	
+	case 'argN':
+	break
+}	
+*/
 function jf_form_actions(){
-	/*
-	Para usar
-	switch (jf_form_actions('arg1', 'arg2', ..., 'argN')){
-		case 'arg1':
-		break;
-		
-		case 'arg2':
-		break;
-		
-		...
-		
-		case 'argN':
-		break
-	}	
-	*/
+
 
     $params = func_get_args();
     

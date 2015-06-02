@@ -192,7 +192,7 @@ div.bodyhome{
 /***************************		Acesso rápido		*****/
 .ARbox{
 	background: #ddd;
-	padding: 15px;
+	padding: 8px 15px;
 	font-size: 12px;
 	margin-bottom: 20px;
 	border-radius: 5px;
@@ -201,7 +201,7 @@ div.bodyhome{
 	.ARbox span{
 		float: left;
 		position: relative;
-		margin: 0 7px;
+		margin: 7px;
 		}
 		
 		.ARbox span a{

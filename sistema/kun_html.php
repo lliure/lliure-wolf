@@ -82,13 +82,11 @@
 						<span class="icone"></span>
 						<ul id="appRapido">
 							<?php
-							while($dados = mysql_fetch_array($query)){								
-								$icone = 'app/'.$dados['pasta'].'/sys/ico.png';
-								
+							while($dados = mysql_fetch_array($query)){
 								?>
 								<li id="appR-<?php echo $dados['id']?>">
 									<a href="?app=<?php echo $dados['pasta']?>" title="<?php echo $dados['nome']?>">
-										<img src="<?php echo $icone; ?>" alt="" />
+										<img src="<?php echo 'app/'.$dados['pasta'].'/sys/ico.png'; ?>" alt="" />
 									</a>
 								</li>
 								<?php

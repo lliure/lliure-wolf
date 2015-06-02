@@ -1,0 +1,593 @@
+/************* IMPUT ****************/
+
+.api-midias{
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding-right: 175px;
+	position: relative;
+	}
+
+	.api-midias input.div{
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		}
+
+	.api-midias .botoes{
+		margin: 0 !important;
+		padding: 0 !important;
+		position: absolute;
+		right: 0;
+		top: 0;
+		}
+
+		.api-midias .botoes button{
+			margin: 0;
+			padding: 0;
+			}
+
+
+
+
+
+
+
+/******************* ESTRUTURA *****************/
+			
+#api_midias{
+	position: relative;
+	width: 100%;
+	height: 100%;
+	}
+	
+	#api_midias .scroll{
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		overflow-y: scroll;
+		}
+	
+	#api_midias div{
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		}
+
+	#api_midias .topo{
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 80px;
+		z-index: 300;
+		border-bottom: 1px solid #bbb;
+		}
+
+	#api_midias .baixo{
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 50px;
+		z-index: 200;
+		border-top: 1px solid #bbb;
+		}
+
+	#api_midias .meio{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		padding: 80px 0 50px;
+		z-index: 100;
+		border: none;
+		}
+
+		#api_midias .meio.topo{
+			padding-top: 0px;
+			}
+
+		#api_midias .meio.baixo{
+			padding-bottom: 0px;
+			}
+
+	#api_midias .meio .main{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		z-index: 100;
+		}
+
+	#api_midias .colu{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		width: 165px;
+		z-index: 100;
+		}
+
+		#api_midias .colu.right{
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			height: 100%;
+			z-index: 200;
+			border-left: 1px solid #bbb;
+			}
+
+		#api_midias .colu.left{
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			height: 100%;
+			z-index: 200;
+			border-right: 1px solid #bbb;
+			}
+
+		#api_midias .colu.center{
+			height: 100%;
+			width: 100%;
+			z-index: 100;
+			padding: 0px 165px;
+			border: none;
+			}
+
+			#api_midias .colu.center.left{
+				padding-left: 0;
+				}
+
+			#api_midias .colu.center.right{
+				padding-right: 0;
+				}
+
+		#api_midias .colu .content{
+			position: relative;
+			height: 100%;
+			width: 100%;
+			float: left;
+}
+
+
+
+
+
+/****************** CONTEUDOS *****************/
+
+			#api_midias	.topo form.form{
+				position: relative;
+				padding: 0;
+				margin: 0;
+				float: left;
+				width: 100%;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+				}
+							
+				#api_midias	.topo form.form input.upload-input{
+					width: 0;
+					height: 0;
+					padding: 0;
+					margin: 0;
+					position: absolute;
+					top: 0;
+					left: 0;
+					visibility: hidden;
+					}
+				
+				#api_midias	.topo form.form fieldset{
+					position: relative;
+					padding: 0;
+					margin: 0;
+					float: left;
+					width: 100%;
+					-moz-box-sizing: border-box;
+					box-sizing: border-box;
+					}
+
+					#api_midias	.topo form.form fieldset div{
+						position: relative;
+						margin: 0;
+						float: left;
+						width: 100%;
+						-moz-box-sizing: border-box;
+						box-sizing: border-box;
+						}
+
+						#api_midias	.topo form.form fieldset div input,
+						#api_midias	.topo form.form fieldset div .input{
+							width: 100%;
+							}
+
+						#api_midias	.topo form.form fieldset div.direrio{
+							width: 100%;
+							-moz-box-sizing: border-box;
+							box-sizing: border-box;
+							padding-right: 294px;
+							}
+
+						#api_midias	.topo form.form fieldset div.pesquisa{
+							position: absolute;
+							top: 0;
+							right: 84px;
+							width: 200px;
+							}
+
+						#api_midias	.topo form.form fieldset div.upload{
+							position: absolute;
+							top: 0;
+							right: 0;
+							width: auto;
+							}
+							
+							#api_midias	.topo form.form fieldset div.upload button{
+								margin: 0;
+								}
+
+			#api_midias	.baixo .linha{
+				margin-top: 17px;
+				line-height: 30px;
+				}
+				
+				#api_midias	.baixo .linha form.form{
+					float: right;
+					width: auto;
+					}
+				
+					#api_midias	.baixo .linha form.form div.botoes{
+						margin: 0 -3px 0 0;
+						}
+	
+#api_midias_files{
+	position: relative;
+	width: 100%;
+	height: 100%;
+	}
+	
+	#api_midias_files .solte-aqui{
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		border: 3px dashed #bbb;
+		font-size: 1.6em;
+		font-weight: bold;
+		color: #bbb;
+		background-color: rgba(0, 0, 0, 0.11);
+		text-align: center;
+		z-index: 200;
+		}
+	
+		#api_midias_files .solte-aqui .line{
+			height: 100%;
+			}
+	
+		#api_midias_files .solte-aqui .ausilio{
+			display: inline;
+			width: 0px;
+			height: 100%;
+			vertical-align: middle;
+			}
+	
+	.files{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		z-index: 100;
+		
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		}
+	
+		.files .file{
+			float: left;
+			width: 120px;
+			margin: 10px;
+			margin-bottom: 42px;
+			position: relative;
+			}
+	
+			.files .file .ico{
+				position: relative;
+				float: left;
+				width: 100%;
+				height: 106px;
+				}
+	
+				.files .file .ico .pos{
+					float: left;
+					position: absolute;
+					bottom: 0;
+					left: 50%;
+					}
+	
+					.files .file .ico .pos .mark{
+						position: relative;
+						float: left;
+						padding: 2px;
+						box-sizing: border-box;
+						margin-left: -50%;
+						-webkit-box-shadow: 2px 2px 2px -1px rgba(0,0,0,0.1);
+						-moz-box-shadow: 2px 2px 2px -1px rgba(0,0,0,0.1);
+						box-shadow: 2px 2px 2px -1px rgba(0,0,0,0.1);
+						}
+	
+						.files .file .ico .pos .mark .base-corte{
+							position: relative;
+							overflow: hidden;
+							}
+	
+						.files .file .ico .pos .mark .deletar,
+						.files .file .ico .pos .mark .checkbox{
+							position: absolute;
+							right: 0;
+							width: 22px;
+							height: 22px;
+							border: none !important;
+							display: none;
+							background-position: center;
+							background-repeat: no-repeat;
+							}
+							
+						.files .file .ico .pos .mark .checkbox{
+							top: 0;
+							background-image: url(../../imagens/icones/checkbox_unchecked.png);
+							border-top-left-radius: 0px !important;
+							border-bottom-right-radius: 0px !important;
+							}
+							
+						.files .file .ico .pos .mark .deletar{
+							bottom: 0;
+							background-image: url(../../imagens/icones/delete.png);
+							border-top-right-radius: 0px !important;
+							border-bottom-left-radius: 0px !important;
+							}
+	
+						.files .file .ico .pos .mark .barra-load{
+							position: absolute;
+							top: 0;
+							right: 0;
+							bottom: 0;
+							width: 100%;
+							border: none !important;
+							opacity: 0.35;
+							}
+	
+						.files .file .ico .pos .mark .load{
+							position: absolute;
+							top: 0;
+							right: 0;
+							bottom: 0;
+							left: 0;
+							border: none !important;
+							background-image: url(../../imagens/jfbox/loading.gif);
+							background-repeat: no-repeat;
+							background-position: center;
+							display: none;
+							}
+	
+						.files .file .ico .pos .mark .erro{
+							position: absolute;
+							top: 0;
+							right: 0;
+							bottom: 0;
+							left: 0;
+							border: none !important;
+							background-image: url(../../imagens/icones/bug.png);
+							background-repeat: no-repeat;
+							background-position: center;
+							display: none;
+							opacity: 0.5;
+							}
+	
+							.files .file.erro .ico .pos .mark .erro{
+								display: block;
+								}
+							
+							.files .file .ico .pos .mark.celec .checkbox,
+							.files .file .ico .pos .mark:hover .checkbox,
+							.files .file .ico .pos .mark:hover .deletar{
+								display: block;
+								}
+							
+							.files .file .ico .pos .mark.celec .checkbox{
+								background-image: url(../../imagens/icones/checkbox_checked.png);
+								}
+	
+							.files .file.erro .ico .pos .mark .checkbox,
+							.files .file.erro .ico .pos .mark .deletar{
+								display: none;
+								}
+
+						.files .file .ico .pos .mark,
+						.files .file .ico .pos .mark .deletar,
+						.files .file .ico .pos .mark .barra-load,
+						.files .file .ico .pos .mark .load,
+						.files .file .ico .pos .mark .checkbox,
+						.files .file .ico .pos .mark .erro{
+							border-radius: 4px;
+							background-color: #F5F5F5;
+							border: 1px solid #E4E4E4;
+							}
+							
+						.files .file .ico .pos .mark:hover,
+						.files .file .ico .pos .mark:hover .checkbox{
+							background-color: #FaFaFa;
+							border-color: #EfEfEf;
+							}
+	
+						.files .file .ico .pos .mark:active,
+						.files .file .ico .pos .mark:active .checkbox{
+							background-color: #eee;
+							border-color: #ddd;
+							}
+	
+						.files .file .ico .pos .mark .img-ico{
+							max-width: 100px;
+							max-height: 100px;
+							}
+	
+							.files .file .ico .pos .mark .base-corte .img-ico{
+								max-width: none;
+								max-height: none;
+								position: absolute;
+								}
+	
+			.files .file .nome{
+				position: absolute;
+				top: 100%;
+				left: 0;
+				right: 0;
+				text-align: center;
+				padding-top: 5px;
+				word-wrap: break-word;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+				line-height: 1.2em;
+				}
+
+						#api-midias-icosToCortar .files .file .ico .pos .mark .load,
+						#api-midias-icosToCortar .files .file .ico .pos .mark .checkbox,
+						#api-midias-icosToCortar .files .file .ico .pos .mark .deletar,
+						#api-midias-icosCortardos .files .file .ico .pos .mark .load,
+						#api-midias-icosCortardos .files .file .ico .pos .mark .deletar,
+						#api-midias-icosCortardos .files .file .ico .pos .mark .checkbox{
+							display: none;
+							}
+
+#api-midias-areaCorte{
+	float: left;
+	width: 100%;
+	height: 100%;
+	padding: 10px;
+	overflow: hidden;
+	background-color: #FFFFFF;
+	}
+
+	#api-midias-areaCorte .area-de-corte{
+		float: left;
+		width: 100%;
+		height: 100%;
+		position: relative;
+		}
+
+		#api-midias-areaCorte .area-de-corte .area-de-corte-main{
+			position: absolute;
+			top: 0;
+			height: 100%;
+			left: 50%;
+			right: 50%;
+			float: left;
+			}
+
+			#api-midias-areaCorte .area-de-corte .area-de-corte-main .area-de-corte-main-main{
+				position: relative;
+				width: auto;
+				height: auto;
+				float: left;
+				}
+
+				#api-midias-areaCorte .area-de-corte .area-de-corte-main .area-de-corte-main-main .imgToCorte{
+					float: left;
+					width: 100%;
+					height: 100%;
+					margin-left: -50%;
+					background-image: url(bg-transparente.png);
+					background-position: center;
+					}
+
+					#api-midias-areaCorte .area-de-corte .area-de-corte-main .area-de-corte-main-main .imgToCorte img{
+						float: left;
+						width: 100%;
+						height: 100%;
+						}
+
+#menu-corte{
+	}
+	
+	#menu-corte form.form fieldset div div.input,
+	#menu-corte form.form fieldset div input,
+	#menu-corte form.form fieldset div textarea,
+	#menu-corte form.form fieldset div select,
+	#menu-corte form.form fieldset div span{
+		width: auto !important;
+		display: inline;
+		}
+		
+#midias-arquivos-selecionadas{
+	float: left;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	}
+		
+	#midias-arquivos-selecionadas .icones{
+		float: left;
+		width: 100%;
+		height: 150px;
+		position: relative;
+		overflow: hidden;
+		}
+		
+		#midias-arquivos-selecionadas .icones .p-0{
+			position: absolute;
+			top: 0px;
+			left: 5px;
+			z-index: 300;
+			}
+		
+		#midias-arquivos-selecionadas .icones .p-1{
+			position: absolute;
+			top: 13px;
+			left: 18px;
+			z-index: 200;
+			}
+		
+		#midias-arquivos-selecionadas .icones .p-2{
+			position: absolute;
+			top: 26px;
+			left: 31px;
+			z-index: 100;
+			}
+		
+	#midias-arquivos-selecionadas .total{
+		float: left;
+		width: 100%;
+		position: relative;
+		text-align: center;
+		}
+		
+#midias-msg-del{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(255,255,255,0.6);
+	text-align: center;
+	z-index: 400;
+	display: none;
+	}
+		
+	#midias-msg-del .box{
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		width: 350px;
+		margin: 0 auto;
+		border-radius: 4px;
+		background-color: #F5F5F5;
+		border: 1px solid #E4E4E4;
+		-webkit-box-shadow: 2px 2px 2px -1px rgba(0,0,0,0.1);
+		-moz-box-shadow: 2px 2px 2px -1px rgba(0,0,0,0.1);
+		box-shadow: 2px 2px 2px -1px rgba(0,0,0,0.1);
+		padding: 22px;
+		text-align: left;
+		padding-bottom: 45px;
+		}

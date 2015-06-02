@@ -4,9 +4,11 @@ lliure wolf
 
 <br>
 
-#### 7.0 Wolf (15/11/2014)
+#### 7.0 Wolf (19/05/2015)
+- [upade] - acrescentado os métodos onserver() e onclient() na api aplimo
+- [bug] - mensagem de erro em não puxar o método header() na api aplimo
+- [bug] - correções, erro ao acessar um banco não existente na api navigi
 - [bug] - correções de acessos para arquivos
-- [bug] - correções de funcionamento na api aplimo
 - [update] - adequação no navigi para receber as classe conforme a denominação das etiquetas
 - [update] - criada a função lltoobject() para fazer o carregamento de arquivos ll
 - [update] - acrescentada api tags

@@ -32,4 +32,13 @@ $aplicativo->setNome('tags')
 			->css('api/tags/estilo.css')
 			->js('api/tags/script.js')
 			->addApp();
+			
+$aplicativo->setNome('midias')
+			->setCaminho('api/midias/inicio.php')
+			->css('api/midias/estilo.css')
+			->css('api/midias/jquery.Jcrop.min.css')
+			->js('api/midias/jquery.Jcrop.js')
+			->js('api/midias/jquery.color.js')
+			->js('api/midias/script.js')
+			->addApp();
 ?>

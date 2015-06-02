@@ -34,7 +34,7 @@ if(isset($_GET['a'])){
 	jf_insert(PREFIXO.'lliure_start', array('idPlug' => $_GET['a']));
 	
 	$dados = mysql_fetch_array(mysql_query('select * 
-						from '.PREFIXO.'lliure_plugins 
+						from '.PREFIXO.'lliure_apps 
 						where id = "'.$_GET['a'].'"
 						limit 1'));
 	?>
@@ -57,7 +57,7 @@ if(isset($_GET['a'])){
 	$query = mysql_query('select b.*
 						from '.PREFIXO.'lliure_start a
 						
-						left join '.PREFIXO.'lliure_plugins b
+						left join '.PREFIXO.'lliure_apps b
 						on b.id = a.idPlug
 						order by b.nome');
 	if(mysql_num_rows($query) > 0){
@@ -89,7 +89,7 @@ if(isset($_GET['a'])){
 <div class="ARTem ARbox">
 	<?php
 	$query = mysql_query('select * 
-						from '.PREFIXO.'lliure_plugins 
+						from '.PREFIXO.'lliure_apps 
 						where id not in((select idPlug from '.PREFIXO.'lliure_start))
 						order by nome');
 	if(mysql_num_rows($query) > 0){

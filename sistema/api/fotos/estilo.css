@@ -119,16 +119,17 @@ div.ediFoto {
 	div.ediFoto img{
 		margin-bottom: 10px;
 		display: block;
+		float: left;
 		}
 	
 	div.ediFoto form{
 		clear: both;
-		width: 100%;
+		width: 284px;
 		margin: 0;
 		}	
 		
 		div.ediFoto form input{
-			width: 215px;
+			width: 192px;
 			float: left;
 			padding: 4px;
 			font-size: 11px;
@@ -141,6 +142,7 @@ div.ediFoto {
 			}
 			
 		div.ediFoto form .botao button{
-			padding: 4px 14px;
+			padding: 0px 14px;
+			line-height: 25px;
 			margin: 0;
 			}

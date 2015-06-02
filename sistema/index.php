@@ -42,7 +42,7 @@ $ll_ling = $_ll['ling'];
 require_once("api/gerenciamento_de_api.php"); 
 
 $_ll['app']['header'] = null;
-$_ll['app']['pagina'] = "paginas/permissao.php";
+$_ll['app']['pagina'] = "opt/mensagens/permissao.php";
 
 
 $get = array_keys($_GET);
@@ -104,7 +104,7 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 			
 			
 		} elseif(ll_tsecuryt('admin')) {
-			$_ll['app']['pagina'] = "painel/plugins.php";
+			$_ll['app']['pagina'] = "opt/stirpanelo/ne_trovi.php";
 		}
 		
 		break;
@@ -128,8 +128,8 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 
 	case 'painel':
 		if(ll_tsecuryt('admin')){
-			$_ll['app']['header'] = 'painel/header.php';
-			$_ll['app']['pagina'] = 'painel/index.php';
+			$_ll['app']['header'] = 'opt/stirpanelo/header.php';
+			$_ll['app']['pagina'] = 'opt/stirpanelo/index.php';
 			$_ll['app']['home'] = '?painel';
 		}
 

@@ -173,7 +173,7 @@ class aplimo{
 		
 		foreach($this->hc_menu as $key => $valor){			
 			$valor = jf_iconv2($valor);
-			if(isset($valor['js']) && !empty($valor['js']))
+			if(isset($valor['js']))
 				$valor['js'] = trim(jf_decode('aplimo', $valor['js']));
 
 			switch($valor['tipo']){
@@ -189,11 +189,9 @@ class aplimo{
 					break;
 					
 				case 'input':
-					echo '<form action="'.$valor['url'].'" autocomplete="off" method="post" class="alg_'.$valor['align'].'  '.$valor['class'].' aplm_input"><input class=" aplm_input_'.$key.'" rel="'.$valor['texto'].'" name="'.$valor['name'].'" value="'.(isset($_GET[$valor['name']]) ? $_GET[$valor['name']] : '').'"/></form>';
+					echo '<form action="'.$valor['url'].'" autocomplete="off" method="post" class="alg_'.$valor['align'].'  '.$valor['class'].' aplm_input"><input class=" aplm_input_'.$key.'" placeholder="'.$valor['texto'].'" name="'.$valor['name'].'" value="'.(isset($_GET[$valor['name']]) ? $_GET[$valor['name']] : '').'"/></form>';
 					
-					$this->js .= $valor['js'];	
-					
-					$this->js .= '$(".aplm_input_'.$key.'").jf_inputext();';				
+					$this->js .= $valor['js'];				
 					break;
 			}
 		}
@@ -202,7 +200,6 @@ class aplimo{
 	
 	function header(){
 		global $_ll;
-		
 		$aktivigi_class = ' aktivigi ll_border-color ll_color';
 		
 		$this->class_sub = null;
@@ -253,16 +250,28 @@ class aplimo{
 	function onserver(){
 		global $_ll;
 		
-		if(isset($_GET['sapm']) && file_exists(self::$basePath  . $_GET['apm'] . '/'. $_GET['sapm'] .'/onserver.php'))
-			$apm_load = self::$basePath  . $_GET['apm'] . '/'. $_GET['sapm'] .'/onserver.php';
-		elseif(file_exists(self::$basePath  . $_GET['apm'] . '/onserver.php'))
-			$apm_load = self::$basePath  . $_GET['apm'] . '/onserver.php';
+		if(isset($_GET['sapm']) && file_exists($_ll['app']['pasta'] . $_GET['apm'] . '/'. $_GET['sapm'] .'/onserver.php'))
+			$apm_load = $_ll['app']['pasta'] . $_GET['apm'] . '/'. $_GET['sapm'] .'/onserver.php';
+		elseif(file_exists($_ll['app']['pasta'] . $_GET['apm'] . '/onserver.php'))
+			$apm_load = $_ll['app']['pasta'] . $_GET['apm'] . '/onserver.php';
+		
+		require_once($apm_load);
+	}
+	function onclient(){
+		global $_ll;
+		
+		if(isset($_GET['sapm']) && file_exists($_ll['app']['pasta'] . $_GET['apm'] . '/'. $_GET['sapm'] .'/onclient.php'))
+			$apm_load = $_ll['app']['pasta'] . $_GET['apm'] . '/'. $_GET['sapm'] .'/onclient.php';
+		elseif(file_exists($_ll['app']['pasta'] . $_GET['apm'] . '/onclient.php'))
+			$apm_load = $_ll['app']['pasta'] . $_GET['apm'] . '/onclient.php';
 		
 		require_once($apm_load);
 	}
 	
 	function require_page(){
 		global $_ll;
+		
+	
 		$apm_load  = 'api/aplimo/ne_trovi.php';
 		                    
         if(isset($_GET['sapm']) && file_exists(self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/' . $_GET['sapm'] . '.php'))
@@ -278,6 +287,11 @@ class aplimo{
 	
 	function monta(){
 		global $_ll;
+		
+		if(!isset($this->class_li)){
+			echo 'Método header() não foi instanciado!';
+			die();
+		}
 		
 		$total_reg = 30;
 		$tr = 10;
