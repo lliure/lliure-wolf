@@ -167,12 +167,11 @@ class aplimo{
 			return array_shift($tmp_menu);
 		}
 		
-	function monta_hc_menu(){	
+	function monta_hc_menu(){
 		echo '<div class="aplm_subheader">';
-			
 		
 		foreach($this->hc_menu as $key => $valor){			
-			$valor = jf_iconv2($valor);
+			//$valor = jf_iconv2($valor);
 			if(isset($valor['js']))
 				$valor['js'] = trim(jf_decode('aplimo', $valor['js']));
 

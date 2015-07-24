@@ -405,11 +405,11 @@ function jf_dunix($dataEnt){
 }
 
 //	Função iconv formulada para array
-function jf_iconv2($arr, $in_charset = "UTF-8", $out_charset = "ISO-8859-1"){ 
+function jf_iconv2($arr, $in_charset = "UTF-8", $out_charset = 'ISO-8859-1//TRANSLIT'){ 
 		return jf_iconv($in_charset, $out_charset, $arr); 
 }
 
-function jf_iconv($in_charset = "UTF-8", $out_charset = "ISO-8859-1", $arr){
+function jf_iconv($in_charset = "UTF-8", $out_charset = 'ISO-8859-1//TRANSLIT', $arr){
 	if (!is_array($arr)){
 		return iconv($in_charset, $out_charset, $arr);
 	}
