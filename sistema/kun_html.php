@@ -47,7 +47,7 @@
 				$keyGet = array_keys($_GET);
 				if($keyGet['0'] == 'app' && !empty($_GET['app'])){
 					?>
-					<a href="javascript: void(0);" class="addDesktop" title="Adicionar essa pÃ¡gina ao desktop"><img src="imagens/layout/add_desktop.png" alt="" /></a>
+					<a href="javascript: void(0);" class="addDesktop" title="Adicionar essa página ao desktop"><img src="imagens/layout/add_desktop.png" alt="" /></a>
 					<?php 
 				}
 			} 
