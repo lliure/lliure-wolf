@@ -3,10 +3,10 @@
 *
 * API navigi - lliure
 *
-* @Vers„o 6.4
+* @Vers√£o 6.4
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@glliure.com.br> http://www.lliure.com.br/
-* @LicenÁa http://opensource.org/licenses/gpl-license.php GNU Public License
+* @Licen√ßa http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
@@ -25,12 +25,12 @@ function navigi_tratamento($dados){
 	if($navigi['configSel'] != false)
 		$configSel = $dados[$navigi['configSel']];
 		
-	/** Configura a coluna e o id que ser„o exibidos	*/
+	/** Configura a coluna e o id que serao exibidos	*/
 	$dados['coluna'] = $dados[$navigi['config'][$configSel]['coluna']];
 	$dados['id'] = $dados[$navigi['config'][$configSel]['id']];
 	
 	
-	/**********		DEFINI«√O DO CLICK							**/
+	/**********		DEFINICAO DO CLICK	 					**/
 	$dados['click'] = null;
 	
 	if(isset($navigi['config'][$configSel]['link_col']))
@@ -38,10 +38,10 @@ function navigi_tratamento($dados){
 	elseif(isset($navigi['config'][$configSel]['link']))
 		$dados['click'] = $navigi['config'][$configSel]['link'].$dados['id'];
 		
-	$dados['click']	.= (isset($navigi['paginacao']['pAtual']) ? '&nvg_pg='.$navigi['paginacao']['pAtual'] : '' ); /* acrecenta paginaÁ„o*/
+	$dados['click']	.= (isset($navigi['paginacao']['pAtual']) ? '&nvg_pg='.$navigi['paginacao']['pAtual'] : '' ); /* acrecenta pagina√ß√£o*/
 	/**/
 	
-	/**********		DEFINI«√O DO ICONE							**/
+	/**********		DEFINI√á√ÉO DO ICONE							**/
 	$dados['ico'] = 'api/navigi/img/ico.png';
 	
 	if(isset($navigi['config'][$configSel]['ico']))
@@ -53,8 +53,8 @@ function navigi_tratamento($dados){
 	
 	$dados['as_id'] = $dados[$navigi['config'][$configSel]['as_id']]; // alias para o id
 	
-	/**********		DEFINI«√O DAS FUN«’ES DE RENOMEAR E DELETAR	**/
-	/** TambÈm realiza a codificaÁ„o de permiÁıes, usadas no js	**/
+	/**********		DEFINI√á√ÉO DAS FUN√á√ïES DE RENOMEAR E DELETAR	**/
+	/** Tamb√©m realiza a codifica√ß√£o de permi√ß√µes, usadas no js	**/
 	$dados['rename'] = false;
 	$dados['delete'] = false;
 	
@@ -105,7 +105,7 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 					.'nome="'.$dados['coluna'].'"> '
 					 
 				.'<span class="navigi_ico"><span><img src="'.$dados['ico'].'" alt="'.$dados['coluna'].'" /></span></span>'
-				.'<span id="nome_'.$dados['id'].'" class="navigi_nome">'.htmlspecialchars($dados['coluna']).'</span>'
+				.'<span id="nome_'.$dados['id'].'" class="navigi_nome">'.htmlspecialchars($dados['coluna'], ENT_COMPAT, 'ISO-8859-1', true)).'</span>'
 			.'</div>';
 
 	}
@@ -158,7 +158,7 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 			
 		
 		
-		/* Para calcular o colspan din‚mico */
+		/* Para calcular o colspan din√¢mico */
 		$dados['colspan'] = $colspan;		
 		$tableColspan = ($tableColspan > $colspan ? $tableColspan : $colspan);
 		
@@ -179,7 +179,7 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 				echo '<th style="width: '.$valor[1].';" class="'.$key.'">'.$valor[0].'</th>';
 
 		
-	/** Para criar no top os th necess·rios para exibiÁ„o dos botıes a baixo */			
+	/** Para criar no top os th necess√°rios para exibi√ß√£o dos bot√µes a baixo */			
 	for($i = 1; $i <= $tableColspan; $i++)
 		echo 	 '<th class="ico"></th>';
 	
@@ -197,7 +197,7 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 					.($ico == true ? '<td><img src="'.$dados['ico'].'" alt="'.$dados['coluna'].'" /></td>' : '' )
 					
 					.'<td>'.str_pad($dados['as_id'], 7, 0, STR_PAD_LEFT).'</td>'
-					.'<td colspan="'.($tableColspan-$dados['colspan']).'"><div class="navigi_nome">'.htmlspecialchars($dados['coluna']).'</div></td>'
+					.'<td colspan="'.($tableColspan-$dados['colspan']).'"><div class="navigi_nome">'.htmlspecialchars($dados['coluna'], ENT_COMPAT, 'ISO-8859-1', true).'</div></td>'
 					
 					.$cell[$dados['id']]
 					

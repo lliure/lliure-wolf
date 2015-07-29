@@ -5,6 +5,7 @@ lliure wolf
 <br>
 
 #### 7.0 Wolf (27/07/2015)
+- [bug] - correção de htmlspecialchars na api Navigi 
 - [bug] - ajustada codifição de caracteres nos arquivos kun_html.php e funcoes.js
 - [upade] - acrescentado os métodos onserver() e onclient() na api aplimo
 - [bug] - mensagem de erro em não puxar o método header() na api aplimo
