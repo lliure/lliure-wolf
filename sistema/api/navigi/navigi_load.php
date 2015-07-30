@@ -105,7 +105,7 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 					.'nome="'.$dados['coluna'].'"> '
 					 
 				.'<span class="navigi_ico"><span><img src="'.$dados['ico'].'" alt="'.$dados['coluna'].'" /></span></span>'
-				.'<span id="nome_'.$dados['id'].'" class="navigi_nome">'.htmlspecialchars($dados['coluna'], ENT_COMPAT, 'ISO-8859-1', true)).'</span>'
+				.'<span id="nome_'.$dados['id'].'" class="navigi_nome">'.htmlspecialchars($dados['coluna'], ENT_COMPAT, 'ISO-8859-1', true).'</span>'
 			.'</div>';
 
 	}
