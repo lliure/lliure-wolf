@@ -151,7 +151,7 @@ function jf_insert($tabela, $dados = null, $print = false){
 			$valores = '';
 			$colunas = '';
 			foreach($dados as $chave => $valor){
-				$valor = ($valor != 'NULL' ? '"'.addslashes($valor).'"' : 'NULL');
+				$valor = ($valor !== 'NULL' ? '"'.addslashes($valor).'"' : 'NULL');
 				$valores .= (empty($valores)? '' : ', ').$valor;
 				$colunas .= (empty($colunas)? '' : ', ').$chave;
 			}
