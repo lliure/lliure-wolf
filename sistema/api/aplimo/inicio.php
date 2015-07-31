@@ -129,7 +129,7 @@ class aplimo{
 		$data['adjunct'] = $compl;
 		$data['class'] = $class;
 		
-		$data = json_encode($data, true);
+		//$data = json_encode($data, true);
 		
 		$this->hc_menu_item($tipo, $data);
 	}
@@ -139,6 +139,8 @@ class aplimo{
 	 * 
 	 * Exemplo de utlização
 	 * $this->hc_menu_item('a', '{"texto": "teste", "url": "http://google.com"}');
+	 * 
+	 * $this->hc_menu_item('a', array("texto" => "teste", "url" => "http://google.com"));
 	 * 
 	 * $type: passe o tipo do menu pode ser 
 	 * 			   a: link comum
@@ -223,9 +225,11 @@ class aplimo{
 				foreach($valor['link'] as $lok => $defin){
 					
 					$this->class_li[$key.'-'.$lok] = null;
-						
-					if(	 	(isset($_GET['apm']) && $defin['link'] == $_GET['apm'])
-						|| (isset($_GET['sapm']) && $key == $_GET['apm'] && in_array($_GET['sapm'], $defin['mark'])) ) {
+					
+					/* if(	(isset($_GET['apm']) && $defin['link'] == $_GET['apm']) */
+					
+					if((isset($_GET['sapm']) && $key == $_GET['apm'] && in_array($_GET['sapm'], $defin['mark'])) ) {
+							
 						self::$basePath = $defin['basePath'];
 						$this->class_li[$key.'-'.$lok] = $aktivigi_class;
 						$this->class_sub[$key] = 'open_sub';
