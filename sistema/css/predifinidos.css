@@ -121,7 +121,7 @@ form.form fieldset{
 		form.form fieldset div.colunas{
 			display: -webkit-flex;
 			display: flex;
-			align-items: flex-end;
+			align-items: flex-start;
 			}
 			
 		form.form fieldset div.column > div,
@@ -131,7 +131,7 @@ form.form fieldset{
 			margin: 0 3px;
 			}
 			
-		form.form fieldset div.column > div.width
+		form.form fieldset div.column > div.width,
 		form.form fieldset div.colunas > div.width{
 			-webkit-flex: 0 0 auto;
 			flex: 0 0 auto;

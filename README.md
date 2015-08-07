@@ -5,6 +5,7 @@ lliure wolf
 <br>
 
 #### 7.0 Wolf (31/07/2015)
+- [bug] - atualização nos padrões de css class .column
 - [bug] - aterando entrada na função jf_insert() de != para !== de 'NULL'
 - [bug] - correção na api aplimo referente a montagem do menu superior na função hc_menu()
 - [bug] - correção na api aplimo referente a montagem do menu superior na função hc_menu()
