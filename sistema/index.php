@@ -190,6 +190,7 @@ if($_ll['mode_operacion'] == 'sen_html'){
 //Inicia o histórico
 ll_historico('inicia');
 //Inicia o Tema atual 	
+
 if(($ll_tema = lltoObject('temas/'.$_ll['user']['tema'].'/dados.ll')) != false){
 	$_ll['tema'] = (array) $ll_tema;
 	$ll_icones = $_ll['tema']['icones'];
@@ -197,6 +198,5 @@ if(($ll_tema = lltoObject('temas/'.$_ll['user']['tema'].'/dados.ll')) != false){
 	
 }
 // 
-
 require_once('kun_html.php');
 ?>

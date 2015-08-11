@@ -21,6 +21,7 @@ if (!empty($_FILES)) {
 		
 	if(move_uploaded_file($tempFile,$targetFile) != false){
 		jf_insert(PREFIXO.$dados[0], array('foto' => $nome, $dados[1] => $dados[2]));
+	
 		echo $nome;
 	}
 }

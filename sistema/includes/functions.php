@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 6.4
+* @Versão 7.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -25,8 +25,10 @@ function navig_historic(){
 ///***///
 function lltoObject($file){
 	//$file = @get_include_contents($file);
-	$file = @simplexml_load_file($file, 'SimpleXMLElement', LIBXML_NOCDATA);
-
+	if(($file = @simplexml_load_file($file, 'SimpleXMLElement', LIBXML_NOCDATA)) != false)
+		foreach($file as $key => $value)
+			$file->$key = utf8_decode($value);
+	
 	return $file;
 }
 

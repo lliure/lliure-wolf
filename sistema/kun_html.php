@@ -111,10 +111,9 @@
 		?>
 		<div class="both"></div>
 	</div>
-	
-	
+
 	<div id="ll_rodape">
-		<a href="http://www.lliure.com.br">lliure 6 Shiba-inu</a>
+		<a href="http://www.lliure.com.br"><?php echo 'lliure '.$_ll['conf']->versao;?></a>
 	</div> 
 </div> 
 </body>

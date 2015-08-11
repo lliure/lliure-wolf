@@ -4,7 +4,9 @@ lliure wolf
 
 <br>
 
-#### 7.0 Wolf (31/07/2015)
+#### 7.0 Wolf (11/08/2015)
+- [update] - Atualização em rotinas para inicio de arquivo llconf.ll em utf-8
+- [update] - Atualização na função lltoObject() para suporte a utf-8
 - [bug] - atualização nos padrões de css class .column
 - [bug] - aterando entrada na função jf_insert() de != para !== de 'NULL'
 - [bug] - correção na api aplimo referente a montagem do menu superior na função hc_menu()

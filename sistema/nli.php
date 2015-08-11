@@ -35,7 +35,7 @@ if(isset($_GET['nli'])){
 
 if(!isset($require) || isset($_GET['r'])){
 	require_once('includes/carrega_conf.php');
-
+		
 	$temo = 'lliure';
 	if(isset($_ll['conf']->temoDefaulto))
 		if(file_exists('temas/'.$_ll['conf']->temoDefaulto.'/dados.ll'))
