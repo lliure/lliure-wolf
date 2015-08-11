@@ -5,6 +5,8 @@ lliure wolf
 <br>
 
 #### 7.0 Wolf (11/08/2015)
+- [update] - Alterado nomenclatura do modo sen_html para onclient, $_ll['sen_html'] foi mantida por compatibilidade
+- [update] - Removido arquivo kun_html.php e acoes.php da raiz
 - [update] - Atualização em rotinas para inicio de arquivo llconf.ll em utf-8
 - [update] - Atualização na função lltoObject() para suporte a utf-8
 - [bug] - atualização nos padrões de css class .column

@@ -53,12 +53,14 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 			
 			$_ll['app']['home'] = 'index.php?app='.$_GET['app'];
 			$_ll['app']['onserver'] = 'onserver.php?app='.$_GET['app'];
-			$_ll['app']['sen_html'] = 'sen_html.php?app='.$_GET['app'];
+			$_ll['app']['onclient'] = 'onclient.php?app='.$_GET['app'];			
 			$_ll['app']['pasta'] = 'app/'.$_GET['app'].'/';
-						
+				
+
+			$_ll['app']['sen_html'] = $_ll['app']['onclient'];
 			$llAppHome = $_ll['app']['home'];
 			$llAppOnServer = $_ll['app']['onserver'];
-			$llAppSenHtml = $_ll['app']['sen_html'];			
+			$llAppSenHtml = $_ll['app']['onclient'];			
 			$llAppPasta = $_ll['app']['pasta'];
 			
 			/**		Controle de abertura de páginas		**/			
@@ -69,8 +71,8 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 				$_ll['app']['header'] = $_ll['app']['pasta'].'header.php';
 				break;
 				
-			case 'sen_html':
-				$_ll['app']['pagina'] = $_ll['app']['pasta'].'sen_html.php';
+			case 'onclient':
+				$_ll['app']['pagina'] = $_ll['app']['pasta'].'onclient.php';
 				$_ll['app']['header'] = $_ll['app']['pasta'].'header.php';
 				break;
 			
@@ -182,7 +184,7 @@ if($_ll['mode_operacion'] == 'onserver'){
 
 
 /*******************************		Sen HTML		*/
-if($_ll['mode_operacion'] == 'sen_html'){
+if($_ll['mode_operacion'] == 'onclient'){
 	require_once($_ll['app']['pagina']);	
 	die();
 }
@@ -198,5 +200,139 @@ if(($ll_tema = lltoObject('temas/'.$_ll['user']['tema'].'/dados.ll')) != false){
 	
 }
 // 
-require_once('kun_html.php');
 ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<link rel="SHORTCUT ICON" href="imagens/layout/favicon.ico" type="image/x-icon" />
+	<meta name="author" content="Jeison Frasson" />
+	<meta name="DC.creator.address" content="jomadee@lliure.com.br" />
+	<meta name="DC.creator " content="Jeison Frasson" />
+
+	<?php
+	lliure::loadCss();	
+	echo (isset($_GET['app']) && !empty($_GET['app'])  && file_exists($_ll['app']['pasta'].'estilo.css') ?
+		'<link rel="stylesheet" type="text/css" href="'.$_ll['app']['pasta'].'estilo.css">'
+		: '' )
+		
+	.'<link rel="stylesheet" type="text/css" href="temas/'.$ll_tema->id.'/estilo.css">';
+	
+	
+	lliure::loadJs();
+	
+	?>
+	<title>lliure WAP</title>
+</head>
+
+<body>
+<div id="tudo">
+	<div id="topo">
+		<span class="borda-esquerda"></span>
+		<span class="borda-direita"></span>
+		<div class="left">
+			<a href="index.php" class="logoSistema"><img src="imagens/layout/blank.gif"/></a>
+			<?php
+			if(!empty($_GET) &&  ll_tsecuryt()){
+				$keyGet = array_keys($_GET);
+				if($keyGet['0'] == 'app' && !empty($_GET['app'])){
+					?>
+					<a href="javascript: void(0);" class="addDesktop" title="Adicionar essa p?na ao desktop"><img src="imagens/layout/add_desktop.png" alt="" /></a>
+					<?php 
+				}
+			} 
+			?>
+		</div>
+		
+
+		<div class="right">			
+			<div class="menu">
+				<ul>
+					<?php
+					echo '<li><a href="index.php">Home</a></li>'
+						.'<li><a href="?minhaconta">Minha conta</a></li>'
+						.(ll_tsecuryt('admin') ? '<li><a href="?painel">Painel de controle</a></li>' : '')						
+						.'<li><a href="nli.php?r=logout">Sair</a></li>';
+					?>					
+				</ul>
+			</div>
+			<?php 
+			
+			if(ll_tsecuryt('admin')){
+				$consulta = "select b.* from 
+							".PREFIXO."lliure_start as a
+							
+							left join ".PREFIXO."lliure_apps as b
+							on a.idPlug = b.id	";
+				$query = mysql_query($consulta);
+				
+				?>
+				<div class="start" id="menu_rapido"  <?php echo (mysql_num_rows($query) == 0 ? 'style="display: none;"' : '' );?>>
+					<div class="width">
+						<span class="icone"></span>
+						<ul id="appRapido">
+							<?php
+							while($dados = mysql_fetch_array($query)){
+								?>
+								<li id="appR-<?php echo $dados['id']?>">
+									<a href="?app=<?php echo $dados['pasta']?>" title="<?php echo $dados['nome']?>">
+										<img src="<?php echo 'app/'.$dados['pasta'].'/sys/ico.png'; ?>" alt="" />
+									</a>
+								</li>
+								<?php
+							}
+							?>
+						</ul>
+					</div>
+				</div>
+				<?php				
+			} 
+			?>
+		</div>
+	</div>
+
+	<div id="conteudo">
+		<?php 
+		$carrega = 'opt/stirpanelo/ne_trovi.php';
+		if(file_exists($_ll['app']['pagina']))
+			$carrega = $_ll['app']['pagina'];
+			
+		require_once($carrega);
+		?>
+		<div class="both"></div>
+	</div>
+
+	<div id="ll_rodape">
+		<a href="http://www.lliure.com.br"><?php echo 'lliure '.$_ll['conf']->versao;?></a>
+	</div> 
+</div> 
+</body>
+
+<head>
+	<script type="text/javascript">
+		$(function(){
+			<?php
+			ll_alert();
+			?>
+		
+			$('.addDesktop').click(function(){
+				ll_addDesk();
+			});
+	
+			ll_load('load');
+			ll_sessionFix();
+
+			$('#topo .right div.start').mouseenter(function(){		
+				var size = $("#appRapido").find("li").size()*52;
+				$("#appRapido").css({width: size});
+
+				$(this).stop().animate({width: size+20}, 500, 'easeInOutQuart');
+			}).mouseleave(function(){
+			  $(this).stop().animate({width: '20'}, 500, 'easeInOutQuart');
+			});		
+		});
+	</script>
+</head>
+
+</html>
