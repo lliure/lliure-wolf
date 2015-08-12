@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 6.4
+* @Versão 7.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -71,6 +71,15 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 				$_ll['app']['header'] = $_ll['app']['pasta'].'header.php';
 				break;
 				
+			case 'sen_html':
+				$_ll['app']['pagina'] = $_ll['app']['pasta'].'sen_html.php';
+				
+				if(!file_exists($_ll['app']['pagina']))
+					$_ll['app']['pagina'] = $_ll['app']['pasta'].'onclient.php';
+					
+				$_ll['app']['header'] = $_ll['app']['pasta'].'header.php';
+				break;
+				
 			case 'onclient':
 				$_ll['app']['pagina'] = $_ll['app']['pasta'].'onclient.php';
 				$_ll['app']['header'] = $_ll['app']['pasta'].'header.php';
@@ -104,31 +113,53 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 				break;			
 			}
 			
-			
 		} elseif(ll_tsecuryt('admin')) {
 			$_ll['app']['pagina'] = "opt/stirpanelo/ne_trovi.php";
 		}
+		break;
+		
+	case 'opt':
+		if(!empty($_GET['opt'])
+			&& (file_exists('opt/'.$_GET['opt']))){
+			
+			$_ll['opt']['home'] = 'index.php?opt='.$_GET['opt'];
+			$_ll['opt']['onserver'] = 'onserver.php?opt='.$_GET['opt'];
+			$_ll['opt']['onclient'] = 'onclient.php?opt='.$_GET['opt'];			
+			$_ll['opt']['pasta'] = 'opt/'.$_GET['opt'].'/';
+			
+			/**		Controle de abertura de páginas		**/			
+			switch($_ll['mode_operacion']){
+				
+			case 'onserver':
+				$_ll['opt']['pagina'] = $_ll['opt']['pasta'].'onserver.php';
+				$_ll['opt']['header'] = $_ll['opt']['pasta'].'header.php';
+				break;
+				
+			case 'onclient':
+				$_ll['opt']['pagina'] = $_ll['opt']['pasta'].'onclient.php';
+				$_ll['opt']['header'] = $_ll['opt']['pasta'].'header.php';
+				break;
+			
+			case 'kun_html':
+				$ll_segok = true;				
+				
+				if($ll_segok){
+					$_ll['opt']['pagina'] = $_ll['opt']['pasta'].'start.php';
+					
+					if(file_exists($_ll['opt']['pasta'].'header.php'))
+						$_ll['opt']['header'] = $_ll['opt']['pasta'].'header.php';			
+				}					
+				break;			
+			}
+		} else {
+			$_ll['opt']['pagina'] = "opt/stirpanelo/ne_trovi.php";
+		}
+		
 		
 		break;
 
-	case 'minhaconta':
-		$_GET['usuarios'] = $_ll['user']['id'];
-		$_ll['css'][] = 'css/usuarios.css';
-		$_ll['app']['home'] = '?minhaconta';
-		$_ll['app']['header'] = 'opt/user/usuarios.header.php';
-		$_ll['app']['pagina'] = 'opt/user/usuarios.php';
-		break;
-
-	case 'usuarios':
-		if(ll_tsecuryt('admin')){
-			$_ll['app']['pagina'] = 'opt/user/usuarios.php';
-			$_ll['app']['header'] = 'opt/user/usuarios.header.php';
-			$_ll['app']['home'] = '?painel';
-			$_ll['css'][] = 'css/usuarios.css';
-		}
-		break;
-
 	case 'painel':
+		$get[0] = 'app';
 		if(ll_tsecuryt('admin')){
 			$_ll['app']['header'] = 'opt/stirpanelo/header.php';
 			$_ll['app']['pagina'] = 'opt/stirpanelo/index.php';
@@ -138,6 +169,7 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 		break;
 
 	case 'desk':	
+		$get[0] = 'app';
 		if(isset($_ll['conf']->desktop->$_ll['user']['grupo']))
 			header('location: '.$_ll['conf']->desktop->$_ll['user']['grupo']);
 			
@@ -146,6 +178,7 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 		break;
 
 	default:
+		$get[0] = 'app';
 		break;
 }
 /*****/
@@ -171,13 +204,13 @@ if($_ll['mode_operacion'] == 'kun_html'){
 }
 
 /*******************************		Header			*/
-if($_ll['app']['header'] != null)
-	require_once($_ll['app']['header']);
+if($_ll[$get[0]]['header'] != null)
+	require_once($_ll[$get[0]]['header']);
 
 
 /*******************************		On Server		*/
 if($_ll['mode_operacion'] == 'onserver'){	
-	require_once($_ll['app']['pagina']);	
+	require_once($_ll[$get[0]]['pagina']);	
 	die();
 }
 
@@ -185,7 +218,7 @@ if($_ll['mode_operacion'] == 'onserver'){
 
 /*******************************		Sen HTML		*/
 if($_ll['mode_operacion'] == 'onclient'){
-	require_once($_ll['app']['pagina']);	
+	require_once($_ll[$get[0]]['pagina']);	
 	die();
 }
 	
@@ -251,7 +284,7 @@ if(($ll_tema = lltoObject('temas/'.$_ll['user']['tema'].'/dados.ll')) != false){
 				<ul>
 					<?php
 					echo '<li><a href="index.php">Home</a></li>'
-						.'<li><a href="?minhaconta">Minha conta</a></li>'
+						.'<li><a href="?opt=user&minhaconta">Minha conta</a></li>'
 						.(ll_tsecuryt('admin') ? '<li><a href="?painel">Painel de controle</a></li>' : '')						
 						.'<li><a href="nli.php?r=logout">Sair</a></li>';
 					?>					
@@ -295,8 +328,9 @@ if(($ll_tema = lltoObject('temas/'.$_ll['user']['tema'].'/dados.ll')) != false){
 	<div id="conteudo">
 		<?php 
 		$carrega = 'opt/stirpanelo/ne_trovi.php';
-		if(file_exists($_ll['app']['pagina']))
-			$carrega = $_ll['app']['pagina'];
+
+		if(file_exists($_ll[$get[0]]['pagina']))
+			$carrega = $_ll[$get[0]]['pagina'];
 			
 		require_once($carrega);
 		?>

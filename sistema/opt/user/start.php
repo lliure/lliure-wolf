@@ -3,43 +3,16 @@
 *
 * lliure WAP
 *
-* @Versão 6.0
+* @Versão 7.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
-if(!empty($_POST)){
-	require_once("../../etc/bdconf.php"); 
-	require_once("../../includes/jf.funcoes.php"); 
-	require_once("../../api/fileup/inicio.php"); 
-
-	if(empty($_POST['senha'])){
-		unset($_POST['senha']);
-	} else{
-		$_POST['senha'] = md5($_POST['senha']."0800");
-	}
-	
-	$file = new fileup; 								// incia a classe
-	$file->diretorio = '../../../uploads/usuarios/';		// pasta para o upload (lembre-se que o caminho é apartir do arquivo onde estiver sedo execultado)
-	$file->up(); 										// executa a classe
-	
-	if(isset($_POST['imagem']))
-		unset($_POST['imagem']);
-		
-	
-	jf_update(PREFIXO."lliure_admin", $_POST, array('id' => $_GET['id']));
-
-	($_SESSION['Logado']['id'] == $_GET['id'] ? $_SESSION['Logado']['themer'] = $_POST['themer'] : '');
-
-	$_SESSION['aviso'][0] = "Alteração realizada com sucesso!";
-	header('location: ../../index.php?'.(isset($_GET['minhaconta']) ? 'minhaconta' : 'usuarios' ));
-}
-
-if(empty($_GET['usuarios'])){
+if(empty($_GET['user'])){
 	$botoes[] =	array('href' => $backReal, 'img' => $_ll['tema']['icones'].'br_prev.png', 'title' => $backNome);
-	$botoes[] =	array('href' => 'opt/user/ajax.novo_usuario.php', 'img' => $_ll['tema']['icones'].'user.png', 'title' => 'Criar usuário', 'attr' => 'class="criar"');
+	$botoes[] =	array('href' => $_ll['opt']['onclient'].'&ac=new', 'img' => $_ll['tema']['icones'].'user.png', 'title' => 'Criar usuário', 'attr' => 'class="criar"');
 } else {
 	$botoes[] =	array('href' => '?'.(isset($_GET['minhaconta']) ? 'desk' : 'usuarios') , 'img' => $_ll['tema']['icones'].'br_prev.png', 'title' => 'Voltar');
 }
@@ -47,30 +20,33 @@ if(empty($_GET['usuarios'])){
 echo app_bar('Painel de usuários', $botoes);
 
 
-if(empty($_GET['usuarios'])){	
+if(empty($_GET['user'])){
 	$navegador = new navigi();	
 	$navegador->tabela = PREFIXO.'lliure_admin';
 	$navegador->query = 'select * from '.$navegador->tabela.' where id != "'.$_SESSION['logado']['id'].'"'.(ll_tsecuryt() ? '' : ' and grupo != "dev"').' order by nome ASC';
 	$navegador->delete = true;
 
 	$navegador->config = array(
-			'link' => '?usuarios=',
+			'link' => $_ll['opt']['home'].'&user=',
 			'ico' => 'imagens/layout/user.png'
 			);
 	$navegador->monta();
 	?>
 	<script type="text/javascript">
-		$(document).ready(function(){	
-			$(".criar").jfbox({abreBox: false}, function(){
-				jfAlert('Novo usuário criado com sucesso!', 1);
-				navigi_start();
+		$(document).ready(function(){			
+			$(".criar").click(function(){
+				ll_load($(this).attr('href'), function(){
+					jfAlert('Novo usuário criado com sucesso!', 1);
+					navigi_start();
+				});
+				return false;
 			}); 
 		});
 	</script>
 	<?php
 } else {
 
-	$consulta = 'select * from '.PREFIXO.'lliure_admin where id = "'.$_GET['usuarios'].'"';
+	$consulta = 'select * from '.PREFIXO.'lliure_admin where id = "'.$_GET['user'].'" limit 1';
 	
 	$dados = mysql_fetch_assoc(mysql_query($consulta));
 	
@@ -78,7 +54,7 @@ if(empty($_GET['usuarios'])){
 	?>
 
 	<div class="boxCenter editUsuario">
-		<form method="post" action="opt/user/usuarios.php?id=<?php echo $_GET['usuarios'].(isset($_GET['minhaconta']) ? '&minhaconta' : '');?>"  enctype="multipart/form-data">
+		<form method="post" action="<?php echo $_ll['opt']['onserver'].'&ac=grava&id='.$_GET['user'].(isset($_GET['minhaconta']) ? '&minhaconta' : '');?>"  enctype="multipart/form-data">
 			<fieldset>
 				<legend>Dados pessoais</legend>
 				
@@ -125,7 +101,7 @@ if(empty($_GET['usuarios'])){
 				</div>	
 			
 				<?php	
-				if(ll_tsecuryt('admin') && $_GET['usuarios'] != $_SESSION['logado']['id']){
+				if(ll_tsecuryt('admin') && $_GET['user'] != $_SESSION['logado']['id']){
 					?>
 					<div>
 						<label>Grupo de usuário</label>
@@ -161,7 +137,7 @@ if(empty($_GET['usuarios'])){
 			
 			<span class="botao"><a href="<?php echo  $backReal;?>">Voltar</a></span>
 			
-			<span class="botao"><button type="submit">Salvar</button></span>
+			<span class="botao"><button type="submit" class="confirm">Gravar</button></span>
 		</form>
 	</div>
 	<?php	

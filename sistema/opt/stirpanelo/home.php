@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 6.0
+* @Versão 7.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -25,8 +25,8 @@ echo app_bar('Painel de controle', $botoes);
 		
 		<div class="listp">
 			<div class="inter">
-				<a href="?usuarios"><img src="imagens/layout/users.png" alt="" /></a>
-				<a href="?usuarios"><span>Usuários</span></a>
+				<a href="?opt=user"><img src="imagens/layout/users.png" alt="" /></a>
+				<a href="?opt=user"><span>Usuários</span></a>
 			</div>
 		</div>	
 		
