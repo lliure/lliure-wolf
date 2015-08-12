@@ -169,7 +169,8 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 		break;
 
 	case 'desk':	
-		$get[0] = 'app';
+		$get[0] = 'app';		
+		
 		if(isset($_ll['conf']->desktop->$_ll['user']['grupo']))
 			header('location: '.$_ll['conf']->desktop->$_ll['user']['grupo']);
 			

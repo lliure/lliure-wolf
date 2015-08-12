@@ -26,9 +26,11 @@ function navig_historic(){
 function lltoObject($file){
 	//$file = @get_include_contents($file);
 	if(($file = @simplexml_load_file($file, 'SimpleXMLElement', LIBXML_NOCDATA)) != false)
-		foreach($file as $key => $value)
-			$file->$key = utf8_decode($value);
-	
+		if(is_object($file))
+			array_walk_recursive($file, function(&$item, $key){
+				$item = utf8_encode($item);
+			});
+		
 	return $file;
 }
 
