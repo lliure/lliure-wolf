@@ -6,5 +6,4 @@ RewriteEngine on
 
 #RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME} !-d
-
-RewriteRule !\.(js|ico|txt|gif|jpg|png|css|htaccess|html|htm|php|swf)$ index.php
+RewriteRule !\.(js|ico|txt|gif|jpg|png|css|htaccess|html|htm|php|swf|pdf|svg|otf|eot|ttf|woff|woff2)$ boot.php [NC]
