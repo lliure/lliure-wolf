@@ -573,7 +573,7 @@ function jf_ato($array) {
       foreach ($array as $name=>$value) {
          $name = strtolower(trim($name));
          if (!empty($name)) {
-            $object->$name = arrayToObject($value);
+            $object->$name = jf_ato($value);
          }
       }
       return $object;
@@ -581,6 +581,21 @@ function jf_ato($array) {
     else {
       return FALSE;
     }
+}
+
+function jf_ota($obj)
+{
+	if (is_object($obj)) $obj = (array)$obj;
+	if (is_array($obj)) {
+		$new = array();
+		foreach ($obj as $key => $val) {
+			$new[$key] = jf_ota($val);
+		}
+	} else {
+		$new = $obj;
+	}
+
+	return $new;
 }
 
 /********	Criptografia	********/

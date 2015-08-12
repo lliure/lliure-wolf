@@ -24,13 +24,17 @@ function navig_historic(){
 
 ///***///
 function lltoObject($file){
-	//$file = @get_include_contents($file);
-	if(($file = @simplexml_load_file($file, 'SimpleXMLElement', LIBXML_NOCDATA)) != false)
-		if(is_object($file))
-			array_walk_recursive($file, function(&$item, $key){
-				$item = utf8_encode($item);
-			});
-		
+	if(($file = @simplexml_load_file($file, 'SimpleXMLElement', LIBXML_NOCDATA)) != false){		
+		$file = jf_ota($file);
+		array_walk_recursive($file, function(&$item, $key){
+			$item = utf8_decode($item);
+		});			
+	}
+	
+	$file = jf_ato($file);
+	
+	//var_dump($file); die();
+	
 	return $file;
 }
 
@@ -252,12 +256,12 @@ function ll_alert($texto = null, $tempo = 1){
 
 //função que retorna a linguagem nativa, caso não tenha nenhuma retorna false
 function ll_ling(){
-	global $llconf;	
+	global $_ll;		
 	
-	$retorno = false;
+	$retorno = false;	
 	
-	if(isset($llconf->idiomas) && !empty($llconf->idiomas))
-		$retorno = (string) $llconf->idiomas->nativo;
+	if(isset($_ll['conf']->idiomas) && !empty($_ll['conf']->idiomas))
+		$retorno = (string) $_ll['conf']->idiomas->nativo;
 		
 	return $retorno;
 }
