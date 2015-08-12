@@ -5,6 +5,7 @@ lliure wolf
 <br>
 
 #### 7.0 Wolf (12/08/2015)
+- [update] - função de conversão de array para objeto adicionado a bibliotecla jf
 - [update] - Adição das extenções de fontes no .htaccess
 - [update] - Alteração na api midias para usar passando menos parametros
 - [update] - opt user reformulada aos novos padrões
