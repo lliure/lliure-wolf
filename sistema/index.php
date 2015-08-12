@@ -89,9 +89,8 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 				$ll_segok = false;
 				
 				if(ll_tsecuryt() == false){
-					if(($config = @simplexml_load_file($_ll['app']['pasta'].'/sys/config.ll')) !== false){
-						
-						if($config->seguranca != 'public' && (ll_securyt($_GET['app']) == true))
+					if(($config = @simplexml_load_file($_ll['app']['pasta'].'/sys/config.ll')) !== false){					
+						if($config->seguranca != 'public' && ((ll_securyt($_GET['app']) == true) || (ll_tsecuryt($config->seguranca))))
 							$ll_segok = true;
 						elseif($config->seguranca == 'public')
 							$ll_segok = true;
