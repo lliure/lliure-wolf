@@ -5,8 +5,9 @@ lliure wolf
 <br>
 
 #### 7.0 Wolf (12/08/2015)
-- [update] - opt user reformulada aos novos padrões 
-- [update] - entrada de GET opt adicionada ao sistema 
+- [update] - Alteração na api midias para usar passando menos parametros.
+- [update] - opt user reformulada aos novos padrões
+- [update] - entrada de GET opt adicionada ao sistema
 - [update] - Alterado nomenclatura do modo sen_html para onclient, $_ll['sen_html'] foi mantida por compatibilidade
 - [update] - Removido arquivo kun_html.php e acoes.php da raiz
 - [update] - Atualização em rotinas para inicio de arquivo llconf.ll em utf-8
