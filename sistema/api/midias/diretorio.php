@@ -39,7 +39,7 @@ if(is_dir($pasta)){
 		$tipos = explode(' ', $midias->tipos());
 		$etc = strtolower(pathinfo($pasta. '/'. $arquivo, PATHINFO_EXTENSION));
 		
-		if(in_array($etc, $tipos)){
+		if(in_array($etc, $tipos) || $tipos[0] == null){
 			$selecionado = array_search($arquivo, $d);
 
 			$data = filemtime($pasta. '/'. $arquivo);

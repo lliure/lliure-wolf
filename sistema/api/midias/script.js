@@ -40,7 +40,7 @@
 			var crop = null;
 			var quantStart = parseInt($(self).attr('data-quant-start'));
 			var quantLength = parseInt($(self).attr('data-quant-length'));
-			var maxCele = (quantLength == 0? 0 :(quantStart + quantLength - 1));
+			var maxCele = (quantLength == 0? 0 :(quantStart + quantLength));
 			var tipos = $(self).attr('data-tipos').split(' ');
 			var pagina = $(self).attr('data-pagina');
 			var deletar = null;
@@ -631,8 +631,7 @@
 
 			function liberaBotao(){
 				var length = $('.file[data-cele-ord]', self).length;
-				//console.log(length, quantStart, quantLength, (quantStart + quantLength), ((length >= quantStart && length < (quantStart + quantLength))? 'true' : 'false'));
-				if((pagina == 'midias' && ((quantLength == 0 && length >= 1) || (length >= quantStart && length < (quantStart + quantLength))))
+				if((pagina == 'midias' && (length >= quantStart && length <= (quantStart + quantLength)))
 				|| (pagina == 'corte')
 				){
 					$('#midias-botao-proximo', self).prop('disabled', false);

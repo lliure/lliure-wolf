@@ -5,16 +5,19 @@ define('MIDIAS_IMAGENS', 0);
 class midias{
 	
 	private static 
-		$tiposPreDefinidos = array('png jpg gif');
+		$tiposPreDefinidos = array(
+			// MIDIAS_IMAGENS
+			'png jpg gif'
+		);
 
 	private 
-		$titulo = '',
+		$titulo = 'Selecione os arquivos',
 		$dica = '',
 		$name = '',
 		$tipos = null,
 		$corte = null,
 		$cortes = array('c', 'o', 'm', 'p', 'r', 'a'),
-		$quantidadeStar = 1,
+		$quantidadeStar = 0,
 		$quantidadeLength = 1,
 		$rais = '',
 		$diretorio = '',
@@ -55,11 +58,11 @@ class midias{
 
 	public function quantidade($star = NULL, $length = NULL) {
 		if($star !== NULL && $length !== NULL ){
-			$this->quantidadeStar = ($star >= 1? $star: 1);
+			$this->quantidadeStar = ($star >= 0? $star: 0);
 			$this->quantidadeLength = ($length >= 1? $length: 1);
 		
 		}elseif($star !== NULL){
-			$this->quantidadeStar = 1;
+			$this->quantidadeStar = 0;
 			$this->quantidadeLength = ($star >= 0? $star: 0);
 		
 		}else 
