@@ -41,7 +41,7 @@
 			var quantStart = parseInt($(self).attr('data-quant-start'));
 			var quantLength = parseInt($(self).attr('data-quant-length'));
 			var maxCele = (quantLength == 0? 0 :(quantStart + quantLength));
-			var tipos = $(self).attr('data-tipos').split(' ');
+			var tipos = ($(self).attr('data-tipos').length == 0? null: $(self).attr('data-tipos').split(' '));
 			var pagina = $(self).attr('data-pagina');
 			var deletar = null;
 			var name = $(self).attr('data-name');
@@ -677,7 +677,7 @@
 					var etc  = file.name.split('.').pop().toLowerCase();
 					var data = Math.round((new Date()).getTime() / 1000);
 					
-					if(tipos.indexOf(etc) >= 0){
+					if(tipos == null || tipos.indexOf(etc) >= 0){
 						var ref = 
 						$('<div>', {class: 'file', 'data-time': data, 'data-zise': file.size, 'data-etc': etc, 'data-nome': file.name}).append([
 							$('<div>', {class: 'ico'}).append([
