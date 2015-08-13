@@ -11,5 +11,4 @@ require_once 'inicio.php';
 $midias = unserialize(jf_decode($_SESSION['logado']['token'], $_GET['m']));
 
 $pasta = realpath($midias->rais(). DS . ($dir = $midias->diretorio() && !empty($dir)? $dir. DS: ''));
-$pastaRef = str_repeat('../', count(explode('/', SISTEMA))). str_replace('\\', '/', substr($pasta, (strlen(MIDIAS_BASEPATH) - strlen(SISTEMA))));
-
+$pastaRef = str_repeat('../', preg_match_all('/\\|\//', SISTEMA) + 1). str_replace('\\', '/', substr($pasta, (strlen(MIDIAS_BASEPATH) - strlen(SISTEMA))));

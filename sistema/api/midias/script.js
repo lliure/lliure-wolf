@@ -1,7 +1,7 @@
 ;	apiMidias = {};
 	apiMidias.contesto = null;
 
-(function(jQuery, d, w){
+(function($, d, w){
 	
 	$(function(){
 		$('.api-midias .botoes button, .api-midias input.div').click(function(){
