@@ -4,7 +4,9 @@ lliure wolf
 
 <br>
 
-#### 7.0 Wolf (12/08/2015)
+#### 7.0 Wolf (14/08/2015)
+- [update] - instalada como opt o recrusto font-awesome
+- [update] - instalada fonte como fonte padrao Open Sans
 - [update] - na configuração do aplicado no arquivo .ll aceita o grupo que pode acessar o app ex: <seguranca>admin</seguranca>
 - [update] - função de conversão de array para objeto adicionado a biblioteca jf
 - [update] - Adição das extenções de fontes no .htaccess
