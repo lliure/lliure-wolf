@@ -2,12 +2,14 @@
 *
 * lliure WAP
 *
-* @Versão 6.0
+* @Versão 7.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
+
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -28,6 +30,14 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 	text-decoration: none;
+	}
+	
+*{
+	 box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	
+	
 	}
 
 /* HTML5 display-role reset for older browsers */
@@ -68,7 +78,7 @@ button::-moz-focus-inner {
 	}
 
 strong{
-	font-weight: bold;
+	font-weight: 600;
 	}
 	
 em{
@@ -86,8 +96,9 @@ pre{
 html, body {
 	width:100%;
 	height:100%;
-	font-family: "DejaVu Sans", Verdana, Tahoma,  "Ubuntu","Ubuntu Beta","Bitstream Vera Sans";
-	font-size: 12px;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
+	font-size: 10px;
 	} 
 	
 body{	
@@ -134,7 +145,7 @@ h1	{
 	font-size: 2em;
 	margin-bottom: 3px;
 	color: #a90037;
-	font-weight: bold;
+	font-weight: 600;
 	}
 	
 	div.linhaFina{
@@ -146,7 +157,7 @@ h2{
 	font-size: 1.3em;
 	color: #9e0000;
 	margin-bottom: 15px;
-	font-weight: bold;
+	font-weight: 600;
 	}
 			
 h3 {
@@ -194,7 +205,7 @@ input, textarea, select {
 	color: #444;
 	padding: 3px;
 	outline: none;
-	font-family: "DejaVu Sans", Verdana, Tahoma,  "Ubuntu","Ubuntu Beta","Bitstream Vera Sans";
+	font-family: 'Open Sans', sans-serif;
 	font-size: 1em;
 	border: 1px solid #ccc;
 	border-radius: 3px;
@@ -222,7 +233,7 @@ button {
 	font-size: 0.8em;
 	margin: 0px;
 	padding: 8px;
-	font-family: "DejaVu Sans", Verdana, Tahoma,  "Ubuntu","Ubuntu Beta","Bitstream Vera Sans";
+	font-family: 'Open Sans', sans-serif;
 	}
 	
 /**********************************************		PRE-CLASSES		*/
