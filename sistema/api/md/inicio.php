@@ -239,6 +239,10 @@ class midias{
 		$r .= '</div>';
 		return $r;
 	}
+
+	public function implode(){
+		return rawurlencode(jf_encode($_SESSION['logado']['token'], serialize($this)));
+	}
     
     final static function preparaParaJson($array){
         if(is_array($array)){
@@ -250,10 +254,6 @@ class midias{
         }
         return $array;
     }
-	
-	public function implode(){
-		return rawurlencode(jf_encode($_SESSION['logado']['token'], serialize($this)));
-	}
 	
 	public function datas(){
 		$r  = '';
