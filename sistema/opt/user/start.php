@@ -73,10 +73,11 @@ if(empty($_GET['user'])){
 					<input type="text" value="<?php echo $twitter?>" name="twitter" />
 				</div>		
 			
-				<div>
+				<div class="user-fileup">
+					<label>Foto</label>
 					<?php
 					$file = new fileup;
-					$file->titulo = 'Foto';
+					$file->titulo = '';
 					$file->rotulo = 'Selecionar imagem'; 
 					$file->registro = $foto;
 					$file->campo = 'foto'; 
