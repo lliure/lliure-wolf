@@ -253,7 +253,7 @@ class aplimo{
 		} elseif(isset($_GET['apm']) && file_exists(self::$basePath . $_GET['apm'] . '/header.php')) {
 			$this->home = $_ll['app']['home'].'&apm='.$_GET['apm'];
 			$this->onserver = $_ll['app']['onserver'].'&apm='.$_GET['apm'];
-			$this->onclient = $_ll['onclient']['home'].'&apm='.$_GET['apm'];
+			$this->onclient = $_ll['app']['onclient'].'&apm='.$_GET['apm'];
 			
 			require_once(self::$basePath . $_GET['apm'] . '/header.php');
 		}
