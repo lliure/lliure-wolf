@@ -360,18 +360,16 @@ class aplimo{
 				</ul>
 			</div>
 			
-			<div class="centro">
-				<div class="align">			
-					<?php
-					if(!empty($this->hc_menu))		/**************************		Monta menu superior	**/		
-						$this->monta_hc_menu();					
-							
-					$this->require_page();
-					?>
-
-				</div>
+			<div class="centro">		
+				<?php
+				if(!empty($this->hc_menu))		/**************************		Monta menu superior	**/		
+					$this->monta_hc_menu();					
+						
+				$this->require_page();
+				?>
+				<div class="both"></div>
 			</div>
-			<div class="both"></div>
+			
 		</div>
 		
 		
@@ -387,10 +385,7 @@ class aplimo{
 					$(this).removeClass('open_sub');
 				
 				$(box).slideToggle();
-			});
-			
-			$('#tudo').css('background', '#fff');
-			
+			});			
 			<?php echo $this->js; ?>
 		</script>
 		<?php
