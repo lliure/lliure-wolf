@@ -63,7 +63,7 @@ class aplimo{
 	var $smalt = null;
 	var $js = null;
 	private static $basePath = null;
-	
+		
 	function __construct() {
 		global $_ll;		
 		self::basePath($_ll['app']['pasta']);
