@@ -5,6 +5,7 @@ lliure wolf
 <br>
 
 #### 7.0 Wolf (14/08/2015)
+- [update] - .gitignore da rais adicionado
 - [update] - instalada como opt o recrusto font-awesome
 - [update] - instalada fonte como fonte padrao Open Sans
 - [update] - na configuração do aplicado no arquivo .ll aceita o grupo que pode acessar o app ex: <seguranca>admin</seguranca>
