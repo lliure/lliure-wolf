@@ -5,6 +5,7 @@ lliure wolf
 <br>
 
 #### 7.0 Wolf (14/08/2015)
+- [bug] - strtolower em ll_app::setNome pos se pasar um nome com letras maiuscalas dava um erro no lliure::iniciaApi;
 - [update] - .gitignore da rais adicionado
 - [update] - instalada como opt o recrusto font-awesome
 - [update] - instalada fonte como fonte padrao Open Sans
@@ -20,7 +21,6 @@ lliure wolf
 - [update] - Atualização na função lltoObject() para suporte a utf-8
 - [bug] - atualização nos padrões de css class .column
 - [bug] - aterando entrada na função jf_insert() de != para !== de 'NULL'
-- [bug] - correção na api aplimo referente a montagem do menu superior na função hc_menu()
 - [bug] - correção na api aplimo referente a montagem do menu superior na função hc_menu()
 - [bug] - correção de htmlspecialchars na api Navigi 
 - [bug] - ajustada codifição de caracteres nos arquivos kun_html.php e funcoes.js

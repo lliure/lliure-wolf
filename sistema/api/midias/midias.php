@@ -1,6 +1,6 @@
 <?php
 
-/* @var $midias midias */
+/* @var $midias Midias */
 header ('Content-type: text/html; charset=ISO-8859-1'); require_once 'header.php';
 
 if(isset($_GET['inseridos']))
@@ -23,7 +23,7 @@ ob_start(); require_once 'diretorio.php'; ob_clean();?>
 			<input id="upload-input" class="upload-input" type="file" name="img" multiple/>
 			<fieldset>
 				<div class="direrio">
-					<input class="div" readonly="readonly" type="test" value="<?php echo $pastaRef;?>"/>
+					<input class="div" readonly="readonly" type="test" value="<?php echo $midias->pastaRef();?>"/>
 				</div>
 				<div class="pesquisa">
 					<input id="midias-pesquisa" type="text" placeholder="Pesquisa" />

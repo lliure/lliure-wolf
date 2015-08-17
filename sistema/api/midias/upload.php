@@ -1,6 +1,6 @@
 <?php
 
-/* @var $midias midias */
+/* @var $midias Midias */
 header ('Content-type: text/html; charset=ISO-8859-1'); require_once 'header.php';
 
 $e = explode('.', $_FILES['file']['name']);
@@ -10,9 +10,9 @@ $nam = implode('.', $e);
 $i = -1;
 
 $n = $_FILES['file']['name'];
-$name = $pasta. DS. $_FILES['file']['name'];
+$name = $midias->pasta(). DS. $_FILES['file']['name'];
 
-while (file_exists(($name = $pasta. DS. $nam. ((++$i) > 0? ' ('. $i. ')': ''). '.'. $ets)));
+while (file_exists(($name = $midias->pasta(). DS. $nam. ((++$i) > 0? ' ('. $i. ')': ''). '.'. $ets)));
 
 $erros = array(
 	0 => 'Não houve erro, o upload foi bem sucedido.',
@@ -29,7 +29,7 @@ if ($t !== FALSE){
 	$data = filemtime($name);
 	$size = filesize($name);
 	
-	echo json_encode(midias::preparaParaJson(array(
+	echo json_encode(Midias::preparaParaJson(array(
 		'data' => $data,
 		'size' => $size,
 		'etc'  => $ets,
@@ -37,7 +37,7 @@ if ($t !== FALSE){
 	)));
 	
 }else {
-	echo json_encode(midias::preparaParaJson(array(
+	echo json_encode(Midias::preparaParaJson(array(
 		'erro' => !$t,
 		'cod' => $_FILES['file']['error'],
 		'msg' => $erros[$_FILES['file']['error']]
