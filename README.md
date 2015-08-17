@@ -1,13 +1,11 @@
 lliure wolf
 -----------
-<br>
-> 7.0 (Wolf)
->
-> Plataforma de desenvolvimento e testes para o lliure
-<br>
+
+> 7.0 (Perdigueiro Português)
 
 #### 7.0 Wolf (14/08/2015)
 - [bug] - strtolower em ll_app::setNome pos se pasar um nome com letras maiuscalas dava um erro no lliure::iniciaApi;
+- [update] - Api aplimo reformulado com flexbox
 - [update] - .gitignore da rais adicionado
 - [update] - instalada como opt o recrusto font-awesome
 - [update] - instalada fonte como fonte padrao Open Sans
