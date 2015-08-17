@@ -11,7 +11,7 @@
  */
 
 lliure::inicia('navigi');
-lliure::loadcss('css/usuarios.css');
+lliure::loadcss($_ll['opt']['pasta'].'usuarios.css');
 
 
 

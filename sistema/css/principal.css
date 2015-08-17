@@ -60,11 +60,12 @@
 	#topo .right div.menu{
 		position: relative;
 		margin-right: 14px;
-		float: right;
+		float: right;		
 		}
 
 		#topo .right div.menu ul li{
 			float: left;
+			font-size: 1.3em;
 			}
 			
 			#topo .right div.menu ul li a{

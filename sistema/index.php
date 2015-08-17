@@ -44,6 +44,7 @@ require_once("api/gerenciamento_de_api.php");
 $_ll['app']['header'] = null;
 $_ll['app']['pagina'] = "opt/mensagens/permissao.php";
 
+$_ll['titulo'] = 'lliure Wap';
 
 $get = array_keys($_GET);
 switch(isset($get[0]) ? $get[0] : 'desk' ){
@@ -256,7 +257,7 @@ if(($ll_tema = lltoObject('temas/'.$_ll['user']['tema'].'/dados.ll')) != false){
 	lliure::loadJs();
 	
 	?>
-	<title>lliure WAP</title>
+	
 </head>
 
 <body>
@@ -344,6 +345,8 @@ if(($ll_tema = lltoObject('temas/'.$_ll['user']['tema'].'/dados.ll')) != false){
 </body>
 
 <head>
+	<title><?php echo $_ll['titulo']?></title>
+	
 	<script type="text/javascript">
 		$(function(){
 			<?php

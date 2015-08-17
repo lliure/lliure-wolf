@@ -9,17 +9,29 @@
 *
 */
 
+#tudo{
+	background: #fff;
+	height: 100%
+	}
+	
+	#conteudo{
+		height: calc(100% - 34px);
+		}
+
 .container{
 	clear: both;
-	float: left;
-	width: 100%;
+	
+	margin: 0 -13px;
+	padding: 0;
+	float: none;
+	width: auto;
+	
+	display: flex;
+	justify-content: center;
 	}
 		
 	.container .menu{
-		float: left;
 		width: 210px;
-		height: 33px;
-		margin-right: -210px;
 		position: relative;
 		z-index: 300;
 		}		
@@ -31,9 +43,6 @@
 		z-index: 100;
 		}
 		
-		.container .centro .align{
-			margin-left: 240px;
-			}
 			
 		.container .centro .paginacao{
 			float: left;
@@ -100,11 +109,10 @@
 /***/
 .cabecalho{
 	border-bottom: 1px solid #e1e1e1;
-	margin: 0 20px 0 -13px;
-	padding: 17px 13px 13px;
-	float: none;
-	width: auto;
+	padding: 17px 0 0;
+
 	background: #fff;
+	height: 55px;
 	}
 	
 	.container .menu h1{
@@ -150,84 +158,87 @@
 			}
 	
 .corpo{
-	margin: 0 20px 0 -13px;
-	padding: 17px 0px 13px;
-	float: none;
-	width: auto;
-	background: #fff;
+	
+	height: calc(100% - 25px);
 	}
 	
-	.corpo .menu .ul{
-		
-		}
-		
-	.corpo .menu ul li{
-		padding-left: 13px;
-		border-left: 4px solid transparent;
+	.corpo .menu{
 		}
 	
-		.corpo .menu ul li span,
-		.corpo .menu ul li .link1{			
-			display: block;
-			padding: 10px 0 10px 20px;			
-			font-size: 1.1em;
-			cursor: pointer;
-			color: #111;
+		.corpo .menu .ul{
+			
 			}
 			
-		.corpo .menu ul li span{
-			background: url('img/down.gif') no-repeat 6px center;
+		.corpo .menu ul li{
+			border-left: 4px solid transparent;
 			}
-			
-		.corpo .menu ul li span:hover,
-		.corpo .menu ul li .link1:hover{
-			background-color: #EEEEEE;
-			}
-			
-			.corpo .menu ul li span.open_sub{
-				background-image: url('img/up.gif');
-				font-weight: bold;
-				color: #444;
-				}			
-			
-			.corpo .menu ul li ul{
-				display: none;
-				position: relative;
-				left: -29px;
-				padding-left: 12px;
-				}
-				
-			.corpo .menu ul li ul.open_sub{
+		
+			.corpo .menu ul li span,
+			.corpo .menu ul li .link1{			
 				display: block;
+				padding: 10px 0 10px 20px;			
+				font-size: 1.3em;
+				cursor: pointer;
+				color: #111;
 				}
 				
-				.corpo .menu ul li ul li{
-					padding-left: 37px;
-					}
+			.corpo .menu ul li span{
+				background: url('img/down.gif') no-repeat 6px center;
+				}
 				
-				.corpo .menu ul li ul li a{
+			.corpo .menu ul li span:hover,
+			.corpo .menu ul li .link1:hover{
+				background-color: #EEEEEE;
+				}
+				
+				.corpo .menu ul li span.open_sub{
+					background-image: url('img/up.gif');
+					font-weight: bold;
+					color: #444;
+					}			
+				
+				.corpo .menu ul li ul{
+					display: none;
+					position: relative;
+					left: -29px;
+					padding-left: 12px;
+					}
+					
+				.corpo .menu ul li ul.open_sub{
 					display: block;
-					padding: 6px 0;
-					color: #111;
 					}
 					
-				.corpo .menu ul li ul li a:hover{
-					text-decoration: underline;
-					}
-				
+					.corpo .menu ul li ul li{
+						padding-left: 37px;
+						}
 					
-	/***/
-	
-		.corpo .menu ul li.aktivigi{
-			border-color: #777;
-			font-weight: bold;
-			color: #777;		
-			}
-			
-			.corpo .menu ul li.aktivigi a{
-				color: inherit;
+					.corpo .menu ul li ul li a{
+						display: block;
+						padding: 6px 0;
+						color: #111;
+						font-size: 1.2em;
+						}
+						
+					.corpo .menu ul li ul li a:hover{
+						text-decoration: underline;
+						}
+					
+						
+		/***/
+		
+			.corpo .menu ul li.aktivigi{
+				border-color: #777;
+				font-weight: bold;
+				color: #777;		
 				}
 				
+				.corpo .menu ul li.aktivigi a{
+					color: inherit;
+					}
+
+	.corpo .centro{
+		float: left;
+		}					
 				
 /*--------------*/
 .corpo h3{

@@ -37,15 +37,13 @@ if(!isset($require) || isset($_GET['r'])){
 	require_once('includes/carrega_conf.php');
 		
 	$temo = 'lliure';
-	if(isset($_ll['conf']->temoDefaulto))
-		if(file_exists('temas/'.$_ll['conf']->temoDefaulto.'/dados.ll'))
-		$temo = (string) $_ll['conf']->temoDefaulto;
+	
+	
+	if(isset($_ll['conf']->temodefaulto))
+		if(file_exists('temas/'.$_ll['conf']->temodefaulto.'/dados.ll'))
+		$temo = (string) $_ll['conf']->temodefaulto;
 		
-	if(!isset($require)){		
-		/*
-		if (!in_array("mod_rewrite", apache_get_modules()))
-			echo '<div class="mensagem"><span><strong>mod_rewrite</strong> não está ativo nesse servidor, por favor ative para que a segurança do lliure funcione corretamente</span></div>';
-		*/
+	if(!isset($require)){
 		$require = 'temas/'.$temo.'/login.php';
 	}
 }

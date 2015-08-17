@@ -66,7 +66,7 @@
 	#login form label{
 		text-align: left;
 		color: #555;	
-		font-size: 1em;
+		font-size: 1.1em;
 		display: block;
 		font-weight: bold;
 		margin: 0 0 0.5em;
@@ -83,7 +83,7 @@
 			border-width: 1px;
 			display: inline-block;
 			height: 32px;
-			font-size: 1.2em;			
+			font-size: 1.3em;			
 			margin: 0;
 			padding: 0 8px;
 			}
@@ -98,7 +98,7 @@
 			}
 
 		#login form input:focus{
-			border-color: #E60F3D;
+			border-color: #a41a11;
 			}
 			
 	#login form .botao{
@@ -111,18 +111,18 @@
 			font-size: 13px;
 			line-height: 13px;
 			height: 32px;
-			background-color: #E60F3D;
-			background-image: -moz-linear-gradient(center top , #E60F41, #CF0D37);
-			border: 1px solid #D90E3D;
+			background-color: #bf2317;
+			background-image: -moz-linear-gradient(center top , #bf2317, #a41a11);
+			border: 1px solid #a41a11;
 			color: #FFFFFF;
 			text-shadow: 0 1px rgba(0, 0, 0, 0.1);
 			font-weight: bold;
 			}
 		
 		#login form .botao button:hover{
-			background-color: #D40C4D;
-			background-image: -moz-linear-gradient(center top , #DE0E3B, #C70B33);
-			border: 1px solid #A50F2F;
+			background-color: #bf180b;
+			background-image: -moz-linear-gradient(center top , #bf180b, #bf2317);
+			border: 1px solid #a41a11;
 			color: #FFFFFF;
 			text-shadow: 0 1px rgba(0, 0, 0, 0.3);
 			}
