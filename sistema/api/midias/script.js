@@ -138,7 +138,7 @@ api.Midias.tamanho = function(tamanho){
 	return Math.floor(tamanho)+ 'PB';
 
 };
-api.Midias.redimencionar = function(dimensoesUm, dimensoesDois, tipo){
+api.Midias.redimencionar = function(dimensoesUm, dimensoesDois, tipo){ 
 
 	tipo = (tipo === undefined? 'p': tipo);
 	dimensoesUm.proporcao = (dimensoesUm.proporcao === undefined? dimensoesUm.width / dimensoesUm.height : dimensoesUm.proporcao);
