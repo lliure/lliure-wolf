@@ -1,9 +1,7 @@
 lliure wolf
------------
-<br>
-> 7.0 (Wolf)
->
-> Plataforma de desenvolvimento e testes para o lliure
+=========
+> 7.0 (Wolf) 
+
 <br>
 
 #### 7.0 Wolf (14/08/2015)
