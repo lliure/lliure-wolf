@@ -3,8 +3,6 @@
 /* @var $midias Midias */
 header ('Content-type: text/html; charset=ISO-8859-1'); require_once 'header.php';
 
-$ars = array();
-$arqs = array();
 $arquivos = array();
 
 function ordenDosArquivos($arq1, $arq2){
@@ -14,62 +12,66 @@ function ordenDosArquivos($arq1, $arq2){
     return ($arq1->data > $arq2->data)? -1: 1;
 }
 
-if(is_dir($midias->pasta())){
+function montaDiretorio($midias, &$arquivos){
+	if (is_dir($midias->pasta())) {
 
-	if(!isset($_GET['i'])){
-	
-		$diretorio = dir($midias->pasta());
-		
-		while($arquivo = $diretorio->read())
-			if(!($arquivo == '.' || $arquivo == '..') && !is_dir($midias->pasta(). DS. $arquivo))
-				$arqs[] = $arquivo;
-		
-		$diretorio->close();
-		
-	}else{
-		foreach ($_GET['i'] as $arquivo){
-			$arqs[] = array_pop(explode('/', $arquivo));
+		$ars = array();
+		$arqs = array();
+
+		if (!isset($_GET['i'])) {
+
+			$diretorio = dir($midias->pasta());
+
+			while ($arquivo = $diretorio->read())
+				if (!($arquivo == '.' || $arquivo == '..') && !is_dir($midias->pasta() . DS . $arquivo))
+					$arqs[] = $arquivo;
+
+			$diretorio->close();
+
+		} else {
+			foreach ($_GET['i'] as $arquivo) {
+				$arqs[] = array_pop(explode('/', $arquivo));
+			}
 		}
-	}
-		
-	$d = $midias->listaDeArquivos();
-			
-	foreach ($arqs as $arquivo){
-		
-		$tipos = explode(' ', $midias->tipos());
-		$etc = strtolower(pathinfo($midias->pasta(). '/'. $arquivo, PATHINFO_EXTENSION));
-		
-		if(in_array($etc, $tipos) || $tipos[0] == null){
-			$selecionado = array_search($arquivo, $d);
 
-			$data = filemtime($midias->pasta(). '/'. $arquivo);
-			$size = filesize($midias->pasta(). '/'. $arquivo);
+		$d = $midias->listaDeArquivos();
 
-			$ars[] = (object) array(
-				'data'		=> $data,
-				'datas'		=> 'data-data="'. $data. '" data-size="'. $size. '" data-etc="'. $etc. '" data-nome="'. $arquivo. '"'. ($selecionado !== FALSE? ' data-pre-cele="true" data-cele-ord="'. ($selecionado + 1). '"' .((($cor = $midias->corteDados($arquivo)) && !empty($cor))?  ' data-corte="'. $cor. '"': '') : ''),
-				'classe'	=> 'mark'. ($selecionado !== FALSE? ' celec': ''),
-				'img'		=> (!array_search($etc, array('ico', 'png', 'jpg'))?
-					'<img class="img-sem" src="api/navigi/img/ico.png">'
-				:
-					'<img class="img-ico" src="'. $midias->pastaRef(). '/'. $arquivo. '">'
-				),
-				'nome'		=> $arquivo
-			);
+		foreach ($arqs as $arquivo) {
+
+			$tipos = explode(' ', $midias->tipos());
+			$etc = strtolower(pathinfo($midias->pasta() . '/' . $arquivo, PATHINFO_EXTENSION));
+
+			if (in_array($etc, $tipos) || $tipos[0] == null) {
+				$selecionado = array_search($arquivo, $d);
+
+				$data = filemtime($midias->pasta() . '/' . $arquivo);
+				$size = filesize($midias->pasta() . '/' . $arquivo);
+
+				$ars[] = (object)array(
+					'data' => $data,
+					'datas' => 'data-data="' . $data . '" data-size="' . $size . '" data-etc="' . $etc . '" data-nome="' . $arquivo . '"' . ($selecionado !== FALSE ? ' data-pre-cele="true" data-cele-ord="' . ($selecionado + 1) . '"' . ((($cor = $midias->getCorte($arquivo)) && !empty($cor)) ? ' data-corte="' . $cor . '"' : '') : ''),
+					'classe' => 'mark' . ($selecionado !== FALSE ? ' celec' : ''),
+					'img' => (!array_search($etc, array('ico', 'png', 'jpg')) ?
+						'<img class="img-sem" src="api/navigi/img/ico.png">'
+						:
+						'<img class="img-ico" src="' . $midias->pastaRef() . '/' . $arquivo . '">'
+					),
+					'nome' => $arquivo
+				);
+			}
+
 		}
-		
-	}
-	
-	if(!isset($_GET['i']))
-		usort($ars, 'ordenDosArquivos');
-		
-	foreach ($ars as $arquivo){
-		$arquivos[] = '
-			<div class="file" '. $arquivo->datas. '>
+
+		if (!isset($_GET['i']))
+			usort($ars, 'ordenDosArquivos');
+
+		foreach ($ars as $arquivo) {
+			$arquivos[] = '
+			<div class="file" ' . $arquivo->datas . '>
 				<div class="ico">
 					<div class="pos">
-						<span class="'. $arquivo->classe. '">
-							'. $arquivo->img. '
+						<span class="' . $arquivo->classe . '">
+							' . $arquivo->img . '
 							<span class="checkbox"></span>
 							<span class="deletar"></span>
 							<span class="erro"></span>
@@ -77,11 +79,10 @@ if(is_dir($midias->pasta())){
 					</div>
 				</div>
 				<div class="nome">
-					'. $arquivo->nome. '
+					' . $arquivo->nome . '
 				</div>
 			</div>
 		';
+		}
 	}
-}
-
-echo json_encode(Midias::preparaParaJson($arquivos));
+}montaDiretorio($midias, $arquivos);

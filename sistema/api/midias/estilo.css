@@ -155,6 +155,22 @@
 				display: none;
 				}
 
+	.api-midias .api-midias-multfiles{
+		position: relative;
+		font-size: 1.2em;
+		margin: 0 !important;
+		padding: 0 !important;
+		z-index: 10;
+		}
+
+		.api-midias.api-midias-grande .api-midias-multfiles{
+			padding-left: 35px !important;
+			}
+
+		.api-midias.api-midias-pequeno .api-midias-multfiles{
+			padding-left: 70px !important;
+			}
+
 
 
 
@@ -474,7 +490,7 @@
 							border-bottom-left-radius: 0px !important;
 							}
 	
-						.files .file .ico .pos .mark .barra-load{
+						.files .file .ico .pos .mark .api-midias-barra-load{
 							position: absolute;
 							top: 0;
 							right: 0;
@@ -532,7 +548,7 @@
 
 						.files .file .ico .pos .mark,
 						.files .file .ico .pos .mark .deletar,
-						.files .file .ico .pos .mark .barra-load,
+						.files .file .ico .pos .mark .api-midias-barra-load,
 						.files .file .ico .pos .mark .load,
 						.files .file .ico .pos .mark .checkbox,
 						.files .file .ico .pos .mark .erro{

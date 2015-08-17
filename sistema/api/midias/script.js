@@ -1,7 +1,7 @@
 ;if(typeof api === 'undefined')api={};
 
 api.Midias = {};
-api.Midias.sendFileToServer = function(contesto, end, formData, ref){
+api.Midias.sendFileToServer = function(finalizacao, formData, ref){
 	//console.log(self.sendFiles, self.sendFilesBuffer);
 
 	if(api.Midias.sendFiles >= 5){
@@ -32,7 +32,7 @@ api.Midias.sendFileToServer = function(contesto, end, formData, ref){
 					}
 					return xhrobj;
 				},
-				url: 'api/midias/upload.php?m=' + $(contesto).attr('data-action'),
+				url: 'api/midias/upload.php?m=' + api.Midias.contesto.attr('data-action'),
 				type: "POST",
 				dataType: 'json',
 				contentType: false,
@@ -58,19 +58,29 @@ api.Midias.sendFileToServer = function(contesto, end, formData, ref){
 						$('.nome', ref).html(unescape(data.nome));
 					}
 					api.Midias.sendFiles -= 1;
-					api.Midias.sendFileToServer(contesto, end);
+					api.Midias.sendFileToServer(finalizacao);
 				},
 				error: function (){
 					$(ref).addClass('erro');
 					api.Midias.sendFiles -= 1;
-					api.Midias.sendFileToServer(contesto, end);
+					api.Midias.sendFileToServer(finalizacao);
 				}
 			});
 		}
 	}
 	if(formData == undefined && api.Midias.sendFiles <= 0){
-		end();
+		finalizacao();
 	}
+};
+api.Midias.TrataArquivosDeUpload = function(files, tipos, desenha, finalizacao){
+	$(files).each(function(i, file){
+		if(tipos == null || tipos.indexOf(file.name.toString().split('.').pop().toLowerCase()) >= 0){
+			var ref = desenha(file);
+			var formData = new FormData();
+			formData.append('file', file);
+			api.Midias.sendFileToServer(finalizacao, formData, ref);
+		}
+	});
 };
 api.Midias.dezenhaInput = function(files){
 	api.Midias.contesto.attr('data-total-parcial', files.length);
@@ -78,27 +88,30 @@ api.Midias.dezenhaInput = function(files){
 	var multfiles = api.Midias.contesto.find('.api-midias-multfiles');
 	content.html('');
 	multfiles.html(files.length + ' Arquivos');
-	var r = [];
 	for(var id in files)(function(id, file){
-		var img = file.img;
-		delete file.img;
-		delete file.name;
-		delete file.value;
-		file.class = 'api-midias-file';
-		var t =
-		$('<div>', file).append([
-			$('<div>', {class: 'api-midias-img'}).append([
-				$('<img>', {'src': img}),
-				$('<div>', {class: 'api-midias-barra-load'})
-			]),
-			$('<span>', {class: 'api-midias-name'}).html(file['data-nome']),
-			$('<br>',   {class: 'api-midias-br-nome'}),
-			$('<span>', {class: 'api-midias-dados'}).html((file['data-size'] !== undefined? 'Tamanho: '+ api.Midias.tamanho(file['data-size']): ''))
-		]);
-		content.append([t]);
-		r.push(t);
+		content.append(api.Midias.iconeInput(file));
 	})(id, files[id]);
-	return r;
+	if(api.Midias.contesto.hasClass('api-midias-grande') || files.length == 1)content.show(); else content.hide();
+	if(api.Midias.contesto.hasClass('api-midias-pequeno') && files.length != 1)multfiles.show(); else multfiles.hide();
+};
+api.Midias.iconeInput = function(file){
+	var img = file.img;
+	var path = img.split('/');
+	img = path.pop();
+	path = path.join('/');
+	delete file.img;
+	delete file.name;
+	delete file.value;
+	file.class = 'api-midias-file';
+	return $('<div>', file).append([
+		$('<div>', {class: 'api-midias-img'}).append([
+			$('<img>', {'src': path + '/' + (file['data-corte']? file['data-corte'] + '/': '') + img}),
+			$('<div>', {class: 'api-midias-barra-load'})
+		]),
+		$('<span>', {class: 'api-midias-name'}).html(file['data-nome']),
+		$('<br>',   {class: 'api-midias-br-nome'}),
+		$('<span>', {class: 'api-midias-dados'}).html((file['data-size'] !== undefined? 'Tamanho: '+ api.Midias.tamanho(file['data-size']): ''))
+	]);
 };
 api.Midias.tamanho = function(tamanho){
 	tamanho = parseFloat(tamanho);
@@ -124,6 +137,63 @@ api.Midias.tamanho = function(tamanho){
 	tamanho /= 1024;
 	return Math.floor(tamanho)+ 'PB';
 
+};
+api.Midias.redimencionar = function(dimensoesUm, dimensoesDois, tipo){
+
+	tipo = (tipo === undefined? 'p': tipo);
+	dimensoesUm.proporcao = (dimensoesUm.proporcao === undefined? dimensoesUm.width / dimensoesUm.height : dimensoesUm.proporcao);
+	dimensoesDois.proporcao = (dimensoesDois.proporcao === undefined? dimensoesDois.width / dimensoesDois.height : dimensoesDois.proporcao);
+	var f = {};
+	var proprocao = 0;
+
+	switch (tipo){
+
+		case 'c':
+
+			if(dimensoesUm.proporcao > dimensoesDois.proporcao){
+				proprocao = dimensoesDois.height / dimensoesUm.height;
+			}else{
+				proprocao = dimensoesDois.width / dimensoesUm.width;
+			}
+
+			f.width =		Math.round(dimensoesUm.width * proprocao);
+			f.height =		Math.round(dimensoesUm.height * proprocao);
+			f.proporcao =	f.width / f.height;
+			f.top =			Math.round(-((f.height - dimensoesDois.height) / 2));
+			f.left =		Math.round(-((f.width - dimensoesDois.width) / 2));
+
+			break;
+
+		case 'a':
+
+			f.width =		dimensoesDois.width;
+			f.height =		dimensoesDois.height;
+			f.proporcao =	dimensoesDois.proporcao;
+			f.top =			0;
+			f.left =		0;
+
+			break;
+
+		default:
+		case 'r':
+		case 'p':
+		case 'o':
+
+			if(dimensoesUm.proporcao < dimensoesDois.proporcao){
+				proprocao = dimensoesDois.height / dimensoesUm.height;
+			}else{
+				proprocao = dimensoesDois.width / dimensoesUm.width;
+			}
+
+			f.width =		Math.round(dimensoesUm.width * proprocao);
+			f.height =		Math.round(dimensoesUm.height * proprocao);
+			f.proporcao =	f.width / f.height;
+			f.top =			Math.round(-((f.height - dimensoesDois.height) / 2));
+			f.left =		Math.round(-((f.width - dimensoesDois.width) / 2));
+
+			break;
+	}
+	return f;
 };
 api.Midias.contesto = null;
 api.Midias.sendFiles = 0;
@@ -178,7 +248,7 @@ api.Midias.sendFilesBuffer = [];
 			corte.width = parseInt(c[0]);
 			corte.height = parseInt(c[1]);
 			corte.proporcao = corte.width / corte.height;
-			var icone = redimencionar(corte, {width: 100, height: 100}, 'p');
+			var icone = api.Midias.redimencionar(corte, {width: 100, height: 100}, 'p');
 			var crop = null;
 			var quantStart = parseInt($(self).attr('data-quant-start'));
 			var quantLength = parseInt($(self).attr('data-quant-length'));
@@ -200,7 +270,8 @@ api.Midias.sendFilesBuffer = [];
 			}).on('drop', function (e){
 				msg.fadeOut(250);
 				e.preventDefault();
-				handleFileUpload(e.originalEvent.dataTransfer.files);
+				//handleFileUpload(e.originalEvent.dataTransfer.files);
+				api.Midias.TrataArquivosDeUpload(e.originalEvent.dataTransfer.files, tipos, constroiIcone, liberaBotao);
 			});
 
 			//caso o arastar volte no documento some a mensagem
@@ -228,8 +299,9 @@ api.Midias.sendFilesBuffer = [];
 			
 			/************* clicar no botao uploa abra a tela de upload *********/
 			$('#upload-input', self).change(function(event){
-				console.log(typeof this.files);
-				handleFileUpload(this.files);
+				//console.log(typeof this.files);
+				//handleFileUpload(this.files);
+				api.Midias.TrataArquivosDeUpload(this.files, tipos, constroiIcone, liberaBotao);
 				event.stopPropagation();
 				event.preventDefault();
 				return false;
@@ -294,7 +366,7 @@ api.Midias.sendFilesBuffer = [];
 			});
 			
 			$('#midias-msg-del button.apagar', self).click(function(e){
-				$.getJSON('api/midias/deletar.php?m='+ action + '&ap=' + escape(deletar.attr('data-nome')));
+				console.log($.getJSON('api/midias/deletar.php?m='+ action + '&ap=' + escape(deletar.attr('data-nome'))));
 				$(deletar).remove();
 				deletar = null;
 				$('#midias-msg-del', self).hide();
@@ -506,7 +578,7 @@ api.Midias.sendFilesBuffer = [];
 				var src = $(euImg).attr('src');
 				var img = new Image();
 				img.onload = function(){
-					var fim = redimencionar(img, box, 'p');
+					var fim = api.Midias.redimencionar(img, box, 'p');
 					var nova = $('<img>', {id: 'midias-imgToCorte', 'data-nome': nome, src: src});
 					box.find('.imgToCorte').css({width: fim.width, height: fim.height}).html(nova);
 					setCorteToImg();
@@ -536,7 +608,7 @@ api.Midias.sendFilesBuffer = [];
 			
 			/**
 			 * configura um corte na imagem selecionada e acerta a miniatura dela.
-			 * corte = ['c', 'p', 'o', 'm'];
+			 * corte = ['c', 'o', 'm', 'p', 'r', 'a'];
 			 * 
 			 * @param {string} corteTipo O corte a ser configura, caso nao passe ele carrega o configurado para imagem
 			 * @returns {Boolean} flase se nao ouver img configurada.
@@ -579,7 +651,7 @@ api.Midias.sendFilesBuffer = [];
 						case 'p':
 						case 'o':
 
-							var f = redimencionar(img, icone, corteTipo);
+							var f = api.Midias.redimencionar(img, icone, corteTipo);
 							
 							if(corteTipo == 'p' || corteTipo == 'r'){
 								f.top = 0;
@@ -625,7 +697,7 @@ api.Midias.sendFilesBuffer = [];
 									p[3] = Math.round(((c[3] + c[5]) / img.height) * imgRef.height);
 									self.crop.setSelect(p);
 								}else{
-									var f = redimencionar(img, icone, 'a');
+									var f = api.Midias.redimencionar(img, icone, 'a');
 									$(eu).attr({'data-corte': corte.width + '-' + corte.height + '-' + 'a'});
 									$(ico).css(f);
 								}
@@ -665,64 +737,6 @@ api.Midias.sendFilesBuffer = [];
 				img.src = src;
 				
 			}
-			
-			function redimencionar(dimensoesUm, dimensoesDois, tipo){
-				
-				tipo = (tipo === undefined? 'p': tipo);
-				dimensoesUm.proporcao = (dimensoesUm.proporcao === undefined? dimensoesUm.width / dimensoesUm.height : dimensoesUm.proporcao);
-				dimensoesDois.proporcao = (dimensoesDois.proporcao === undefined? dimensoesDois.width / dimensoesDois.height : dimensoesDois.proporcao);
-				var f = {};
-				var proprocao = 0;
-				
-				switch (tipo){
-
-					case 'c':
-						
-						if(dimensoesUm.proporcao > dimensoesDois.proporcao){
-							proprocao = dimensoesDois.height / dimensoesUm.height;
-						}else{
-							proprocao = dimensoesDois.width / dimensoesUm.width;
-						}
-						
-						f.width =		Math.round(dimensoesUm.width * proprocao);
-						f.height =		Math.round(dimensoesUm.height * proprocao);
-						f.proporcao =	f.width / f.height;
-						f.top =			Math.round(-((f.height - dimensoesDois.height) / 2));
-						f.left =		Math.round(-((f.width - dimensoesDois.width) / 2));
-						
-					break;
-
-					case 'a':
-
-						f.width =		dimensoesDois.width;
-						f.height =		dimensoesDois.height;
-						f.proporcao =	dimensoesDois.proporcao;
-						f.top =			0;
-						f.left =		0;
-						
-					break;
-
-					default:
-					case 'r':
-					case 'p':
-					case 'o':
-					
-						if(dimensoesUm.proporcao < dimensoesDois.proporcao){
-							proprocao = dimensoesDois.height / dimensoesUm.height;
-						}else{
-							proprocao = dimensoesDois.width / dimensoesUm.width;
-						}
-
-						f.width =		Math.round(dimensoesUm.width * proprocao);
-						f.height =		Math.round(dimensoesUm.height * proprocao);
-						f.proporcao =	f.width / f.height;
-						f.top =			Math.round(-((f.height - dimensoesDois.height) / 2));
-						f.left =		Math.round(-((f.width - dimensoesDois.width) / 2));
-						
-					break;
-				}
-				return f;
-			}
 
 			$('#api-midias-icosCortardos .file').each(function(index, file){
 				var ico = $('.img-ico', file);
@@ -737,7 +751,7 @@ api.Midias.sendFilesBuffer = [];
 						var c = $(file).attr('data-corte').split('-');
 						cte = c.pop();
 						if(cte == 'c' || cte == 'p' || cte == 'o' || cte == 'r' || cte == 'a'){
-							var f = redimencionar(img, icone, cte);
+							var f = api.Midias.redimencionar(img, icone, cte);
 						}else{
 							c[2] = parseInt(c[2]);
 							c[3] = parseInt(c[3]);
@@ -753,7 +767,7 @@ api.Midias.sendFilesBuffer = [];
 							};
 						}
 					}else{
-						var f = redimencionar(img, icone, cor);
+						var f = api.Midias.redimencionar(img, icone, cor);
 						$(file).attr({'data-corte': corte.width + '-' + corte.height + '-' + cor});
 					}
 					
@@ -837,7 +851,7 @@ api.Midias.sendFilesBuffer = [];
 											$('<img>', {class: 'img-ico', src: 'api/navigi/img/ico.png'})
 										:
 											$('<img>', {class: 'img-sem', src: 'api/navigi/img/ico.png'})),
-										$('<span>', {class: 'barra-load'}),
+										$('<span>', {class: 'api-midias-barra-load'}),
 										$('<span>', {class: 'checkbox'}),
 										$('<span>', {class: 'erro'})
 									])
@@ -857,9 +871,41 @@ api.Midias.sendFilesBuffer = [];
 						var formData = new FormData();
 						formData.append('file', file);
 						//sendFileToServer(formData, ref);
-						api.Midias.sendFileToServer(self, liberaBotao, formData, ref);
+						api.Midias.sendFileToServer(liberaBotao, formData, ref);
 					}
 				});
+			}
+
+			function constroiIcone(file){
+				var ref =
+				$('<div>', {
+					'class': 'file',
+					'data-nome': file.name,
+					'data-etc': file.name.split('.').pop().toLowerCase(),
+					'data-size': file.size,
+					'data-time': Math.round((new Date()).getTime() / 1000),
+				}).append([
+					$('<div>', {class: 'ico'}).append([
+						$('<div>', {class: 'pos'}).append([
+							$('<span>', {class: 'mark'}).append([
+								(file.type.match('image.*')?
+									$('<img>', {class: 'img-ico', src: 'api/navigi/img/ico.png'})
+									:
+									$('<img>', {class: 'img-sem', src: 'api/navigi/img/ico.png'})),
+								$('<span>', {class: 'barra-load'}),
+								$('<span>', {class: 'checkbox'}),
+								$('<span>', {class: 'erro'})
+							])
+						])
+					]),
+					$('<div>', {class: 'nome'}).append([
+						file.name
+					])
+				]);
+				$('#api_midias_files .files', self).prepend(ref);
+				if(file.type.match('image.*'))
+					desenharIcone(file, $('.img-ico', ref));
+				return ref;
 			}
 			
 			function desenharIcone(file, ico){
@@ -896,81 +942,7 @@ api.Midias.sendFilesBuffer = [];
 					}
 				}
 			}
-			
-			/*function sendFileToServer(formData, ref){
-				
-				var sfts = this;
-				this.abcdef = (isNaN(this.abcdef)? 0: this.abcdef);
-				this.abcdefg = (this.abcdefg == undefined? []: this.abcdefg);
-				
-				//console.log(sfts.abcdef, this.abcdefg);
-				
-				if(sfts.abcdef >= 5){
-					sfts.abcdefg.push({formData: formData, ref: ref});
-					
-				}else{
-					if(formData == undefined && sfts.abcdefg.length > 0){
-						var a		= sfts.abcdefg.shift();
-						formData	= a.formData;
-						ref			= a.ref;
-					}
-					if(formData != undefined){
-						sfts.abcdef += 1;
-						$.ajax({
-							xhr: function(){
-								var xhrobj = $.ajaxSettings.xhr();
-								if (xhrobj.upload){
-										xhrobj.upload.addEventListener('progress', function(event) {
-											var percent = 0;
-											var position = event.loaded || event.position;
-											var total = event.total;
-											if (event.lengthComputable) {
-												percent = Math.ceil(position / total * 100);
-											}
-											//Set progress
-											$('.barra-load', ref).css({width: percent + '%'});
-										}, false);
-									}
-								return xhrobj;
-							},
-							url: 'api/midias/upload.php?m=' + $(self).attr('data-action'),
-							type: "POST",
-							dataType: 'json',
-							contentType: false,
-							processData: false,
-							cache: false,
-							data: formData,
-							context: ref,
-							success: function(data){
-								$('.barra-load', ref).hide();
-								if(data.erro != undefined){
-									console.log(data);
-									$(ref).addClass('erro').attr({
-										'data-erro': unescape(data.msg),
-									});
-									$('.nome', ref).html(unescape(data.msg));
-								}else{
-									$(ref).attr({
-										'data-data': unescape(data.data),
-										'data-size': unescape(data.size),
-										'data-etc':  unescape(data.etc),
-										'data-nome': unescape(data.nome)
-									});
-									$('.nome', ref).html(unescape(data.nome));
-								}
-								sfts.abcdef -= 1;
-								sendFileToServer();
-							},
-							error: function (){
-								$(ref).addClass('erro');
-								sfts.abcdef -= 1;
-								sendFileToServer();
-							}
-						});
-					}
-				}
-			}*/
-			
+
 		});
 		
 	};

@@ -38,8 +38,9 @@ class Midias{
 		$pasta = '',
 		$pastaRef = '',
 		$dados = array(),
+		$dadosAtuais = array(),
 		$inseridos = array(),
-		$removiodos = array();
+		$removidos = array();
 
 
 	public function tipos($tipos = null) {
@@ -149,45 +150,34 @@ class Midias{
 		return $this;
 	}
 
-	public function dados(array $arquivos = NULL){
-		if($arquivos !== NULL)
-			$this->dados = $arquivos;
+	private function addFiles(&$var, $files = null){
+		if($files === NULL)
+			return array_keys($var);
 
-		else
-			return $this->dados;
-
+		$var = array();
+		foreach($files as $file){
+			$file = explode('/', $file);
+			$var[array_pop($file)] = array_pop($file);
+		}
 		return $this;
+	}
+
+	public function dados(array $arquivos = NULL){
+		return $this->addFiles($this->dados, $arquivos);
 	}
 
 	public function inseridos(array $arquivos = NULL){
-		if($arquivos !== NULL)
-			$this->inseridos = $arquivos;
-
-		else
-			return $this->inseridos;
-
-		return $this;
+		return $this->addFiles($this->inseridos, $arquivos);
 	}
 
 	public function removidos(array $arquivos = NULL){
-		if($arquivos !== NULL)
-			$this->removiodos = $arquivos;
-
-		else
-			return $this->removiodos;
-
-		return $this;
+		return $this->addFiles($this->removidos, $arquivos);
 	}
 
 	public function setCortes(array $cortes){
-
 		foreach ($cortes as $arq => $corte){
-
-			if(isset($this->dados[$arq]))
-				$this->dados[$arq] = $corte;
-
-			if(isset($this->inseridos[$arq]))
-				$this->inseridos[$arq] = $corte;
+			if(isset($this->dados[$arq])) $this->dados[$arq] = $corte;
+			if(isset($this->inseridos[$arq])) $this->inseridos[$arq] = $corte;
 		}
 	}
 
@@ -195,37 +185,16 @@ class Midias{
 		return
 			(isset($this->inseridos[$arquivo])? $this->inseridos[$arquivo]:
 			(isset($this->dados[$arquivo])? $this->dados[$arquivo]:
-			NULL));
-	}
-
-	public function corteDados($arquivo){
-		return
-			(isset($this->inseridos[$arquivo])? $this->inseridos[$arquivo]:
-			(isset($this->dados[$arquivo])? $this->dados[$arquivo]:
-			NULL));
+			(NULL)));
 	}
 
 	public function listaDeArquivos(){
-
-		$arquivos = array();
-		$remo = $this->removidos();
-
-		foreach ($this->dados() as $arq)
-			if(!in_array($arq, $remo))
-				$arquivos[] = $arq;
-
-		foreach ($this->inseridos() as $arq)
-			$arquivos[] = $arq;
-
-		return $arquivos;
-	}
-
-	private static function temCorte($arquivo){
-		if(preg_match('/([0-9]+-)+(([^-]+)-)*['. implode('', self::CORTES). ']\//i', $arquivo)){
-			$e = explode('/', $arquivo); array_pop($e);
-			return array_pop($e);
-		}
-		return false;
+		$arquivos = $this->dados;
+		foreach($this->removidos as $arquivo => $corte)
+			unset($arquivos[$arquivo]);
+		foreach($this->inseridos as $arquivo => $corte)
+			$arquivos[$arquivo] = $corte;
+		return array_keys($arquivos);
 	}
 
 	public function dica($dica = NULL){
@@ -274,11 +243,11 @@ class Midias{
 			if($this->quantidadeTotal <= $i++) break;
 			$nome = substr($file, ($p = strripos('/', $file)) !== false ? $p : 0);
 			$tamanho = filesize($this->pasta() . '/' . $file);
-			$corte = $this->temCorte($file);
+			$corte = self::getCorte($file);
 			$r .= '
-				<div class="api-midias-file" data-name="'. $nome. '" data-tamanho="'. $tamanho. ($corte !== false? ' data-corte="' . $corte. '"': '') . '">
+				<div class="api-midias-file" data-name="'. $nome. '" data-tamanho="'. $tamanho. ($corte !== null? ' data-corte="' . $corte. '"': '') . '">
 					<div class="api-midias-img">
-						<img src="' . $this->pastaRef() . '/' . $file . '" alt=""/>
+						<img src="' . $this->pastaRef() . '/'. ($corte !== null? $corte. '/': '') . $file . '" alt=""/>
 						<div class="api-midias-barra-load"></div>
 					</div>
 					<span class="api-midias-name">' . $nome . '</span><br class="api-midias-br-nome"/>
@@ -345,9 +314,17 @@ class Midias{
 		$r .= ' data-corte="'. $this->corte(). '"';
 		$r .= ' data-tipos="'. $this->tipos(). '"';
 		$r .= ' data-cortes="'. implode('-', $this->cortes()). '"';
-		$r .= ' data-anteriores="'. implode(';', self::preparaParaJson($this->dados())). '"';
+		$r .= ' data-anteriores="'. $this->dadosAntetiores(). '"';
 		$r .= ' data-action="'. $this->implode(). '"';
 		return $r;
+	}
+
+	private function dadosAntetiores(){
+		$r = array();
+		foreach ($this->dados() as $id => $arquivo){
+			$r[] = ((!empty($this->dados[$arquivo])? $this->dados[$arquivo]. '/': ''). $arquivo);
+		}
+		return implode(';', $r);
 	}
 
 	static public function atualizaBanco(&$_DADOS, $tabela, $idLigacao, $colunaLigacao = 'lig', $colunaArquivo = 'arquivo', $colunaOrden = null){

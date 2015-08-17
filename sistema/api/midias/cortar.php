@@ -3,16 +3,11 @@
 /* @var $midias Midias */
 header ('Content-type: text/html; charset=ISO-8859-1'); require_once 'header.php';
 
-//if(isset($_GET['i']))
-//	$midias->paraCorte($_GET['i']);
-
-if(isset($_GET['inseridos']))
-	$midias->inseridos($_GET['inseridos']);
-
 if(isset($_GET['removidos']))
 	$midias->removidos($_GET['removidos']);
 
-$_GET['i'] = $midias->listaDeArquivos();
+if(isset($_GET['inseridos']))
+	$midias->inseridos($_GET['inseridos']);
 
 //echo '<pre>'. print_r($midias, true). '</pre>';
 
@@ -27,7 +22,9 @@ $cortes = array(
 
 $corSet = $midias->cortes();
 
-ob_start(); require_once 'diretorio.php'; ob_clean(); ?>
+/* $_GET['i'] lista de arquivos exibidos */
+$_GET['i'] = $midias->listaDeArquivos();
+require_once 'diretorio.php';?>
 
 <div id="api_midias" data-pagina="corte"<?php echo $midias->datas();?>>
 

@@ -3,18 +3,18 @@
 /* @var $midias Midias */
 header ('Content-type: text/html; charset=ISO-8859-1'); require_once 'header.php';
 
-if(isset($_GET['inseridos']))
-	$midias->inseridos($_GET['inseridos']);
-
 if(isset($_GET['removidos']))
 	$midias->removidos($_GET['removidos']);
+
+if(isset($_GET['inseridos']))
+	$midias->inseridos($_GET['inseridos']);
 
 if(isset($_GET['corte']))
 	$midias->setCortes($_GET['corte']);
 
 //echo '<pre>'. print_r($midias, true). '</pre>';
 
-ob_start(); require_once 'diretorio.php'; ob_clean();?>
+require_once 'diretorio.php';?>
 
 <div id="api_midias" data-pagina="midias"<?php echo $midias->datas();?>>
 	<div class="topo">
