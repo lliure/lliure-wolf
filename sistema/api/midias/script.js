@@ -134,9 +134,9 @@ api.Midias.sendFilesBuffer = [];
 	$(function(){
 
 		$('.api-midias .api-midias-botoes .api-midias-upload').prop('disabled', false).click(function(){
-			var contexto = $(this).closest('.api-midias');
-			api.Midias.contesto = contexto;
-			contexto.find('.api-midias-input-file').click();
+			var contesto = $(this).closest('.api-midias');
+			api.Midias.contesto = contesto;
+			contesto.find('.api-midias-input-file').click();
 		});
 
 		$('.api-midias .api-midias-input-file').change(function(event){
@@ -147,18 +147,17 @@ api.Midias.sendFilesBuffer = [];
 		});
 
 		$('.api-midias .api-midias-botoes .api-midias-servidor').prop('disabled', false).click(function(){
-			var contexto = $(this).closest('.api-midias');
-			api.Midias.contesto = contexto;
-			var carrega = 'api/midias/midias.php?m='+ contexto.attr('data-action');
-			var a = '';
-			$('input[ref="inseridos"]', contexto).each(function(){
-				a += '&inseridos[]=' + escape($(this).val()).replace('/', '%2F');
+			var contesto = $(this).closest('.api-midias');
+			api.Midias.contesto = contesto;
+			var carrega = 'api/midias/midias.php?m='+ contesto.attr('data-action');
+			$('input[ref="inseridos"]', contesto).each(function(){
+				carrega += '&inseridos[]=' + escape($(this).val()).replace('/', '%2F');
 			});
-			$('input[ref="removidos"]', contexto).each(function(){
-				a += '&removidos[]=' + escape($(this).val()).replace('/', '%2F');
+			$('input[ref="removidos"]', contesto).each(function(){
+				carrega += '&removidos[]=' + escape($(this).val()).replace('/', '%2F');
 			});
 			$().jfbox({
-				carrega: carrega + a,
+				carrega: carrega,
 				position: 'maximized'
 			});
 		});
