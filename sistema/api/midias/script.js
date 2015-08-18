@@ -2,32 +2,20 @@
 
 api.Midias = {};
 api.Midias.sendFileToServer = function(settings){
-
 	if(settings && api.Midias.sendFiles >= 5){
 		api.Midias.sendFilesBuffer.push(settings);
-
 	}else{
-
 		if(!settings && api.Midias.sendFilesBuffer.length > 0)
 			settings = api.Midias.sendFilesBuffer.shift();
-
 		if(settings){
-
 			api.Midias.sendFiles += 1;
-
 			var formData = new FormData();
 			formData.append('file', settings.file);
-
 			$.ajax({
 				xhr: function(){
 					var xhrobj = $.ajaxSettings.xhr();
 					if (xhrobj.upload){xhrobj.upload.addEventListener('progress', function(event){
-						var percent = 0;
-						var position = event.loaded || event.position;
-						var total = event.total;
-						if (event.lengthComputable)
-							percent = Math.ceil(position / total * 100);
-						settings.progress(percent);
+						settings.progress((!event.lengthComputable? 0: Math.ceil((event.loaded || event.position) / (event.total) * 100)));
 					}, false);}
 					return xhrobj;
 				},
@@ -41,34 +29,33 @@ api.Midias.sendFileToServer = function(settings){
 				success: function(data){
 					settings.success(data);
 					api.Midias.sendFiles -= 1;
-					if(api.Midias.sendFiles <= 0)
-						settings.end();
-					else
-						api.Midias.sendFileToServer();
+					ifEnd(settings.end);
 				},
 				error: function(data){
 					settings.error(data);
-					api.Midias.sendFiles -= 1;
-					if(api.Midias.sendFiles <= 0)
-						settings.end();
-					else
-						api.Midias.sendFileToServer();
+					ifEnd(settings.end);
 				}
 			});
 		}
 	}
+	function ifEnd(end){
+		if(api.Midias.sendFiles <= 0)end();
+		else api.Midias.sendFileToServer();
+	}
 };
 api.Midias.dezenhaInput = function(files){
-	api.Midias.contesto.attr('data-total-parcial', files.length);
+	var length = Object.keys(files).length;
+	var ordem = Object.keys(files).sort();
+	api.Midias.contesto.attr('data-total-parcial', length);
 	var content = api.Midias.contesto.find('.api-midias-content');
 	var multfiles = api.Midias.contesto.find('.api-midias-multfiles');
 	content.html('');
-	multfiles.html(files.length + ' Arquivos');
-	for(var id in files)(function(id, file){
+	multfiles.html(length + ' Arquivos');
+	for(var id in ordem)(function(id, file){
 		content.append(api.Midias.iconeInput(file));
-	})(id, files[id]);
-	if(api.Midias.contesto.hasClass('api-midias-grande') || files.length == 1)content.show(); else content.hide();
-	if(api.Midias.contesto.hasClass('api-midias-pequeno') && files.length != 1)multfiles.show(); else multfiles.hide();
+	})(id, files[ordem[id]]);
+	if(api.Midias.contesto.hasClass('api-midias-grande') || length == 1)content.show(); else content.hide();
+	if(api.Midias.contesto.hasClass('api-midias-pequeno') && length != 1)multfiles.show(); else multfiles.hide();
 };
 api.Midias.iconeInput = function(file){
 	var img = file.img;
@@ -86,33 +73,53 @@ api.Midias.iconeInput = function(file){
 		]),
 		$('<span>', {class: 'api-midias-name'}).html(file['data-nome']),
 		$('<br>',   {class: 'api-midias-br-nome'}),
-		$('<span>', {class: 'api-midias-dados'}).html((file['data-size'] !== undefined? 'Tamanho: '+ api.Midias.tamanho(file['data-size']): ''))
+		$('<span>', {class: 'api-midias-dados'}).html((file['data-size'] !== undefined? 'Tamanho: '+ tamanho(file['data-size']): ''))
 	]);
+	function tamanho(tamanho){
+		tamanho = parseFloat(tamanho);
+		if(tamanho < 1024)
+			return Math.floor(tamanho)+ 'b';
+		tamanho /= 1024;
+		if(tamanho < 1024)
+			return Math.floor(tamanho)+ 'kB';
+		tamanho /= 1024;
+		if(tamanho < 1024)
+			return Math.floor(tamanho)+ 'MB';
+		tamanho /= 1024;
+		if(tamanho < 1024)
+			return Math.floor(tamanho)+ 'GB';
+		tamanho /= 1024;
+		if(tamanho < 1024)
+			return Math.floor(tamanho)+ 'TB';
+		tamanho /= 1024;
+		return Math.floor(tamanho)+ 'PB';
+	}
 };
-api.Midias.tamanho = function(tamanho){
-	tamanho = parseFloat(tamanho);
-	if(tamanho < 1024)
-		return Math.floor(tamanho)+ 'b';
-
-	tamanho /= 1024;
-	if(tamanho < 1024)
-		return Math.floor(tamanho)+ 'kB';
-
-	tamanho /= 1024;
-	if(tamanho < 1024)
-		return Math.floor(tamanho)+ 'MB';
-
-	tamanho /= 1024;
-	if(tamanho < 1024)
-		return Math.floor(tamanho)+ 'GB';
-
-	tamanho /= 1024;
-	if(tamanho < 1024)
-		return Math.floor(tamanho)+ 'TB';
-
-	tamanho /= 1024;
-	return Math.floor(tamanho)+ 'PB';
-
+api.Midias.atualizaInputs = function(removidos, inseridos){
+	$('input[type="hidden"][ref="inseridos"], input[type="hidden"][ref="removidos"]', api.Midias.contesto).remove();
+	$.each(removidos, function(id, dados){
+		$(api.Midias.contesto).append([
+			$('<input>', {type: 'hidden', ref: 'removidos', name: dados.name, value: dados.value})
+		]);
+	});
+	$.each(inseridos, function(id, dados){
+		$(api.Midias.contesto).append([
+			$('<input>', {type: 'hidden', ref: 'inseridos', name: dados.name, value: dados.value})
+		]);
+	});
+};
+api.Midias.difernciar = function(itens, lista){
+	var i, inseridos = [], removidos = [], name = api.Midias.contesto.attr('data-name');
+	$.each(itens, function(index, valeu){
+		if((i = lista.indexOf(valeu.id)) < 0)
+			inseridos.push({name: name + '[inseridos][' + valeu['data-cele-ord'] + ']', value: valeu['value']});
+		else
+			lista.splice(i, 1);
+	});
+	$.each(lista, function(index){
+		removidos.push({name: name + '[removidos][]', value: lista[index].split(':').pop()});
+	});
+	return {'inseridos': inseridos, 'removidos': removidos};
 };
 api.Midias.redimencionar = function(dimensoesUm, dimensoesDois, tipo){ 
 
@@ -187,9 +194,12 @@ api.Midias.sendFilesBuffer = [];
 
 		$('.api-midias .api-midias-input-file').change(function(event){
 
+			var contesto = api.Midias.contesto;
+			var total = parseInt(contesto.attr('data-quant-total'));
 			var tipos = (api.Midias.contesto.attr('data-tipos').length == 0? null: api.Midias.contesto.attr('data-tipos').split(' '));
 
 			var eu = $(this);
+			var files = {};
 			eu.prop('disable', true);
 			api.Midias.contesto.find('.api-midias-botoes .api-midias-upload').prop('disable', true);
 
@@ -199,19 +209,21 @@ api.Midias.sendFilesBuffer = [];
 			var multfiles = api.Midias.contesto.find('.api-midias-multfiles');
 			multfiles.html(this.files.length+ ' Arquivos');
 
-			$(this.files).each(function(index, file){
+			$.each(this.files, function(index, file){
+				if(index >= total)return false;
 
 				var etc  = file.name.split('.').pop().toLowerCase();
 				var data = Math.round((new Date()).getTime() / 1000);
 
 				if(tipos == null || tipos.indexOf(etc) >= 0){
+
 					var ref = api.Midias.iconeInput({
-						'data-time': 	 data,
-						'data-size': 	 0,
-						'data-etc':  	 etc,
-						'data-corte':  	 null,
-						'data-nome': 	 file.name,
-						'img':		 	 '',
+						'data-time':  	data,
+						'data-size':  	0,
+						'data-etc':   	etc,
+						'data-corte': 	null,
+						'data-nome':  	file.name,
+						'img':		  	''
 					});
 
 					content.append(ref);
@@ -236,10 +248,11 @@ api.Midias.sendFilesBuffer = [];
 							if (!data.erro) {
 								ref.find('.api-midias-img .api-midias-barra-load').hide();
 								$(ref).attr({
-									'data-data': decodeURI(data.data),
-									'data-size': decodeURI(data.size),
-									'data-etc': decodeURI(data.etc),
-									'data-nome': decodeURI(data.nome)
+									'data-cele-ord': index,
+									'data-data':     decodeURI(data.data),
+									'data-size':     decodeURI(data.size),
+									'data-etc':      decodeURI(data.etc),
+									'data-nome':     decodeURI(data.nome)
 								});
 								ref.find('.api-midias-name').html(decodeURI(data.nome));
 							} else {
@@ -255,6 +268,26 @@ api.Midias.sendFilesBuffer = [];
 							ref.find('.api-midias-name').html('error');
 						},
 						'end': function () {
+							var fotos = {};
+							contesto.find('.api-midias-file').each(function(index, val){
+								val = $(val);
+								var value = (!!val.attr('data-corte')? val.attr('data-corte') + '/': '') + val.attr('data-nome');
+								fotos[index+ ':'+ value] = {
+									'data-cele-ord': index,
+									'data-time': 	 val.attr('data-time'),
+									'data-size': 	 val.attr('data-size'),
+									'data-etc':  	 val.attr('data-etc'),
+									'data-corte':  	 val.attr('data-corte'),
+									'data-nome': 	 val.attr('data-nome'),
+									'img':		 	 val.find('.img-ico').attr('src'),
+									'value':	 	 value
+								};
+							});
+							console.log(fotos);
+							var inp = decodeURI($(self).attr('data-dados-deft')).split(';'); inp.pop();
+							result = api.Midias.difernciar(fotos, inp);
+							api.Midias.atualizaInputs(result.removidos, result.inseridos);
+
 							eu.prop('disable', false);
 							api.Midias.contesto.find('.api-midias-botoes .api-midias-upload').prop('disable', false);
 						}
@@ -427,95 +460,95 @@ api.Midias.sendFilesBuffer = [];
 				var pesq = $(this).val().toLowerCase();
 
 
+				if(pesq.search(/^\*/) >= 0){
 
-				/**************** reordenar por data **************/
-				if(pesq == '*data=asc' || pesq == '*data=desc'){
-					var datas = [];
-					$('.file', self).each(function (index, file){
-						var data_nova = parseInt($(file).attr('data-data'));
-						if(datas.length <= 0){
-							datas.splice(0, 0, {'data': data_nova, 'element': file});
-						}else{
-							for(var i = (datas.length - 1); i >= 0; i--){
-								if(data_nova >= datas[i].data){
-									datas.splice((i + 1), 0, {'data': data_nova, 'element': file});
-									break;
-								}else if(i === 0){
-									datas.splice(0, 0, {'data': data_nova, 'element': file});
+					$('#api_midias_files .file', self).hide();
+
+					/**************** reordenar por data **************/
+					if (pesq == '*data=asc' || pesq == '*data=desc') {
+						var datas = [];
+						$('#api_midias_files .file', self).each(function (index, file) {
+							var data_nova = parseInt($(file).attr('data-data'));
+							if (datas.length <= 0) {
+								datas.splice(0, 0, {'data': data_nova, 'element': file});
+							} else {
+								for (var i = (datas.length - 1); i >= 0; i--) {
+									if (data_nova >= datas[i].data){
+										datas.splice((i + 1), 0, {'data': data_nova, 'element': file}); break;
+									} else if (i === 0) {
+										datas.splice(0, 0, {'data': data_nova, 'element': file});
+									}
 								}
 							}
-						}
-					});
-					
-					if(pesq == '*data=asc')
-						reordenarUp(datas);
-						
-					else if(pesq == '*data=desc')
-						reordenarDown(datas);
+						});
+
+						if (pesq == '*data=asc')
+							reordenarUp(datas);
+
+						else if (pesq == '*data=desc')
+							reordenarDown(datas);
 
 
-
-				/**************** reordenar por nome **************/
-				}else if(pesq == '*nome=asc' || pesq == '*nome=desc'){
-					var nomes = [];
-					$('.file', self).each(function (index, file){
-						var nome_novo = $(file).attr('data-nome').toLowerCase();
-						if(nomes.length <= 0){
-							nomes.splice(0, 0, {'nome': nome_novo, 'element': file});
-						}else{
-							for(var i = (nomes.length - 1); i >= 0; i--){
-								if(nome_novo >= nomes[i].nome){
-									nomes.splice((i + 1), 0, {'nome': nome_novo, 'element': file});
-									break;
-								}else if(i === 0){
-									nomes.splice(0, 0, {'nome': nome_novo, 'element': file});
+						/**************** reordenar por nome **************/
+					} else if (pesq == '*nome=asc' || pesq == '*nome=desc') {
+						var nomes = [];
+						$('#api_midias_files .file', self).each(function (index, file) {
+							var nome_novo = $(file).attr('data-nome').toLowerCase();
+							if (nomes.length <= 0) {
+								nomes.splice(0, 0, {'nome': nome_novo, 'element': file});
+							} else {
+								for (var i = (nomes.length - 1); i >= 0; i--) {
+									if (nome_novo >= nomes[i].nome) {
+										nomes.splice((i + 1), 0, {'nome': nome_novo, 'element': file}); break;
+									} else if (i === 0) {
+										nomes.splice(0, 0, {'nome': nome_novo, 'element': file});
+									}
 								}
 							}
-						}
-					});
-					
-					if(pesq == '*nome=asc')
-						reordenarUp(nomes);
-						
-					else if(pesq == '*nome=desc')
-						reordenarDown(nomes);
+						});
 
+						if (pesq == '*nome=asc')
+							reordenarUp(nomes);
 
+						else if (pesq == '*nome=desc')
+							reordenarDown(nomes);
+
+					}
 
 				/************ filtra por nome ************/
-				}else if(pesq.length){
-					$('.file', self).each(function (index, file){
-						if(!$(file).attr('data-nome').toLowerCase().match(pesq)){
+				}else if (pesq.length) {
+					$('#api_midias_files .file', self).each(function (index, file) {
+						if (!$(file).attr('data-nome').toLowerCase().match(pesq)) {
 							$(file).hide();
-						}else{
+						} else {
 							$(file).show();
 						}
 					});
 
 
-
-				/***************** mostrar tudo novamente ************/
-				}else
-					$('.file', self).show();
+					/***************** mostrar tudo novamente ************/
+				} else
+					$('#api_midias_files .file', self).show();
 			
 			});
-			
+
 			function reordenarUp(lista){
+				lista.reverse();
 				$(lista).each(function(indes, cele){
-					$('.files', self).append(cele.element);
+					$('#api_midias_files .files', self).prepend($(cele.element).show());
 				});
 			}
 			
 			function reordenarDown(lista){
 				$(lista).each(function(indes, cele){
-					$('.files', self).prepend(cele.element);
+					$('#api_midias_files .files', self).prepend($(cele.element).show());
 				});
 			}
 
 			$('#midias-botao-anterior', self).click(function(){
 				var i = '';
-				$('#api-midias-icosCortardos .file', self).each(function(index){
-					i += '&corte[' + escape($(this).attr('data-nome')) + ']=' + escape($(this).attr('data-corte'));
+				$('#api-midias-icosCortardos .file', self).each(function(){
+					i += '&corte[' + encodeURI($(this).attr('data-nome')) + ']=' + encodeURI($(this).attr('data-corte'));
 				});
 				if(!$(this).prop('disabled')){
 					$().jfbox({
@@ -528,17 +561,16 @@ api.Midias.sendFilesBuffer = [];
 			$('#midias-botao-encerrar, #midias-botao-proximo', self).click(function(){
 				if(!$(this).prop('disabled')){
 					var botao = this;
-					var fotos = [];
-					$(
-						($(botao).hasClass('arquivos')? '#api_midias_files .file[data-cele-ord]' : 
-						($(botao).hasClass('cortes')? '#api-midias-icosCortardos .file' : ''))
-					, self).each(function(index, val){
+					var fotos = {};
+					var arfot = [];
+					$(($(botao).hasClass('arquivos')? '#api_midias_files .file[data-cele-ord]' :(
+					$(botao).hasClass('cortes')? '#api-midias-icosCortardos .file' : '')),
+					self).each(function(index, val){
 						val = $(val);
 						var value = val.attr('data-nome');
 						if($(botao).hasClass('comCortes') && val.attr('data-corte') != undefined)
 							value = val.attr('data-corte') + '/' + value;
-						fotos[(parseInt(val.attr('data-cele-ord')) - 1)] = {
-							'data-cele-ord': val.attr('data-cele-ord'),
+						arfot[(parseInt(val.attr('data-cele-ord')) - 1)] = {
 							'data-time': 	 val.attr('data-time'),
 							'data-size': 	 val.attr('data-size'),
 							'data-etc':  	 val.attr('data-etc'),
@@ -548,42 +580,22 @@ api.Midias.sendFilesBuffer = [];
 							'value':	 	 value
 						};
 					});
-					var inseridos = [], removidos = [], inp;
-					$(fotos).each(function(id, nome){
-						inp = $('#midias-dados-antetiores input[name="dados['+ (id + 1)+ ']"][value="'+ nome.value+ '"]', self);
-						if(inp.length <= 0){
-							nome.name = name + '[inseridos]['+ (id + 1)+ ']';
-							inseridos.push(nome);
-						}else{
-							inp.remove();
-						}
-					});
-					$('#midias-dados-antetiores input').each(function(){
-						removidos.push({name: name + '[removidos][]', value: $(this).val()});
-					});
-
+					$.each(arfot, function(id,valeu){fotos[(id+ ':'+ valeu.value)]=valeu});
+					var inp = decodeURI($(self).attr('data-dados-deft')).split(';'); inp.pop();
+					result = api.Midias.difernciar(fotos, inp);
 					if($(this).hasClass('fim')){
-						$('input[type="hidden"][ref="inseridos"], input[type="hidden"][ref="removidos"]', api.Midias.contesto).remove();
-						$(inseridos).each(function(id, dados){
-							$(api.Midias.contesto).append([
-								$('<input>', {type: 'hidden', ref: 'inseridos', name: dados.name, value: dados.value})
-							]);
-						});
-						$(removidos).each(function(id, dados){
-							$(api.Midias.contesto).append([
-								$('<input>', {type: 'hidden', ref: 'removidos', name: dados.name, value: dados.value})
-							]);
-						});
+						api.Midias.atualizaInputs(result.removidos, result.inseridos);
 						api.Midias.dezenhaInput(fotos);
 						fechaJfbox();
 					}else{
 						var i = '';
-						$(inseridos).each(function(id, dados){
+						$(result.inseridos).each(function(id, dados){
 							i += '&inseridos[]=' + dados.value;
 						});
-						$(removidos).each(function(id, dados){
+						$(result.removidos).each(function(id, dados){
 							i += '&removidos[]=' + dados.value;
 						});
+						console.log(i);
 						$().jfbox({
 							carrega: 'api/midias/cortar.php?m='+ action + i,
 							position: 'maximized'

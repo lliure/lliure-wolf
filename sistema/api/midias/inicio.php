@@ -314,17 +314,18 @@ class Midias{
 		$r .= ' data-corte="'. $this->corte(). '"';
 		$r .= ' data-tipos="'. $this->tipos(). '"';
 		$r .= ' data-cortes="'. implode('-', $this->cortes()). '"';
-		$r .= ' data-anteriores="'. $this->dadosAntetiores(). '"';
+		$r .= ' data-dados-deft="'. $this->dadosImplode($this->dados()). '"';
+		$r .= ' data-dados-atul="'. $this->dadosImplode($this->listaDeArquivos()). '"';
 		$r .= ' data-action="'. $this->implode(). '"';
 		return $r;
 	}
 
-	private function dadosAntetiores(){
+	private function dadosImplode($dados){
 		$r = array();
-		foreach ($this->dados() as $id => $arquivo){
-			$r[] = ((!empty($this->dados[$arquivo])? $this->dados[$arquivo]. '/': ''). $arquivo);
+		foreach ($dados as $id => $arquivo){
+			$r[] = $id. ':'. urldecode((!empty($this->dados[$arquivo])? $this->dados[$arquivo]. '/': ''). $arquivo);
 		}
-		return implode(';', $r);
+		return implode(';', $r). ';';
 	}
 
 	static public function atualizaBanco(&$_DADOS, $tabela, $idLigacao, $colunaLigacao = 'lig', $colunaArquivo = 'arquivo', $colunaOrden = null){
