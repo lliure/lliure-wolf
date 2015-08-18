@@ -1,35 +1,34 @@
 ;if(typeof api === 'undefined')api={};
 
 api.Midias = {};
-api.Midias.sendFileToServer = function(finalizacao, formData, ref){
-	//console.log(self.sendFiles, self.sendFilesBuffer);
+api.Midias.sendFileToServer = function(settings){
 
-	if(api.Midias.sendFiles >= 5){
-		api.Midias.sendFilesBuffer.push({formData: formData, ref: ref});
+	if(settings && api.Midias.sendFiles >= 5){
+		api.Midias.sendFilesBuffer.push(settings);
 
 	}else{
-		if(formData == undefined && api.Midias.sendFilesBuffer.length > 0){
-			var a		= api.Midias.sendFilesBuffer.shift();
-			formData	= a.formData;
-			ref			= a.ref;
-		}
-		if(formData != undefined){
+
+		if(!settings && api.Midias.sendFilesBuffer.length > 0)
+			settings = api.Midias.sendFilesBuffer.shift();
+
+		if(settings){
+
 			api.Midias.sendFiles += 1;
+
+			var formData = new FormData();
+			formData.append('file', settings.file);
+
 			$.ajax({
 				xhr: function(){
 					var xhrobj = $.ajaxSettings.xhr();
-					if (xhrobj.upload){
-						xhrobj.upload.addEventListener('progress', function(event) {
-							var percent = 0;
-							var position = event.loaded || event.position;
-							var total = event.total;
-							if (event.lengthComputable) {
-								percent = Math.ceil(position / total * 100);
-							}
-							//Set progress
-							$('.api-midias-barra-load', ref).css({width: percent + '%'});
-						}, false);
-					}
+					if (xhrobj.upload){xhrobj.upload.addEventListener('progress', function(event){
+						var percent = 0;
+						var position = event.loaded || event.position;
+						var total = event.total;
+						if (event.lengthComputable)
+							percent = Math.ceil(position / total * 100);
+						settings.progress(percent);
+					}, false);}
 					return xhrobj;
 				},
 				url: 'api/midias/upload.php?m=' + api.Midias.contesto.attr('data-action'),
@@ -39,48 +38,25 @@ api.Midias.sendFileToServer = function(finalizacao, formData, ref){
 				processData: false,
 				cache: false,
 				data: formData,
-				context: ref,
 				success: function(data){
-					$('.barra-load', ref).hide();
-					if(data.erro != undefined){
-						console.log(data);
-						$(ref).addClass('erro').attr({
-							'data-erro': unescape(data.msg),
-						});
-						$('.nome', ref).html(unescape(data.msg));
-					}else{
-						$(ref).attr({
-							'data-data': unescape(data.data),
-							'data-size': unescape(data.size),
-							'data-etc':  unescape(data.etc),
-							'data-nome': unescape(data.nome)
-						});
-						$('.nome', ref).html(unescape(data.nome));
-					}
+					settings.success(data);
 					api.Midias.sendFiles -= 1;
-					api.Midias.sendFileToServer(finalizacao);
+					if(api.Midias.sendFiles <= 0)
+						settings.end();
+					else
+						api.Midias.sendFileToServer();
 				},
-				error: function (){
-					$(ref).addClass('erro');
+				error: function(data){
+					settings.error(data);
 					api.Midias.sendFiles -= 1;
-					api.Midias.sendFileToServer(finalizacao);
+					if(api.Midias.sendFiles <= 0)
+						settings.end();
+					else
+						api.Midias.sendFileToServer();
 				}
 			});
 		}
 	}
-	if(formData == undefined && api.Midias.sendFiles <= 0){
-		finalizacao();
-	}
-};
-api.Midias.TrataArquivosDeUpload = function(files, tipos, desenha, finalizacao){
-	$(files).each(function(i, file){
-		if(tipos == null || tipos.indexOf(file.name.toString().split('.').pop().toLowerCase()) >= 0){
-			var ref = desenha(file);
-			var formData = new FormData();
-			formData.append('file', file);
-			api.Midias.sendFileToServer(finalizacao, formData, ref);
-		}
-	});
 };
 api.Midias.dezenhaInput = function(files){
 	api.Midias.contesto.attr('data-total-parcial', files.length);
@@ -210,7 +186,81 @@ api.Midias.sendFilesBuffer = [];
 		});
 
 		$('.api-midias .api-midias-input-file').change(function(event){
-			handleFileUpload(this.files);
+
+			var tipos = (api.Midias.contesto.attr('data-tipos').length == 0? null: api.Midias.contesto.attr('data-tipos').split(' '));
+
+			var eu = $(this);
+			eu.prop('disable', true);
+			api.Midias.contesto.find('.api-midias-botoes .api-midias-upload').prop('disable', true);
+
+			api.Midias.contesto.attr('data-total-parcial', this.files.length);
+			var content = api.Midias.contesto.find('.api-midias-content');
+			content.html('');
+			var multfiles = api.Midias.contesto.find('.api-midias-multfiles');
+			multfiles.html(this.files.length+ ' Arquivos');
+
+			$(this.files).each(function(index, file){
+
+				var etc  = file.name.split('.').pop().toLowerCase();
+				var data = Math.round((new Date()).getTime() / 1000);
+
+				if(tipos == null || tipos.indexOf(etc) >= 0){
+					var ref = api.Midias.iconeInput({
+						'data-time': 	 data,
+						'data-size': 	 0,
+						'data-etc':  	 etc,
+						'data-corte':  	 null,
+						'data-nome': 	 file.name,
+						'img':		 	 '',
+					});
+
+					content.append(ref);
+
+					if(file.type.match('image.*')){
+						var reader = new FileReader();
+						reader.onload = function(f){
+							ref.find('.api-midias-img img').attr({src: f.target.result});
+						};
+						reader.onerror = function(){
+							ref.find('.api-midias-img img').attr({src: 'imagens/icones/doc_delete.png'});
+						};
+						reader.readAsDataURL(file);
+					}
+
+					api.Midias.sendFileToServer({
+						'file': file,
+						'progress': function (percent) {
+							ref.find('.api-midias-img .api-midias-barra-load').css({width: percent + '%'});
+						},
+						'success': function (data) {
+							if (!data.erro) {
+								ref.find('.api-midias-img .api-midias-barra-load').hide();
+								$(ref).attr({
+									'data-data': decodeURI(data.data),
+									'data-size': decodeURI(data.size),
+									'data-etc': decodeURI(data.etc),
+									'data-nome': decodeURI(data.nome)
+								});
+								ref.find('.api-midias-name').html(decodeURI(data.nome));
+							} else {
+								console.log(data);
+								$(ref).addClass('erro').attr({
+									'data-erro': decodeURI(data.msg),
+								});
+								ref.find('.api-midias-name').html(decodeURI(data.msg));
+							}
+						},
+						'error': function (data) {
+							console.log(data);
+							ref.find('.api-midias-name').html('error');
+						},
+						'end': function () {
+							eu.prop('disable', false);
+							api.Midias.contesto.find('.api-midias-botoes .api-midias-upload').prop('disable', false);
+						}
+					});
+				}
+			});
 			event.stopPropagation();
 			event.preventDefault();
 			return false;
@@ -270,8 +320,7 @@ api.Midias.sendFilesBuffer = [];
 			}).on('drop', function (e){
 				msg.fadeOut(250);
 				e.preventDefault();
-				//handleFileUpload(e.originalEvent.dataTransfer.files);
-				api.Midias.TrataArquivosDeUpload(e.originalEvent.dataTransfer.files, tipos, constroiIcone, liberaBotao);
+				handleFileUpload(e.originalEvent.dataTransfer.files);
 			});
 
 			//caso o arastar volte no documento some a mensagem
@@ -300,8 +349,7 @@ api.Midias.sendFilesBuffer = [];
 			/************* clicar no botao uploa abra a tela de upload *********/
 			$('#upload-input', self).change(function(event){
 				//console.log(typeof this.files);
-				//handleFileUpload(this.files);
-				api.Midias.TrataArquivosDeUpload(this.files, tipos, constroiIcone, liberaBotao);
+				handleFileUpload(this.files);
 				event.stopPropagation();
 				event.preventDefault();
 				return false;
@@ -631,7 +679,7 @@ api.Midias.sendFilesBuffer = [];
 					var ico = $('.img-ico', eu);
 					var base = $('.base-corte', eu);
 
-					if((['c', 'p', 'o', 'r', 'a', 'm'].indexOf(corteTipo)) < 0)
+					if((['c', 'o', 'm', 'p', 'r', 'a'].indexOf(corteTipo)) < 0)
 						corteTipo = eu.attr('data-corte').split('-').pop();
 
 					if(corteTipo === undefined)
@@ -864,48 +912,40 @@ api.Midias.sendFilesBuffer = [];
 
 						$('#api_midias_files .files', self).prepend(ref);
 
-						if(file.type.match('image.*')){
+						if(file.type.match('image.*'))
 							desenharIcone(file, $('.img-ico', ref));
-						}
 
-						var formData = new FormData();
-						formData.append('file', file);
-						//sendFileToServer(formData, ref);
-						api.Midias.sendFileToServer(liberaBotao, formData, ref);
+						api.Midias.sendFileToServer({
+							'file': file,
+							'progress': function (percent) {
+								$('.api-midias-barra-load', ref).css({width: percent + '%'});
+							},
+							'success': function (data) {
+								if (!data.erro) {
+									$('.barra-load', ref).hide();
+									$(ref).attr({
+										'data-data': decodeURI(data.data),
+										'data-size': decodeURI(data.size),
+										'data-etc': decodeURI(data.etc),
+										'data-nome': decodeURI(data.nome)
+									});
+									$('.nome', ref).html(decodeURI(data.nome));
+								} else {
+									console.log(data);
+									$(ref).addClass('erro').attr({
+										'data-erro': decodeURI(data.msg),
+									});
+									$('.nome', ref).html(decodeURI(data.msg));
+								}
+							},
+							'error': function (data) {
+								console.log(data);
+								$('.nome', ref).html('ERROR');
+							},
+							'end': liberaBotao
+						});
 					}
 				});
-			}
-
-			function constroiIcone(file){
-				var ref =
-				$('<div>', {
-					'class': 'file',
-					'data-nome': file.name,
-					'data-etc': file.name.split('.').pop().toLowerCase(),
-					'data-size': file.size,
-					'data-time': Math.round((new Date()).getTime() / 1000),
-				}).append([
-					$('<div>', {class: 'ico'}).append([
-						$('<div>', {class: 'pos'}).append([
-							$('<span>', {class: 'mark'}).append([
-								(file.type.match('image.*')?
-									$('<img>', {class: 'img-ico', src: 'api/navigi/img/ico.png'})
-									:
-									$('<img>', {class: 'img-sem', src: 'api/navigi/img/ico.png'})),
-								$('<span>', {class: 'barra-load'}),
-								$('<span>', {class: 'checkbox'}),
-								$('<span>', {class: 'erro'})
-							])
-						])
-					]),
-					$('<div>', {class: 'nome'}).append([
-						file.name
-					])
-				]);
-				$('#api_midias_files .files', self).prepend(ref);
-				if(file.type.match('image.*'))
-					desenharIcone(file, $('.img-ico', ref));
-				return ref;
 			}
 			
 			function desenharIcone(file, ico){
