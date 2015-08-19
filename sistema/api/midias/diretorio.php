@@ -49,7 +49,7 @@ function montaDiretorio($midias, &$arquivos){
 
 				$ars[] = (object)array(
 					'data' => $data,
-					'datas' => 'data-data="' . $data . '" data-size="' . $size . '" data-etc="' . $etc . '" data-nome="' . $arquivo . '"' . ($selecionado !== FALSE ? ' data-pre-cele="true" data-cele-ord="' . ($selecionado + 1) . '"' . ((($cor = $midias->getCorte($arquivo)) && !empty($cor)) ? ' data-corte="' . $cor . '"' : '') : ''),
+					'datas' => 'data-data="' . $data . '" data-size="' . $size . '" data-etc="' . $etc . '" data-nome="' . $arquivo . '"' . ($selecionado !== FALSE ? ' data-pre-cele="true" data-ordem="' . ($selecionado + 1) . '"' . ((($cor = $midias->getCorte($arquivo)) && !empty($cor)) ? ' data-corte="' . $cor . '"' : '') : ''),
 					'classe' => 'mark' . ($selecionado !== FALSE ? ' celec' : ''),
 					'img' => (!array_search($etc, array('ico', 'png', 'jpg')) ?
 						'<img class="img-sem" src="api/navigi/img/ico.png">'

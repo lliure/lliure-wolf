@@ -63,8 +63,6 @@ api.Midias.iconeInput = function(file){
 	img = path.pop();
 	path = path.join('/');
 	delete file.img;
-	delete file.name;
-	delete file.value;
 	file.class = 'api-midias-file';
 	return $('<div>', file).append([
 		$('<div>', {class: 'api-midias-icone'}).append([
@@ -100,24 +98,31 @@ api.Midias.dezenhaTamando = function (tamanho){
 	tamanho /= 1024;
 	return Math.floor(tamanho)+ 'PB';
 };
-api.Midias.atualizaInputs = function(removidos, inseridos){
-	$('input[type="hidden"][ref="inseridos"], input[type="hidden"][ref="removidos"]', api.Midias.contesto).remove();
-	$.each(removidos, function(id, dados){
-		$(api.Midias.contesto).append([
-			$('<input>', {type: 'hidden', ref: 'removidos', name: dados.name, value: dados.value})
-		]);
+api.Midias.inputsProcessa = function(contesto){
+	contesto = contesto || api.Midias.contesto;
+	var fotos = {};
+	contesto.find('.api-midias-file').each(function(index, val){
+		val = $(val);
+		fotos[(index+ ':'+ (!!val.attr('data-corte')? val.attr('data-corte') + '/': '') + val.attr('data-nome'))] = {
+			'data-ordem': index,
+			'data-time':  val.attr('data-time'),
+			'data-size':  val.attr('data-size'),
+			'data-etc':   val.attr('data-etc'),
+			'data-corte': val.attr('data-corte'),
+			'data-nome':  val.attr('data-nome'),
+			'img':		  val.find('.img-ico').attr('src')
+		};
 	});
-	$.each(inseridos, function(id, dados){
-		$(api.Midias.contesto).append([
-			$('<input>', {type: 'hidden', ref: 'inseridos', name: dados.name, value: dados.value})
-		]);
-	});
+	var inp = decodeURI(contesto.attr('data-dados-deft')).split(';'); inp.pop();
+	api.Midias.atualizaInputs(api.Midias.difernciar(fotos, inp, contesto), contesto);
 };
-api.Midias.difernciar = function(itens, lista){
-	var i, inseridos = [], removidos = [], name = api.Midias.contesto.attr('data-name');
-	$.each(itens, function(index, valeu){
-		if((i = lista.indexOf(valeu.id)) < 0)
-			inseridos.push({name: name + '[inseridos][' + valeu['data-cele-ord'] + ']', value: valeu['value']});
+api.Midias.difernciar = function(itens, lista, contesto){
+	contesto = contesto || api.Midias.contesto;
+	var i, inseridos = [], removidos = [], name = contesto.attr('data-name');
+	$.each(itens, function(index, dados){
+		var value = (!!dados['data-corte']? dados['data-corte'] + '/': '') + dados['data-nome'];
+		if((i = lista.indexOf(dados.id)) < 0)
+			inseridos.push({name: name + '[inseridos][' + dados['data-ordem'] + ']', value: value});
 		else
 			lista.splice(i, 1);
 	});
@@ -125,6 +130,22 @@ api.Midias.difernciar = function(itens, lista){
 		removidos.push({name: name + '[removidos][]', value: valeu.split(':').pop()});
 	});
 	return {'inseridos': inseridos, 'removidos': removidos};
+};
+api.Midias.atualizaInputs = function(opcoes, contesto){
+	contesto = contesto || api.Midias.contesto;
+	$('input[type="hidden"][ref="inseridos"], input[type="hidden"][ref="removidos"]', contesto).remove();
+	if(opcoes.removidos)
+	$.each(opcoes.removidos, function(id, dados){
+		$(contesto).append([
+			$('<input>', {type: 'hidden', ref: 'removidos', name: dados.name, value: dados.value})
+		]);
+	});
+	if(opcoes.inseridos)
+	$.each(opcoes.inseridos, function(id, dados){
+		$(contesto).append([
+			$('<input>', {type: 'hidden', ref: 'inseridos', name: dados.name, value: dados.value})
+		]);
+	});
 };
 api.Midias.redimencionar = function(dimensoesUm, dimensoesDois, tipo){ 
 
@@ -255,7 +276,7 @@ api.Midias.sendFilesBuffer = [];
 							if (!data.erro) {
 								ref.find('.api-midias-img .api-midias-barra-load').hide();
 								$(ref).attr({
-									'data-cele-ord': index,
+									'data-ordem': index,
 									'data-data':     decodeURI(data['data']),
 									'data-size':     decodeURI(data['size']),
 									'data-etc':      decodeURI(data['etc']),
@@ -275,31 +296,10 @@ api.Midias.sendFilesBuffer = [];
 							console.log(data);
 							ref.find('.api-midias-name').html('error');
 						},
-						'end': function () {
-							var fotos = {};
-							contesto.find('.api-midias-file').each(function(index, val){
-								val = $(val);
-								var value = (!!val.attr('data-corte')? val.attr('data-corte') + '/': '') + val.attr('data-nome');
-								fotos[index+ ':'+ value] = {
-									'data-cele-ord': index,
-									'data-time': 	 val.attr('data-time'),
-									'data-size': 	 val.attr('data-size'),
-									'data-etc':  	 val.attr('data-etc'),
-									'data-corte':  	 val.attr('data-corte'),
-									'data-nome': 	 val.attr('data-nome'),
-									'img':		 	 val.find('.img-ico').attr('src'),
-									'value':	 	 value
-								};
-							});
-							console.log(fotos);
-							var inp = decodeURI(contesto.attr('data-dados-deft')).split(';'); inp.pop();
-							console.log(inp);
-							result = api.Midias.difernciar(fotos, inp);
-							console.log(result);
-							api.Midias.atualizaInputs(result.removidos, result.inseridos);
-
+						'end': function(){
+							api.Midias.inputsProcessa(contesto);
 							eu.prop('disable', false);
-							api.Midias.contesto.find('.api-midias-botoes .api-midias-upload').prop('disable', false);
+							contesto.find('.api-midias-botoes .api-midias-upload').prop('disable', false);
 						}
 					});
 				}
@@ -334,7 +334,7 @@ api.Midias.sendFilesBuffer = [];
 			var self = this;
 			var area = $('#api_midias_files', this);
 			var msg = $('.solte-aqui', area);
-			var totalCele = $('.file[data-cele-ord]', self).length;
+			var totalCele = $('.file[data-ordem]', self).length;
 			var action = $(this).attr('data-action');
 			var c = $(this).attr('data-corte').split('-');
 			var corte = {};
@@ -412,29 +412,29 @@ api.Midias.sendFilesBuffer = [];
 						if(maxCele <= 0 || totalCele < maxCele){
 							totalCele++;
 						}else{
-							$('.file[data-cele-ord]', self).each(function(index, element){
-								var novo = parseInt($(element).attr('data-cele-ord'));
+							$('.file[data-ordem]', self).each(function(index, element){
+								var novo = parseInt($(element).attr('data-ordem'));
 								novo--;
 								if(novo <= 0){
 									$('.mark', element).removeClass('celec');
-									$(element).removeAttr('data-cele-ord');
+									$(element).removeAttr('data-ordem');
 								}else{
-									$(element).attr({'data-cele-ord': novo});
+									$(element).attr({'data-ordem': novo});
 								}
 							});
 						}
-						$(file).attr({'data-cele-ord': totalCele});
+						$(file).attr({'data-ordem': totalCele});
 						$(this).addClass('celec');
 					}else{
 						totalCele--;
-						var celeRemo = parseInt($(file).attr('data-cele-ord'));
-						$(file).removeAttr('data-cele-ord');
+						var celeRemo = parseInt($(file).attr('data-ordem'));
+						$(file).removeAttr('data-ordem');
 						$(this).removeClass('celec');
-						$('.file[data-cele-ord]', self).each(function(index, element){
-							var novo = parseInt($(element).attr('data-cele-ord'));
+						$('.file[data-ordem]', self).each(function(index, element){
+							var novo = parseInt($(element).attr('data-ordem'));
 							if(novo >= celeRemo){
 								novo--;
-								$(element).attr({'data-cele-ord': novo});
+								$(element).attr({'data-ordem': novo});
 							}
 						});
 					}
@@ -556,13 +556,15 @@ api.Midias.sendFilesBuffer = [];
 			}
 
 			$('#midias-botao-anterior', self).click(function(){
-				var i = '';
-				$('#api-midias-icosCortardos .file', self).each(function(){
-					i += '&corte[' + encodeURI($(this).attr('data-nome')) + ']=' + encodeURI($(this).attr('data-corte'));
-				});
 				if(!$(this).prop('disabled')){
 					$().jfbox({
-						carrega: 'api/midias/midias.php?m='+ action + i,
+						carrega: 'api/midias/midias.php?m='+ action + (function(){
+							var i = '';
+							$('#api-midias-icosCortardos .file', self).each(function(){
+								i += '&corte[' + encodeURI($(this).attr('data-nome')) + ']=' + encodeURI($(this).attr('data-corte'));
+							});
+							return i;
+						})(),
 						position: 'maximized'
 					});
 				}
@@ -573,36 +575,35 @@ api.Midias.sendFilesBuffer = [];
 					var botao = this;
 					var fotos = {};
 					var arfot = [];
-					$(($(botao).hasClass('arquivos')? '#api_midias_files .file[data-cele-ord]' :(
+					$(($(botao).hasClass('arquivos')? '#api_midias_files .file[data-ordem]' :(
 					$(botao).hasClass('cortes')? '#api-midias-icosCortardos .file' : '')),
 					self).each(function(index, val){
 						val = $(val);
-						var value = val.attr('data-nome');
-						if($(botao).hasClass('comCortes') && val.attr('data-corte') != undefined)
-							value = val.attr('data-corte') + '/' + value;
-						arfot[(parseInt(val.attr('data-cele-ord')) - 1)] = {
-							'data-time': 	 val.attr('data-time'),
-							'data-size': 	 val.attr('data-size'),
-							'data-etc':  	 val.attr('data-etc'),
-							'data-corte':  	 val.attr('data-corte'),
-							'data-nome': 	 val.attr('data-nome'),
-							'img':		 	 val.find('.img-ico').attr('src'),
-							'value':	 	 value
+						var value = (($(botao).hasClass('comCortes') && val.attr('data-corte') != undefined)? val.attr('data-corte') + '/': '')+ val.attr('data-nome');
+						arfot[(parseInt(val.attr('data-ordem')) - 1)] = {
+							'data-ordem': val.attr('data-ordem'),
+							'data-time':  val.attr('data-time'),
+							'data-size':  val.attr('data-size'),
+							'data-etc':   val.attr('data-etc'),
+							'data-corte': val.attr('data-corte'),
+							'data-nome':  val.attr('data-nome'),
+							'img':		  val.find('.img-ico').attr('src'),
+							'value':	  value
 						};
 					});
-					$.each(arfot, function(id,valeu){fotos[(id+ ':'+ valeu.value)]=valeu});
+					$.each(arfot, function(id, valeu){var i = (id+ ':'+ valeu.value); fotos[i] = valeu; delete fotos[i].value;});
 					var inp = decodeURI($(self).attr('data-dados-deft')).split(';'); inp.pop();
 					result = api.Midias.difernciar(fotos, inp);
 					if($(this).hasClass('fim')){
-						api.Midias.atualizaInputs(result.removidos, result.inseridos);
 						api.Midias.dezenhaInput(fotos);
+						api.Midias.atualizaInputs(result);
 						fechaJfbox();
 					}else{
 						var i = '';
-						$(result.inseridos).each(function(id, dados){
+						$.each(result.inseridos, function(id, dados){
 							i += '&inseridos[]=' + dados.value;
 						});
-						$(result.removidos).each(function(id, dados){
+						$.each(result.removidos, function(id, dados){
 							i += '&removidos[]=' + dados.value;
 						});
 						console.log(i);
@@ -864,7 +865,7 @@ api.Midias.sendFilesBuffer = [];
 			});
 
 			function liberaBotao(){
-				var length = $('.file[data-cele-ord]', self).length;
+				var length = $('.file[data-ordem]', self).length;
 				if((pagina == 'midias' && (length >= quantStart && length <= (quantStart + quantLength)))
 				|| (pagina == 'corte')
 				){
@@ -879,8 +880,8 @@ api.Midias.sendFilesBuffer = [];
 			
 			function preencheAmostra(){
 				var fotos = [];
-				$('#api_midias_files .file[data-cele-ord]', self).each(function(index, val){
-					var id = (parseInt($(val).attr('data-cele-ord')) - 1);
+				$('#api_midias_files .file[data-ordem]', self).each(function(index, val){
+					var id = (parseInt($(val).attr('data-ordem')) - 1);
 					var img = $('<img>', {class: $('img.img-ico, img.img-sem', val).attr('class'), src:  $('img.img-ico, img.img-sem', val).attr('src')});
 					fotos[id] = img;
 				});
