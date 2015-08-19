@@ -81,7 +81,7 @@
 			position: relative;
 			margin: 0 !important;
 			padding: 9px !important;
-			padding-left: 0px !important;
+			padding-left: 0 !important;
 			display: inline-block;
 			}
 
@@ -91,16 +91,56 @@
 				line-height: 35px;
 				}
 
+			.api-midias .api-midias-content .api-midias-file .api-midias-icone{
+				position: relative;
+				margin: 0 !important;
+				padding: 0 !important;
+				float: left;
+				display: inline-block;
+				}
+
+				.api-midias.api-midias-grande[data-total-parcial="1"] .api-midias-content .api-midias-file .api-midias-icone{
+					margin-right: 10px !important;
+					}
+
+				.api-midias.api-midias-pequeno .api-midias-content .api-midias-file .api-midias-icone{
+					display: none;
+					}
+
+			.api-midias .api-midias-content .api-midias-file .api-midias-generico{
+				margin: 0 !important;
+				padding: 0 !important;
+				float: left;
+				position: relative;
+				height: 40px;
+				width: 40px;
+				font-size: 40px;
+				text-align: center;
+				}
+
+				.api-midias .api-midias-content .api-midias-file .api-midias-generico .api-midias-etc{
+					margin: auto 0 !important;
+					padding: 0 3px !important;
+					float: left;
+					position: absolute;
+					top: 14px;
+					bottom: 0;
+					left: -2px;
+					height: 22px;
+					font-size: 15px;
+					line-height: 1em;
+					background-color: rgb(102, 102, 102);
+					border: 2px solid #fff;
+					color: #fff;
+					border-radius: 3px;
+					}
+
 			.api-midias .api-midias-content .api-midias-file .api-midias-img{
 				margin: 0 !important;
 				padding: 0 !important;
 				float: left;
 				position: relative;
 				}
-
-				.api-midias.api-midias-grande[data-total-parcial="1"] .api-midias-content .api-midias-file .api-midias-img{
-					margin-right: 10px !important;
-					}
 
 				.api-midias.api-midias-pequeno .api-midias-content .api-midias-file .api-midias-img{
 					display: none;
@@ -111,16 +151,16 @@
 					float: left;
 					}
 
-				.api-midias .api-midias-content .api-midias-file .api-midias-img .api-midias-barra-load{
-					margin: 0 !important;
-					padding: 0 !important;
-					position: absolute;
-					left: 0;
-					bottom: 0;
-					height: 10px;
-					width: 0;
-					background-color: rgba(105, 107, 113, 0.65);
-					}
+			.api-midias .api-midias-content .api-midias-file .api-midias-barra-load{
+				margin: 0 !important;
+				padding: 0 !important;
+				position: absolute;
+				left: 0;
+				bottom: 0;
+				height: 10px;
+				width: 0;
+				background-color: rgba(105, 107, 113, 0.65);
+				}
 
 			.api-midias .api-midias-content .api-midias-file span{
 				display: inline;
@@ -228,11 +268,11 @@
 		}
 
 		#api_midias .meio.topo{
-			padding-top: 0px;
+			padding-top: 0;
 			}
 
 		#api_midias .meio.baixo{
-			padding-bottom: 0px;
+			padding-bottom: 0;
 			}
 
 	#api_midias .meio .main{
@@ -244,7 +284,6 @@
 
 	#api_midias .colu{
 		position: relative;
-		width: 100%;
 		height: 100%;
 		width: 165px;
 		z-index: 100;
@@ -274,7 +313,7 @@
 			height: 100%;
 			width: 100%;
 			z-index: 100;
-			padding: 0px 165px;
+			padding: 0 165px;
 			border: none;
 			}
 
@@ -408,7 +447,7 @@
 	
 		#api_midias_files .solte-aqui .ausilio{
 			display: inline;
-			width: 0px;
+			width: 0;
 			height: 100%;
 			vertical-align: middle;
 			}
@@ -421,7 +460,6 @@
 		
 		-webkit-touch-callout: none;
 		-webkit-user-select: none;
-		-khtml-user-select: none;
 		-moz-user-select: none;
 		-ms-user-select: none;
 		user-select: none;
@@ -430,8 +468,7 @@
 		.files .file{
 			float: left;
 			width: 120px;
-			margin: 10px;
-			margin-bottom: 42px;
+			margin: 10px 10px 42px;
 			position: relative;
 			}
 	
@@ -480,15 +517,15 @@
 						.files .file .ico .pos .mark .checkbox{
 							top: 0;
 							background-image: url(../../imagens/icones/checkbox_unchecked.png);
-							border-top-left-radius: 0px !important;
-							border-bottom-right-radius: 0px !important;
+							border-top-left-radius: 0 !important;
+							border-bottom-right-radius: 0 !important;
 							}
 							
 						.files .file .ico .pos .mark .deletar{
 							bottom: 0;
 							background-image: url(../../imagens/icones/delete.png);
-							border-top-right-radius: 0px !important;
-							border-bottom-left-radius: 0px !important;
+							border-top-right-radius: 0 !important;
+							border-bottom-left-radius: 0 !important;
 							}
 	
 						.files .file .ico .pos .mark .api-midias-barra-load{
@@ -681,7 +718,7 @@
 		
 		#midias-arquivos-selecionadas .icones .p-0{
 			position: absolute;
-			top: 0px;
+			top: 0;
 			left: 5px;
 			z-index: 300;
 			}
@@ -730,7 +767,6 @@
 		-webkit-box-shadow: 2px 2px 2px -1px rgba(0,0,0,0.1);
 		-moz-box-shadow: 2px 2px 2px -1px rgba(0,0,0,0.1);
 		box-shadow: 2px 2px 2px -1px rgba(0,0,0,0.1);
-		padding: 22px;
+		padding: 22px 22px 45px;
 		text-align: left;
-		padding-bottom: 45px;
 		}

@@ -241,18 +241,25 @@ class Midias{
 		$r = ''; $i = 0;
 		foreach($this->dados() as $file) {
 			if($this->quantidadeTotal <= $i++) break;
-			$nome = substr($file, ($p = strripos('/', $file)) !== false ? $p : 0);
+			$nome = substr($file, (($p = strripos('/', $file)) !== false ? $p : 0));
+			$ext = array_pop(explode('.', $nome));
 			$tamanho = filesize($this->pasta() . '/' . $file);
 			$corte = self::getCorte($file);
 			$r .= '
-				<div class="api-midias-file" data-name="'. $nome. '" data-tamanho="'. $tamanho. ($corte !== null? ' data-corte="' . $corte. '"': '') . '">
-					<div class="api-midias-img">
-						<img src="' . $this->pastaRef() . '/'. ($corte !== null? $corte. '/': '') . $file . '" alt=""/>
-						<div class="api-midias-barra-load"></div>
+					<div class="api-midias-file" data-name="'. $nome. '" data-tamanho="'. $tamanho. ($corte !== null? ' data-corte="' . $corte. '"': '') . '">
+						<div class="api-midias-icone">
+							<div class="api-midias-img"'. (in_array($ext, explode(' ', self::$tiposPreDefinidos[self::TiposImagens]))? '': ' style="display: none;"'). '>
+								<img src="'. $this->pastaRef(). '/'. ($corte !== null? $corte. '/': '') . $file . '" alt=""/>
+							</div>
+							<div class="api-midias-generico"'. (in_array($ext, explode(' ', self::$tiposPreDefinidos[self::TiposImagens]))? ' style="display: none;"': ''). '>
+								<i class="fa fa-file"></i>
+								<div class="api-midias-etc">'. $ext. '</div>
+							</div>
+							<div class="api-midias-barra-load"></div>
+						</div>
+						<span class="api-midias-name">'. $nome. '</span><br class="api-midias-br-nome"/>
+						<span class="api-midias-dados">Tamanho: '. self::tamanhoDoArquivo($tamanho). '</span>
 					</div>
-					<span class="api-midias-name">' . $nome . '</span><br class="api-midias-br-nome"/>
-					<span class="api-midias-dados">Tamanho: ' . self::tamanhoDoArquivo($tamanho) . '</span>
-				</div>
 			';
 		}return $r;
 	}

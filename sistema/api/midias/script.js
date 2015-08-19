@@ -67,33 +67,38 @@ api.Midias.iconeInput = function(file){
 	delete file.value;
 	file.class = 'api-midias-file';
 	return $('<div>', file).append([
-		$('<div>', {class: 'api-midias-img'}).append([
-			$('<img>', {'src': path + '/' + (file['data-corte']? file['data-corte'] + '/': '') + img}),
+		$('<div>', {class: 'api-midias-icone'}).append([
+			$('<div>', {class: 'api-midias-img', css: {'display': 'none'}}).append([
+				$('<img>', {'src': path + '/' + (file['data-corte']? file['data-corte'] + '/': '') + img}),
+			]),
+			$('<div>', {class: 'api-midias-generico'}).append([
+				$('<i>', {'class': 'fa fa-file'}),
+				$('<div>', {class: 'api-midias-etc'}).html(file['data-etc'])
+			]),
 			$('<div>', {class: 'api-midias-barra-load'})
 		]),
-		$('<span>', {class: 'api-midias-name'}).html(file['data-nome']),
-		$('<br>',   {class: 'api-midias-br-nome'}),
-		$('<span>', {class: 'api-midias-dados'}).html((file['data-size'] !== undefined? 'Tamanho: '+ tamanho(file['data-size']): ''))
+		$('<span>', {class: 'api-midias-name'}).html(file['data-nome']),$('<br>',   {class: 'api-midias-br-nome'}),
+		$('<span>', {class: 'api-midias-dados'}).html((file['data-size'] !== undefined? 'Tamanho: '+ api.Midias.dezenhaTamando(file['data-size']): ''))
 	]);
-	function tamanho(tamanho){
-		tamanho = parseFloat(tamanho);
-		if(tamanho < 1024)
-			return Math.floor(tamanho)+ 'b';
-		tamanho /= 1024;
-		if(tamanho < 1024)
-			return Math.floor(tamanho)+ 'kB';
-		tamanho /= 1024;
-		if(tamanho < 1024)
-			return Math.floor(tamanho)+ 'MB';
-		tamanho /= 1024;
-		if(tamanho < 1024)
-			return Math.floor(tamanho)+ 'GB';
-		tamanho /= 1024;
-		if(tamanho < 1024)
-			return Math.floor(tamanho)+ 'TB';
-		tamanho /= 1024;
-		return Math.floor(tamanho)+ 'PB';
-	}
+};
+api.Midias.dezenhaTamando = function (tamanho){
+	tamanho = parseFloat(tamanho);
+	if(tamanho < 1024)
+		return Math.floor(tamanho)+ 'b';
+	tamanho /= 1024;
+	if(tamanho < 1024)
+		return Math.floor(tamanho)+ 'kB';
+	tamanho /= 1024;
+	if(tamanho < 1024)
+		return Math.floor(tamanho)+ 'MB';
+	tamanho /= 1024;
+	if(tamanho < 1024)
+		return Math.floor(tamanho)+ 'GB';
+	tamanho /= 1024;
+	if(tamanho < 1024)
+		return Math.floor(tamanho)+ 'TB';
+	tamanho /= 1024;
+	return Math.floor(tamanho)+ 'PB';
 };
 api.Midias.atualizaInputs = function(removidos, inseridos){
 	$('input[type="hidden"][ref="inseridos"], input[type="hidden"][ref="removidos"]', api.Midias.contesto).remove();
@@ -116,8 +121,8 @@ api.Midias.difernciar = function(itens, lista){
 		else
 			lista.splice(i, 1);
 	});
-	$.each(lista, function(index){
-		removidos.push({name: name + '[removidos][]', value: lista[index].split(':').pop()});
+	$.each(lista, function(index, valeu){
+		removidos.push({name: name + '[removidos][]', value: valeu.split(':').pop()});
 	});
 	return {'inseridos': inseridos, 'removidos': removidos};
 };
@@ -229,6 +234,8 @@ api.Midias.sendFilesBuffer = [];
 					content.append(ref);
 
 					if(file.type.match('image.*')){
+						contesto.find('.api-midias-generico').hide();
+						contesto.find('.api-midias-img').show();
 						var reader = new FileReader();
 						reader.onload = function(f){
 							ref.find('.api-midias-img img').attr({src: f.target.result});
@@ -249,12 +256,13 @@ api.Midias.sendFilesBuffer = [];
 								ref.find('.api-midias-img .api-midias-barra-load').hide();
 								$(ref).attr({
 									'data-cele-ord': index,
-									'data-data':     decodeURI(data.data),
-									'data-size':     decodeURI(data.size),
-									'data-etc':      decodeURI(data.etc),
-									'data-nome':     decodeURI(data.nome)
+									'data-data':     decodeURI(data['data']),
+									'data-size':     decodeURI(data['size']),
+									'data-etc':      decodeURI(data['etc']),
+									'data-nome':     decodeURI(data['nome'])
 								});
-								ref.find('.api-midias-name').html(decodeURI(data.nome));
+								ref.find('.api-midias-name').html(decodeURI(data['nome']));
+								ref.find('.api-midias-dados').html('Tamanho: '+ api.Midias.dezenhaTamando(parseInt(decodeURI(data['size']))));
 							} else {
 								console.log(data);
 								$(ref).addClass('erro').attr({
@@ -284,8 +292,10 @@ api.Midias.sendFilesBuffer = [];
 								};
 							});
 							console.log(fotos);
-							var inp = decodeURI($(self).attr('data-dados-deft')).split(';'); inp.pop();
+							var inp = decodeURI(contesto.attr('data-dados-deft')).split(';'); inp.pop();
+							console.log(inp);
 							result = api.Midias.difernciar(fotos, inp);
+							console.log(result);
 							api.Midias.atualizaInputs(result.removidos, result.inseridos);
 
 							eu.prop('disable', false);
