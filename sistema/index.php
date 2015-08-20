@@ -24,17 +24,58 @@ if(!isset($_SESSION['logado'])) {
 	header('location: nli.php');
 }
 
-$_ll['user'] = $_SESSION['logado'];
+require_once('includes/carrega_conf.php');
+$llconf = $_ll['conf'];
 
 if(!isset($_ll['mode_operacion']))
-	$_ll['mode_operacion'] = 'kun_html';
+	$_ll['mode_operacion'] = 'normal';
+
+/******************************************************		TRATAMENTO DE URL	*/
+
+if($_ll['mode_operacion'] == 'normal' && isset($llconf->execucao)){	
+	$uArray = $_SERVER['REQUEST_URI'];
+	$_ll['url']['endereco'] = (isset($_SERVER['HTTPS']) ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST'];
+	$_ll['url']['real'] = $_ll['url']['endereco'].substr($_SERVER['PHP_SELF'], 0, -9);
+	
+	$_ll['url']['endereco'] = explode("/", $_ll['url']['endereco'].$uArray);
+	
+	$uArray = explode("/", $uArray);
+	$nReal = explode('/', $_ll['url']['real']);
+	
+	for($i = 0; $i <= count($nReal)-4; $i++)
+		unset($uArray[$i]);
+	
+	$uArray = array_values($uArray);
+	
+	$_ll['url']['endereco'] = array_slice($_ll['url']['endereco'], 0, count($uArray) * -1);
+	$_ll['url']['endereco'] = implode('/', $_ll['url']['endereco']).'/';
+	
+	if($llconf->execucao == URL_AMIGAVEL){
+		for ($i = 0; $i <= count($uArray)-1; $i++) {
+			if(strpos($uArray[$i], '=') != false){
+				$va = explode('=', $uArray[$i]);
+				$_GET[$va[0]] = $va[1]; //monta os get
+			} else {
+				$_GET[$i] = $uArray[$i]; //monta os get
+			}
+		}
+		$_ll['url']['get'] = implode('/', $uArray);
+	} else {		
+		if(!empty($uArray))
+			$_ll['url']['get'] = implode('/', $uArray);		
+	}
+		
+	if(($url = ll_gourl($_ll['url']['get'], $llconf->execucao)) && $url !== false)
+		header('location: '.$_ll['url']['endereco'].$url);
+}
+
+
+$_ll['user'] = $_SESSION['logado'];
 
 $_ll['css'] = array();
 $_ll['js'] = array();
 
-require_once('includes/carrega_conf.php');
 
-$llconf = $_ll['conf'];
 
 $_ll['ling'] = ll_ling();
 $ll_ling = $_ll['ling'];
@@ -47,17 +88,40 @@ $_ll['app']['pagina'] = "opt/mensagens/permissao.php";
 $_ll['titulo'] = 'lliure Wap';
 
 $get = array_keys($_GET);
+
+if(!isset($_GET['app']) && !isset($_GET['opt']) && isset($_ll['conf']->desktop->$_ll['user']['grupo'])){
+	$desk = explode('=', $_ll['conf']->desktop->$_ll['user']['grupo']);
+	$get[0] = 'desk';
+	$desk['app'] = $desk[1];
+}
+
 switch(isset($get[0]) ? $get[0] : 'desk' ){
+	case 'desk':
+		$get[0] = 'app';
+			
+		$_ll['app']['pagina'] = "opt/desktop/desktop.php";
+		$_ll['app']['header'] = 'opt/desktop/desktop.header.php';
+		
+		
+		if(isset($_ll['conf']->desktop->$_ll['user']['grupo'])){			
+			$_GET['app'] = $desk['app'];			
+		} else {
+			break;
+		}
+		
 	case 'app':
 		if(!empty($_GET['app'])
 			&& (file_exists('app/'.$_GET['app']))){
 			
-			$_ll['app']['home'] = 'index.php?app='.$_GET['app'];
-			$_ll['app']['onserver'] = 'onserver.php?app='.$_GET['app'];
-			$_ll['app']['onclient'] = 'onclient.php?app='.$_GET['app'];			
-			$_ll['app']['pasta'] = 'app/'.$_GET['app'].'/';
+			$urlApp = '?app='.$_GET['app'];
+			if(isset($desk))
+				$urlApp = '?';
 				
-
+			$_ll['app']['home'] = $_ll['url']['endereco'].'index.php'.$urlApp;
+			$_ll['app']['onserver'] = $_ll['url']['endereco'].'onserver.php'.$urlApp;
+			$_ll['app']['onclient'] = $_ll['url']['endereco'].'onclient.php'.$urlApp;			
+			$_ll['app']['pasta'] = 'app/'.$_GET['app'].'/';
+	
 			$_ll['app']['sen_html'] = $_ll['app']['onclient'];
 			$llAppHome = $_ll['app']['home'];
 			$llAppOnServer = $_ll['app']['onserver'];
@@ -86,7 +150,7 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 				$_ll['app']['header'] = $_ll['app']['pasta'].'header.php';
 				break;
 			
-			case 'kun_html':
+			case 'normal':
 				$ll_segok = false;
 				
 				if(ll_tsecuryt() == false){
@@ -140,7 +204,7 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 				$_ll['opt']['header'] = $_ll['opt']['pasta'].'header.php';
 				break;
 			
-			case 'kun_html':
+			case 'normal':
 				$ll_segok = true;				
 				
 				if($ll_segok){
@@ -168,15 +232,6 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 
 		break;
 
-	case 'desk':	
-		$get[0] = 'app';		
-		
-		if(isset($_ll['conf']->desktop->$_ll['user']['grupo']))
-			header('location: '.$_ll['conf']->desktop->$_ll['user']['grupo']);
-			
-		$_ll['app']['pagina'] = "opt/desktop/desktop.php";
-		$_ll['app']['header'] = 'opt/desktop/desktop.header.php';
-		break;
 
 	default:
 		$get[0] = 'app';
@@ -184,7 +239,7 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 }
 /*****/
 
-if($_ll['mode_operacion'] == 'kun_html'){
+if($_ll['mode_operacion'] == 'normal'){
 	lliure::loadJs('js/jquery.js');
 	lliure::loadJs('api/tiny_mce/tiny_mce.js');
 	lliure::loadJs('js/jquery-ui.js');
@@ -211,13 +266,12 @@ if($_ll[$get[0]]['header'] != null)
 
 /*******************************		On Server		*/
 if($_ll['mode_operacion'] == 'onserver'){	
-	require_once($_ll[$get[0]]['pagina']);	
+	require_once($_ll[$get[0]]['pagina']);
 	die();
 }
 
 
-
-/*******************************		Sen HTML		*/
+/*******************************		On Client		*/
 if($_ll['mode_operacion'] == 'onclient'){
 	require_once($_ll[$get[0]]['pagina']);	
 	die();
@@ -234,11 +288,14 @@ if(($ll_tema = lltoObject('temas/'.$_ll['user']['tema'].'/dados.ll')) != false){
 	
 }
 // 
+
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br">
 <head>
+	<base href="<?php echo $_ll['url']['real']?>" />
+	<meta name="url" content="<?php echo $_ll['url']['real']?>" />
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<link rel="SHORTCUT ICON" href="imagens/layout/favicon.ico" type="image/x-icon" />
 	<meta name="author" content="Jeison Frasson" />

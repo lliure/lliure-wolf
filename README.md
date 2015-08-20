@@ -3,7 +3,9 @@ lliure wolf
 
 > 7.0 (Perdigueiro Português)
 
-#### 7.0 Wolf (14/08/2015)
+#### 7.0 Wolf (20/08/2015)
+- [update] - suporte para conversão automatica de url para comum ou amigavel
+- [update] - alterada forma de entrada para apps de desktop, não é apresentado o ?app na url
 - [bug] - strtolower em ll_app::setNome pos se pasar um nome com letras maiuscalas dava um erro no lliure::iniciaApi;
 - [update] - Api aplimo reformulado com flexbox
 - [update] - .gitignore da rais adicionado
