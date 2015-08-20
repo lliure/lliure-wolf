@@ -26,7 +26,7 @@ $corSet = $midias->cortes();
 $_GET['i'] = $midias->listaDeArquivos();
 require_once 'diretorio.php';?>
 
-<div id="api_midias" data-pagina="corte"<?php echo $midias->datas();?>>
+<div id="api_midias" data-pagina="corte"<?php echo $midias->enbled();?>>
 
 	<div class="topo">
 		<div id="menu-corte">
@@ -116,14 +116,14 @@ require_once 'diretorio.php';?>
 			<form class="form">
 				<div class="botoes">
 					<button id="midias-botao-cancelar" type="button">Cancelar</button>
+					<?php if(!isset($_GET['socorte'])){?>
 					<button id="midias-botao-anterior" type="button">Anterior</button>
-					<button id="midias-botao-encerrar" class="confirm cortes comCortes fim" type="button">Encerrar</button>
+					<?php }?>
+					<button id="midias-botao-encerrar" class="confirm cortes comCortes <?php echo ((isset($_GET['socorte']))? 'socorte': 'fim');?>" type="button">Encerrar</button>
 				</div>
 			</form>
 		</div>
 	</div>
-	
-	<?php echo $midias->construirSelecionados();?>
 	
 </div>
 

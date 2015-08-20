@@ -29,7 +29,7 @@ class Midias{
 		$modelo = null,
 		$tipos = null,
 		$corte = '',
-		$cortes = array('c', 'o', 'm', 'p', 'r', 'a'),
+		$cortes = self::CORTES,
 		$quantidadeStar = 0,
 		$quantidadeLength = 1,
 		$quantidadeTotal = 1,
@@ -183,8 +183,8 @@ class Midias{
 	public function getCorte($arquivo){
 		return
 			(isset($this->inseridos[$arquivo])? $this->inseridos[$arquivo]:
-			(isset($this->dados[$arquivo])? $this->dados[$arquivo]:
-			(NULL)));
+				(isset($this->dados[$arquivo])? $this->dados[$arquivo]:
+					(NULL)));
 	}
 
 	public function listaDeArquivos(){
@@ -288,14 +288,14 @@ class Midias{
 
 	}
 
-	public function construirSelecionados(){
+	/*public function construirSelecionados(){
 		$r  = '<div id="midias-dados-antetiores" style="display: none; visibility: hidden;">';
 		foreach ($this->dados() as $id => $arquivo){
 			$r .= '<input type="hidden" name="dados['. ($id + 1). ']" data-id="'. ($id + 1). '" value="'. ((!empty($this->dados[$arquivo])? $this->dados[$arquivo]. '/': ''). $arquivo). '"/>';
 		}
 		$r .= '</div>';
 		return $r;
-	}
+	}*/
 
 	final static function preparaParaJson($array){
 		if(is_array($array)){

@@ -241,12 +241,12 @@ function jfConfirm(texto){
 
 
 
-function fechaJfbox(force){
+function fechaJfbox(force, args){
 	var temtexto = false;
 
 	if(jfboxVars.manaFermi == false || force == true){
 		if(typeof jfboxVars.fermi == 'function')
-			jfboxVars.fermi.call(undefined);
+			jfboxVars.fermi.call(undefined, args);
 			
 		if(jfboxVars.inputTest == true){
 			$('#jfboxLoad textarea, #jfboxLoad input[type=text]').each(function(){

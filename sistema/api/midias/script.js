@@ -120,14 +120,13 @@ api.Midias.difernciar = function(itens, lista, contesto){
 	contesto = contesto || api.Midias.contesto;
 	var i, inseridos = [], removidos = [], name = contesto.attr('data-api-midias');
 	$.each(itens, function(index, dados){
-		var value = (!!dados['data-corte']? dados['data-corte'] + '/': '') + dados['data-nome'];
-		if((i = lista.indexOf(dados.id)) < 0)
-			inseridos.push({name: name + '[inseridos][' + dados['data-ordem'] + ']', value: value});
+		if((i = lista.indexOf(index)) < 0)
+			inseridos.push({name: name + '[inseridos][' + (index.split(':').shift()) + ']', value: index.split(':').pop()});
 		else
 			lista.splice(i, 1);
 	});
 	$.each(lista, function(index, valeu){
-		removidos.push({name: name + '[removidos][]', value: valeu.split(':').pop()});
+		removidos.push({name: name + '[removidos][' + (valeu.split(':').shift()) + ']', value: valeu.split(':').pop()});
 	});
 	return {'inseridos': inseridos, 'removidos': removidos};
 };
@@ -328,157 +327,72 @@ api.Midias.sendFilesBuffer = [];
 			$('<input>', {type: 'file'}).css({
 				display: 'none'
 			})
-		);
-
-		$('[data-api-midias]:not(.api-midias)').click(function(){
+		).click(function(){
 			api.Midias.contesto = $(this);
 			api.Midias.contesto.find('input[type="file"]').click();
-			//console.log(api.Midias.contesto.find('input[type="file"]'));
 		});
 
 		$('[data-api-midias]:not(.api-midias) input[type="file"]').click(function(event){
 			event.stopPropagation();
 		}).change(function(event){
-
-			console.log(this.files);
-
 			var contesto = api.Midias.contesto;
 			var total = parseInt(contesto.attr('data-quant-total'));
+			var action = contesto.attr('data-action');
 			var files = {};
+			var corte  = (contesto.attr('data-corte') && contesto.attr('data-cortes')? (contesto.attr('data-corte')+ '-'+ contesto.attr('data-cortes').split('-').shift()) : null);
 			$.each(this.files, function(index, file){
 				if (index >= total)return false;
-
-				var etc    = file.name.split('.').pop().toLowerCase();
-				var corte  = contesto.attr('data-corte');
-				var data   = Math.round((new Date()).getTime() / 1000);
-				var id 	   = index+ ':'+ ((corte? corte + '/': '')+ file.name);
-				files[id] = {
-					'data-ordem': index,
-					'data-data':  data,
-					'data-size':  file.size,
-					'data-etc':   etc,
-					'data-corte': corte,
-					'data-nome':  file.name,
-					'img':   ((corte? corte + '/': '')+ file.name)
-
-				};
-
 				api.Midias.sendFileToServer({
 					'file': file,
 					'progress': function (percent){},
 					'success': function (data){
-						if (!data.erro) {
-							files[id]['data-data'] = decodeURI(data['data']);
-							files[id]['data-size'] = decodeURI(data['size']);
-							files[id]['data-etc'] =  decodeURI(data['etc']);
-							files[id]['data-nome'] = decodeURI(data['nome']);
-							files[id]['img'] = ((corte? corte + '/': '')+ decodeURI(data['nome']));
-						} else {
+						if (!data.erro){
+							var img    = index+ ':'+ ((corte? corte + '/': '')+ decodeURI(data['nome']));
+							files[img] = {
+								'ordem': index,
+								'data':  decodeURI(data['data']),
+								'size':  decodeURI(data['size']),
+								'etc':   decodeURI(data['etc']),
+								'corte': corte,
+								'nome':  decodeURI(data['nome']),
+								'img':   img
+							};
+
+						}else{
 							console.log(data);
-							delete files[id];
 						}
 					},
 					'error': function (data) {
 						console.log(data);
 					},
 					'end': function(){
-						api.Midias.difernciar(files, contesto);
+						var inp = decodeURI(contesto.attr('data-dados')).split(';'); inp.pop();
+						var result = api.Midias.difernciar(files, inp, contesto);
+						if(corte) {
+							var i = '';
+							$.each(result.inseridos, function (id, dados) {
+								i += '&inseridos[]=' + dados.value;
+							});
+							$.each(result.removidos, function (id, dados) {
+								i += '&removidos[]=' + dados.value;
+							});
+							$().jfbox({
+								carrega: 'api/midias/cortar.php?m=' + action + '&socorte' + i,
+								position: 'maximized',
+								fermi: function (result) {
+									console.log(result);
+									$(contesto).trigger('end.midias.api', result);
+								}
+							});
+						}else{
+							$(contesto).trigger('end.midias.api', result);
+						}
 					}
 				});
-
-			});
-
-			event.stopPropagation();
-			event.preventDefault();
-			return false;
-
-			/*var contesto = api.Midias.contesto;
-			var total = parseInt(contesto.attr('data-quant-total'));
-			var tipos = (api.Midias.contesto.attr('data-tipos').length == 0? null: api.Midias.contesto.attr('data-tipos').split(' '));
-
-			var eu = $(this);
-			eu.prop('disable', true);
-			api.Midias.contesto.find('.api-midias-botoes .api-midias-upload').prop('disable', true);
-
-			api.Midias.contesto.attr('data-total-parcial', this.files.length);
-			var content = api.Midias.contesto.find('.api-midias-content');
-			content.html('');
-			var multfiles = api.Midias.contesto.find('.api-midias-multfiles');
-			multfiles.html(this.files.length+ ' Arquivos');
-
-			$.each(this.files, function(index, file){
-				if(index >= total)return false;
-
-				var etc  = file.name.split('.').pop().toLowerCase();
-				var data = Math.round((new Date()).getTime() / 1000);
-
-				if(tipos == null || tipos.indexOf(etc) >= 0){
-
-					var ref = api.Midias.iconeInput({
-						'data-data':  	data,
-						'data-size':  	0,
-						'data-etc':   	etc,
-						'data-corte': 	null,
-						'data-nome':  	file.name,
-						'img':		  	''
-					});
-
-					content.append(ref);
-
-					if(file.type.match('image.*')){
-						contesto.find('.api-midias-generico').hide();
-						contesto.find('.api-midias-img').show();
-						var reader = new FileReader();
-						reader.onload = function(f){
-							ref.find('.api-midias-img img').attr({src: f.target.result});
-						};
-						reader.onerror = function(){
-							ref.find('.api-midias-img img').attr({src: 'imagens/icones/doc_delete.png'});
-						};
-						reader.readAsDataURL(file);
-					}
-
-					api.Midias.sendFileToServer({
-						'file': file,
-						'progress': function (percent) {
-							ref.find('.api-midias-img .api-midias-barra-load').css({width: percent + '%'});
-						},
-						'success': function (data) {
-							if (!data.erro) {
-								ref.find('.api-midias-img .api-midias-barra-load').hide();
-								$(ref).attr({
-									'data-ordem': index,
-									'data-data':     decodeURI(data['data']),
-									'data-size':     decodeURI(data['size']),
-									'data-etc':      decodeURI(data['etc']),
-									'data-nome':     decodeURI(data['nome'])
-								});
-								ref.find('.api-midias-name').html(decodeURI(data['nome']));
-								ref.find('.api-midias-dados').html('Tamanho: '+ api.Midias.dezenhaTamando(parseInt(decodeURI(data['size']))));
-							} else {
-								console.log(data);
-								$(ref).addClass('erro').attr({
-									'data-erro': decodeURI(data.msg),
-								});
-								ref.find('.api-midias-name').html(decodeURI(data.msg));
-							}
-						},
-						'error': function (data) {
-							console.log(data);
-							ref.find('.api-midias-name').html('error');
-						},
-						'end': function(){
-							api.Midias.inputsProcessa(contesto);
-							eu.prop('disable', false);
-							contesto.find('.api-midias-botoes .api-midias-upload').prop('disable', false);
-						}
-					});
-				}
 			});
 			event.stopPropagation();
 			event.preventDefault();
 			return false;
-			*/
 		});
 
 	});
@@ -750,10 +664,12 @@ api.Midias.sendFilesBuffer = [];
 					$.each(arfot, function(id, valeu){var i = (id+ ':'+ valeu.value); fotos[i] = valeu; delete fotos[i].value;});
 					var inp = decodeURI($(self).attr('data-dados')).split(';'); inp.pop();
 					result = api.Midias.difernciar(fotos, inp);
-					if($(this).hasClass('fim')){
+					if($(this).hasClass('fim')) {
 						api.Midias.dezenhaInput(fotos);
 						api.Midias.atualizaInputs(result);
 						fechaJfbox();
+					}else if($(this).hasClass('socorte')){
+						fechaJfbox(true, result);
 					}else{
 						var i = '';
 						$.each(result.inseridos, function(id, dados){
@@ -792,26 +708,27 @@ api.Midias.sendFilesBuffer = [];
 			 * @param {string} nome Nome da imagen a ser cortada
 			 */
 			function setImgToCorte(nome){
-				
-				var box = $('#api-midias-areaCorte .area-de-corte', self);
-				box.width = $(box).width();
-				box.height = $(box).height();
-				
-				if($('img[data-nome]', box).attr('data-nome') == nome)
-					return false;
-				
-				var eu = $('#api-midias-icosCortardos .file[data-nome="' + nome + '"]', self);
-				var euImg = $('.img-ico', eu);
-				var src = $(euImg).attr('src');
-				var img = new Image();
-				img.onload = function(){
-					var fim = api.Midias.redimencionar(img, box, 'p');
-					var nova = $('<img>', {id: 'midias-imgToCorte', 'data-nome': nome, src: src});
-					box.find('.imgToCorte').css({width: fim.width, height: fim.height}).html(nova);
-					setCorteToImg();
-				};
-				img.src = src;
-				
+				setTimeout(function(){
+					var box = $('#api-midias-areaCorte .area-de-corte', self);
+					box.width = $(box).width();
+					box.height = $(box).height();
+					console.log($(box).width(), $(box).height());
+
+					if($('img[data-nome]', box).attr('data-nome') == nome)
+						return false;
+
+					var eu = $('#api-midias-icosCortardos .file[data-nome="' + nome + '"]', self);
+					var euImg = $('.img-ico', eu);
+					var src = $(euImg).attr('src');
+					var img = new Image();
+					img.onload = function(){
+						var fim = api.Midias.redimencionar(img, box, 'p');
+						var nova = $('<img>', {id: 'midias-imgToCorte', 'data-nome': nome, src: src});
+						box.find('.imgToCorte').css({width: fim.width, height: fim.height}).html(nova);
+						setCorteToImg();
+					};
+					img.src = src;
+				}, 2);
 			}
 			setImgToCorte($('#api-midias-icosToCortar .file').eq(0).attr('data-nome'));
 			

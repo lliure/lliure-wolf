@@ -16,7 +16,7 @@ if(isset($_GET['corte']))
 
 require_once 'diretorio.php';?>
 
-<div id="api_midias" data-pagina="midias"<?php echo $midias->datas();?>>
+<div id="api_midias" data-pagina="midias"<?php echo $midias->enbled();?>>
 	<div class="topo">
 		<h2><?php echo $midias->titulo();?></h2>
 		<form id="midias-form-topo" class="form">
