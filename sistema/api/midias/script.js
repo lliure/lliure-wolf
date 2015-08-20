@@ -105,7 +105,7 @@ api.Midias.inputsProcessa = function(contesto){
 		val = $(val);
 		fotos[(index+ ':'+ (!!val.attr('data-corte')? val.attr('data-corte') + '/': '') + val.attr('data-nome'))] = {
 			'data-ordem': index,
-			'data-time':  val.attr('data-time'),
+			'data-data':  val.attr('data-data'),
 			'data-size':  val.attr('data-size'),
 			'data-etc':   val.attr('data-etc'),
 			'data-corte': val.attr('data-corte'),
@@ -113,12 +113,12 @@ api.Midias.inputsProcessa = function(contesto){
 			'img':		  val.find('.img-ico').attr('src')
 		};
 	});
-	var inp = decodeURI(contesto.attr('data-dados-deft')).split(';'); inp.pop();
+	var inp = decodeURI(contesto.attr('data-dados')).split(';'); inp.pop();
 	api.Midias.atualizaInputs(api.Midias.difernciar(fotos, inp, contesto), contesto);
 };
 api.Midias.difernciar = function(itens, lista, contesto){
 	contesto = contesto || api.Midias.contesto;
-	var i, inseridos = [], removidos = [], name = contesto.attr('data-name');
+	var i, inseridos = [], removidos = [], name = contesto.attr('data-api-midias');
 	$.each(itens, function(index, dados){
 		var value = (!!dados['data-corte']? dados['data-corte'] + '/': '') + dados['data-nome'];
 		if((i = lista.indexOf(dados.id)) < 0)
@@ -225,7 +225,6 @@ api.Midias.sendFilesBuffer = [];
 			var tipos = (api.Midias.contesto.attr('data-tipos').length == 0? null: api.Midias.contesto.attr('data-tipos').split(' '));
 
 			var eu = $(this);
-			var files = {};
 			eu.prop('disable', true);
 			api.Midias.contesto.find('.api-midias-botoes .api-midias-upload').prop('disable', true);
 
@@ -244,7 +243,179 @@ api.Midias.sendFilesBuffer = [];
 				if(tipos == null || tipos.indexOf(etc) >= 0){
 
 					var ref = api.Midias.iconeInput({
-						'data-time':  	data,
+						'data-data':  	data,
+						'data-size':  	0,
+						'data-etc':   	etc,
+						'data-corte': 	null,
+						'data-nome':  	file.name,
+						'img':		  	''
+					});
+
+					content.append(ref);
+
+					if(file.type.match('image.*')){
+						contesto.find('.api-midias-generico').hide();
+						contesto.find('.api-midias-img').show();
+						var reader = new FileReader();
+						reader.onload = function(f){
+							ref.find('.api-midias-img img').attr({src: f.target.result});
+						};
+						reader.onerror = function(){
+							ref.find('.api-midias-img img').attr({src: 'imagens/icones/doc_delete.png'});
+						};
+						reader.readAsDataURL(file);
+					}
+
+					api.Midias.sendFileToServer({
+						'file': file,
+						'progress': function (percent) {
+							ref.find('.api-midias-img .api-midias-barra-load').css({width: percent + '%'});
+						},
+						'success': function (data) {
+							if (!data.erro) {
+								ref.find('.api-midias-img .api-midias-barra-load').hide();
+								$(ref).attr({
+									'data-ordem': index,
+									'data-data':  decodeURI(data['data']),
+									'data-size':  decodeURI(data['size']),
+									'data-etc':   decodeURI(data['etc']),
+									'data-nome':  decodeURI(data['nome'])
+								});
+								ref.find('.api-midias-name').html(decodeURI(data['nome']));
+								ref.find('.api-midias-dados').html('Tamanho: '+ api.Midias.dezenhaTamando(parseInt(decodeURI(data['size']))));
+							} else {
+								console.log(data);
+								$(ref).addClass('erro').attr({
+									'data-erro': decodeURI(data.msg),
+								});
+								ref.find('.api-midias-name').html(decodeURI(data.msg));
+							}
+						},
+						'error': function (data) {
+							console.log(data);
+							ref.find('.api-midias-name').html('error');
+						},
+						'end': function(){
+							api.Midias.inputsProcessa(contesto);
+							eu.prop('disable', false);
+							contesto.find('.api-midias-botoes .api-midias-upload').prop('disable', false);
+						}
+					});
+				}
+			});
+			event.stopPropagation();
+			event.preventDefault();
+			return false;
+		});
+
+		$('.api-midias .api-midias-botoes .api-midias-servidor').prop('disabled', false).click(function(){
+			var contesto = $(this).closest('.api-midias');
+			api.Midias.contesto = contesto;
+			var carrega = 'api/midias/midias.php?m='+ contesto.attr('data-action');
+			$('input[ref="inseridos"]', contesto).each(function(){
+				carrega += '&inseridos[]=' + escape($(this).val()).replace('/', '%2F');
+			});
+			$('input[ref="removidos"]', contesto).each(function(){
+				carrega += '&removidos[]=' + escape($(this).val()).replace('/', '%2F');
+			});
+			$().jfbox({
+				carrega: carrega,
+				position: 'maximized'
+			});
+		});
+
+		$('[data-api-midias]:not(.api-midias)').prepend(
+			$('<input>', {type: 'file'}).css({
+				display: 'none'
+			})
+		);
+
+		$('[data-api-midias]:not(.api-midias)').click(function(){
+			api.Midias.contesto = $(this);
+			api.Midias.contesto.find('input[type="file"]').click();
+			//console.log(api.Midias.contesto.find('input[type="file"]'));
+		});
+
+		$('[data-api-midias]:not(.api-midias) input[type="file"]').click(function(event){
+			event.stopPropagation();
+		}).change(function(event){
+
+			console.log(this.files);
+
+			var contesto = api.Midias.contesto;
+			var total = parseInt(contesto.attr('data-quant-total'));
+			var files = {};
+			$.each(this.files, function(index, file){
+				if (index >= total)return false;
+
+				var etc    = file.name.split('.').pop().toLowerCase();
+				var corte  = contesto.attr('data-corte');
+				var data   = Math.round((new Date()).getTime() / 1000);
+				var id 	   = index+ ':'+ ((corte? corte + '/': '')+ file.name);
+				files[id] = {
+					'data-ordem': index,
+					'data-data':  data,
+					'data-size':  file.size,
+					'data-etc':   etc,
+					'data-corte': corte,
+					'data-nome':  file.name,
+					'img':   ((corte? corte + '/': '')+ file.name)
+
+				};
+
+				api.Midias.sendFileToServer({
+					'file': file,
+					'progress': function (percent){},
+					'success': function (data){
+						if (!data.erro) {
+							files[id]['data-data'] = decodeURI(data['data']);
+							files[id]['data-size'] = decodeURI(data['size']);
+							files[id]['data-etc'] =  decodeURI(data['etc']);
+							files[id]['data-nome'] = decodeURI(data['nome']);
+							files[id]['img'] = ((corte? corte + '/': '')+ decodeURI(data['nome']));
+						} else {
+							console.log(data);
+							delete files[id];
+						}
+					},
+					'error': function (data) {
+						console.log(data);
+					},
+					'end': function(){
+						api.Midias.difernciar(files, contesto);
+					}
+				});
+
+			});
+
+			event.stopPropagation();
+			event.preventDefault();
+			return false;
+
+			/*var contesto = api.Midias.contesto;
+			var total = parseInt(contesto.attr('data-quant-total'));
+			var tipos = (api.Midias.contesto.attr('data-tipos').length == 0? null: api.Midias.contesto.attr('data-tipos').split(' '));
+
+			var eu = $(this);
+			eu.prop('disable', true);
+			api.Midias.contesto.find('.api-midias-botoes .api-midias-upload').prop('disable', true);
+
+			api.Midias.contesto.attr('data-total-parcial', this.files.length);
+			var content = api.Midias.contesto.find('.api-midias-content');
+			content.html('');
+			var multfiles = api.Midias.contesto.find('.api-midias-multfiles');
+			multfiles.html(this.files.length+ ' Arquivos');
+
+			$.each(this.files, function(index, file){
+				if(index >= total)return false;
+
+				var etc  = file.name.split('.').pop().toLowerCase();
+				var data = Math.round((new Date()).getTime() / 1000);
+
+				if(tipos == null || tipos.indexOf(etc) >= 0){
+
+					var ref = api.Midias.iconeInput({
+						'data-data':  	data,
 						'data-size':  	0,
 						'data-etc':   	etc,
 						'data-corte': 	null,
@@ -307,22 +478,7 @@ api.Midias.sendFilesBuffer = [];
 			event.stopPropagation();
 			event.preventDefault();
 			return false;
-		});
-
-		$('.api-midias .api-midias-botoes .api-midias-servidor').prop('disabled', false).click(function(){
-			var contesto = $(this).closest('.api-midias');
-			api.Midias.contesto = contesto;
-			var carrega = 'api/midias/midias.php?m='+ contesto.attr('data-action');
-			$('input[ref="inseridos"]', contesto).each(function(){
-				carrega += '&inseridos[]=' + escape($(this).val()).replace('/', '%2F');
-			});
-			$('input[ref="removidos"]', contesto).each(function(){
-				carrega += '&removidos[]=' + escape($(this).val()).replace('/', '%2F');
-			});
-			$().jfbox({
-				carrega: carrega,
-				position: 'maximized'
-			});
+			*/
 		});
 
 	});
@@ -582,7 +738,7 @@ api.Midias.sendFilesBuffer = [];
 						var value = (($(botao).hasClass('comCortes') && val.attr('data-corte') != undefined)? val.attr('data-corte') + '/': '')+ val.attr('data-nome');
 						arfot[(parseInt(val.attr('data-ordem')) - 1)] = {
 							'data-ordem': val.attr('data-ordem'),
-							'data-time':  val.attr('data-time'),
+							'data-data':  val.attr('data-data'),
 							'data-size':  val.attr('data-size'),
 							'data-etc':   val.attr('data-etc'),
 							'data-corte': val.attr('data-corte'),
@@ -592,7 +748,7 @@ api.Midias.sendFilesBuffer = [];
 						};
 					});
 					$.each(arfot, function(id, valeu){var i = (id+ ':'+ valeu.value); fotos[i] = valeu; delete fotos[i].value;});
-					var inp = decodeURI($(self).attr('data-dados-deft')).split(';'); inp.pop();
+					var inp = decodeURI($(self).attr('data-dados')).split(';'); inp.pop();
 					result = api.Midias.difernciar(fotos, inp);
 					if($(this).hasClass('fim')){
 						api.Midias.dezenhaInput(fotos);
@@ -914,7 +1070,7 @@ api.Midias.sendFilesBuffer = [];
 					
 					if(tipos == null || tipos.indexOf(etc) >= 0){
 						var ref = 
-						$('<div>', {class: 'file', 'data-time': data, 'data-size': file.size, 'data-etc': etc, 'data-nome': file.name}).append([
+						$('<div>', {class: 'file', 'data-data': data, 'data-size': file.size, 'data-etc': etc, 'data-nome': file.name}).append([
 							$('<div>', {class: 'ico'}).append([
 								$('<div>', {class: 'pos'}).append([
 									$('<span>', {class: 'mark'}).append([

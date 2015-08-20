@@ -22,6 +22,8 @@
 		height: 0 !important;
 		background: none !important;
 		visibility: hidden !important;
+		float: left;
+		display: inline-block;
 		}
 
 	.api-midias .api-midias-botoes{

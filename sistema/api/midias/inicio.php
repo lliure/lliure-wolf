@@ -28,7 +28,7 @@ class Midias{
 		$name = '',
 		$modelo = null,
 		$tipos = null,
-		$corte = null,
+		$corte = '',
 		$cortes = array('c', 'o', 'm', 'p', 'r', 'a'),
 		$quantidadeStar = 0,
 		$quantidadeLength = 1,
@@ -38,7 +38,6 @@ class Midias{
 		$pasta = '',
 		$pastaRef = '',
 		$dados = array(),
-		$dadosAtuais = array(),
 		$inseridos = array(),
 		$removidos = array();
 
@@ -221,7 +220,7 @@ class Midias{
 	public function __toString(){
 		$t = (($t = count($this->dados())) <= $this->quantidadeTotal? $t: $this->quantidadeTotal);
 		return '
-			<div class="input api-midias api-midias-'. $this->modelo(). '" data-total-parcial="'. count($this->dados()). '"'. $this->datas(). '>
+			<div class="input api-midias api-midias-'. $this->modelo(). '" data-total-parcial="'. count($this->dados()). '"'. $this->enbled(). '>
 				<input class="api-midias-input-file" type="file"'. ($this->quantidadeTotal > 1? ' multiple': ''). '/>
 				<div class="api-midias-botoes">
 					<button class="api-midias-upload" type="button" disabled="disabled" title="Upload"><i class="fa fa-upload"></i></i></button><br/>
@@ -313,16 +312,15 @@ class Midias{
 		return rawurlencode(jf_encode($_SESSION['logado']['token'], serialize($this)));
 	}
 
-	public function datas(){
-		$r  = ' data-name="' . $this->name(). '"';
+	public function enbled(){
+		$r  = ' data-api-midias="' . $this->name(). '"';
 		$r .= ' data-quant-start="'. $this->quantidadeStar(). '"';
 		$r .= ' data-quant-length="'. $this->quantidadeLength(). '"';
 		$r .= ' data-quant-total="'. $this->quantidade(). '"';
 		$r .= ' data-corte="'. $this->corte(). '"';
-		$r .= ' data-tipos="'. $this->tipos(). '"';
 		$r .= ' data-cortes="'. implode('-', $this->cortes()). '"';
-		$r .= ' data-dados-deft="'. $this->dadosImplode($this->dados()). '"';
-		$r .= ' data-dados-atul="'. $this->dadosImplode($this->listaDeArquivos()). '"';
+		$r .= ' data-tipos="'. $this->tipos(). '"';
+		$r .= ' data-dados="'. $this->dadosImplode($this->dados()). '"';
 		$r .= ' data-action="'. $this->implode(). '"';
 		return $r;
 	}
