@@ -243,20 +243,21 @@ class aplimo{
 			}
 		}
 		
+		if(isset($_GET['apm']) && file_exists(self::$basePath . $_GET['apm'] . '/header.php')) {
+			$this->home = $_ll['app']['home'].'&apm='.$_GET['apm'];
+			$this->onserver = $_ll['app']['onserver'].'&apm='.$_GET['apm'];
+			$this->onclient = $_ll['app']['onclient'].'&apm='.$_GET['apm'];
+				
+			require_once(self::$basePath . $_GET['apm'] . '/header.php');
+		}
+		
 		if(isset($_GET['sapm']) && file_exists(self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/header.php')){
 			$this->home = $_ll['app']['home'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
 			$this->onserver = $_ll['app']['onserver'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
 			$this->onclient = $_ll['app']['home'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
 			
-			require_once(self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/header.php');
-				
-		} elseif(isset($_GET['apm']) && file_exists(self::$basePath . $_GET['apm'] . '/header.php')) {
-			$this->home = $_ll['app']['home'].'&apm='.$_GET['apm'];
-			$this->onserver = $_ll['app']['onserver'].'&apm='.$_GET['apm'];
-			$this->onclient = $_ll['app']['onclient'].'&apm='.$_GET['apm'];
-			
-			require_once(self::$basePath . $_GET['apm'] . '/header.php');
-		}
+			require_once(self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/header.php');	
+		} 
 	}
 	
 	function onserver(){
@@ -283,7 +284,7 @@ class aplimo{
 	function require_page(){
 		global $_ll;
 		
-	
+		
 		$apm_load  = 'api/aplimo/ne_trovi.php';
 		                    
         if(isset($_GET['sapm']) && file_exists(self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/' . $_GET['sapm'] . '.php'))

@@ -21,6 +21,26 @@ function navig_historic(){
 	return ll_historico('inicia');
 	}
 
+define('URL_NORMAL', 'URL_NORMAL');
+define('URL_AMIGAVEL', 'URL_AMIGAVEL');
+function ll_gourl($url, $execucao = URL_NORMAL){
+	if($execucao == 'URL_AMIGAVEL'){	
+		if(strpos($url, '?') !== false){
+			$url = str_replace(array('index.php', '?','&'), array('' ,'', '/'), $url);
+			if($url[0] == '/')
+				$url = substr($url, 1);
+		} else 
+			$url = false;
+
+	} else {
+		if(strpos($url, '/') !== false)
+			$url = '?'.str_replace(array('/', '?'), array('&', ''), $url);
+		else
+			$url = false;	
+	}
+	
+	return $url;
+}
 
 ///***///
 function lltoObject($file){

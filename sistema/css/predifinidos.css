@@ -339,14 +339,14 @@ form.form div.botoes {
 	span.botao button,
 	span.botao a{
 		outline: none;
-		font-size: 0.916em;
+		font-size: 1.1em;
 		border-radius: 3px;
 		line-height: 30px;
 		height: 30px;
 		padding: 0 1.2em;
 		margin: 0;
 		margin-right: 3px;
-		font-weight: bold;
+		font-weight: 400;
 		
 		box-sizing: border-box;
 		-webkit-box-sizing: border-box;
@@ -378,43 +378,27 @@ form.form div.botoes {
 	form.form div.botoes a,
 	span.botao button,
 	span.botao a{
-		background: #f5f5f5;
-		background: -moz-linear-gradient(top,  #f5f5f5 0%, #f1f1f1 100%);
-		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f5f5f5), color-stop(100%,#f1f1f1));
-		background: -webkit-linear-gradient(top,  #f5f5f5 0%,#f1f1f1 100%);
-		background: -o-linear-gradient(top,  #f5f5f5 0%,#f1f1f1 100%);
-		background: -ms-linear-gradient(top,  #f5f5f5 0%,#f1f1f1 100%);
-		background: linear-gradient(to bottom,  #f5f5f5 0%,#f1f1f1 100%);
-		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#f1f1f1',GradientType=0 );
-
 		background-color: #F5F5F5;
-		border: 1px solid #ccc;
-		color: #444444;
-		}
+		-moz-box-shadow:inset 0px -9px 15px -20px #000000;
+		-webkit-box-shadow:inset 0px -9px 15px -20px #000000;
+		box-shadow:inset 0px -9px 15px -20px #000000;
+		border:1px solid #cccccc;
+		color:#444444;
+
+	}
 		
 	form.form div.botoes button:hover,
 	form.form div.botoes a:hover,
 	span.botao button:hover,
 	span.botao a:hover{
 		border-color: #888;
-		box-shadow: 0 0 2px #ddd;
 		}
 		
 	form.form div.botoes button:active,
 	form.form div.botoes a:active,
 	span.botao button:active,
-	span.botao a:active{
-		background: rgba(242,242,242,1);
-		background: -moz-linear-gradient(top, rgba(242,242,242,1) 0%, rgba(230,230,230,1) 100%);
-		background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(242,242,242,1)), color-stop(100%, rgba(230,230,230,1)));
-		background: -webkit-linear-gradient(top, rgba(242,242,242,1) 0%, rgba(230,230,230,1) 100%);
-		background: -o-linear-gradient(top, rgba(242,242,242,1) 0%, rgba(230,230,230,1) 100%);
-		background: -ms-linear-gradient(top, rgba(242,242,242,1) 0%, rgba(230,230,230,1) 100%);
-		background: linear-gradient(to bottom, rgba(242,242,242,1) 0%, rgba(230,230,230,1) 100%);
-		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#e6e6e6', GradientType=0 );
-
-		border-color: #888;
-		box-shadow: inset 0px 2px 2px 0px rgba(0,0,0,0.14);
+	span.botao a:active{		
+		border-color: #888;		
 		}
 		
 	/******		DISABILITADO	******/	
@@ -423,17 +407,8 @@ form.form div.botoes {
 	span.botao button:disabled,
 	span.botao a[disabled]{
 		background: #ffffff;
-		background: -moz-linear-gradient(top,  #ffffff 0%, #ededed 100%);
-		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ededed));
-		background: -webkit-linear-gradient(top, #ffffff 0%, #ededed 100%);
-		background: -o-linear-gradient(top, #ffffff 0%, #ededed 100%);
-		background: -ms-linear-gradient(top, #ffffff 0%, #ededed 100%);
-		background: linear-gradient(to bottom, #ffffff 0%, #ededed 100%);
-		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed', GradientType=0);
-
 		border: 1px solid #ccc;
 		color: #444444;
-		box-shadow: 0 0 2px #ddd;
 		}
 		
 	form.form div.botoes button:disabled:hover,
@@ -450,15 +425,7 @@ form.form div.botoes {
 	span.botao button.confirm,
 	span.botao a.confirm{
 		background: #4d90fe;
-		background: -moz-linear-gradient(top,  #4d90fe 0%, #4787ed 100%);
-		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4d90fe), color-stop(100%,#4787ed));
-		background: -webkit-linear-gradient(top,  #4d90fe 0%,#4787ed 100%);
-		background: -o-linear-gradient(top,  #4d90fe 0%,#4787ed 100%);
-		background: -ms-linear-gradient(top,  #4d90fe 0%,#4787ed 100%);
-		background: linear-gradient(to bottom,  #4d90fe 0%,#4787ed 100%);
-		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d90fe', endColorstr='#4787ed',GradientType=0 );
-
-		border: 1px solid #3079ED;
+		border: 1px solid #3f75ce;
 		color: #fff;
 		}
 		
@@ -466,17 +433,8 @@ form.form div.botoes {
 	form.form div.botoes a.confirm:hover,
 	span.botao button.confirm:hover,
 	span.botao a.confirm:hover{
-		background: #4d90fe;
-		background: -moz-linear-gradient(top,  #4d90fe 0%, #4787ed 100%);
-		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4d90fe), color-stop(100%,#4787ed));
-		background: -webkit-linear-gradient(top,  #4d90fe 0%,#4787ed 100%);
-		background: -o-linear-gradient(top,  #4d90fe 0%,#4787ed 100%);
-		background: -ms-linear-gradient(top,  #4d90fe 0%,#4787ed 100%);
-		background: linear-gradient(to bottom,  #4d90fe 0%,#4787ed 100%);
-		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d90fe', endColorstr='#4787ed',GradientType=0 );
-
-		border-color: #2f5bb7;
 		box-shadow: 0 0 2px #ddd;
+		border-color: #264f93;
 		}
 		
 		

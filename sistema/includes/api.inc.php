@@ -33,6 +33,11 @@ $aplicativo->setNome('tags')
 			->js('api/tags/script.js')
 			->addApp();
 			
+			
+$aplicativo->setNome('parsedown')
+			->setCaminho('api/parsedown/parsedown.php')
+			->addApp();
+			
 $aplicativo->setNome('midias')
 			->setCaminho('api/midias/inicio.php')
 			->css('api/midias/estilo.css')
