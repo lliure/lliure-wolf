@@ -1,6 +1,6 @@
 <?php
 
-/* @var $midias midias */
+/* @var $midias Midias */
 header ('Content-type: text/html; charset=ISO-8859-1'); require_once 'header.php';
 
 $ars = array();
@@ -14,14 +14,14 @@ function ordenDosArquivos($arq1, $arq2){
     return ($arq1->data > $arq2->data)? -1: 1;
 }
 
-if(is_dir($pasta)){
+if(is_dir($midias->pasta())){
 
 	if(!isset($_GET['i'])){
 	
-		$diretorio = dir($pasta);
+		$diretorio = dir($midias->pasta());
 		
 		while($arquivo = $diretorio->read())
-			if(!($arquivo == '.' || $arquivo == '..') && !is_dir($pasta. DS. $arquivo))
+			if(!($arquivo == '.' || $arquivo == '..') && !is_dir($midias->pasta(). DS. $arquivo))
 				$arqs[] = $arquivo;
 		
 		$diretorio->close();
@@ -37,13 +37,13 @@ if(is_dir($pasta)){
 	foreach ($arqs as $arquivo){
 		
 		$tipos = explode(' ', $midias->tipos());
-		$etc = strtolower(pathinfo($pasta. '/'. $arquivo, PATHINFO_EXTENSION));
+		$etc = strtolower(pathinfo($midias->pasta(). '/'. $arquivo, PATHINFO_EXTENSION));
 		
 		if(in_array($etc, $tipos) || $tipos[0] == null){
 			$selecionado = array_search($arquivo, $d);
 
-			$data = filemtime($pasta. '/'. $arquivo);
-			$size = filesize($pasta. '/'. $arquivo);
+			$data = filemtime($midias->pasta(). '/'. $arquivo);
+			$size = filesize($midias->pasta(). '/'. $arquivo);
 
 			$ars[] = (object) array(
 				'data'		=> $data,
@@ -52,7 +52,7 @@ if(is_dir($pasta)){
 				'img'		=> (!array_search($etc, array('ico', 'png', 'jpg'))?
 					'<img class="img-sem" src="api/navigi/img/ico.png">'
 				:
-					'<img class="img-ico" src="'. $pastaRef. '/'. $arquivo. '">'
+					'<img class="img-ico" src="'. $midias->pastaRef(). '/'. $arquivo. '">'
 				),
 				'nome'		=> $arquivo
 			);
@@ -84,4 +84,4 @@ if(is_dir($pasta)){
 	}
 }
 
-echo json_encode(midias::preparaParaJson($arquivos));
+echo json_encode(Midias::preparaParaJson($arquivos));

@@ -1,29 +1,42 @@
 <?php
 
-define('MIDIAS_IMAGENS', 0);
+if(!defined('MIDIAS_BASEPATH')) define('MIDIAS_BASEPATH', realpath(dirname(__FILE__). '/../../'));
+if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
 
-class midias{
+require_once MIDIAS_BASEPATH. '/etc/bdconf.php';
+require_once MIDIAS_BASEPATH. '/includes/functions.php';
+
+class Midias{
 
 	const
-		CORTES = array('c', 'o', 'm', 'p', 'r', 'a');
+		CORTES = array('c', 'o', 'm', 'p', 'r', 'a'),
 
-	private static
-		$tiposPreDefinidos = array(
-		// MIDIAS_IMAGENS
-		'png jpg gif'
+		//Modelos
+		ModeloPequeno = 'pequeno',
+		ModeloGrande = 'grande',
+
+		//tipos
+		TiposImagens = 0;
+
+	private static $tiposPreDefinidos = array(
+		'png jpg gif'			// Midias::TiposImagens
 	);
 
 	private
 		$titulo = 'Selecione os arquivos',
 		$dica = '',
 		$name = '',
+		$modelo = null,
 		$tipos = null,
 		$corte = null,
 		$cortes = array('c', 'o', 'm', 'p', 'r', 'a'),
 		$quantidadeStar = 0,
 		$quantidadeLength = 1,
+		$quantidadeTotal = 1,
 		$rais = '',
 		$diretorio = '',
+		$pasta = '',
+		$pastaRef = '',
 		$dados = array(),
 		$inseridos = array(),
 		$removiodos = array();
@@ -69,8 +82,9 @@ class midias{
 			$this->quantidadeLength = ($star >= 0? $star: 0);
 
 		}else
-			return $this->quantidadeStar + $this->quantidadeLength;
+			return $this->quantidadeTotal;
 
+		$this->quantidadeTotal = $this->quantidadeStar + $this->quantidadeLength;
 		return $this;
 	}
 
@@ -89,6 +103,7 @@ class midias{
 		else
 			return $this->rais;
 
+		$this->dirExtar();
 		return $this;
 	}
 
@@ -99,7 +114,21 @@ class midias{
 		else
 			return $this->diretorio;
 
+		$this->dirExtar();
 		return $this;
+	}
+
+	private function dirExtar(){
+		$this->pasta = realpath($this->rais(). DS . ($dir = $this->diretorio() && !empty($dir)? $dir. DS: ''));
+		$this->pastaRef = str_repeat('../', preg_match_all('/\\|\//', SISTEMA) + 1). str_replace('\\', '/', substr($this->pasta, (strlen(MIDIAS_BASEPATH) - strlen(SISTEMA))));
+	}
+
+	public function pasta(){
+		return $this->pasta;
+	}
+
+	public function pastaRef(){
+		return $this->pastaRef;
 	}
 
 	public function name($name = NULL){
@@ -112,32 +141,40 @@ class midias{
 		return $this;
 	}
 
+	public function modelo($modelo = NULL){
+		if($modelo === NULL)
+			return ($this->modelo === null? ($this->quantidadeTotal <= 1? self::ModeloPequeno: self::ModeloGrande): $this->modelo);
+
+		$this->modelo = ($modelo == self::ModeloPequeno? $modelo: ($modelo == self::ModeloGrande? $modelo: null));
+		return $this;
+	}
+
 	public function dados(array $arquivos = NULL){
 		if($arquivos !== NULL)
-			self::inseriArquivos($this->dados, $arquivos);
+			$this->dados = $arquivos;
 
 		else
-			return array_keys($this->dados);
+			return $this->dados;
 
 		return $this;
 	}
 
 	public function inseridos(array $arquivos = NULL){
 		if($arquivos !== NULL)
-			self::inseriArquivos($this->inseridos, $arquivos);
+			$this->inseridos = $arquivos;
 
 		else
-			return array_keys($this->inseridos);
+			return $this->inseridos;
 
 		return $this;
 	}
 
 	public function removidos(array $arquivos = NULL){
 		if($arquivos !== NULL)
-			self::inseriArquivos($this->removiodos, $arquivos);
+			$this->removiodos = $arquivos;
 
 		else
-			return array_keys($this->removiodos);
+			return $this->removiodos;
 
 		return $this;
 	}
@@ -183,20 +220,12 @@ class midias{
 		return $arquivos;
 	}
 
-	private static function inseriArquivos(&$var, $arquivos) {
-		$var = array();
-		foreach ($arquivos as $arquivo){
-			$arq = $arquivo;
-			$cor = '';
-			if(preg_match('/([0-9]+-)+(([^-]+)-)*['. implode('', self::CORTES). ']\//i', $arquivo)){
-				$e = explode('/', $arquivo);
-				$arq = array_pop($e);
-				$cor = array_pop($e);
-				$e[] = $arq;
-				$arq = implode('/', $e);
-			}
-			$var[$arq] = $cor;
+	private static function temCorte($arquivo){
+		if(preg_match('/([0-9]+-)+(([^-]+)-)*['. implode('', self::CORTES). ']\//i', $arquivo)){
+			$e = explode('/', $arquivo); array_pop($e);
+			return array_pop($e);
 		}
+		return false;
 	}
 
 	public function dica($dica = NULL){
@@ -221,14 +250,67 @@ class midias{
 
 
 	public function __toString(){
+		$t = (($t = count($this->dados())) <= $this->quantidadeTotal? $t: $this->quantidadeTotal);
 		return '
-			<div class="api-midias" data-name="'. $this->name(). '"  data-action="api/midias/midias.php?m='. $this->implode(). '">
-				<input class="div" readonly="readonly" type="test" value="'. implode('; ', $this->dados()). '"/>
-				<div class="botoes">
-					<button type="button">Selecione os Arquivos</button>
+			<div class="input api-midias api-midias-'. $this->modelo(). '" data-total-parcial="'. count($this->dados()). '"'. $this->datas(). '>
+				<input class="api-midias-input-file" type="file"'. ($this->quantidadeTotal > 1? ' multiple': ''). '/>
+				<div class="api-midias-botoes">
+					<button class="api-midias-upload" type="button" disabled="disabled" title="Upload"><i class="fa fa-upload"></i></i></button><br/>
+					<button class="api-midias-servidor" type="button" disabled="disabled" title="Servidor"><i class="fa fa-server"></i></button>
+				</div>
+				<div class="api-midias-content"'. ($this->modelo() == self::ModeloGrande || $t == 1? '': ' style="display: none"'). '>
+					'. $this->icones(). '
+				</div>
+				<div class="api-midias-multfiles"'. ($this->modelo() == self::ModeloPequeno && $t != 1? '': ' style="display: none"'). '>
+					'. count($this->dados()). ' Arquivos
 				</div>
 			</div>
 		';
+	}
+
+	protected function icones(){
+		$r = ''; $i = 0;
+		foreach($this->dados() as $file) {
+			if($this->quantidadeTotal <= $i++) break;
+			$nome = substr($file, ($p = strripos('/', $file)) !== false ? $p : 0);
+			$tamanho = filesize($this->pasta() . '/' . $file);
+			$corte = $this->temCorte($file);
+			$r .= '
+				<div class="api-midias-file" data-name="'. $nome. '" data-tamanho="'. $tamanho. ($corte !== false? ' data-corte="' . $corte. '"': '') . '">
+					<div class="api-midias-img">
+						<img src="' . $this->pastaRef() . '/' . $file . '" alt=""/>
+						<div class="api-midias-barra-load"></div>
+					</div>
+					<span class="api-midias-name">' . $nome . '</span><br class="api-midias-br-nome"/>
+					<span class="api-midias-dados">Tamanho: ' . self::tamanhoDoArquivo($tamanho) . '</span>
+				</div>
+			';
+		}return $r;
+	}
+
+	private static function tamanhoDoArquivo($tamanho){
+		if($tamanho < 1024)
+			return floor($tamanho).'b';
+
+		$tamanho /= 1024;
+		if($tamanho < 1024)
+			return floor($tamanho).'kB';
+
+		$tamanho /= 1024;
+		if($tamanho < 1024)
+			return floor($tamanho).'MB';
+
+		$tamanho /= 1024;
+		if($tamanho < 1024)
+			return floor($tamanho).'GB';
+
+		$tamanho /= 1024;
+		if($tamanho < 1024)
+			return floor($tamanho).'TB';
+
+		$tamanho /= 1024;
+		return floor($tamanho).'PB';
+
 	}
 
 	public function construirSelecionados(){
@@ -256,13 +338,14 @@ class midias{
 	}
 
 	public function datas(){
-		$r  = '';
-		$r .= ' data-name="' . $this->name(). '"';
+		$r  = ' data-name="' . $this->name(). '"';
 		$r .= ' data-quant-start="'. $this->quantidadeStar(). '"';
 		$r .= ' data-quant-length="'. $this->quantidadeLength(). '"';
+		$r .= ' data-quant-total="'. $this->quantidade(). '"';
 		$r .= ' data-corte="'. $this->corte(). '"';
 		$r .= ' data-tipos="'. $this->tipos(). '"';
 		$r .= ' data-cortes="'. implode('-', $this->cortes()). '"';
+		$r .= ' data-anteriores="'. implode(';', self::preparaParaJson($this->dados())). '"';
 		$r .= ' data-action="'. $this->implode(). '"';
 		return $r;
 	}

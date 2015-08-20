@@ -3,31 +3,157 @@
 .api-midias{
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	padding-right: 175px;
 	position: relative;
+	margin: 0 !important;
+	padding: 0 !important;
 	}
 
-	.api-midias input.div{
-		-webkit-touch-callout: none;
-		-webkit-user-select: none;
-		-khtml-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
-		}
+.api-midias.api-midias-grande{
+	height: 60px !important;
+	}
 
-	.api-midias .botoes{
+	.api-midias .api-midias-input-file{
 		margin: 0 !important;
 		padding: 0 !important;
-		position: absolute;
-		right: 0;
-		top: 0;
+		border: none !important;
+		color: transparent !important;
+		opacity: 0 !important;
+		width: 0 !important;
+		height: 0 !important;
+		background: none !important;
+		visibility: hidden !important;
 		}
 
-		.api-midias .botoes button{
+	.api-midias .api-midias-botoes{
+		position: absolute;
+		margin: 0 !important;
+		padding: 0 !important;
+		left: 0;
+		z-index: 20;
+		}
+
+		.api-midias .api-midias-botoes button{
 			margin: 0;
 			padding: 0;
+			width: 28px;
+			height: 28px;
+			line-height: 30px;
+			font-size: 16px;
+			text-align: center;
+			background: none;
+			border: none;
+			border-radius: 0;
+			color: inherit;
+			text-shadow: 1px 1px 2px rgba(255, 255, 255, 1);
 			}
+
+		.api-midias .api-midias-botoes button[disabled]{
+			opacity: 0.6;
+			}
+
+		.api-midias .api-midias-botoes br{
+			display: none;
+			}
+
+		.api-midias.api-midias-grande .api-midias-botoes br{
+			display: inline;
+			}
+
+	.api-midias .api-midias-content{
+		position: relative;
+		margin: 0 !important;
+		padding: 0 !important;
+		padding-left: 35px !important;
+		z-index: 10;
+		overflow: auto;
+		overflow-x: hidden;
+		}
+
+		.api-midias.api-midias-grande .api-midias-content{
+			padding-left: 35px !important;
+			}
+
+		.api-midias.api-midias-pequeno .api-midias-content{
+			padding-left: 70px !important;
+			}
+
+		.api-midias .api-midias-content .api-midias-file{
+			position: relative;
+			margin: 0 !important;
+			padding: 9px !important;
+			padding-left: 0px !important;
+			display: inline-block;
+			}
+
+			.api-midias.api-midias-pequeno .api-midias-content .api-midias-file{
+				padding-top: 7px !important;
+				padding-bottom: 5px !important;
+				line-height: 35px;
+				}
+
+			.api-midias .api-midias-content .api-midias-file .api-midias-img{
+				margin: 0 !important;
+				padding: 0 !important;
+				float: left;
+				position: relative;
+				}
+
+				.api-midias.api-midias-grande[data-total-parcial="1"] .api-midias-content .api-midias-file .api-midias-img{
+					margin-right: 10px !important;
+					}
+
+				.api-midias.api-midias-pequeno .api-midias-content .api-midias-file .api-midias-img{
+					display: none;
+					}
+
+				.api-midias .api-midias-content .api-midias-file .api-midias-img img{
+					max-height: 40px;
+					float: left;
+					}
+
+				.api-midias .api-midias-content .api-midias-file .api-midias-img .api-midias-barra-load{
+					margin: 0 !important;
+					padding: 0 !important;
+					position: absolute;
+					left: 0;
+					bottom: 0;
+					height: 10px;
+					width: 0;
+					}
+
+			.api-midias .api-midias-content .api-midias-file span{
+				display: inline;
+				line-height: 1.2em;
+				white-space: nowrap;
+				}
+
+			.api-midias .api-midias-content .api-midias-file span.api-midias-name,
+			.api-midias .api-midias-content .api-midias-file span.api-midias-dados{
+				display: none;
+				}
+
+			.api-midias[data-total-parcial="1"] .api-midias-content .api-midias-file span.api-midias-name,
+			.api-midias.api-midias-pequeno .api-midias-content .api-midias-file span.api-midias-name{
+				display: inline;
+				font-weight: bold;
+				font-size: 1.8em;
+				line-height: 1.5em;
+				}
+
+			.api-midias.api-midias-pequeno .api-midias-content .api-midias-file span.api-midias-name{
+				font-size: 1.4em;
+				font-weight: normal;
+				line-height: 1em;
+				}
+
+			.api-midias.api-midias-grande[data-total-parcial="1"] .api-midias-content .api-midias-file span.api-midias-dados{
+				display: inline;
+				font-size: 1.1em;
+				}
+
+			.api-midias.api-midias-pequeno .api-midias-content .api-midias-file .api-midias-br-nome{
+				display: none;
+				}
 
 
 

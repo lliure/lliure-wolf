@@ -1,15 +1,12 @@
 lliure wolf
-=========
-> 7.0 (Perdigueiro Português) 
+-----------
 
-<br>
+> 7.0 (Perdigueiro Português)
 
 #### 7.0 Wolf (14/08/2015)
-<<<<<<< HEAD
+- [bug] - strtolower em ll_app::setNome pos se pasar um nome com letras maiuscalas dava um erro no lliure::iniciaApi;
 - [update] - Api aplimo reformulado com flexbox
-=======
 - [update] - .gitignore da rais adicionado
->>>>>>> 52ff72554c2d09fd9df42a2cd7e5d3ed4bfc0365
 - [update] - instalada como opt o recrusto font-awesome
 - [update] - instalada fonte como fonte padrao Open Sans
 - [update] - na configuração do aplicado no arquivo .ll aceita o grupo que pode acessar o app ex: <seguranca>admin</seguranca>
@@ -24,7 +21,6 @@ lliure wolf
 - [update] - Atualização na função lltoObject() para suporte a utf-8
 - [bug] - atualização nos padrões de css class .column
 - [bug] - aterando entrada na função jf_insert() de != para !== de 'NULL'
-- [bug] - correção na api aplimo referente a montagem do menu superior na função hc_menu()
 - [bug] - correção na api aplimo referente a montagem do menu superior na função hc_menu()
 - [bug] - correção de htmlspecialchars na api Navigi 
 - [bug] - ajustada codifição de caracteres nos arquivos kun_html.php e funcoes.js

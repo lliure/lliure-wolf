@@ -3,9 +3,10 @@
 *
 * gerenciamento de APIs - lliure
 *
-* @Versão 6.1
+* @Versão 6.2
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Colaboração Carlos Alberto Carucci
+* @Colaboração Rodrigo Dechen <rodrigo@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@glliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -137,7 +138,7 @@ class ll_app{
 	}
 	
 	public function setNome($nome){
-		$this->nome = $nome;
+		$this->nome = strtolower($nome);
 		$this->caminho = '';
 		$this->css = array();
 		$this->js = array();
