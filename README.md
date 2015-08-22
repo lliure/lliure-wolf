@@ -4,6 +4,7 @@ lliure wolf
 > 7.0 (Perdigueiro Português)
 
 #### 7.0 Wolf (20/08/2015)
+- [bug] - adição de definição de $llconf->execucao caso não existisse.
 - [update] - suporte para conversão automatica de url para comum ou amigavel
 - [update] - alterada forma de entrada para apps de desktop, não é apresentado o ?app na url
 - [bug] - strtolower em ll_app::setNome pos se pasar um nome com letras maiuscalas dava um erro no lliure::iniciaApi;
@@ -26,7 +27,7 @@ lliure wolf
 - [bug] - correção na api aplimo referente a montagem do menu superior na função hc_menu()
 - [bug] - correção de htmlspecialchars na api Navigi 
 - [bug] - ajustada codifição de caracteres nos arquivos kun_html.php e funcoes.js
-- [upade] - acrescentado os métodos onserver() e onclient() na api aplimo
+- [update] - acrescentado os métodos onserver() e onclient() na api aplimo
 - [bug] - mensagem de erro em não puxar o método header() na api aplimo
 - [bug] - correções, erro ao acessar um banco não existente na api navigi
 - [bug] - correções de acessos para arquivos
