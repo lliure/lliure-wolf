@@ -4,6 +4,7 @@ lliure wolf
 > 7.0 (Perdigueiro Português)
 
 #### 7.0 Wolf (22/08/2015)
+- [update] - thumbs.php
 - [bug] - adição de definição de $llconf->execucao caso não existisse.
 - [update] - suporte para conversão automatica de url para comum ou amigavel
 - [update] - alterada forma de entrada para apps de desktop, não é apresentado o ?app na url
