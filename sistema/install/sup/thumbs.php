@@ -1,45 +1,43 @@
 <?php
 /**
-*
-* lliure WAP
-*
-* @Versão 4.7.1
-* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
-* @Colaborção    Rodirgo Dechen <rodrigo@grapestudio.com.br>
-* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
-* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
-*
-*	
-*	Entrada de get
-*	para: o, p, c, r, a.
-*	/300-200-p-o/teste.jpg					onde /"largura"-"altura"-["efeito 1"-["efeito 2"-]...]-"tipo"/"imagem"
-*	
-*	para: m.
-*	/300-200-150-10-600-400-m/teste.jpg		onde /"largura"-"altura"-"Corte x"-"Corte y"-"Corte largura"-"Corte altura"-["efeito 1"-["efeito 2"-]...]-m/"imagem"
-* 
-*	Tipo padrao é p.
-*	
-*	Os tipos poden ser: 
-*	"o" = Objetiva, redimencina para o tamanho final (adciona tranparencia para completar a medida menor)
-*	"p" = Proporcional, mantendo a medida maior da imagem igual a medida menor da thumb
-*	"c" = Corte, corta a imagem centralizada no tamanho escolhido
-*	"r" = Relativo, a medida que estiver faltando é redimencionada para o valor relativo a original
-*	"a" = Ajustado, Ajusta as dimensões da imagem para as do corte.
-*	"m" = Manual, Configure manualmente o tamanho do corte.
-*	
-*	Efeitos implementados.
-*	"p" = deixa a imagem preto e banca
-*	
-*/
+ *
+ * lliure WAP
+ *
+ * @Versão 5
+ * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
+ * @Colaborção    Rodirgo Dechen <rodrigo@grapestudio.com.br>
+ * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
+ * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
+ *
+ *
+ *	Entrada de get
+ *	para: o, p, c, r, a.
+ *	/300-200-p-o/teste.jpg					onde /"largura"-"altura"-["efeito 1"-["efeito 2"-]...]-"tipo"/"imagem"
+ *
+ *	para: m.
+ *	/300-200-150-10-600-400-m/teste.jpg		onde /"largura"-"altura"-"Corte x"-"Corte y"-"Corte largura"-"Corte altura"-["efeito 1"-["efeito 2"-]...]-m/"imagem"
+ *
+ *	Tipo padrao é p.
+ *
+ *	Os tipos poden ser:
+ *	"c" = Corte, corta a imagem centralizada no tamanho escolhido
+ *	"o" = Objetiva, redimencina para o tamanho final (adciona tranparencia para completar a medida menor)
+ *	"m" = Manual, Configure manualmente o tamanho do corte.
+ *	"p" = Proporcional, mantendo a medida maior da imagem igual a medida menor da thumb
+ *	"r" = Relativo, a medida que estiver faltando é redimencionada para o valor relativo a original
+ *	"a" = Ajustado, Ajusta as dimensões da imagem para as do corte.
+ *
+ *	Efeitos implementados.
+ *	"p" = deixa a imagem preto e banca
+ *
+ */
 
-/* @var $camCom string	Caminho completo*/
-/* @var $imgNom string	Imagem nome*/
-/* @var $params string	Parametros da thumb*/
 /* @var $pasUpl string	Nome da pasta de uploads*/
 /* @var $camBas string	Caminho basico da imagem a partir da pasta de uploads*/
+/* @var $imgNom string	Imagem nome*/
 /* @var $camImg string	Caminho da imagem com o nome dela*/
 /* @var $tmbTps array	Tipos de thumbs disponiveis*/
-/* @var $typTmb string	Tipo da thumb usando
+/* @var $typTmb string	Tipo da thumb usando */
 /* @var $manTop int		Manual Top*/
 /* @var $manLef int		Manual Left*/
 /* @var $manWid int		Manual largula*/
@@ -66,56 +64,57 @@ if(!defined('DS'))
 	/** Abrevicao de DIRECTORY_SEPARATOR*/
 	define ('DS', DIRECTORY_SEPARATOR);
 
-$camCom = $_SERVER['REQUEST_URI'];
-$camCom = explode('/', $camCom);
-$imgNom = urldecode(array_pop($camCom));
-$params = array_pop($camCom);
-$params = explode('-', $params);
-$camCom = implode(DS, $camCom);
 $pasUpl = 'uploads';
-$camBas = substr($camCom, (strpos($camCom, $pasUpl) + strlen($pasUpl) + 1));
+$confgs = array();
+if(!preg_match_all('/'. $pasUpl. '\\/(.*\\/)(?:(\\d+)-(\\d+)-((?:\\w-)*)([copra])|(\\d+)-(\\d+)-(\\d+)-(\\d+)-(\\d+)-(\\d+)-((?:\\w-)*)(m))\\/(.*(\\..*))$/im', rawurldecode($_SERVER['REQUEST_URI']), $confgs))
+	die('não encontrado configuração de thumbs');
+
+$camBas = $confgs[1][0];
+$imgNom = $confgs[14][0];
 $camImg = $camBas. DS. $imgNom;
+$tmbTps = array('c', 'o', 'm', 'p', 'r', 'a');
 
-$tmbTps = array('p', 'o', 'c', 'a', 'r', 'm');
-$typTmb = array_pop($params);
-$typTmb = (in_array($typTmb, $tmbTps)? $typTmb: $tmbTps[0]);
+if($confgs[13][0] == 'm'){
+	$typTmb = 'm';
+	$basWid = (int) ($confgs[6][0]);
+	$basHei = (int) ($confgs[7][0]);
+	$basWid = ($basWid == 0 && $basHei != 0 ? $basHei : $basWid);
+	$basHei = ($basHei == 0 && $basWid != 0 ? $basWid : $basHei);
+	$manLef = (int) $confgs[8][0];
+	$manTop = (int) $confgs[9][0];
+	$manWid = (int) $confgs[10][0];
+	$manHei = (int) $confgs[11][0];
+	$parEfc = $confgs[12][0];
 
-switch ($typTmb){
-	case 'm':
-		$manLef = (int) $params[2];
-		$manTop = (int) $params[3];
-		$manWid = (int) $params[4];
-		$manHei = (int) $params[5];
-		unset($params[2], $params[3], $params[4], $params[5]);
-
-	default:
-		$basWid = (int) ($params[0] == 0 && !empty($params[1]) ? $params[1] : $params[0]);
-		$basHei = (int) ($params[1] == 0 && !empty($params[0]) ? $params[0] : $params[1]);
-		unset($params[0], $params[1]);
-		
-	break;
+}elseif(in_array($confgs[5][0], $tmbTps)){
+	$typTmb = $confgs[5][0];
+	$basWid = (int) ($confgs[2][0]);
+	$basHei = (int) ($confgs[3][0]);
+	$basWid = ($basWid == 0 && $basHei != 0 ? $basHei : $basWid);
+	$basHei = ($basHei == 0 && $basWid != 0 ? $basWid : $basHei);
+	$parEfc = $confgs[4][0];
 }
 
-$parEfc = array_values($params);
+$parEfc = explode('-', $parEfc); array_pop($parEfc);
 $imgEts = strtolower(pathinfo($camImg, PATHINFO_EXTENSION));
 
 // Cria uma nova imagem a partir de um arquivo ou URL
 switch ($imgEts) {
 	case 'jpg':
 		$oriImg = imagecreatefromjpeg($camImg);
-	break;
+		break;
 
 	case 'png':
 		$oriImg = imagecreatefrompng($camImg);
 		imagealphablending($oriImg, false);
 		imagesavealpha($oriImg, true);
-	break;
+		break;
 
 	case 'gif':
 		$oriImg = imagecreatefromgif($camImg);
 		imagealphablending($oriImg, false);
 		imagesavealpha($oriImg, true);
-	break;
+		break;
 }
 
 $oriWid = ImagesX($oriImg);
@@ -128,59 +127,59 @@ switch($typTmb){
 
 	case 'c':
 	case 'r':
-	
+
 		if($basPro > $oriPro)
 			$indRed = $basWid / $oriWid;
-		
+
 		else
 			$indRed = $basHei / $oriHei;
-		
+
 		$novWid = $oriWid * $indRed;
 		$novHei = $oriHei * $indRed;
-		
+
 		if($typTmb == 'r'){
 
 			$novLef = 0;
 			$novTop = 0;
 			$basWid = $novWid;
 			$basHei = $novHei;
-			
+
 		}else{
-			
+
 			$novLef = ($basWid - $novWid) / 2;
 			$novTop = ($basHei - $novHei) / 2;
-			
-		}	
-		
-	break;
+
+		}
+
+		break;
 
 	case 'o':
 	case 'p':
-	
+
 		if($basPro < $oriPro)
 			$indRed = $basWid / $oriWid;
-		
+
 		else
 			$indRed = $basHei / $oriHei;
-		
+
 		$novWid = $oriWid * $indRed;
 		$novHei = $oriHei * $indRed;
-		
+
 		if($typTmb == 'p'){
 
 			$novLef = 0;
 			$novTop = 0;
 			$basWid = $novWid;
 			$basHei = $novHei;
-			
+
 		}else{
-			
+
 			$novLef = ($basWid - $novWid) / 2;
 			$novTop = ($basHei - $novHei) / 2;
-			
-		}	
-		
-	break;
+
+		}
+
+		break;
 
 	case 'a':
 
@@ -190,7 +189,7 @@ switch($typTmb){
 		$novWid = $basWid;
 		$novHei = $basHei;
 
-	break;
+		break;
 
 	case 'm':
 
@@ -202,56 +201,56 @@ switch($typTmb){
 		$novWid =	($relWid * $oriWid);
 		$novHei =	($relHei * $oriHei);
 
-	break;
+		break;
 
 }
 
 if ($imgEts == 'png' or $typTmb == 'o'){
 
 	header('Content-Type: image/png');
-	
+
 	$novImg  = imagecreatetruecolor($basWid, $basHei);
 	imagealphablending($novImg, false);
 	$corTra = imagecolorallocatealpha($novImg, 0, 0, 0, 127);
 	imagefill($novImg, 0, 0, $corTra);
 	imagesavealpha($novImg, true);
 	imagealphablending($novImg, true);
-	
+
 	imagecopyresampled($novImg, $oriImg, $novLef, $novTop, 0, 0, $novWid, $novHei, $oriWid, $oriHei);
-    
-    if (in_array('p', $parEfc))
-        imagefilter($novImg, IMG_FILTER_GRAYSCALE);
-	
+
+	if (in_array('p', $parEfc))
+		imagefilter($novImg, IMG_FILTER_GRAYSCALE);
+
 	imagepng($novImg);
-	
+
 }else if ($imgEts == 'jpg'){
 
 	header("Content-type: image/jpeg");
-	
+
 	$novImg  = imagecreatetruecolor($basWid, $basHei);
 	imagecopyresampled($novImg, $oriImg, $novLef, $novTop, 0, 0, $novWid, $novHei, $oriWid, $oriHei);
-    
-    if (in_array('p', $parEfc))
-        imagefilter($novImg, IMG_FILTER_GRAYSCALE);
-	
+
+	if (in_array('p', $parEfc))
+		imagefilter($novImg, IMG_FILTER_GRAYSCALE);
+
 	imagejpeg($novImg, NULL, 100);
-	
+
 }else if ($imgEts == 'gif'){
-	
+
 	header('Content-Type: image/gif');
-	
+
 	$novImg  = imagecreatetruecolor($basWid, $basHei);
 	imagealphablending($novImg, false);
 	$corTra = imagecolorallocatealpha($novImg, 0, 0, 0, 127);
 	imagefill($novImg, 0, 0, $corTra);
 	imagesavealpha($novImg, true);
 	imagealphablending($novImg, true);
-	
+
 	imagecopyresampled($novImg, $oriImg, $novLef, $novTop, 0, 0, $novWid, $novHei, $oriWid, $oriHei);
-    
-    if (in_array('p', $parEfc))
-        imagefilter($novImg, IMG_FILTER_GRAYSCALE);
-	
+
+	if (in_array('p', $parEfc))
+		imagefilter($novImg, IMG_FILTER_GRAYSCALE);
+
 	imagegif($novImg);
-	
+
 }

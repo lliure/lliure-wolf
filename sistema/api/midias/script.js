@@ -85,7 +85,7 @@ api.Midias.dezenhaTamando = function (tamanho){
 		return Math.floor(tamanho)+ 'b';
 	tamanho /= 1024;
 	if(tamanho < 1024)
-		return Math.floor(tamanho)+ 'kB';
+		return Math.floor(tamanho)+ 'KB';
 	tamanho /= 1024;
 	if(tamanho < 1024)
 		return Math.floor(tamanho)+ 'MB';
