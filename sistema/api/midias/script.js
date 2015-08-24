@@ -318,7 +318,7 @@ api.Midias.sendFilesBuffer = [];
 		$('[data-api-midias]:not(.api-midias) input[type="file"]').click(function(event){
 			event.stopPropagation();
 		}).change(function(event){
-			var self = this.files;
+			var self = this;
 			var contesto = api.Midias.contesto;
 			var total = parseInt(contesto.attr('data-quant-total'));
 			var action = contesto.attr('data-action');
@@ -366,7 +366,7 @@ api.Midias.sendFilesBuffer = [];
 						}else{
 							$(contesto).trigger('end.midias.api', result);
 						}
-						$(self).remove(self);
+						$(self).remove();
 						contesto.prepend($('<input>', {type: 'file'}).css({display: 'none'}));
 					}
 				});
