@@ -126,7 +126,8 @@ api.Midias.difernciar = function(itens, lista, contesto){
 			lista.splice(i, 1);
 	});
 	$.each(lista, function(index, valeu){
-		removidos.push({name: name + '[removidos][' + (valeu.split(':').shift()) + ']', value: valeu.split(':').pop()});
+		if(valeu.length && valeu.length > 0)
+			removidos.push({name: name + '[removidos][' + (valeu.split(':').shift()) + ']', value: valeu.split(':').pop()});
 	});
 	return {'inseridos': inseridos, 'removidos': removidos};
 };
@@ -308,16 +309,16 @@ api.Midias.sendFilesBuffer = [];
 			});
 		});
 
-		$('[data-api-midias]:not(.api-midias)').prepend(
-			$('<input>', {type: 'file'}).css({display: 'none'})
-		).click(function(){
+		$('[data-api-midias]:not(.api-midias)')
+		.prepend($('<input>', {type: 'file'}).css({display: 'none'}))
+		.click(function(){
 			api.Midias.contesto = $(this);
 			api.Midias.contesto.find('input[type="file"]').click();
-		});
-
-		$('[data-api-midias]:not(.api-midias) input[type="file"]').click(function(event){
+		})
+		.on('click', 'input[type="file"]', function(event){
 			event.stopPropagation();
-		}).change(function(event){
+		})
+		.on('change', 'input[type="file"]', function(event){
 			var self = this;
 			var contesto = api.Midias.contesto;
 			var total = parseInt(contesto.attr('data-quant-total'));
