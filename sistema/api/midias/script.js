@@ -146,59 +146,44 @@ api.Midias.atualizaInputs = function(opcoes, contesto){
 		]);
 	});
 };
-api.Midias.redimencionar = function(dimensoesUm, dimensoesDois, tipo){ 
-
+api.Midias.redimencionar = function(dimensoesUm, dimensoesDois, tipo){
 	tipo = (tipo === undefined? 'p': tipo);
 	dimensoesUm.proporcao = (dimensoesUm.proporcao === undefined? dimensoesUm.width / dimensoesUm.height : dimensoesUm.proporcao);
 	dimensoesDois.proporcao = (dimensoesDois.proporcao === undefined? dimensoesDois.width / dimensoesDois.height : dimensoesDois.proporcao);
 	var f = {};
 	var proprocao = 0;
-
 	switch (tipo){
-
 		case 'c':
-
-			if(dimensoesUm.proporcao > dimensoesDois.proporcao){
+			if(dimensoesUm.proporcao > dimensoesDois.proporcao)
 				proprocao = dimensoesDois.height / dimensoesUm.height;
-			}else{
+			else
 				proprocao = dimensoesDois.width / dimensoesUm.width;
-			}
-
 			f.width =		Math.round(dimensoesUm.width * proprocao);
 			f.height =		Math.round(dimensoesUm.height * proprocao);
 			f.proporcao =	f.width / f.height;
 			f.top =			Math.round(-((f.height - dimensoesDois.height) / 2));
 			f.left =		Math.round(-((f.width - dimensoesDois.width) / 2));
-
 			break;
-
 		case 'a':
-
 			f.width =		dimensoesDois.width;
 			f.height =		dimensoesDois.height;
 			f.proporcao =	dimensoesDois.proporcao;
 			f.top =			0;
 			f.left =		0;
-
 			break;
-
 		default:
 		case 'r':
 		case 'p':
 		case 'o':
-
-			if(dimensoesUm.proporcao < dimensoesDois.proporcao){
+			if(dimensoesUm.proporcao < dimensoesDois.proporcao)
 				proprocao = dimensoesDois.height / dimensoesUm.height;
-			}else{
+			else
 				proprocao = dimensoesDois.width / dimensoesUm.width;
-			}
-
 			f.width =		Math.round(dimensoesUm.width * proprocao);
 			f.height =		Math.round(dimensoesUm.height * proprocao);
 			f.proporcao =	f.width / f.height;
 			f.top =			Math.round(-((f.height - dimensoesDois.height) / 2));
 			f.left =		Math.round(-((f.width - dimensoesDois.width) / 2));
-
 			break;
 	}
 	return f;
@@ -324,9 +309,7 @@ api.Midias.sendFilesBuffer = [];
 		});
 
 		$('[data-api-midias]:not(.api-midias)').prepend(
-			$('<input>', {type: 'file'}).css({
-				display: 'none'
-			})
+			$('<input>', {type: 'file'}).css({display: 'none'})
 		).click(function(){
 			api.Midias.contesto = $(this);
 			api.Midias.contesto.find('input[type="file"]').click();
@@ -335,12 +318,13 @@ api.Midias.sendFilesBuffer = [];
 		$('[data-api-midias]:not(.api-midias) input[type="file"]').click(function(event){
 			event.stopPropagation();
 		}).change(function(event){
+			var self = this.files;
 			var contesto = api.Midias.contesto;
 			var total = parseInt(contesto.attr('data-quant-total'));
 			var action = contesto.attr('data-action');
 			var files = {};
 			var corte  = (contesto.attr('data-corte') && contesto.attr('data-cortes')? (contesto.attr('data-corte')+ '-'+ contesto.attr('data-cortes').split('-').shift()) : null);
-			$.each(this.files, function(index, file){
+			$.each(self.files, function(index, file){
 				if (index >= total)return false;
 				api.Midias.sendFileToServer({
 					'file': file,
@@ -357,15 +341,10 @@ api.Midias.sendFilesBuffer = [];
 								'nome':  decodeURI(data['nome']),
 								'img':   img
 							};
-
-						}else{
-							console.log(data);
-						}
-					},
-					'error': function (data) {
+						}else console.log(data);
+					}, 'error': function (data) {
 						console.log(data);
-					},
-					'end': function(){
+					}, 'end': function(){
 						var inp = decodeURI(contesto.attr('data-dados')).split(';'); inp.pop();
 						var result = api.Midias.difernciar(files, inp, contesto);
 						if(corte) {
@@ -387,6 +366,8 @@ api.Midias.sendFilesBuffer = [];
 						}else{
 							$(contesto).trigger('end.midias.api', result);
 						}
+						$(self).remove(self);
+						contesto.prepend($('<input>', {type: 'file'}).css({display: 'none'}));
 					}
 				});
 			});
