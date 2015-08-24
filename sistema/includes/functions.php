@@ -36,7 +36,7 @@ function ll_gourl($url, $execucao = URL_NORMAL){
 		if(strpos($url, '/') !== false)
 			$url = '?'.str_replace(array('/', '?'), array('&', ''), $url);
 		else
-			$url = false;	
+			$url = false;
 	}
 	
 	return $url;
