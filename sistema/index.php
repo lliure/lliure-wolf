@@ -133,17 +133,15 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 				$_ll['app']['header'] = $_ll['app']['pasta'].'header.php';
 				break;
 				
-			case 'sen_html':
-				$_ll['app']['pagina'] = $_ll['app']['pasta'].'sen_html.php';
-				
-				if(!file_exists($_ll['app']['pagina']))
-					$_ll['app']['pagina'] = $_ll['app']['pasta'].'onclient.php';
-					
-				$_ll['app']['header'] = $_ll['app']['pasta'].'header.php';
-				break;
-				
 			case 'onclient':
+			case 'sen_html':
 				$_ll['app']['pagina'] = $_ll['app']['pasta'].'onclient.php';
+			
+				/*{*/
+				if(!file_exists($_ll['app']['pagina']))
+					$_ll['app']['pagina'] = $_ll['app']['pasta'].'sen_html.php';
+				/*}*/
+				
 				$_ll['app']['header'] = $_ll['app']['pasta'].'header.php';
 				break;
 			

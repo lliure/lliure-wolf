@@ -4,6 +4,8 @@ lliure wolf
 > 7.0 (Perdigueiro Português)
 
 #### 7.0 Wolf (22/08/2015)
+- [bug] - reconhecimento url amiaveis
+- [bug] - tratamento de onclient
 - [update] - alterações no processamento de urls em thumbs.php
 - [bug] - adição de definição de valor padrão em $llconf->execucao
 - [update] - suporte para conversão automática de url para comum ou amigavel
