@@ -30,6 +30,9 @@ $llconf = $_ll['conf'];
 if(!isset($_ll['mode_operacion']))
 	$_ll['mode_operacion'] = 'normal';
 
+if(!isset($llconf->execucao))
+	$llconf->execucao = URL_NORMAL;
+
 /******************************************************		TRATAMENTO DE URL	*/
 
 if($_ll['mode_operacion'] == 'normal' && isset($llconf->execucao)){	
