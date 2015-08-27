@@ -109,13 +109,13 @@
 .cabecalho{
 	border-bottom: 1px solid #e1e1e1;
 	padding: 17px 0 0;
-
 	background: #fff;
-	height: 55px;
+	height: 65px;
+	margin-bottom: 20px;
 	}
 	
 	.container .menu h1{
-		font-size: 1.8em;
+		font-size: 2.3em;
 		font-weight: normal;
 		margin: 5px 0 0 25px;
 		}
@@ -258,14 +258,14 @@
 	/** botão */
 	.aplm_botao{
 		float: left;
-		font-size: 0.916em;		
+		font-size: 1.1em;		
 		border-radius: 3px;
 		line-height: 30px;
 		height: 30px;
 		padding: 0 1.2em;
 		margin: 0;
 		margin-right: 3px;
-		font-weight: bold;
+		font-weight: 600;
 		
 		box-sizing: border-box;
 		-webkit-box-sizing: border-box;

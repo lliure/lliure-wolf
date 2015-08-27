@@ -127,7 +127,7 @@ table.navigi_list{
 			
 		tr td .navigi_nome .navigi_rename .nvg_ren_left{
 			float: left;
-			font-weight: bold;
+			font-weight: 600;
 			font-size: 14px;
 			width: 100px;
 			padding-top: 8px;
@@ -158,8 +158,8 @@ table.navigi_list{
 			line-height: 32px;
 			margin-right: 10px;
 			border: 1px solid #E0E0E0;
-			font-weight: bold;
-			font-size: 0.909em;
+			font-weight: 600;
+			font-size: 1.1em;
 			
 			border-radius: 2px;
 			

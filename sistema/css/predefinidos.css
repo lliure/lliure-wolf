@@ -32,7 +32,7 @@ div.mensagem{
 	div.mensagem span.red{
 		display: inline;
 		color: #a00;
-		font-weight: bold;
+		font-weight: 600;
 		}
 		
 	div.mensagem span.blue{
@@ -40,7 +40,7 @@ div.mensagem{
 		}
 		
 	div.mensagem a{
-		font-weight: bold;
+		font-weight: 600;
 		color: #3573A6;
 		}
 	
@@ -107,7 +107,7 @@ form.form fieldset{
 	form.form fieldset legend{
 		font-size: 14px;
 		margin-bottom: 10px;
-		font-weight: bold;
+		font-weight: 600;
 		color: #444;
 		}
 
@@ -175,7 +175,7 @@ form.form fieldset{
 			}
 			
 		form.form fieldset div label.required{
-			font-weight: bold;
+			font-weight: 600;
 			}
 			
 		form.form fieldset div label.error{
@@ -515,8 +515,8 @@ table.table{
 		}	
 
 		table.table tr th{
-			font-weight: bold;
-			font-size: 13px;
+			font-weight: 600;
+			font-size: 1.3em;
 			color: #555;
 			padding: 0.7em 8px;
 			background: #ddd;
@@ -531,7 +531,7 @@ table.table{
 			
 		table.table tr td{
 			padding: 10px 8px;
-			font-size: 12px;
+			font-size: 1.2em;
 			border: none;
 			vertical-align: middle;
 
