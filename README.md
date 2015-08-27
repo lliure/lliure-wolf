@@ -4,11 +4,11 @@ lliure wolf
 > 7.0 (Perdigueiro Português)
 
 #### 7.0 Wolf (22/08/2015)
-- [update] - thumbs.php
-- [bug] - adição de definição de $llconf->execucao caso não existisse
+- [update] - alterações no processamento de urls em thumbs.php
+- [bug] - adição de definição de valor padrão em $llconf->execucao
 - [update] - suporte para conversão automática de url para comum ou amigavel
 - [update] - alterada forma de entrada para apps de desktop, não é apresentado o ?app na url
-- [bug] - strtolower em ll_app::setNome para poder entrar com um nome com letras maiúsculas
+- [bug] - adicionado strtolower ao método ll_app::setNome para poder entrar valores em maiúsculo
 - [update] - Api aplimo reformulado com flexbox
 - [update] - .gitignore da rais adicionado
 - [update] - instalada como opt o recurso font-awesome
