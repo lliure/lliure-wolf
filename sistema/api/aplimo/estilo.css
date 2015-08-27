@@ -33,6 +33,7 @@
 		width: 210px;
 		position: relative;
 		z-index: 300;
+		margin-right: 20px;
 		}		
 		
 	.container .centro{
@@ -40,6 +41,7 @@
 		float: left;
 		position: relative;
 		z-index: 100;
+		padding-right: 20px;
 		}
 		
 			

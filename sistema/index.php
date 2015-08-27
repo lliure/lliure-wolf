@@ -34,43 +34,38 @@ if(!isset($llconf->execucao))
 	$llconf->execucao = URL_NORMAL;
 
 /******************************************************		TRATAMENTO DE URL	*/
+$uArray = $_SERVER['REQUEST_URI'];
+$_ll['url']['endereco'] = (isset($_SERVER['HTTPS']) ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST'];
+$_ll['url']['real'] = $_ll['url']['endereco'].str_replace(array('onserver.php', 'onclient.php', 'index.php'), '', $_SERVER['PHP_SELF']);
 
-if($_ll['mode_operacion'] == 'normal' && isset($llconf->execucao)){	
-	$uArray = $_SERVER['REQUEST_URI'];
-	$_ll['url']['endereco'] = (isset($_SERVER['HTTPS']) ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST'];
-	$_ll['url']['real'] = $_ll['url']['endereco'].substr($_SERVER['PHP_SELF'], 0, -9);
-	
-	$_ll['url']['endereco'] = explode("/", $_ll['url']['endereco'].$uArray);
-	
-	$uArray = explode("/", $uArray);
-	$nReal = explode('/', $_ll['url']['real']);
-	
-	for($i = 0; $i <= count($nReal)-4; $i++)
-		unset($uArray[$i]);
-	
-	$uArray = array_values($uArray);
-	
-	$_ll['url']['endereco'] = array_slice($_ll['url']['endereco'], 0, count($uArray) * -1);
-	$_ll['url']['endereco'] = implode('/', $_ll['url']['endereco']).'/';
-	
-	if($llconf->execucao == URL_AMIGAVEL){
-		for ($i = 0; $i <= count($uArray)-1; $i++) {
-			if(strpos($uArray[$i], '=') != false){
-				$va = explode('=', $uArray[$i]);
-				$_GET[$va[0]] = $va[1]; //monta os get
-			} else {
-				$_GET[$i] = $uArray[$i]; //monta os get
-			}
+$_ll['url']['endereco'] = explode("/", $_ll['url']['endereco'].$uArray);
+
+$uArray = explode("/", $uArray);
+$nReal = explode('/', $_ll['url']['real']);
+
+$uArray = array_slice($uArray, count($nReal)-3);
+
+$_ll['url']['endereco'] = array_slice($_ll['url']['endereco'], 0, count($uArray) * -1);
+$_ll['url']['endereco'] = implode('/', $_ll['url']['endereco']).'/';
+
+if($llconf->execucao == URL_AMIGAVEL){
+	for ($i = 0; $i <= count($uArray)-1; $i++) {
+		if(strpos($uArray[$i], '=') != false){
+			$va = explode('=', $uArray[$i]);
+			$_GET[$va[0]] = $va[1]; //monta os get
+		} else {
+			$_GET[$i] = $uArray[$i]; //monta os get
 		}
-		$_ll['url']['get'] = implode('/', $uArray);
-	} else {		
-		if(!empty($uArray))
-			$_ll['url']['get'] = implode('/', $uArray);		
 	}
-		
-	if(($url = ll_gourl($_ll['url']['get'], $llconf->execucao)) && $url !== false)
-		header('location: '.$_ll['url']['endereco'].$url);
-}
+} 
+
+if(!empty($uArray))
+	$_ll['url']['get'] = implode('/', $uArray);		
+
+if($_ll['mode_operacion'] == 'normal' && ($url = ll_gourl($_ll['url']['get'], $llconf->execucao)) && $url !== false)
+	header('location: '.$_ll['url']['endereco'].$url);
+
+/******************************************************							*/
 
 
 $_ll['user'] = $_SESSION['logado'];
@@ -79,9 +74,8 @@ $_ll['css'] = array();
 $_ll['js'] = array();
 
 
-
 $_ll['ling'] = ll_ling();
-$ll_ling = $_ll['ling'];
+//$ll_ling = $_ll['ling'];
 
 require_once("api/gerenciamento_de_api.php"); 
 
