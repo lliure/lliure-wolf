@@ -185,7 +185,7 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 	case 'opt':
 		if(!empty($_GET['opt'])
 			&& (file_exists('opt/'.$_GET['opt']))){
-			
+				
 			$_ll['opt']['home'] = 'index.php?opt='.$_GET['opt'];
 			$_ll['opt']['onserver'] = 'onserver.php?opt='.$_GET['opt'];
 			$_ll['opt']['onclient'] = 'onclient.php?opt='.$_GET['opt'];			
@@ -213,8 +213,9 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 					if(file_exists($_ll['opt']['pasta'].'header.php'))
 						$_ll['opt']['header'] = $_ll['opt']['pasta'].'header.php';			
 				}					
-				break;			
+				break;
 			}
+			
 		} else {
 			$_ll['opt']['pagina'] = "opt/stirpanelo/ne_trovi.php";
 		}
@@ -229,7 +230,6 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 			$_ll['app']['pagina'] = 'opt/stirpanelo/index.php';
 			$_ll['app']['home'] = '?painel';
 		}
-
 		break;
 
 
@@ -240,6 +240,13 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 /*****/
 
 if($_ll['mode_operacion'] == 'normal'){
+	//Inicia o Tema atual
+	if(($ll_tema = lltoObject('temas/'.$_ll['user']['tema'].'/dados.ll')) != false){
+		$_ll['tema'] = (array) $ll_tema;
+		$ll_icones = $_ll['tema']['icones'];
+		$plgIcones = $ll_icones;
+	}
+	
 	lliure::loadJs('js/jquery.js');
 	lliure::loadJs('api/tiny_mce/tiny_mce.js');
 	lliure::loadJs('js/jquery-ui.js');
@@ -251,12 +258,16 @@ if($_ll['mode_operacion'] == 'normal'){
 	lliure::loadCss('css/base.css');
 	lliure::loadCss('css/principal.css');
 	lliure::loadCss('css/paginas.css');
-	lliure::loadCss('css/predifinidos.css');
+	lliure::loadCss('css/predefinidos.css');
 	lliure::loadCss('css/jfbox.css');
+	
+	if(isset($_ll['app']['pasta'])  && file_exists($_ll['app']['pasta'].'estilo.css'))
+		lliure::loadCss($_ll['app']['pasta'].'estilo.css');
 
-	$apigem = new api;
-	$apigem->iniciaApi('appbar');
-	$apigem->iniciaApi('fileup');
+	lliure::loadCss('temas/'.$ll_tema->id.'/estilo.css');
+		
+	lliure::inicia('appbar');
+	lliure::inicia('fileup');
 }
 
 /*******************************		Header			*/
@@ -279,16 +290,7 @@ if($_ll['mode_operacion'] == 'onclient'){
 	
 //Inicia o histórico
 ll_historico('inicia');
-//Inicia o Tema atual 	
-
-if(($ll_tema = lltoObject('temas/'.$_ll['user']['tema'].'/dados.ll')) != false){
-	$_ll['tema'] = (array) $ll_tema;
-	$ll_icones = $_ll['tema']['icones'];
-	$plgIcones = $ll_icones;
 	
-}
-// 
-
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -304,7 +306,7 @@ if(($ll_tema = lltoObject('temas/'.$_ll['user']['tema'].'/dados.ll')) != false){
 
 	<?php
 	lliure::loadCss();	
-	echo (isset($_GET['app']) && !empty($_GET['app'])  && file_exists($_ll['app']['pasta'].'estilo.css') ?
+	echo (isset($_ll['app']['pasta'])  && file_exists($_ll['app']['pasta'].'estilo.css') ?
 		'<link rel="stylesheet" type="text/css" href="'.$_ll['app']['pasta'].'estilo.css">'
 		: '' )
 		
@@ -342,7 +344,7 @@ if(($ll_tema = lltoObject('temas/'.$_ll['user']['tema'].'/dados.ll')) != false){
 				<ul>
 					<?php
 					echo '<li><a href="index.php">Home</a></li>'
-						.'<li><a href="?opt=user&minhaconta">Minha conta</a></li>'
+						.'<li><a href="?opt=user&en=minhaconta">Minha conta</a></li>'
 						.(ll_tsecuryt('admin') ? '<li><a href="?painel">Painel de controle</a></li>' : '')						
 						.'<li><a href="nli.php?r=logout">Sair</a></li>';
 					?>					
@@ -386,7 +388,7 @@ if(($ll_tema = lltoObject('temas/'.$_ll['user']['tema'].'/dados.ll')) != false){
 	<div id="conteudo">
 		<?php 
 		$carrega = 'opt/stirpanelo/ne_trovi.php';
-
+		
 		if(file_exists($_ll[$get[0]]['pagina']))
 			$carrega = $_ll[$get[0]]['pagina'];
 			

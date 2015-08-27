@@ -33,6 +33,6 @@ case 'grava':
 	($_SESSION['Logado']['id'] == $_GET['id'] ? $_SESSION['Logado']['themer'] = $_POST['themer'] : '');
 
 	$_SESSION['aviso'][0] = "Alteração realizada com sucesso!";
-	header('location: '.$_ll['opt']['home'].(isset($_GET['minhaconta']) ? '&minhaconta' : '' ));
+	header('location: '.$_ll['opt']['home'].(isset($_GET['en']) && $_GET['en'] == 'minhaconta' ? '&en=minhaconta' : '' ));
 	break;
 }

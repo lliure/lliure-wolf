@@ -42,5 +42,5 @@ if(!empty($_SESSION['ll_url'])){
 }
 
 
-header('location: index.php'.$retorna_page);
+header('location: '.$_ll['url']['endereco'].$retorna_page);
 ?>

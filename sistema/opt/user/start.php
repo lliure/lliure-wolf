@@ -54,7 +54,7 @@ if(empty($_GET['user'])){
 	?>
 
 	<div class="boxCenter editUsuario">
-		<form method="post" action="<?php echo $_ll['opt']['onserver'].'&ac=grava&id='.$_GET['user'].(isset($_GET['minhaconta']) ? '&minhaconta' : '');?>"  enctype="multipart/form-data">
+		<form method="post" action="<?php echo $_ll['opt']['onserver'].'&ac=grava&id='.$_GET['user'].(isset($_GET['en']) && $_GET['en'] == 'minhaconta' ? '&en=minhaconta' : '' );?>"  enctype="multipart/form-data">
 			<fieldset>
 				<legend>Dados pessoais</legend>
 				

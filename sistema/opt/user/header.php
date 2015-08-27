@@ -15,7 +15,7 @@ lliure::loadcss($_ll['opt']['pasta'].'usuarios.css');
 
 
 
-if(isset($_GET['minhaconta'])){
+if(isset($_GET['en']) && $_GET['en'] == 'minhaconta'){
 	$_GET['user'] = $_ll['user']['id'];
 } elseif(!ll_tsecuryt('admin')){
 	$_ll['opt']['pagina'] = "opt/mensagens/permissao.php";

@@ -3,27 +3,27 @@
 *
 * lliure WAP
 *
-* @Versão 6.4
+* @Versão 7.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
-* @LicenÃ§a http://opensource.org/licenses/gpl-license.php GNU Public License
+* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
+
 switch(isset($_GET['r']) ? $_GET['r'] : 'login'){
 case 'logout':
-		session_destroy();
-		header('location: nli.php');
+	session_destroy();
+	header('location: '.$_ll['url']['endereco']);
 	break;
 	
-case 'login':
-	
+case 'login':	
 	if(isset($_SESSION['logado'])){	
 		header('location: nli.php?r=rotinas');
 		
 	} elseif(!empty($_POST)){
 		$falha = true;
-		
+				
 		if( (!empty($_POST['usuario'])) && (!empty($_POST['senha'])) && jf_token($_POST['token'])){
 			
 			$senha = md5($_POST['senha']."0800");
@@ -64,7 +64,7 @@ case 'login':
 			
 
 			if(isset($dadosLogin)){
-
+				
 				$tema_default = $temo;
 				
 				if($dadosLogin['themer'] == 'default')
@@ -85,10 +85,15 @@ case 'login':
 
 		}
 		
+		
+		$retorno = 'nli.php?';
+		if(isset($_POST['retorno']))
+			$retorno = $_POST['retorno']. (strpos($_POST['retorno'], '?') !== false || strpos($_POST['retorno'], '&') !== false ? '&' : '?' );
+		
 		if($falha == false)
-			header('location: nli.php?r=rotinas');
+			header('location: '.$retorno.'r=rotinas');
 		else	
-			header('location: nli.php?rt=falha');
+			header('location:'.$retorno.'rt=falha');
 	}
 	
 	break;
