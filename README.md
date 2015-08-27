@@ -12,7 +12,6 @@ lliure wolf
 - [update] - alterada forma de entrada para apps de desktop, não é apresentado o ?app na url
 - [bug] - adicionado strtolower ao método ll_app::setNome para poder entrar valores em maiúsculo
 - [update] - Api aplimo reformulado com flexbox
-- [update] - .gitignore da rais adicionado
 - [update] - instalada como opt o recurso font-awesome
 - [update] - instalada fonte como fonte padrão Open Sans
 - [update] - na configuração do aplicado no arquivo .ll aceita o grupo que pode acessar o app ex: <seguranca>admin</seguranca>
