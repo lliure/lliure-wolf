@@ -5,14 +5,14 @@ lliure wolf
 
 #### 7.0 Wolf (22/08/2015)
 - [update] - thumbs.php
-- [bug] - adição de definição de $llconf->execucao caso não existisse.
-- [update] - suporte para conversão automatica de url para comum ou amigavel
+- [bug] - adição de definição de $llconf->execucao caso não existisse
+- [update] - suporte para conversão automática de url para comum ou amigavel
 - [update] - alterada forma de entrada para apps de desktop, não é apresentado o ?app na url
-- [bug] - strtolower em ll_app::setNome pos se pasar um nome com letras maiuscalas dava um erro no lliure::iniciaApi;
+- [bug] - strtolower em ll_app::setNome para poder entrar com um nome com letras maiúsculas
 - [update] - Api aplimo reformulado com flexbox
 - [update] - .gitignore da rais adicionado
-- [update] - instalada como opt o recrusto font-awesome
-- [update] - instalada fonte como fonte padrao Open Sans
+- [update] - instalada como opt o recurso font-awesome
+- [update] - instalada fonte como fonte padrão Open Sans
 - [update] - na configuração do aplicado no arquivo .ll aceita o grupo que pode acessar o app ex: <seguranca>admin</seguranca>
 - [update] - função de conversão de array para objeto adicionado a biblioteca jf
 - [update] - Adição das extenções de fontes no .htaccess

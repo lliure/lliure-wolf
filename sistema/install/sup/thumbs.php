@@ -3,7 +3,7 @@
  *
  * lliure WAP
  *
- * @Versão 5
+ * @Versão 7.0
  * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
  * @Colaborção    Rodirgo Dechen <rodrigo@grapestudio.com.br>
  * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
