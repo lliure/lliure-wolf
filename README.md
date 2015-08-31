@@ -4,6 +4,7 @@ lliure wolf
 > 7.0 (Perdigueiro Português)
 
 #### 7.0 Wolf (22/08/2015)
+- [update] - Alterado funcionamento da definição de desktop, tema, e execução agora por grupo de usuário
 - [bug] - reconhecimento url amiaveis
 - [bug] - tratamento de onclient
 - [update] - alterações no processamento de urls em thumbs.php
