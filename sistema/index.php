@@ -24,16 +24,22 @@ if(!isset($_SESSION['logado'])) {
 	header('location: nli.php');
 }
 
+$_ll['user'] = $_SESSION['logado'];
+
+
 require_once('includes/carrega_conf.php');
-$llconf = $_ll['conf'];
 
 if(!isset($_ll['mode_operacion']))
 	$_ll['mode_operacion'] = 'normal';
 
-if(!isset($llconf->execucao))
-	$llconf->execucao = URL_NORMAL;
+	
+	
+if(!isset($_ll['conf']->grupo->{$_ll['user']['grupo']}->execucao)){
+	$_ll['conf']->grupo->{$_ll['user']['grupo']} = new stdClass();
+	$_ll['conf']->grupo->{$_ll['user']['grupo']}->execucao = URL_NORMAL;
+}
 
-/******************************************************		TRATAMENTO DE URL	*/
+/******************************************************		TRATAM URL	*/
 $uArray = $_SERVER['REQUEST_URI'];
 $_ll['url']['endereco'] = (isset($_SERVER['HTTPS']) ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST'];
 $_ll['url']['real'] = $_ll['url']['endereco'].str_replace(array('onserver.php', 'onclient.php', 'index.php'), '', $_SERVER['PHP_SELF']);
@@ -48,7 +54,7 @@ $uArray = array_slice($uArray, count($nReal)-3);
 $_ll['url']['endereco'] = array_slice($_ll['url']['endereco'], 0, count($uArray) * -1);
 $_ll['url']['endereco'] = implode('/', $_ll['url']['endereco']).'/';
 
-if($llconf->execucao == URL_AMIGAVEL){
+if($_ll['conf']->grupo->{$_ll['user']['grupo']}->execucao == URL_AMIGAVEL){
 	for ($i = 0; $i <= count($uArray)-1; $i++) {
 		if(strpos($uArray[$i], '=') != false){
 			$va = explode('=', $uArray[$i]);
@@ -62,13 +68,12 @@ if($llconf->execucao == URL_AMIGAVEL){
 if(!empty($uArray))
 	$_ll['url']['get'] = implode('/', $uArray);		
 
-if($_ll['mode_operacion'] == 'normal' && ($url = ll_gourl($_ll['url']['get'], $llconf->execucao)) && $url !== false)
+if($_ll['mode_operacion'] == 'normal' && ($url = ll_gourl($_ll['url']['get'], $_ll['conf']->grupo->{$_ll['user']['grupo']}->execucao)) && $url !== false)
 	header('location: '.$_ll['url']['endereco'].$url);
 
 /******************************************************							*/
 
 
-$_ll['user'] = $_SESSION['logado'];
 
 $_ll['css'] = array();
 $_ll['js'] = array();
@@ -86,8 +91,8 @@ $_ll['titulo'] = 'lliure Wap';
 
 $get = array_keys($_GET);
 
-if(!isset($_GET['app']) && !isset($_GET['opt']) && isset($_ll['conf']->desktop->$_ll['user']['grupo'])){
-	$desk = explode('=', $_ll['conf']->desktop->$_ll['user']['grupo']);
+if(!isset($_GET['app']) && !isset($_GET['opt']) && isset($_ll['conf']->grupo->{$_ll['user']['grupo']}->desktop)){
+	$desk = explode('=', $_ll['conf']->grupo->{$_ll['user']['grupo']}->desktop);
 	$get[0] = 'desk';
 	$desk['app'] = $desk[1];
 }
@@ -100,7 +105,7 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 		$_ll['app']['header'] = 'opt/desktop/desktop.header.php';
 		
 		
-		if(isset($_ll['conf']->desktop->$_ll['user']['grupo'])){			
+		if(isset($desk['app'])){			
 			$_GET['app'] = $desk['app'];			
 		} else {
 			break;

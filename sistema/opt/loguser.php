@@ -66,6 +66,9 @@ case 'login':
 			if(isset($dadosLogin)){
 				
 				$tema_default = $temo;
+
+				if(isset($_ll['conf']->grupo->{$dadosLogin['grupo']}->tema))
+					$tema_default = $_ll['conf']->grupo->{$dadosLogin['grupo']}->tema;
 				
 				if($dadosLogin['themer'] == 'default')
 					$dadosLogin['themer'] = $tema_default;
