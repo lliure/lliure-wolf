@@ -112,13 +112,13 @@ if(empty($_GET['user'])){
 							ll_tsecuryt() ? $grupos['dev'] = 'Desenvolvedor' : '';
 							
 							
-							if($llconf){
-								$grupos_add = jf_iconv("UTF-8", "ISO-8859-1", (array) $llconf->usua_grup);
+							if(isset($_ll['conf']->grupo)){
+								//$grupos_add = jf_iconv("UTF-8", "ISO-8859-1", (array) $llconf->usua_grup);
 								
-								if(!empty($grupos_add)){
+								if(!empty($_ll['conf']->grupo)){
 									echo '<optgroup label="Sub-grupos">';
-									foreach($grupos_add as $indice => $valor)
-										echo '<option value="'.$indice.'" '.($grupo == $indice?'selected':'').'>'.$valor.'</option>';
+									foreach($_ll['conf']->grupo as $ogrupo => $valor)
+										echo '<option value="'.$ogrupo.'" '.($grupo == $ogrupo?'selected':'').'>'.$valor->nome.'</option>';
 									
 									echo '</optgroup>';
 								}

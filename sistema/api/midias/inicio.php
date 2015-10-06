@@ -6,10 +6,12 @@ if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
 require_once MIDIAS_BASEPATH. '/etc/bdconf.php';
 require_once MIDIAS_BASEPATH. '/includes/functions.php';
 
+//difine('MIDIAS_CORTES', array('c', 'o', 'm', 'p', 'r', 'a'));
+
 class Midias{
 
 	const
-		CORTES = array('c', 'o', 'm', 'p', 'r', 'a'),
+		//CORTES = array('c', 'o', 'm', 'p', 'r', 'a'),
 
 		//Modelos
 		ModeloPequeno = 'pequeno',
@@ -29,7 +31,7 @@ class Midias{
 		$modelo = null,
 		$tipos = null,
 		$corte = '',
-		$cortes = self::CORTES,
+		$cortes = array('c', 'o', 'm', 'p', 'r', 'a'),
 		$quantidadeStar = 0,
 		$quantidadeLength = 1,
 		$quantidadeTotal = 1,
@@ -119,8 +121,9 @@ class Midias{
 	}
 
 	private function dirExtar(){
+		$varVazia = array();
 		$this->pasta = realpath($this->rais(). DS . ($dir = $this->diretorio() && !empty($dir)? $dir. DS: ''));
-		$this->pastaRef = str_repeat('../', preg_match_all('/\\|\//', SISTEMA) + 1). str_replace('\\', '/', substr($this->pasta, (strlen(MIDIAS_BASEPATH) - strlen(SISTEMA))));
+		$this->pastaRef = str_repeat('../', preg_match_all('/\\|\//', SISTEMA, $varVazia) + 1). str_replace('\\', '/', substr($this->pasta, (strlen(MIDIAS_BASEPATH) - strlen(SISTEMA))));
 	}
 
 	public function pasta(){
@@ -315,6 +318,8 @@ class Midias{
 	public function enbled(){
 		$r  = ' data-api-midias="' . $this->name(). '"';
 		$r .= ' data-quant-start="'. $this->quantidadeStar(). '"';
+		$r .= ' data-pasta="'. $this->pasta . '"';
+		$r .= ' data-pastaRef="'. $this->pastaRef . '"';
 		$r .= ' data-quant-length="'. $this->quantidadeLength(). '"';
 		$r .= ' data-quant-total="'. $this->quantidade(). '"';
 		$r .= ' data-corte="'. $this->corte(). '"';

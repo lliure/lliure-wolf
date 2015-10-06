@@ -817,6 +817,32 @@ api.Midias.sendFilesBuffer = [];
 						case 'm':
 
 							if(crop === null){
+								
+								function showPreview(coords){
+									
+									var rx = icone.width / coords.w;
+									var ry = icone.height / coords.h;
+
+									eu.attr({
+										'data-corte': (
+											corte.width + '-' + 
+											corte.height + '-' + 
+											Math.round((coords.x / imgRef.width) * img.width) + '-' + 
+											Math.round((coords.y / imgRef.height) * img.height) + '-' + 
+											Math.round((coords.w / imgRef.width) * img.width)  + '-' + 
+											Math.round((coords.h / imgRef.height) * img.height) + '-' + 
+											'm'
+										)
+									});
+
+									$(ico).css({
+										width: Math.round(rx * imgRef.width),
+										height: Math.round(ry * imgRef.height),
+										left: -(Math.round(rx * coords.x)),
+										top: -(Math.round(ry * coords.y))
+									});
+									
+								}
 
 								self.crop = $.Jcrop('#midias-imgToCorte');
 								self.crop.setOptions({
@@ -846,32 +872,6 @@ api.Midias.sendFilesBuffer = [];
 									$(ico).css(f);
 								}
 								$(base).css({width: icone.width, height: icone.height});
-								
-								function showPreview(coords){
-									
-									var rx = icone.width / coords.w;
-									var ry = icone.height / coords.h;
-
-									eu.attr({
-										'data-corte': (
-											corte.width + '-' + 
-											corte.height + '-' + 
-											Math.round((coords.x / imgRef.width) * img.width) + '-' + 
-											Math.round((coords.y / imgRef.height) * img.height) + '-' + 
-											Math.round((coords.w / imgRef.width) * img.width)  + '-' + 
-											Math.round((coords.h / imgRef.height) * img.height) + '-' + 
-											'm'
-										)
-									});
-
-									$(ico).css({
-										width: Math.round(rx * imgRef.width),
-										height: Math.round(ry * imgRef.height),
-										left: -(Math.round(rx * coords.x)),
-										top: -(Math.round(ry * coords.y))
-									});
-									
-								}
 
 							}
 

@@ -36,7 +36,7 @@ require_once 'diretorio.php';?>
 				<fieldset>
 					<div class="direrio">
 						Corte:&nbsp;
-						<select id="midias-selec-corte" disabled="disabled">
+						<select id="midias-selec-corte">
 							<?php foreach ($cortes as $corte => $nome){?>
 								<?php if(array_search($corte, $corSet) !== FALSE){?>
 									<option value="<?php echo $corte;?>"><?php echo $nome;?></option>

@@ -6,9 +6,12 @@ header ('Content-type: text/html; charset=ISO-8859-1'); require_once 'header.php
 $e = explode('.', $_FILES['file']['name']);
 $ets = array_pop($e);
 $nam = implode('.', $e);
-$i = -1;
-$file = $midias->pasta(). DS. $_FILES['file']['name'];
-while (file_exists(($file = $midias->pasta(). DS. ($name = ($nam. ((++$i) > 0? '('. $i. ')': ''). '.'. $ets)))));
+
+$nam = jf_urlformat($nam);
+$nam = $nam.'_'.substr(md5(time()), rand(0, 20), 8).'.'.$ets;
+$nam = strtolower($nam);
+
+$file = $midias->pasta(). DS. $nam;
 
 $erros = array(
 	0 => 'Não houve erro, o upload foi bem sucedido.',
@@ -29,7 +32,7 @@ if ($t !== FALSE){
 		'data' => $data,
 		'size' => $size,
 		'etc'  => $ets,
-		'nome' => $name
+		'nome' => $nam
 	)));
 	
 }else {

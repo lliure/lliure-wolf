@@ -30,7 +30,8 @@ function montaDiretorio($midias, &$arquivos){
 
 		} else {
 			foreach ($_GET['i'] as $arquivo) {
-				$arqs[] = array_pop(explode('/', $arquivo));
+				$aa = explode('/', $arquivo);
+				$arqs[] = array_pop($aa);
 			}
 		}
 
