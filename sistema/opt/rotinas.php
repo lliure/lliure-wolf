@@ -19,8 +19,8 @@ if(!file_exists('etc/llconf.ll')){
 				."\t".'<idiomas>'."\n"
 					."\t"."\t".'<nativo>pt_br</nativo>'."\n"					
 				."\t".'</idiomas>'."\n"
-				."\t".'<temoDefaulto>perdigueiro-portugues</temoDefaulto>'."\n"
-				."\t".'<versao>7 Perdigueiro Português</versao>'."\n"
+				."\t".'<tema_default>clumber-spaniel</tema_default>'."\n"
+				."\t".'<versao>8 Clumber Spaniel</versao>'."\n"
 			.'</configuracoes>';
 	
 
@@ -31,7 +31,7 @@ if(!file_exists('etc/llconf.ll')){
 	
 	chmod('etc/llconf.ll', 0777);
 	
-	$_SESSION['logado']['tema'] = 'perdigueiro-portugues';
+	$_SESSION['logado']['tema'] = 'clumber-spaniel';
 }
 
 if(!empty($_SESSION['ll_url'])){
@@ -40,7 +40,6 @@ if(!empty($_SESSION['ll_url'])){
 		
 	unset($_SESSION['ll_url']);
 }
-
 
 header('location: '.$_ll['url']['endereco'].$retorna_page);
 ?>

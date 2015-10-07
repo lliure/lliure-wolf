@@ -1,24 +1,24 @@
 h1, h2{
-	color: #eea60d !important;
+	color: #008A17 !important;
 	}
 	
 		
 .ll_border-color{
-	border-color: #eea60d !important;
+	border-color: #008A17 !important;
 	}	
 	
 .ll_color{
-	color: #eea60d !important;
+	color: #008A17 !important;
 	}
 		
 .ll_background{
-	background-color: #eea60d !important;
+	background-color: #008A17 !important;
 	}
 	
 	
 /* ELEMENTOS */
 #topo{
-	background: #eea60d !important;
+	background: #008A17 !important;
 	}
 
 #topo .borda-esquerda,
@@ -43,5 +43,5 @@ h1, h2{
 	}
 	
 #topo .right div.menu ul li a:hover{
-	background: #cf910c;
+	background: #0DAA27;
 	}

@@ -53,7 +53,6 @@ if(!isset($require) || isset($_GET['r'])){
 	require_once('includes/carrega_conf.php');
 		
 	$temo = 'lliure';
-		
 	if(isset($_ll['conf']->tema_default))
 		if(file_exists('temas/'.$_ll['conf']->tema_default.'/dados.ll'))
 			$temo = (string) $_ll['conf']->tema_default;
