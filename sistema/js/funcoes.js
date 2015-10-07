@@ -36,7 +36,7 @@ function ll_sessionFix(){
 
 
 function ll_addDesk(){
-	var	nome = prompt("Qual serï¿½ a identificï¿½o dessa pï¿½gina em seu desktop?");
+	var	nome = prompt("Qual será a identificão dessa página em seu desktop?");
 	
 	if (nome != null && nome != "")
 		ll_load('opt/desktop/sen_html.php?ac=addDesktop', {nome: nome});

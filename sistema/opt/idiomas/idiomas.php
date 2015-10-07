@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 6.0
+* @Versão 8.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -18,6 +18,7 @@ $arrayConf = xml2array($llconf);
 
 switch(isset($_GET['ac']) ? $_GET['ac'] : 'home' ){
 case 'home':
+	
 	$pg_idiomas = '<h1>Controle de Idiomas</h1>';
 	if(isset($arrayConf['idiomas']) && !empty($arrayConf['idiomas'])) {
 		$pg_idiomas .= '<table class="table">'
@@ -27,9 +28,9 @@ case 'home':
 				$pg_idiomas .= '<tr>'
 									.'<td>'.$ll_lista_idiomas[$valor].'</td>'
 									
-									.'<td><a href="opt/idiomas/idiomas.php?ac=natv&amp;idi='.$valor.'" class="jfbox"><img src="imagens/icones/'.($chave == 'nativo' ? 'round_checkmark' : 'round').'.png"></a></td>'
+									.'<td><a href="opt/idiomas/idiomas.php?ac=natv&amp;idi='.$valor.'" class="jfbox"><i class="fa '.($chave == 'nativo' ? 'fa-check-circle-o' : 'fa-circle-o').'"></i></a></td>'
 									
-									.'<td><a href="opt/idiomas/idiomas.php?ac=del&amp;idi='.$valor.'" class="jfbox"><img src="imagens/icones/trash.png"></a></td>'
+									.'<td><a href="opt/idiomas/idiomas.php?ac=del&amp;idi='.$valor.'" class="jfbox"><i class="fa fa-trash"></i></a></td>'
 							  .'</tr>';
 
 				unset($ll_lista_idiomas[$valor]);
@@ -55,7 +56,7 @@ case 'home':
 			.'</fieldset>'
 			.'<div class="botoes"><button type="submit">Adicionar</button></div>'
 		.'</form>';
-
+	
 	echo $pg_idiomas;
 break;
 

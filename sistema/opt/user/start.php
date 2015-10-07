@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 7.0
+* @Versão 8.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -11,8 +11,8 @@
 */
 
 if(empty($_GET['user'])){
-	$botoes[] =	array('href' => $backReal, 'img' => $_ll['tema']['icones'].'br_prev.png', 'title' => $backNome);
-	$botoes[] =	array('href' => $_ll['opt']['onclient'].'&ac=new', 'img' => $_ll['tema']['icones'].'user.png', 'title' => 'Criar usuário', 'attr' => 'class="criar"');
+	$botoes[] =	array('href' => $backReal, 'fa' => 'fa-chevron-left', 'title' => $backNome);
+	$botoes[] =	array('href' => $_ll['opt']['onclient'].'&ac=new',  'fa' => 'fa-user-plus ', 'title' => 'Criar usuário', 'attr' => 'class="criar"');
 } else {
 	$botoes[] =	array('href' => '?'.(isset($_GET['minhaconta']) ? 'desk' : 'usuarios') , 'img' => $_ll['tema']['icones'].'br_prev.png', 'title' => 'Voltar');
 }

@@ -2,7 +2,7 @@
 *
 * lliure WAP
 *
-* @Versão 7.0
+* @Versão 8.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -130,7 +130,6 @@ div.bodyhome{
 /***************************		Install modal		*****/
 .install-box{
 	margin-top: 15px;
-	font-size: 12px;
 	}
 	
 	.install-box h2{
@@ -150,16 +149,23 @@ div.bodyhome{
 			}
 	
 	.install-box form .fase{
-		border-bottom: 1px dotted #888;
-		padding-bottom: 10px;
+		border-top: 1px dotted #888;
+		padding-top: 10px;
 		margin-bottom: 10px;
 		float: left;
 		width: 100%;
+		
 		}
+		
+		.install-box form .fase:first-child{
+			border-top: none;
+			}
 			
 	.install-box form .msm{
 		margin-bottom: 10px;
 		color: #0a0;
+		font-size: 1.2em;
+		line-height: 130%;
 		}
 			
 	.install-box form .msm.msmE{
@@ -211,6 +217,15 @@ div.bodyhome{
 			right: 0;
 			bottom: 0;
 			}
+	
+/*******************************************		Idioma					*****/	
+.idiomaBox{
+		
+	}
+	
+	.idiomaBox table tr td .fa{
+		font-size: 1.4em;
+		}
 			
 			
 /*******************************************		Sobre					*****/

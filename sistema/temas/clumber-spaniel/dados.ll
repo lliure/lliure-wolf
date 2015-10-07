@@ -2,5 +2,4 @@
 <dados>
 	<nome>Clumber Spaniel</nome> 
 	<id>clumber-spaniel</id>
-	<icones>imagens/icones/</icones>
 </dados>

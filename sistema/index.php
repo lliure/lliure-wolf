@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 7.0
+* @Versão 8.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -243,8 +243,8 @@ if($_ll['mode_operacion'] == 'normal'){
 	//Inicia o Tema atual
 	if(($ll_tema = lltoObject('temas/'.$_ll['user']['tema'].'/dados.ll')) != false){
 		$_ll['tema'] = (array) $ll_tema;
-		$ll_icones = $_ll['tema']['icones'];
-		$plgIcones = $ll_icones;
+		/* $ll_icones = $_ll['tema']['icones']; */
+		/* $plgIcones = $ll_icones; */
 	}
 	
 	lliure::loadJs('js/jquery.js');
