@@ -32,10 +32,10 @@ require_once('includes/carrega_conf.php');
 if(!isset($_ll['mode_operacion']))
 	$_ll['mode_operacion'] = 'normal';
 
-	
-	
+		
 if(!isset($_ll['conf']->grupo->{$_ll['user']['grupo']}->execucao)){
-	$_ll['conf']->grupo->{$_ll['user']['grupo']} = new stdClass();
+	$_ll['conf']->grupo = new stdClass;
+	$_ll['conf']->grupo->$_ll['user']['grupo'] = new stdClass;	
 	$_ll['conf']->grupo->{$_ll['user']['grupo']}->execucao = URL_NORMAL;
 }
 
@@ -260,6 +260,7 @@ if($_ll['mode_operacion'] == 'normal'){
 	lliure::loadCss('css/paginas.css');
 	lliure::loadCss('css/predefinidos.css');
 	lliure::loadCss('css/jfbox.css');
+	lliure::loadCss('opt/font-awesome/css/font-awesome.min.css');
 	
 	if(isset($_ll['app']['pasta'])  && file_exists($_ll['app']['pasta'].'estilo.css'))
 		lliure::loadCss($_ll['app']['pasta'].'estilo.css');

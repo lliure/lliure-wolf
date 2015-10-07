@@ -138,7 +138,7 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 		}
 		
 		if($navigi['delete'] || $dados['delete']){
-			$dados['delete'] = '<td class="navigi_del"><img src="api/navigi/img/trash.png"></td>';
+			$dados['delete'] = '<td class="navigi_del"><i class="fa fa-trash"></i></td>';
 			$colspan++;
 		}
 		
@@ -146,7 +146,11 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 			$dados['botoes'] = '';
 			foreach($dados['botao'] as $key => $valor){
 				$valor['link'] = str_replace('#ID', $dados['id'], $valor['link']);
-				$dados['botoes'] .= '<td><a href="'.$valor['link'].'" '.(isset($valor['modal']) ? 'class="navigi_bmod" rel="'.$valor['modal'].'"' : '').'><img src="'.$valor['ico'].'"></a></td>'."\n";
+				$dados['botoes'] .= '<td>'
+						.'<a href="'.$valor['link'].'" '.(isset($valor['modal']) ? 'class="navigi_bmod" rel="'.$valor['modal'].'"' : '').'>'
+							.(isset($valor['fa']) ? '<i class="fa '.$valor['fa'].'"></i>' : '<img src="'.$valor['ico'].'">')
+						.'</a>'
+					.'</td>'."\n";
 				$colspan++;
 			}
 		}

@@ -154,7 +154,7 @@ class navigi{
 	var $etiqueta = null;
 	var $cell = null;
 
-	function monta(){
+	function monta($echo = false){
 		global $_ll;
 		
 		/** Retro compatibilidade para verções antigas*/
@@ -254,8 +254,10 @@ class navigi{
 		
 		$encriptado = jf_encode($_ll['user']['token'], $navigi);		
 	
-		
-		echo '<div id="navigi" token="'.$encriptado.'"></div>';
+		if(!$echo)
+			echo '<div id="navigi" token="'.$encriptado.'"></div>';
+		else
+			return '<div id="navigi" token="'.$encriptado.'"></div>';
 	}
 }
 
