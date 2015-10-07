@@ -248,7 +248,7 @@ if($_ll['mode_operacion'] == 'normal'){
 	}
 	
 	lliure::loadJs('js/jquery.js');
-	lliure::loadJs('api/tiny_mce/tiny_mce.js');
+	lliure::loadJs('api/tinymce/tinymce.min.js');
 	lliure::loadJs('js/jquery-ui.js');
 	lliure::loadJs('js/funcoes.js');
 	lliure::loadJs('js/jquery.jfkey.js');
