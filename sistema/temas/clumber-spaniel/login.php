@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 7.0
+* @Versão 8.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -13,7 +13,7 @@
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="css/base.css" />
-		<link rel="stylesheet" type="text/css" href="temas/perdigueiro-portugues/login/login.css" />
+		<link rel="stylesheet" type="text/css" href="temas/clumber-spaniel/login/login.css" />
 		
 		<script type="text/javascript" src="js/jquery.js"></script>
 		<script type="text/javascript" src="js/funcoes.js"></script>

@@ -98,7 +98,7 @@
 			}
 
 		#login form input:focus{
-			border-color: #a41a11;
+			border-color: #008A17;
 			}
 			
 	#login form .botao{
@@ -111,18 +111,16 @@
 			font-size: 13px;
 			line-height: 13px;
 			height: 32px;
-			background-color: #bf2317;
-			background-image: -moz-linear-gradient(center top , #bf2317, #a41a11);
-			border: 1px solid #a41a11;
+			background-color: #008A17;
+			border: 1px solid #008A17;
 			color: #FFFFFF;
 			text-shadow: 0 1px rgba(0, 0, 0, 0.1);
 			font-weight: bold;
 			}
 		
 		#login form .botao button:hover{
-			background-color: #bf180b;
-			background-image: -moz-linear-gradient(center top , #bf180b, #bf2317);
-			border: 1px solid #a41a11;
+			background-color: #008A17;
+			border: 1px solid #008A17;
 			color: #FFFFFF;
 			text-shadow: 0 1px rgba(0, 0, 0, 0.3);
 			}
