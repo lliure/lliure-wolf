@@ -14,7 +14,7 @@ if(empty($_GET['user'])){
 	$botoes[] =	array('href' => $backReal, 'fa' => 'fa-chevron-left', 'title' => $backNome);
 	$botoes[] =	array('href' => $_ll['opt']['onclient'].'&ac=new',  'fa' => 'fa-user-plus ', 'title' => 'Criar usuário', 'attr' => 'class="criar"');
 } else {
-	$botoes[] =	array('href' => '?'.(isset($_GET['minhaconta']) ? 'desk' : 'usuarios') , 'img' => $_ll['tema']['icones'].'br_prev.png', 'title' => 'Voltar');
+	$botoes[] =	array('href' => (isset($_GET['minhaconta']) ? $_ll['url']['endereco'] : '?opt=user') ,  'fa' => 'fa-chevron-left', 'title' => 'Voltar');
 }
 
 echo app_bar('Painel de usuários', $botoes);
@@ -116,11 +116,13 @@ if(empty($_GET['user'])){
 								//$grupos_add = jf_iconv("UTF-8", "ISO-8859-1", (array) $llconf->usua_grup);
 								
 								if(!empty($_ll['conf']->grupo)){
-									echo '<optgroup label="Sub-grupos">';
+									$sub = null;									
 									foreach($_ll['conf']->grupo as $ogrupo => $valor)
-										echo '<option value="'.$ogrupo.'" '.($grupo == $ogrupo?'selected':'').'>'.$valor->nome.'</option>';
-									
-									echo '</optgroup>';
+										if(isset($valor->nome))
+											$sub .= '<option value="'.$ogrupo.'" '.($grupo == $ogrupo?'selected':'').'>'.$valor->nome.'</option>';
+										
+									if($sub != null)
+										echo '<optgroup label="Sub-grupos">'.$sub.'</optgroup>';
 								}
 							}
 							
