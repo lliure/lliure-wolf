@@ -42,13 +42,17 @@ function navigi_tratamento($dados){
 	/**/
 	
 	/**********		DEFINIÇÃO DO ICONE							**/
-	$dados['ico'] = 'api/navigi/img/ico.png';
+	if(!isset($navigi['config'][$configSel]['fa'])){
+		$dados['ico'] = 'api/navigi/img/ico.png';
 	
-	if(isset($navigi['config'][$configSel]['ico']))
-		$dados['ico'] = $navigi['config'][$configSel]['ico'];
-	
-	if(isset($navigi['config'][$configSel]['ico_col']) && !empty($navigi['config'][$configSel]['ico_col']))
-		$dados['ico'] = $dados[$navigi['config'][$configSel]['ico_col']];
+		if(isset($navigi['config'][$configSel]['ico']))
+			$dados['ico'] = $navigi['config'][$configSel]['ico'];
+		
+		if(isset($navigi['config'][$configSel]['ico_col']) && !empty($navigi['config'][$configSel]['ico_col']))
+			$dados['ico'] = $dados[$navigi['config'][$configSel]['ico_col']];
+	} else {
+		$dados['fa'] = $navigi['config'][$configSel]['fa'];
+	}
 	/**/
 	
 	$dados['as_id'] = $dados[$navigi['config'][$configSel]['as_id']]; // alias para o id
@@ -111,11 +115,11 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 	}
 } else {	/*/// exibindo como lista ********************************************************/
 	$ico = false;
-	
+		
 	if($navigi['configSel'] != false){
 		$ico = $navigi['config'];
 		$ico = array_pop($ico);
-		$ico = (isset($ico['ico']) ? true : false);
+		$ico = (isset($ico['ico']) || isset($ico['fa']) ? true : false);
 	}
 	
 	// colspan		
@@ -131,7 +135,7 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 		
 		$dados = navigi_tratamento($dados);		
 		$colspan = 0;
-				
+			
 		if($navigi['rename'] || $dados['rename']){
 			$dados['rename'] = '<td class="navigi_ren"><img src="api/navigi/img/rename.png"></td>';
 			$colspan++;
@@ -159,16 +163,14 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 		if(!empty($navigi['cell']))
 			foreach($navigi['cell'] as $key => $valor)
 				$cell[$dados['id']] .= '<td>'.$dados[$key].'</td>'."\n";
-			
-		
-		
+
 		/* Para calcular o colspan dinâmico */
 		$dados['colspan'] = $colspan;		
 		$tableColspan = ($tableColspan > $colspan ? $tableColspan : $colspan);
 		
 		$linhas[] = $dados;
 	}
-	
+
 		
 	echo '<table class="table navigi_list">'
 			.'<tr>'
@@ -198,7 +200,14 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 					.'permicao="'.$dados['permicao'].'" '
 					.'nome="'.$dados['coluna'].'">'
 			
-					.($ico == true ? '<td><img src="'.$dados['ico'].'" alt="'.$dados['coluna'].'" /></td>' : '' )
+					.($ico == true 
+							? '<td>'
+								.(isset($dados['fa']) 
+									? '<i class="fa '.$dados['fa'].'"></i>'
+									: '<img src="'.$dados['ico'].'" alt="'.$dados['coluna'].'" />' )
+							 .'</td>'
+							
+							: '' )
 					
 					.'<td>'.str_pad($dados['as_id'], 7, 0, STR_PAD_LEFT).'</td>'
 					.'<td colspan="'.($tableColspan-$dados['colspan']).'"><div class="navigi_nome">'.htmlspecialchars($dados['coluna'], ENT_COMPAT, 'ISO-8859-1', true).'</div></td>'

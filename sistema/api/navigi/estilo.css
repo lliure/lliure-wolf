@@ -105,7 +105,10 @@ table.navigi_list{
 		cursor: pointer;
 		}
 		
-	
+		tr.navigi_tr .fa{
+			font-size: 1.6em;
+			}
+			
 	table.navigi_list tr td .navigi_nome{
 		position: relative;		
 		}		
