@@ -170,8 +170,7 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 		
 		$linhas[] = $dados;
 	}
-
-		
+	
 	echo '<table class="table navigi_list">'
 			.'<tr>'
 				.($ico == true ? '<th class="ico"></th>' : '' )
@@ -210,13 +209,14 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 							: '' )
 					
 					.'<td>'.str_pad($dados['as_id'], 7, 0, STR_PAD_LEFT).'</td>'
-					.'<td colspan="'.($tableColspan-$dados['colspan']).'"><div class="navigi_nome">'.htmlspecialchars($dados['coluna'], ENT_COMPAT, 'ISO-8859-1', true).'</div></td>'
+					.'<td colspan="'.($tableColspan-$dados['colspan']+1) .'"><div class="navigi_nome">'.htmlspecialchars($dados['coluna'], ENT_COMPAT, 'ISO-8859-1', true).'</div></td>'
 					
 					.$cell[$dados['id']]
 					
 					.$dados['botoes']
 					
 					.$dados['rename']
+					
 					.$dados['delete']
 				.'</tr>';
 	}
