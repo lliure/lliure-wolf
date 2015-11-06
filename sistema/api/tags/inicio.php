@@ -122,6 +122,7 @@ class tags{
                         </div>
                         <div class="relacionados"></div>
                     </div>
+					<div class="both"></div>
                     <script>
                         $(function(){
                             tag.loadTopicos($(".'. $this->contexto. '"));
@@ -228,7 +229,7 @@ class tag_server{
         foreach($array as $key => $value){
             $r .= '
 				<span class="tag-adedida" data-id="'.$value['id'].'" data-tag="'.$value['tag'].'">
-					<a class="tag-bot-del"><img src="imagens/icones/delete.png" alt="excluir"></a>
+					<a class="tag-bot-del"><i class="fa fa-times"></i></a>
 					<div class="tag-content">'.$value['tag'].'</div>
 				</span>		
 			';
