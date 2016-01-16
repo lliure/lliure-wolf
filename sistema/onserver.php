@@ -9,7 +9,6 @@
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
-
 $_ll['mode_operacion'] = 'onserver';
 require_once('index.php');
 ?>

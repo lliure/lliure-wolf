@@ -1,4 +1,5 @@
 <?php 
+header('Content-Type: text/html; charset=iso-8859-1');
 /**
 *
 * lliure WAP
@@ -9,6 +10,7 @@
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
+
 
 if(!file_exists("etc/bdconf.php"))
 	header('location: install/index.php');
@@ -170,8 +172,7 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 				if($ll_segok){
 					$_ll['app']['pagina'] = $_ll['app']['pasta'].'start.php';
 					
-					if(file_exists($_ll['app']['pasta'].'header.php'))
-						$_ll['app']['header'] = $_ll['app']['pasta'].'header.php';			
+					$_ll['app']['header'] = $_ll['app']['pasta'].'header.php';			
 				}	
 				
 				break;			
@@ -183,43 +184,40 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 		break;
 		
 	case 'opt':
-		if(!empty($_GET['opt'])
-			&& (file_exists('opt/'.$_GET['opt']))){
+	case 'api':
+		if(!empty($_GET[$get[0]])
+			&& (file_exists($get[0].'/'.$_GET[$get[0]]))){
 				
-			$_ll['opt']['home'] = 'index.php?opt='.$_GET['opt'];
-			$_ll['opt']['onserver'] = 'onserver.php?opt='.$_GET['opt'];
-			$_ll['opt']['onclient'] = 'onclient.php?opt='.$_GET['opt'];			
-			$_ll['opt']['pasta'] = 'opt/'.$_GET['opt'].'/';
+			$_ll[$get[0]]['home'] = 'index.php?'.$get[0].'='.$_GET[$get[0]];
+			$_ll[$get[0]]['onserver'] = 'onserver.php?'.$get[0].'='.$_GET[$get[0]];
+			$_ll[$get[0]]['onclient'] = 'onclient.php?'.$get[0].'='.$_GET[$get[0]];			
+			$_ll[$get[0]]['pasta'] = $get[0].'/'.$_GET[$get[0]].'/';
 			
-			/**		Controle de abertura de páginas		**/			
+		
+			/**		Controle de abertura de páginas		**/		
+			$_ll[$get[0]]['header'] = $_ll[$get[0]]['pasta'].'header.php';			
 			switch($_ll['mode_operacion']){
 				
 			case 'onserver':
-				$_ll['opt']['pagina'] = $_ll['opt']['pasta'].'onserver.php';
-				$_ll['opt']['header'] = $_ll['opt']['pasta'].'header.php';
+				$_ll[$get[0]]['pagina'] = $_ll[$get[0]]['pasta'].'onserver.php';				
 				break;
 				
 			case 'onclient':
-				$_ll['opt']['pagina'] = $_ll['opt']['pasta'].'onclient.php';
-				$_ll['opt']['header'] = $_ll['opt']['pasta'].'header.php';
+				$_ll[$get[0]]['pagina'] = $_ll[$get[0]]['pasta'].'onclient.php';
 				break;
 			
 			case 'normal':
-				$ll_segok = true;				
+				$ll_segok = true;		
 				
 				if($ll_segok){
-					$_ll['opt']['pagina'] = $_ll['opt']['pasta'].'start.php';
-					
-					if(file_exists($_ll['opt']['pasta'].'header.php'))
-						$_ll['opt']['header'] = $_ll['opt']['pasta'].'header.php';			
+					$_ll[$get[0]]['pagina'] = $_ll['opt']['pasta'].'start.php';		
 				}					
 				break;
 			}
 			
 		} else {
-			$_ll['opt']['pagina'] = "opt/stirpanelo/ne_trovi.php";
+			$_ll[$get[0]]['pagina'] = "opt/stirpanelo/ne_trovi.php";
 		}
-		
 		
 		break;
 
@@ -273,7 +271,8 @@ if($_ll['mode_operacion'] == 'normal'){
 
 /*******************************		Header			*/
 if($_ll[$get[0]]['header'] != null)
-	require_once($_ll[$get[0]]['header']);
+	if(file_exists($_ll[$get[0]]['header']))
+		require_once($_ll[$get[0]]['header']);
 
 
 /*******************************		On Server		*/
@@ -291,7 +290,6 @@ if($_ll['mode_operacion'] == 'onclient'){
 	
 //Inicia o histórico
 ll_historico('inicia');
-	
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
