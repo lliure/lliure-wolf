@@ -1,5 +1,9 @@
 Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure),  Módulos e API nativas
 
+#### 8.0 (01/02/2016)
+- [bug] - Correções na seleção de charset
+- [bug] - Correções na API de fotos
+
 #### 7.1 (06/10/2015)
 - [bug] - Correções na API midias
 
