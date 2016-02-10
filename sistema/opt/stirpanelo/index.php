@@ -11,7 +11,7 @@
 */
 
 
-$pagina = 'home';
+$pagina = 'start';
 if(!empty($_GET['painel']) && file_exists('painel/'.$_GET['painel'].'.php'))
 	$pagina = $_GET['painel'];
 	

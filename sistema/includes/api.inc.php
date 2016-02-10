@@ -1,42 +1,42 @@
 <?php
 $aplicativo = new ll_app();
 $aplicativo->setNome('fileup')
-			->setCaminho('fileup/inicio.php')
+			->setCaminho('api/fileup/inicio.php')
 			->css('api/fileup/estilo.css')
-			->addApp();
+			->addApi();
 			
 $aplicativo->setNome('navigi')
 			->setCaminho('api/navigi/inicio.php')
 			->css('api/navigi/estilo.css')
 			->js('api/navigi/script.js')
-			->addApp();
+			->addApi();
 			
 $aplicativo->setNome('jfnav')
 			->setCaminho('api/jfnav/inicio.php')
 			->css('api/jfnav/estilo.css')
-			->addApp();
+			->addApi();
 			
 $aplicativo->setNome('appbar')
 			->setCaminho('api/appbar/inicio.php')
 			->css('api/appbar/estilo.css')
-			->addApp();
+			->addApi();
 			
 $aplicativo->setNome('aplimo')
 			->setCaminho('api/aplimo/inicio.php')
 			->css('api/aplimo/estilo.css')
 			->js('api/aplimo/script.js')
-			->addApp();
+			->addApi();
 			
 $aplicativo->setNome('tags')
 			->setCaminho('api/tags/inicio.php')
 			->css('api/tags/estilo.css')
 			->js('api/tags/script.js')
-			->addApp();
+			->addApi();
 			
 			
 $aplicativo->setNome('parsedown')
 			->setCaminho('api/parsedown/parsedown.php')
-			->addApp();			
+			->addApi();			
 
 $aplicativo->setNome('Midias')
 			->setCaminho('api/midias/inicio.php')
@@ -46,5 +46,7 @@ $aplicativo->setNome('Midias')
 			->js('api/midias/jquery.Jcrop.js')
 			->js('api/midias/jquery.color.js')
 			->js('api/midias/script.js')
-			->addApp();
+			->addApi();
+			
+class api extends lliure{}
 ?>

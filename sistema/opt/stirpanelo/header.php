@@ -10,6 +10,7 @@
 *
 */
 
+lliure::autentica('admin');
 
 lliure::inicia('navigi');
 ?>

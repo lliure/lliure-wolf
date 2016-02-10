@@ -13,9 +13,10 @@ header('Content-Type: text/html; charset=iso-8859-1');
 
 
 if(!file_exists("etc/bdconf.php"))
-	header('location: install/index.php');
+	header('location: opt/install/index.php');
 
 require_once("etc/bdconf.php"); 
+require_once("includes/lliure.php"); 
 require_once("includes/functions.php");
 
 /* Identifica o diretório atual do sistema */
@@ -84,7 +85,7 @@ $_ll['js'] = array();
 $_ll['ling'] = ll_ling();
 //$ll_ling = $_ll['ling'];
 
-require_once("api/gerenciamento_de_api.php"); 
+require_once 'includes/api.inc.php';
 
 $_ll['app']['header'] = null;
 $_ll['app']['pagina'] = "opt/mensagens/permissao.php";
@@ -183,8 +184,14 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 		}
 		break;
 		
+		
+	case 'painel':
+		$get[0] = 'opt';
+		$_GET[$get[0]] = 'stirpanelo';		
+		
 	case 'opt':
 	case 'api':
+	
 		if(!empty($_GET[$get[0]])
 			&& (file_exists($get[0].'/'.$_GET[$get[0]]))){
 				
@@ -195,7 +202,8 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 			
 		
 			/**		Controle de abertura de páginas		**/		
-			$_ll[$get[0]]['header'] = $_ll[$get[0]]['pasta'].'header.php';			
+			$_ll[$get[0]]['header'] = $_ll[$get[0]]['pasta'].'header.php';		
+			
 			switch($_ll['mode_operacion']){
 				
 			case 'onserver':
@@ -221,14 +229,7 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 		
 		break;
 
-	case 'painel':
-		$get[0] = 'app';
-		if(ll_tsecuryt('admin')){
-			$_ll['app']['header'] = 'opt/stirpanelo/header.php';
-			$_ll['app']['pagina'] = 'opt/stirpanelo/index.php';
-			$_ll['app']['home'] = '?painel';
-		}
-		break;
+
 
 
 	default:
