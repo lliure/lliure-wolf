@@ -4,8 +4,8 @@
 * lliure WAP
 *
 * @Versão 8.0
-* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
-* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
+* @Pacote lliure
+* @Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -23,7 +23,7 @@ echo app_bar('Painel de usuários', $botoes);
 if(empty($_GET['user'])){
 	$navegador = new navigi();	
 	$navegador->tabela = PREFIXO.'lliure_admin';
-	$navegador->query = 'select * from '.$navegador->tabela.' where id != "'.$_SESSION['logado']['id'].'"'.(ll_tsecuryt() ? '' : ' and grupo != "dev"').' order by nome ASC';
+	$navegador->query = 'select * from '.$navegador->tabela.' where login != "'.$_ll['user']['login'].'"'.(ll_tsecuryt() ? '' : ' and grupo != "dev"').' order by nome ASC';
 	$navegador->delete = true;
 
 	$navegador->config = array(
@@ -102,7 +102,7 @@ if(empty($_GET['user'])){
 				</div>	
 			
 				<?php	
-				if(ll_tsecuryt('admin') && $_GET['user'] != $_SESSION['logado']['id']){
+				if(ll_tsecuryt('admin') && $login != $_ll['user']['login']){
 					?>
 					<div>
 						<label>Grupo de usuário</label>

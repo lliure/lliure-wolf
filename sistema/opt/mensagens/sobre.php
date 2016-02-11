@@ -1,11 +1,12 @@
 <?php
 /**
 *
-* lliure WAP
+* Exibição de informações basicas do lliure
 *
-* @Versão 6.0
-* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
-* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
+* @Versão do lliure 8.0
+* @Pacote lliure
+* @Sub-pacote stirpanelo
+* @Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -23,14 +24,13 @@ if(($_ll = lltoObject('../../etc/llconf.ll')) == false)
 	<span class="versao">Versão <?php echo  $_ll->versao;?></span>
 	
 	<h2>Obrigado por escolher o lliure</h2>	
-	
-	<span class="desenvolvido">Desenvolvido por Jeison Frasson</span>
-	
+		
 	<div class="rodape">
 		<div class="container">
-			<span class="terco"><a href="http://www.lliure.com.br/aplicativos">Aplicativos</a></span>
-			<span class="terco"><a href="http://newsmade.lliure.com.br/lliure">Tutoriais</a></span>
-			<span class="terco"><a href="http://www.lliure.com.br/hospedagem">Hosted by lliureHost</a></span>
+			<span><a href="http://www.lliure.com.br/aplicativos">Aplicativos</a></span>
+			<span><a href="http://www.lliure.com.br/hub">Fórum</a></span>
+			<span><a href="http://newsmade.lliure.com.br/lliure">Tutoriais</a></span>
+			<span><a href="http://www.lliure.com.br/hospedagem">Hosted by lliureHost</a></span>
 		</div>
 	</div>
 </div>

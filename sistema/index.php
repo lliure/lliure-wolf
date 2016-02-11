@@ -1,33 +1,34 @@
 <?php 
-header('Content-Type: text/html; charset=iso-8859-1');
 /**
 *
-* lliure WAP
+* Iniciação do lliure
 *
-* @Versão 8.0
-* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
-* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
-* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
+* @Versão do lliure 8.0
+* @Pacote lliure
+*
+* Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
+* Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
-
+header('Content-Type: text/html; charset=iso-8859-1');
 
 if(!file_exists("etc/bdconf.php"))
 	header('location: opt/install/index.php');
 
 require_once("etc/bdconf.php"); 
-require_once("includes/lliure.php"); 
+require_once("usr/lliure.php"); 
 require_once("includes/functions.php");
+
 
 /* Identifica o diretório atual do sistema */
 ll_dir();
 
-if(!isset($_SESSION['logado'])) {
+if(!lliure::autentica()) {
 	$_SESSION['ll_url'] = jf_monta_link($_GET);
 	header('location: nli.php');
 }
 
-$_ll['user'] = $_SESSION['logado'];
+$_ll['user'] = $_SESSION['ll']['user'];
 
 
 require_once('includes/carrega_conf.php');
@@ -35,7 +36,7 @@ require_once('includes/carrega_conf.php');
 if(!isset($_ll['mode_operacion']))
 	$_ll['mode_operacion'] = 'normal';
 
-		
+	
 if(!isset($_ll['conf']->grupo->{$_ll['user']['grupo']}->execucao)){
 	$_ll['conf']->grupo = new stdClass;
 	$_ll['conf']->grupo->$_ll['user']['grupo'] = new stdClass;	
@@ -81,9 +82,7 @@ if($_ll['mode_operacion'] == 'normal' && ($url = ll_gourl($_ll['url']['get'], $_
 $_ll['css'] = array();
 $_ll['js'] = array();
 
-
 $_ll['ling'] = ll_ling();
-//$ll_ling = $_ll['ling'];
 
 require_once 'includes/api.inc.php';
 
@@ -230,8 +229,6 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 		break;
 
 
-
-
 	default:
 		$get[0] = 'app';
 		break;
@@ -239,12 +236,6 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 /*****/
 
 if($_ll['mode_operacion'] == 'normal'){
-	//Inicia o Tema atual
-	if(($ll_tema = lltoObject('temas/'.$_ll['user']['tema'].'/dados.ll')) != false){
-		$_ll['tema'] = (array) $ll_tema;
-		/* $ll_icones = $_ll['tema']['icones']; */
-		/* $plgIcones = $ll_icones; */
-	}
 	
 	lliure::loadJs('js/jquery.js');
 	lliure::loadJs('api/tinymce/tinymce.min.js');
@@ -254,18 +245,20 @@ if($_ll['mode_operacion'] == 'normal'){
 	lliure::loadJs('js/jquery.easing.js');
 	lliure::loadJs('js/jquery.jfbox.js');
 
-	lliure::loadCss('css/base.css');
+	lliure::loadCss('css/base.css');	
 	lliure::loadCss('css/principal.css');
+	
+	lliure::loadCss($_ll['user']['tema']['path'].'estilo.css');
+	
 	lliure::loadCss('css/paginas.css');
 	lliure::loadCss('css/predefinidos.css');
 	lliure::loadCss('css/jfbox.css');
 	lliure::loadCss('opt/font-awesome/css/font-awesome.min.css');
 	
-	if(isset($_ll['app']['pasta'])  && file_exists($_ll['app']['pasta'].'estilo.css'))
-		lliure::loadCss($_ll['app']['pasta'].'estilo.css');
-
-	lliure::loadCss('temas/'.$ll_tema->id.'/estilo.css');
-		
+/*
+	if(isset($_ll[$get[0]]['pasta'])  && file_exists($_ll[$get[0]]['pasta'].'estilo.css'))
+		lliure::loadCss($_ll[$get[0]]['pasta'].'estilo.css');
+*/
 	lliure::inicia('appbar');
 	lliure::inicia('fileup');
 }
@@ -281,7 +274,6 @@ if($_ll['mode_operacion'] == 'onserver'){
 	require_once($_ll[$get[0]]['pagina']);
 	die();
 }
-
 
 /*******************************		On Client		*/
 if($_ll['mode_operacion'] == 'onclient'){
@@ -301,22 +293,15 @@ ll_historico('inicia');
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<link rel="SHORTCUT ICON" href="imagens/layout/favicon.ico" type="image/x-icon" />
 	<meta name="author" content="Jeison Frasson" />
-	<meta name="DC.creator.address" content="jomadee@lliure.com.br" />
-	<meta name="DC.creator " content="Jeison Frasson" />
+	<meta name="DC.creator.address" content="lliure@lliure.com.br" />
 
 	<?php
-	lliure::loadCss();	
-	echo (isset($_ll['app']['pasta'])  && file_exists($_ll['app']['pasta'].'estilo.css') ?
-		'<link rel="stylesheet" type="text/css" href="'.$_ll['app']['pasta'].'estilo.css">'
-		: '' )
-		
-	.'<link rel="stylesheet" type="text/css" href="temas/'.$ll_tema->id.'/estilo.css">';
-	
-	
 	lliure::loadJs();
-	
+	lliure::loadCss();
+		echo (isset($_ll['app']['pasta'])  && file_exists($_ll['app']['pasta'].'estilo.css') ?
+		'<link rel="stylesheet" type="text/css" href="'.$_ll['app']['pasta'].'estilo.css">'
+		: '' );
 	?>
-	
 </head>
 
 <body>
@@ -338,7 +323,6 @@ ll_historico('inicia');
 			?>
 		</div>
 		
-
 		<div class="right">			
 			<div class="menu">
 				<ul>

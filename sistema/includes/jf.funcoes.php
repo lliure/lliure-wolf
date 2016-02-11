@@ -4,8 +4,8 @@
 * lliure WAP
 *
 * @Versão 6.2
-* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
-* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
+* @Pacote lliure
+* @Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -362,6 +362,7 @@ function jf_roundint($val, $arredondaPor = 10){
 	return $resultado;
 }
 
+// função para conversão de data para o formado time unix stamp
 function jf_dunix($dataEnt){
 	$diario = explode(' ', $dataEnt);
 
@@ -583,6 +584,7 @@ function jf_ato($array) {
     }
 }
 
+// converte objeto para array
 function jf_ota($obj)
 {
 	if (is_object($obj)) $obj = (array)$obj;

@@ -4,9 +4,9 @@
  * lliure WAP
  *
  * @Versão 7.0
- * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
+ * @Pacote lliure
  * @Colaborção    Rodirgo Dechen <rodrigo@grapestudio.com.br>
- * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
+ * @Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
  * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
  *
  *

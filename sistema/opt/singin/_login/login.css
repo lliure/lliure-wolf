@@ -1,0 +1,140 @@
+/**
+*
+* lliure WAP
+*
+* @Versão 6.0
+* @Pacote lliure
+* @Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
+* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
+#login{
+	text-align: center;
+	padding-top: 80px;	
+	}
+	
+	#login .logo{
+		margin-bottom: 60px;
+		}
+		
+			
+	#login span.mensagem{
+		width: 370px;
+		margin: 0 auto;
+		margin-bottom: 10px;
+		font-size: 11px;
+		background: #FCFDDE;
+		border: 1px solid #ddd;
+		color: #7D7D7D;
+		padding: 8px 0;
+		display: block;
+		}
+
+#loginBox{
+	width: 370px;
+	margin: 0 auto;
+	background: #f1f1f1;
+	text-align: left;
+	position: relative;
+	border: 1px solid #E5E5E5;
+	}
+
+	#login h1{
+		font-size: 1em;
+		margin: 10px 0 0 20px;
+		}
+	
+	#login form {
+		width: 100%;
+		float: left;
+		padding: 20px 0;
+		}
+
+	
+		
+	#login form fieldset{
+		margin: 0 20px;
+		}
+	
+	#login form div{
+		clear: both;
+		width: 100%;
+		margin: 0 0 1.5em;
+		float: left;
+		}
+	
+	#login form label{
+		text-align: left;
+		color: #555;	
+		font-size: 1em;
+		display: block;
+		font-weight: bold;
+		margin: 0 0 0.5em;
+		}
+		
+		#login form input{
+			float: right;
+			width: 100%;
+			background: none repeat scroll 0 0 #FFFFFF;
+			border-color: #C0C0C0 #D9D9D9 #D9D9D9;
+			border-radius: 1px 1px 1px 1px;
+			border-right: 1px solid #D9D9D9;
+			border-style: solid;
+			border-width: 1px;
+			display: inline-block;
+			height: 32px;
+			font-size: 1.2em;			
+			margin: 0;
+			padding: 0 8px;
+			}
+
+		#login form input:hover,
+		#login form input:focus{
+			border-color: #A0A0A0 #B9B9B9 #B9B9B9;
+			border-right: 1px solid #B9B9B9;
+			border-style: solid;
+			border-width: 1px;
+			box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+			}
+
+		#login form input:focus{
+			border-color: #E60F3D;
+			}
+			
+	#login form .botao{
+		clear: both;
+		margin: 0px 20px;
+		float: right;
+		}
+		
+		#login form .botao button{
+			font-size: 13px;
+			line-height: 13px;
+			height: 32px;
+			background-color: #E60F3D;
+			background-image: -moz-linear-gradient(center top , #E60F41, #CF0D37);
+			border: 1px solid #D90E3D;
+			color: #FFFFFF;
+			text-shadow: 0 1px rgba(0, 0, 0, 0.1);
+			font-weight: bold;
+			}
+		
+		#login form .botao button:hover{
+			background-color: #D40C4D;
+			background-image: -moz-linear-gradient(center top , #DE0E3B, #C70B33);
+			border: 1px solid #A50F2F;
+			color: #FFFFFF;
+			text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+			}
+		
+		
+#rodape{
+	font-size: 10px;
+	position: absolute;
+	bottom: 5px;
+	right: 5px;
+	}
+	
+	#rodape a{
+		color: #aaa;
+		}

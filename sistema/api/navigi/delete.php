@@ -1,19 +1,21 @@
 <?php
 /**
 *
-* API navigi - lliure
+* Apaga registros
 *
-* @Versão 6.0
-* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
-* @Entre em contato com o desenvolvedor <jomadee@glliure.com.br> http://www.lliure.com.br/
-* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
+* @Versão do lliure 8.0
+* @Pacote lliure
+* @Sub-pacote navigi
+*
+* Entre em contato com o desenvolvedor <jomadee@glliure.com.br> http://www.lliure.com.br/
+* Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 header("Content-Type: text/html; charset=ISO-8859-1", true);
 require_once("../../etc/bdconf.php"); 
 require_once("../../includes/jf.funcoes.php"); 
 
-$navigi = unserialize(jf_decode($_SESSION['logado']['token'], $_POST['token']));
+$navigi = unserialize(jf_decode($_SESSION['ll']['user']['token'], $_POST['token']));
 
 if($navigi['delete']){
 	$tabela = $navigi['tabela'];

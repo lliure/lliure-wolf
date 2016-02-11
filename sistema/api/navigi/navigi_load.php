@@ -4,7 +4,7 @@
 * API navigi - lliure
 *
 * @Versão 8.0
-* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
+* @Pacote lliure
 * @Entre em contato com o desenvolvedor <jomadee@glliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -14,7 +14,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
 require_once('../../etc/bdconf.php');
 require_once('../../includes/functions.php');
 
-$navigi = unserialize(jf_decode($_SESSION['logado']['token'], $_POST['token']));
+$navigi = unserialize(jf_decode($_SESSION['ll']['user']['token'], $_POST['token']));
 
 function navigi_tratamento($dados){
 	global $navigi;

@@ -4,8 +4,8 @@
 * lliure WAP
 *
 * @Versão 7.0
-* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
-* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
+* @Pacote lliure
+* @Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -196,7 +196,7 @@ function ll_securyt($app){
 			app=teste	=	<user></user>
 	*/
 
-	$grupo = $_SESSION['logado']['grupo'];
+	$grupo = $_SESSION['ll']['user']['grupo'];
 	if(($appConfig = @simplexml_load_file('etc/'.$app.'/seguranca.ll')) == true){
 		
 		$i = 0;
@@ -243,7 +243,7 @@ function ll_tsecuryt($grupo = null){
 			$grupo = explode(',', $grupo);
 	}
 	
-	$grupo_user = $_SESSION['logado']['grupo'];
+	$grupo_user = $_SESSION['ll']['user']['grupo'];
 	switch($grupo_user){
 		case 'dev':
 			return true;

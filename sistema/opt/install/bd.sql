@@ -32,6 +32,22 @@ INSERT INTO `ll_lliure_admin` (`id`, `login`, `senha`, `nome`, `email`, `twitter
 /*!40000 ALTER TABLE `ll_lliure_admin` ENABLE KEYS */;
 
 
+CREATE TABLE `ll_lliure_autenticacao` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`login` VARCHAR(200) NOT NULL,
+	`nome` VARCHAR(200) NOT NULL,
+	`grupo` VARCHAR(10) NULL DEFAULT 'user',
+	`tema` VARCHAR(50) NULL DEFAULT 'default',
+	`ultimoacesso` BIGINT(20) NOT NULL,
+	`cadastro` BIGINT(20) NOT NULL,
+	PRIMARY KEY (`id`),
+	UNIQUE INDEX `login` (`login`)
+)
+COLLATE='latin1_swedish_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=1000000001
+;
+
 -- Copiando estrutura para tabela lliure_6.ll_lliure_desktop
 CREATE TABLE IF NOT EXISTS `ll_lliure_desktop` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
