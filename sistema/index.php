@@ -246,6 +246,8 @@ if($_ll['mode_operacion'] == 'normal'){
 	lliure::loadJs('js/jquery.jfbox.js');
 
 	lliure::loadCss('css/base.css');	
+	lliure::loadCss('opt/open-sans/open-sans.css');
+	
 	lliure::loadCss('css/principal.css');
 	
 	lliure::loadCss($_ll['user']['tema']['path'].'estilo.css');
@@ -253,6 +255,8 @@ if($_ll['mode_operacion'] == 'normal'){
 	lliure::loadCss('css/paginas.css');
 	lliure::loadCss('css/predefinidos.css');
 	lliure::loadCss('css/jfbox.css');
+	
+	
 	lliure::loadCss('opt/font-awesome/css/font-awesome.min.css');
 	
 /*
@@ -307,8 +311,6 @@ ll_historico('inicia');
 <body>
 <div id="tudo">
 	<div id="topo">
-		<span class="borda-esquerda"></span>
-		<span class="borda-direita"></span>
 		<div class="left">
 			<a href="index.php" class="logoSistema"><img src="imagens/layout/blank.gif"/></a>
 			<?php
@@ -334,38 +336,7 @@ ll_historico('inicia');
 					?>					
 				</ul>
 			</div>
-			<?php 
-			
-			if(ll_tsecuryt('admin')){
-				$consulta = "select b.* from 
-							".PREFIXO."lliure_start as a
-							
-							left join ".PREFIXO."lliure_apps as b
-							on a.idPlug = b.id	";
-				$query = mysql_query($consulta);
-				
-				?>
-				<div class="start" id="menu_rapido"  <?php echo (mysql_num_rows($query) == 0 ? 'style="display: none;"' : '' );?>>
-					<div class="width">
-						<span class="icone"></span>
-						<ul id="appRapido">
-							<?php
-							while($dados = mysql_fetch_array($query)){
-								?>
-								<li id="appR-<?php echo $dados['id']?>">
-									<a href="?app=<?php echo $dados['pasta']?>" title="<?php echo $dados['nome']?>">
-										<img src="<?php echo 'app/'.$dados['pasta'].'/sys/ico.png'; ?>" alt="" />
-									</a>
-								</li>
-								<?php
-							}
-							?>
-						</ul>
-					</div>
-				</div>
-				<?php				
-			} 
-			?>
+
 		</div>
 	</div>
 

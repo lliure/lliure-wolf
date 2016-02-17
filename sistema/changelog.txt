@@ -1,6 +1,9 @@
 Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure),  Módulos e API nativas
 
 #### 8.0 Clumber Spaniel (12/02/2016)
+- [update] Descontinuada ferramenta de acesso rápido
+- [update] Criada nova API Vigile para o gerenciamento de alertas
+- [update] Removidos alguns arquivos de font da opt open-sans afim de ficar mais leve o sistema
 - [update] Removida pasta "paginas"
 - [update] Removida pasta "temas"
 - [update] Novo sistema de autenticação de usuários pertencente a classe lliure

@@ -42,13 +42,6 @@ echo app_bar('Painel de controle', $botoes);
 			<?php
 		}
 		?>	
-		
-		<div class="listp">
-			<div class="inter menu_rapido">
-				<a href="opt/stirpanelo/menu-rapido.php"><img src="opt/stirpanelo/img/menu_rapido.png" alt="" /></a>
-				<a href="opt/stirpanelo/menu-rapido.php"><span>Acesso rápido</span></a>
-			</div>
-		</div>
 			
 	
 		<div class="listp">
