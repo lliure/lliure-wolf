@@ -104,7 +104,14 @@ class lliure {
 	
 	/********************************************************** 	Tratamento de cabeçalho 					*/
 	public static function loadCss($css = null, $ecoa=true){
-		global $_ll;
+
+		if(!empty($css))
+			self::add($css, 'css');
+
+		else
+			self::footer();
+
+		/*global $_ll;
 		
 		if(!empty($css)){
 			if(!in_array($css, $_ll['css']))
@@ -120,12 +127,20 @@ class lliure {
 				echo $ret;
 			else
 				return $ret;
-		}
+		}*/
+
 	}
 	
 	public static function loadJs($js = null, $ecoa = true){
-		global $_ll;
-		
+
+		if(!empty($js))
+			self::add($js, 'js');
+
+		else
+			self::header();
+
+		/**global $_ll;
+
 		if(!empty($js)){
 			if(!in_array($js, $_ll['js']))
 				$_ll['js'][] = $js;
@@ -137,12 +152,90 @@ class lliure {
 			
 			if($ecoa)
 				echo $ret;
+
 			else
 				return $ret;
-		}
+		}*/
+
 	}
-	
-		
+
+
+	/**
+	 *
+	 */
+	private static function add($file, $parm2 = null, $parm3 = null){
+
+		global $_ll;
+		$type = null;
+		$priorit = 10;
+
+		if (is_string($parm2) && is_numeric($parm3)){
+			$type = $parm2;
+			$priorit = $parm3;
+
+		}elseif (is_numeric($parm2))
+			$priorit = $parm2;
+
+		if($type !== null);
+		elseif(is_callable($file))
+			$type = 'call';
+
+		else{
+			$f = parse_url($file);
+			$e = explode(".", $f['path']);
+			$ext = strtolower(array_pop($e));
+			$type = $ext;
+		}
+
+		foreach($_ll['docs'] as $ps)
+		foreach($ps as $p => $is)
+		foreach($is as $i => $ts)
+		foreach($ts as $t => $f)
+		if($f == $file) return;
+
+		$_ll['docs'][$priorit][][$type] = $file;
+
+		ksort($_ll['docs']);
+
+	}
+
+	/**
+	 * require todos os documentos da lista no head
+	 */
+	public static function header(){
+		global $_ll;
+		self::getDocs($_ll['docs'], false);
+	}
+
+	/**
+	 * require todos os documentos da lista no footer
+	 */
+	public static function footer(){
+		global $_ll;
+		self::getDocs($_ll['docs'], true);
+	}
+
+	private static function getDocs(array &$ds, $calls = false){
+
+		foreach($ds as $ps)
+		foreach($ps as $p => $is)
+		foreach($is as $i => $ts)
+		foreach($ts as $t => $f)
+		if ($t == 'css'){
+			echo '<link type="text/css" rel="stylesheet" href="' . $f . '" />';
+		} elseif ($t == 'js'){
+			echo '<script type="text/javascript" src="' . $f . '"></script>';
+		} elseif ($t == 'ico'){
+			echo '<link type="image/x-icon" rel="SHORTCUT ICON" href="' . $f . '" />';
+		} elseif ($t == 'php'){
+			require $f;
+		} elseif ($t == 'call' && $calls){
+			$f();
+		}
+
+	}
+
+
 	/********************************************************** 	Gerenciamento de API	 					*/
 	public static function iniciaApi($api){
 		$api = strtolower($api);
