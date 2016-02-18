@@ -111,24 +111,6 @@ class lliure {
 		else
 			self::footer();
 
-		/*global $_ll;
-		
-		if(!empty($css)){
-			if(!in_array($css, $_ll['css']))
-				$_ll['css'][] = $css;				
-			
-		}else{
-			$ret = '';
-			foreach($_ll['css'] as $css){
-				$ret.= '<link rel="stylesheet" href="'.$css.'"/>'."\r\n\t";
-			}
-			
-			if($ecoa)
-				echo $ret;
-			else
-				return $ret;
-		}*/
-
 	}
 	
 	public static function loadJs($js = null, $ecoa = true){
@@ -139,29 +121,35 @@ class lliure {
 		else
 			self::header();
 
-		/**global $_ll;
-
-		if(!empty($js)){
-			if(!in_array($js, $_ll['js']))
-				$_ll['js'][] = $js;
-		}else{
-			$ret = '';
-			foreach($_ll['js'] as $js){
-				$ret.= '<script type="text/javascript" src="'.$js.'"></script>'."\r\n\t";
-			}
-			
-			if($ecoa)
-				echo $ret;
-
-			else
-				return $ret;
-		}*/
-
 	}
 
 
-	/**
+	/** carrera scripts, estilos e ou componentes para o sistema
 	 *
+	 *  carregando scripts e estilos.
+	 *  lliure::add('app/teste/estilo.css'); // carrega meu estilo
+	 *  lliure::add('app/teste/script.js'); // carrega meu script
+	 *
+	 *  carregando scripts e estilos, marcando o tipo.
+	 *  lliure::add('app/teste/estilo.css', 'css'); // carrega meu estilo
+	 *  lliure::add('app/teste/script.js', 'js'); // carrega meu script
+	 *  lliure::add('app/teste/estilo.css.php', 'css'); // carrega um arquivo php como um estilo
+	 *
+	 *  carregando scripts e estilos, mudando a prioridade.
+	 *  lliure::add('app/teste/fonts.css', 5);
+	 *
+	 * 	as prioridades serven para determinar quando seu arquivo aparecera. a prioridade padrão é 10,
+	 *  e quanrto menor este numero, mais para o inicio do documento seu arquivo aparecera.
+	 *
+	 *  carregando scripts e estilos, marcando o tipo e mudando a prioridade.
+	 *  lliure::add('app/teste/estilo.css.php', 'css', 5);
+	 *
+	 *  carregando um arquivo .php.
+	 * 	lliure::add('app/teste/teste.php'); //faz um require no arquivo no final do documento
+	 *
+	 *  carregando uma call (chamado a uma funcao ou metodo estatico).
+	 * 	lliure::add('func_teste', 'call'); //carrega uma funcao especifica
+	 * 	lliure::add('class_teste::func_teste', 'call'); //carrega um metodo especifica
 	 */
 	private static function add($file, $parm2 = null, $parm3 = null){
 
@@ -232,13 +220,25 @@ class lliure {
 				require $f;
 
 			} elseif ($t == 'call' && $calls) {
-				$f();
+				call_user_func($f);
 			}
 
 		}
 
 	}
 
+	public static function api($name){
+		return self::loadComponente('api', $name);
+	}
+
+	public static function app($name){
+		return self::loadComponente('app', $name);
+	}
+
+	private static function loadComponente($type, $name){
+		if(file_exists($f = ($type. '/'. $name. '/'. $name. '.php')))
+			return require_once $f;
+	}
 
 	/********************************************************** 	Gerenciamento de API	 					*/
 	public static function iniciaApi($api){
