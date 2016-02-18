@@ -2,10 +2,11 @@
 *
 * lliure WAP
 *
-* @Versão 6.0
+* @Versão do lliure 8.0
 * @Pacote lliure
-* @Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
-* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+* Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
+* Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 #tudo { 	
@@ -36,7 +37,7 @@
 	
 	#topo .left a.addDesktop{
 		position: absolute;
-		bottom: 0px;
+		bottom: 6px;
 		left: 200px;
 		z-index: 100;
 		}
@@ -66,11 +67,8 @@
 
 #conteudo {
 	z-index: 500;
-	background: none; 
-	padding-bottom: 30px;
 	position: relative;
-	padding: 0px 13px 0;
-	z-index: 100;
+	padding: 6px 13px 0;
 	border-radius: 6px 6px 0 0;
 	background: #EDEDED;
 	top: -6px;
