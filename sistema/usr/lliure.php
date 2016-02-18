@@ -187,8 +187,8 @@ class lliure {
 			$type = $ext;
 		}
 
-		foreach($_ll['docs'] as $ps)
-		foreach($ps as $p => $is)
+		if(isset($_ll['docs']))
+		foreach($_ll['docs'] as $p => $is)
 		foreach($is as $i => $ts)
 		foreach($ts as $t => $f)
 		if($f == $file) return;
@@ -204,7 +204,7 @@ class lliure {
 	 */
 	public static function header(){
 		global $_ll;
-		self::getDocs($_ll['docs'], false);
+		self::getDocs($_ll['docs'], 'header', false);
 	}
 
 	/**
@@ -212,25 +212,29 @@ class lliure {
 	 */
 	public static function footer(){
 		global $_ll;
-		self::getDocs($_ll['docs'], true);
+		self::getDocs($_ll['docs'], 'footer', true);
 	}
 
-	private static function getDocs(array &$ds, $calls = false){
+	private static function getDocs(array &$ds, $loc = 'header', $calls = false){
 
-		foreach($ds as $ps)
-		foreach($ps as $p => $is)
+		foreach($ds as $p => $is)
 		foreach($is as $i => $ts)
-		foreach($ts as $t => $f)
-		if ($t == 'css'){
-			echo '<link type="text/css" rel="stylesheet" href="' . $f . '" />';
-		} elseif ($t == 'js'){
-			echo '<script type="text/javascript" src="' . $f . '"></script>';
-		} elseif ($t == 'ico'){
-			echo '<link type="image/x-icon" rel="SHORTCUT ICON" href="' . $f . '" />';
-		} elseif ($t == 'php'){
-			require $f;
-		} elseif ($t == 'call' && $calls){
-			$f();
+		foreach($ts as $t => $f){
+
+			if ($t == 'css' && $loc == 'header') {
+				echo '<link type="text/css" rel="stylesheet" href="' . $f . '" />';
+			} elseif ($t == 'ico' && $loc == 'header') {
+				echo '<link type="image/x-icon" rel="SHORTCUT ICON" href="' . $f . '" />';
+
+			} elseif ($t == 'js' && $loc == 'footer') {
+				echo '<script type="text/javascript" src="' . $f . '"></script>';
+			} elseif ($t == 'php' && $loc == 'footer') {
+				require $f;
+
+			} elseif ($t == 'call' && $calls) {
+				$f();
+			}
+
 		}
 
 	}
