@@ -151,21 +151,37 @@ class lliure {
 	 * 	lliure::add('func_teste', 'call'); //carrega uma funcao especifica
 	 * 	lliure::add('class_teste::func_teste', 'call'); //carrega um metodo especifica
 	 */
-	private static function add($file, $parm2 = null, $parm3 = null){
+	public static function add($file, $parm2 = null, $parm3 = null){
 
 		global $_ll;
 		$type = null;
 		$priorit = 10;
+		$file = trim($file);
+		$loc = 'header';
 
-		if (is_string($parm2) && is_numeric($parm3)){
+		if(is_string($parm2)){
+
 			$type = $parm2;
-			$priorit = $parm3;
+
+			if (is_numeric($parm3))
+				$priorit = $parm3;
+
+			if (strpos($type, ':') !== false) {
+				$e = explode(':', $type, 2);
+				if (($k = array_search('header', $e)) !== false || ($k = array_search('footer', $e)) !== false)
+					$loc = $e[$k];
+				$type = $e[(1 - $k)];
+			}
+
+			if($type == 'header' || $type == 'footer'){
+				$loc = $type;
+				$type = null;}
 
 		}elseif (is_numeric($parm2))
 			$priorit = $parm2;
 
 		if($type !== null);
-		elseif(is_callable($file))
+		elseif(substr($file, -2) == '()' && is_callable(substr($file, 0, -2)))
 			$type = 'call';
 
 		else{
@@ -176,14 +192,15 @@ class lliure {
 		}
 
 		if(isset($_ll['docs']))
-		foreach($_ll['docs'] as $p => $is)
+		foreach($_ll['docs'] as $l => $ps)
+		foreach($ps as $p => $is)
 		foreach($is as $i => $ts)
 		foreach($ts as $t => $f)
 		if($f == $file) return;
 
-		$_ll['docs'][$priorit][][$type] = $file;
+		$_ll['docs'][$loc][$priorit][][$type] = $file;
 
-		ksort($_ll['docs']);
+		ksort($_ll['docs'][$loc]);
 
 	}
 
@@ -192,7 +209,7 @@ class lliure {
 	 */
 	public static function header(){
 		global $_ll;
-		self::getDocs($_ll['docs'], 'header', false);
+		self::getDocs($_ll['docs'], 'header');
 	}
 
 	/**
@@ -200,27 +217,32 @@ class lliure {
 	 */
 	public static function footer(){
 		global $_ll;
-		self::getDocs($_ll['docs'], 'footer', true);
+		self::getDocs($_ll['docs'], 'footer');
 	}
 
-	private static function getDocs(array &$ds, $loc = 'header', $calls = false){
+	private static function getDocs(array $ds, $loc = 'header'){
 
-		foreach($ds as $p => $is)
+		//echo '<pre>';
+		//print_r($ds);
+		//echo '</pre>';
+
+		foreach($ds as $l => $ps)
+		foreach($ps as $p => $is)
 		foreach($is as $i => $ts)
 		foreach($ts as $t => $f){
 
-			if ($t == 'css' && $loc == 'header') {
+			if ($t == 'css' && $loc == $l) {
 				echo '<link type="text/css" rel="stylesheet" href="' . $f . '" />';
-			} elseif ($t == 'ico' && $loc == 'header') {
+			} elseif ($t == 'ico' && $loc == $l) {
 				echo '<link type="image/x-icon" rel="SHORTCUT ICON" href="' . $f . '" />';
 
-			} elseif ($t == 'js' && $loc == 'footer') {
+			} elseif ($t == 'js' && $loc == $l) {
 				echo '<script type="text/javascript" src="' . $f . '"></script>';
-			} elseif ($t == 'php' && $loc == 'footer') {
+			} elseif ($t == 'php' && $loc == $l) {
 				require $f;
 
-			} elseif ($t == 'call' && $calls) {
-				call_user_func($f);
+			} elseif ($t == 'call' && $loc == $l) {
+				call_user_func(substr($f, 0, -2));
 			}
 
 		}

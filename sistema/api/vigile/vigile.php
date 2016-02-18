@@ -1,7 +1,7 @@
 <?php
 
 //lliure::add('api/vigile/script.js');
-//lliure::add('call', 'vigile_footer');
+//lliure::add('vigile_footer', 'footer');
 
 function vigile($texto, $modo = 'top', $local = null){
 	$_SESSION['vigile']['texto'] = $texto;

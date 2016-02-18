@@ -355,7 +355,7 @@ ll_historico('inicia');
 	<div id="ll_rodape">
 		<a href="http://www.lliure.com.br"><?php echo 'lliure '.$_ll['conf']->versao;?></a>
 	</div> 
-</div> 
+</div>
 </body>
 
 <head>
