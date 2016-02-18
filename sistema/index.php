@@ -237,32 +237,31 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 
 if($_ll['mode_operacion'] == 'normal'){
 	
-	lliure::loadJs('js/jquery.js');
-	lliure::loadJs('api/tinymce/tinymce.min.js');
-	lliure::loadJs('js/jquery-ui.js');
-	lliure::loadJs('js/funcoes.js');
-	lliure::loadJs('js/jquery.jfkey.js');
-	lliure::loadJs('js/jquery.easing.js');
-	lliure::loadJs('js/jquery.jfbox.js');
+	lliure::add('js/jquery.js');
+	lliure::add('api/tinymce/tinymce.min.js');
+	lliure::add('js/jquery-ui.js');
+	lliure::add('js/funcoes.js');
+	lliure::add('js/jquery.jfkey.js');
+	lliure::add('js/jquery.easing.js');
+	lliure::add('js/jquery.jfbox.js');
 
-	lliure::loadCss('css/base.css');	
-	lliure::loadCss('opt/open-sans/open-sans.css');
+	lliure::add('css/base.css');	
+	lliure::add('opt/open-sans/open-sans.css');
 	
-	lliure::loadCss('css/principal.css');
+	lliure::add('css/principal.css');
 	
-	lliure::loadCss($_ll['user']['tema']['path'].'estilo.css');
+	lliure::add($_ll['user']['tema']['path'].'estilo.css');
 	
-	lliure::loadCss('css/paginas.css');
-	lliure::loadCss('css/predefinidos.css');
-	lliure::loadCss('css/jfbox.css');
+	lliure::add('css/paginas.css');
+	lliure::add('css/predefinidos.css');
+	lliure::add('css/jfbox.css');
 	
 	
-	lliure::loadCss('opt/font-awesome/css/font-awesome.min.css');
+	lliure::add('opt/font-awesome/css/font-awesome.min.css');
 	
-/*
 	if(isset($_ll[$get[0]]['pasta'])  && file_exists($_ll[$get[0]]['pasta'].'estilo.css'))
-		lliure::loadCss($_ll[$get[0]]['pasta'].'estilo.css');
-*/
+		lliure::add($_ll[$get[0]]['pasta'].'estilo.css', 20);
+
 	lliure::inicia('appbar');
 	lliure::inicia('fileup');
 }
@@ -300,11 +299,7 @@ ll_historico('inicia');
 	<meta name="DC.creator.address" content="lliure@lliure.com.br" />
 
 	<?php
-	lliure::loadJs();
-	lliure::loadCss();
-		echo (isset($_ll['app']['pasta'])  && file_exists($_ll['app']['pasta'].'estilo.css') ?
-		'<link rel="stylesheet" type="text/css" href="'.$_ll['app']['pasta'].'estilo.css">'
-		: '' );
+	lliure::header();	
 	?>
 </head>
 
@@ -356,6 +351,10 @@ ll_historico('inicia');
 		<a href="http://www.lliure.com.br"><?php echo 'lliure '.$_ll['conf']->versao;?></a>
 	</div> 
 </div> 
+
+<?php
+lliure::footer();
+?>
 </body>
 
 <head>
