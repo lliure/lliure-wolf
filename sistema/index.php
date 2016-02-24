@@ -112,20 +112,20 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 		} else {
 			break;
 		}
-		
+
 	case 'app':
 		if(!empty($_GET['app'])
 			&& (file_exists('app/'.$_GET['app']))){
-			
+
 			$urlApp = '?app='.$_GET['app'];
 			if(isset($desk))
 				$urlApp = '?';
-				
+
 			$_ll['app']['home'] = $_ll['url']['endereco'].'index.php'.$urlApp;
 			$_ll['app']['onserver'] = $_ll['url']['endereco'].'onserver.php'.$urlApp;
-			$_ll['app']['onclient'] = $_ll['url']['endereco'].'onclient.php'.$urlApp;			
+			$_ll['app']['onclient'] = $_ll['url']['endereco'].'onclient.php'.$urlApp;
 			$_ll['app']['pasta'] = 'app/'.$_GET['app'].'/';
-	
+
 			$_ll['app']['sen_html'] = $_ll['app']['onclient'];
 			$llAppHome = $_ll['app']['home'];
 			$llAppOnServer = $_ll['app']['onserver'];
@@ -298,9 +298,8 @@ ll_historico('inicia');
 	<meta name="author" content="Jeison Frasson" />
 	<meta name="DC.creator.address" content="lliure@lliure.com.br" />
 
-	<?php
-	lliure::header();	
-	?>
+	<?php lliure::header();?>
+
 </head>
 
 <body>
@@ -352,9 +351,7 @@ ll_historico('inicia');
 	</div>
 </div>
 
-<?php
-lliure::footer();
-?>
+<?php lliure::footer(); ?>
 
 </body>
 

@@ -209,7 +209,7 @@ class lliure {
 	 */
 	public static function header(){
 		global $_ll;
-		self::getDocs($_ll['docs'], 'header');
+		self::getDocs($_ll['docs']['header']);
 	}
 
 	/**
@@ -217,7 +217,7 @@ class lliure {
 	 */
 	public static function footer(){
 		global $_ll;
-		self::getDocs($_ll['docs'], 'footer');
+		self::getDocs($_ll['docs']['footer']);
 	}
 
 	private static function getDocs(array $ds, $loc = 'header'){
@@ -226,22 +226,25 @@ class lliure {
 		//print_r($ds);
 		//echo '</pre>';
 
-		foreach($ds as $l => $ps)
-		foreach($ps as $p => $is)
+		//$tab = ll::EX('docs_tab', "\t");
+		$tab = "\t";
+		$bl = "\n\r";
+
+		foreach($ds as $p => $is)
 		foreach($is as $i => $ts)
 		foreach($ts as $t => $f){
 
-			if ($t == 'css' && $loc == $l) {
-				echo '<link type="text/css" rel="stylesheet" href="' . $f . '" />';
-			} elseif ($t == 'ico' && $loc == $l) {
-				echo '<link type="image/x-icon" rel="SHORTCUT ICON" href="' . $f . '" />';
+			if ($t == 'css') {
+				echo '<link type="text/css" rel="stylesheet" href="' . $f . '" />'. $bl. $tab;
+			} elseif ($t == 'ico') {
+				echo '<link type="image/x-icon" rel="SHORTCUT ICON" href="' . $f . '" />'. $bl. $tab;
 
-			} elseif ($t == 'js' && $loc == $l) {
-				echo '<script type="text/javascript" src="' . $f . '"></script>';
-			} elseif ($t == 'php' && $loc == $l) {
+			} elseif ($t == 'js') {
+				echo '<script type="text/javascript" src="' . $f . '"></script>'. $bl. $tab;
+			} elseif ($t == 'php') {
 				require $f;
 
-			} elseif ($t == 'call' && $loc == $l) {
+			} elseif ($t == 'call') {
 				call_user_func(substr($f, 0, -2));
 			}
 
@@ -331,6 +334,8 @@ class lliure {
 	}
 }
 
+class ll extends lliure{}
+
 
 class ll_app{
 	private $css;
@@ -378,5 +383,14 @@ class ll_app{
 		return $this;
 	}
 }
+
+
+/*function meus_tabs($tab){
+	return "\t\t";
+}
+ll::ON('docs_tab', 'meus_tabs');
+
+ll::EX('hook');*/
+
 
 ?>
