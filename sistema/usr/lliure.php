@@ -209,7 +209,8 @@ class lliure {
 	 */
 	public static function header(){
 		global $_ll;
-		self::getDocs($_ll['docs']['header']);
+		if(isset($_ll['docs']['header']))
+			self::getDocs($_ll['docs']['header']);
 	}
 
 	/**
@@ -217,7 +218,8 @@ class lliure {
 	 */
 	public static function footer(){
 		global $_ll;
-		self::getDocs($_ll['docs']['footer']);
+		if(isset($_ll['docs']['footer']))
+			self::getDocs($_ll['docs']['footer']);
 	}
 
 	private static function getDocs(array $ds, $loc = 'header'){
