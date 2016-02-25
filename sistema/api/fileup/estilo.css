@@ -1,0 +1,65 @@
+/**
+*
+* API Fileup - Plugin CMS
+*
+* @Versão 6.0
+* @Pacote lliure
+* @Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
+* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
+
+	
+.fileUpBloco{
+	}
+	
+	.fileUpItem{
+		float: left;
+		width: 100%;
+		}
+
+		.fileUpItem .fileup_file{
+			visibility:hidden;
+			height: 0px;
+			}
+
+		.fileUpItem input.fileup_nome{
+			float: left;
+			width: 175px;
+			height: 30px;
+			padding: 0 8px;
+			margin: 0 0 0 10px;
+			}
+
+		.fileUpItem .fileup_botao{
+			background: #444;
+			height: 30px;
+			width: 143px;
+			float: left;
+			color: #ddd;
+			line-height: 31px;
+			text-align: center;
+			border-radius: 3px;
+			}
+
+		.fileUpItem .fileup_botao:hover{
+			color: #ddd;
+			background: #606060;
+			}
+			
+		div.fileUpItem span.flup_apagar{
+			float: left;
+			clear: none; 
+			margin-left: 20px;
+			}
+			
+			div.fileUpItem span.flup_apagar strong{
+				float: left;
+				font-weight: 100;
+				margin-top: 5px;
+				}
+			
+			div.fileUpItem span.flup_apagar input{
+				margin: 5px 0 0 5px;
+				float: left;
+				}
