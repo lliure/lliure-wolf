@@ -1,6 +1,7 @@
 Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure),  Módulos e API nativas
 
 #### 8.0 Clumber Spaniel (12/02/2016)
+- [update] jfBox convertido para api
 - [update] Descontinuada ferramenta de acesso rápido
 - [update] Criada nova API Vigile para o gerenciamento de alertas
 - [update] Removidos alguns arquivos de font da opt open-sans afim de ficar mais leve o sistema
