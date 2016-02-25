@@ -19,10 +19,9 @@ case 'logout':
 	header('location: '.$_ll['url']['endereco']);
 	break;
 	
-case 'login':	
+case 'login':
 	if(isset($_SESSION['logado'])){	
 		header('location: nli.php?r=rotinas');
-		
 	} elseif(!empty($_POST)){
 		$falha = true;
 				
@@ -63,12 +62,12 @@ case 'login':
 			
 			if(isset($dadosLogin)){
 				lliure::autentica($dadosLogin['login'], $dadosLogin['nome'], $dadosLogin['grupo'], $dadosLogin['themer']);
-				
+		
 				
 				$falha = false;
 			}
 		}
-
+	
 		$retorno = 'nli.php?';
 		if(isset($_POST['retorno']))
 			$retorno = $_POST['retorno']. (strpos($_POST['retorno'], '?') !== false || strpos($_POST['retorno'], '&') !== false ? '&' : '?' );

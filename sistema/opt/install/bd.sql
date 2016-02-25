@@ -76,13 +76,6 @@ CREATE TABLE IF NOT EXISTS `ll_lliure_apps` (
 /*!40000 ALTER TABLE `ll_lliure_apps` ENABLE KEYS */;
 
 
--- Copiando estrutura para tabela lliure_6.ll_lliure_start
-CREATE TABLE IF NOT EXISTS `ll_lliure_start` (
-  `idPlug` int(11) NOT NULL,
-  PRIMARY KEY (`idPlug`),
-  CONSTRAINT `FK_ll_lliure_start_ll_lliure_apps` FOREIGN KEY (`idPlug`) REFERENCES `ll_lliure_apps` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 -- Copiando dados para a tabela lliure_6.ll_lliure_start: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `ll_lliure_start` DISABLE KEYS */;
 /*!40000 ALTER TABLE `ll_lliure_start` ENABLE KEYS */;

@@ -73,19 +73,27 @@ class aplimo{
 		self::$basePath = $pasta;
 	}
 	
-	function menu($titulo, $url){
-		$this->menu[] = array(
+	function menu($titulo, $url, $fa = null){
+		$array = array(
 						'titu' => $titulo,
 						'link' => $url
 						);
+						
+		if($fa != null)
+			$array['fa'] = $fa;
+		
+		$this->menu[] = $array;
 	}
 	
-	function sub_menu($titulo, $folder = null){
+	function sub_menu($titulo, $folder = null, $fa = null){
 		$array = array(
 					'titu' => $titulo,
 					'link' => array()
 					);
-						
+					
+		if($fa != null)
+			$array['fa'] = $fa;
+		
 		if(empty($folder))
 			$this->menu[] = $array;
 		else
@@ -201,16 +209,16 @@ class aplimo{
 	
 	function header(){
 		global $_ll;
-		$aktivigi_class = ' aktivigi ll_border-color ll_color';
+		$aktivigi_class = ' aktivigi';
+		$_ll['titulo'] = $this->nome;
+		
 		
 		$this->class_sub = null;
 		$this->class_li = null;
 		
 		if(!isset($_GET['apm'])){			
 			$tmp_menu = array_keys($this->menu);
-			$class = array_shift($tmp_menu);				
-			
-			//$class_li[$class] = $aktivigi_class;
+			$class = array_shift($tmp_menu);
 			
 			if(!is_array($this->menu[$class]['link']))
 				$_GET['apm'] = $this->menu[$class]['link'];
@@ -218,9 +226,11 @@ class aplimo{
 		
 		
 		foreach($this->menu as $key => $valor){
+			
 			if(is_array($valor['link'])){
 				$this->class_li[$key] = null;
 				$this->class_sub[$key] = null;
+				$this->class_sub_titulo[$key] = null;
 				 
 				foreach($valor['link'] as $lok => $defin){
 					
@@ -233,13 +243,14 @@ class aplimo{
 						self::$basePath = $defin['basePath'];
 						$this->class_li[$key.'-'.$lok] = $aktivigi_class;
 						$this->class_sub[$key] = 'open_sub';
+						$this->class_sub_titulo[$key] = $aktivigi_class.' open_sub ll_background';
 					}
 				}
 			} else {
 				$this->class_li[$key] = null;
 				
 				if(isset($_GET['apm']) && $valor['link'] == $_GET['apm'] )
-					$this->class_li[$key] = $aktivigi_class;
+					$this->class_li[$key] = $aktivigi_class.' ll_background ll_border-color';
 			}
 		}
 		
@@ -256,6 +267,7 @@ class aplimo{
 			$this->onserver = $_ll['app']['onserver'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
 			$this->onclient = $_ll['app']['home'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
 			
+			
 			require_once(self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/header.php');	
 		} 
 	}
@@ -268,6 +280,10 @@ class aplimo{
 		elseif(file_exists($_ll['app']['pasta'] . $_GET['apm'] . '/onserver.php'))
 			$apm_load = $_ll['app']['pasta'] . $_GET['apm'] . '/onserver.php';
 		
+		if(!isset($apm_load)){
+			echo 'Arquivo <strong>onserver.php</strong> não encontrado em seu aplicativo';
+			die();
+		}
 		require_once($apm_load);
 	}
 	function onclient(){
@@ -278,15 +294,18 @@ class aplimo{
 		elseif(file_exists($_ll['app']['pasta'] . $_GET['apm'] . '/onclient.php'))
 			$apm_load = $_ll['app']['pasta'] . $_GET['apm'] . '/onclient.php';
 		
+		if(!isset($apm_load)){
+			echo 'Arquivo <strong>onclient.php</strong> não encontrado em seu aplicativo';
+			die();
+		}
 		require_once($apm_load);
 	}
 	
 	function require_page(){
-		global $_ll;
-		
+		global $_ll;		
 		
 		$apm_load  = 'api/aplimo/ne_trovi.php';
-		                    
+		
         if(isset($_GET['sapm']) && file_exists(self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/' . $_GET['sapm'] . '.php'))
 			$apm_load = self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/' . $_GET['sapm'] . '.php';
 		elseif(isset($_GET['apm']) && file_exists(self::$basePath . $_GET['apm'] . '/' . $_GET['apm'] . '.php'))
@@ -308,33 +327,25 @@ class aplimo{
 		
 		$total_reg = 30;
 		$tr = 10;
+
 		?>
-		<div class="container cabecalho">
-			<div class="menu">
-				<h1><a href="<?php echo $_ll['app']['home'];?>"><?php echo $this->nome;?></a></h1>
-			</div>
-			
-			<div class="centro">
-				<div class="align">
-					
-				</div>
-			</div>
-			<div class="both"></div>
-		</div>
+		<span id="apm_titulo"><a href="<?php echo $_ll['app']['home'];?>"><?php echo $this->nome;?></a></span>
 		
-		
-		<div class="container corpo">
+		<div class="container corpo ll_background">
 			<div class="menu">
 				<ul>
+					<li class="apm_menu_home "><a href="<?php echo $_ll['app']['home']?>" class="link1 ll_background-hover"><i class="fa fa-home"></i> Desktop</a></li>
+				
 					<?php					
 					foreach($this->menu as $key => $valor){
 						
-						echo '<li class="'.$this->class_li[$key].'">';
+						echo '<li class="'.$this->class_li[$key].'"> ';
 	
 						if(is_array($valor['link'])){
+							
 							?>
-							<li> 
-								<span <?php echo 'class="'.$this->class_sub[$key].'"' ?>><?php echo $valor['titu']; ?></span> 
+							
+								<span <?php echo 'class="'.$this->class_sub_titulo[$key].' ll_background-hover"' ?>><?php echo (isset($valor['fa']) ? '<i class="fa '.$valor['fa'].'"></i>' : '').$valor['titu']; ?></span> 
 								<ul <?php echo 'class="'.$this->class_sub[$key].'"' ?>>								
 									<?php
 									foreach($valor['link'] as $lok => $defin){
@@ -343,20 +354,19 @@ class aplimo{
 										if(!empty($key))
 											$link = $_ll['app']['home'].'&apm='.$key.'&sapm='.$defin['link'];
 															
-										echo '<li class="'.$this->class_li[$key.'-'.$lok].'">'
+										echo '<li class="'.$this->class_li[$key.'-'.$lok].' ">'
 												.'<a href="'.$link.'">'.$defin['titu'].'</a>'
 											.'</li>';	
 									}
 									?>									
 								</ul>
-							</li>
+						
 							<?php
 						} else {
-							echo '<a href="'.$_ll['app']['home'].'&apm='.$valor['link'].'" class="link1">'.$valor['titu'].'</a>';
+							echo '<a href="'.$_ll['app']['home'].'&apm='.$valor['link'].'" class="link1 ll_background-hover'.$this->class_li[$key].'">'.(isset($valor['fa']) ? '<i class="fa '.$valor['fa'].'"></i> ' : '').$valor['titu'].'</a>';
 						}			
 						echo '</li>';
 					}
-
 					?>
 				</ul>
 			</div>

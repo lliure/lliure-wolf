@@ -35,16 +35,8 @@ function limpaMail($in){
 
 function pm_mail($destinatario = null, $assunto = null, $menssagem = null, $header = null, $conf = null){	
 	$to = limpaMail($destinatario);
-	
-	if(!empty($conf)){		
-		$smtp = (object) $conf;
-        
-	} else {
-		if(($llconf = simplexml_load_file(ll_dir . 'etc/llconf.ll')) == false)
-			return 'Nao foi possível encontrar as configurações de smtp';
-		else
-			$smtp = $llconf->smtp;
-	}
+
+	$smtp = (object) $conf;
 	
 	$mail = new PHPMailer();
 

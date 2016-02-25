@@ -2,15 +2,24 @@
 *
 * lliure WAP
 *
-* @Versão 6.0
+* @Versão 8.0
 * @Pacote lliure
 * @Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
+
+body{
+	display: flex;
+	justify-content: center;
+	 align-items: center;
+}
+
+
+
 #login{
 	text-align: center;
-	padding-top: 80px;	
+	margin-top: -34%;
 	}
 	
 	#login .logo{

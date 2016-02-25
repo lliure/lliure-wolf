@@ -443,13 +443,7 @@ function jf_limpa_acento($texto){
 
 // Formata uma string para o formato url
 function jf_formata_url($texto){
-	$texto = mb_strtolower($texto);
-	$texto = preg_replace("/[áàâãª]/","a",$texto);
-	$texto = preg_replace("/[éèê]/","e",$texto);
-	$texto = preg_replace("/[íìîï]/","i",$texto);
-	$texto = preg_replace("/[óòôõº]/","o",$texto);
-	$texto = preg_replace("/[úùû]/","u",$texto);
-	$texto = str_replace("ç","c",$texto);
+	$texto = jf_formata_pasta($texto);
 	$texto = preg_replace("/[^ a-z 0-9 \t _ \/ -]/", "", $texto);	
 	$texto = str_replace(" ","-",$texto);
 	return($texto);
@@ -603,6 +597,9 @@ function jf_ota($obj)
 /********	Criptografia	********/
 
 function jf_encode($key, $data){
+	if(empty($key))
+		trigger_error("A chave do encode não foi definido", E_USER_ERROR);
+	
 	$return = mcrypt_encrypt(MCRYPT_BLOWFISH, $key, $data, MCRYPT_MODE_ECB);
 	$return = base64_encode($return);
 	return $return;
@@ -617,15 +614,17 @@ function jf_decode($key, $data){
 
 /******	FUNCOES PARA MANIPULAÇÃO DE FORMULARIOS SIMPLES	*/
 function jf_input($name, $data = array(), $class = null){
-	return '<input class="'.$class.'" name="'.$name.'" value="'.$data[$name].'"/>';
+	return '<input class="'.$class.'" name="'.$name.'" value="'.(isset($data[$name]) ? $data[$name] : '').'"/>';
 }
 
 function jf_textarea($name, $data, $class = null){
-	return '<textarea name="'.$name.'"  class="'.$class.'">'.$data[$name].'</textarea>';
+	return '<textarea name="'.$name.'"  class="'.$class.'">'.(isset($data[$name]) ? $data[$name] : '').'</textarea>';
 }
 
 function jf_select($name, $data = array(), $options = array(), $class = null){
-	$selected = $data[$name];
+	$selected = 'NULL';
+	if(isset($data[$name]))
+		$selected = $data[$name];
 
 	$select = '<select name="'.$name.'" class="'.$class.'">';
 	foreach($options as $value => $data)

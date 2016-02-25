@@ -1,8 +1,7 @@
 h1, h2{
 	color: #008A17 !important;
 	}
-	
-		
+			
 .ll_border-color{
 	border-color: #008A17 !important;
 	}	
@@ -10,10 +9,18 @@ h1, h2{
 .ll_color{
 	color: #008A17 !important;
 	}
+	
+	.ll_color-hover:hover{
+		color: #008A17 !important;
+		}
 		
 .ll_background{
 	background-color: #008A17 !important;
 	}
+		
+	.ll_background-hover:hover{
+		background-color: #008A17 !important;
+		}
 	
 	
 /* ELEMENTOS */

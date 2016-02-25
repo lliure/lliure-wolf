@@ -13,7 +13,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
 require_once("../../etc/bdconf.php"); 
 require_once("../../includes/jf.funcoes.php"); 
 
-$navigi = unserialize(jf_decode($_SESSION['logado']['token'], $_POST['token']));
+$navigi = unserialize(jf_decode($_SESSION['ll']['user']['token'], $_POST['token']));
 
 	$seletor = 0;
 	if($navigi['configSel'] != false)

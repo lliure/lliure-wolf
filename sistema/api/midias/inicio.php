@@ -312,7 +312,7 @@ class Midias{
 	}
 
 	public function implode(){
-		return rawurlencode(jf_encode($_SESSION['logado']['token'], serialize($this)));
+		return rawurlencode(jf_encode($_SESSION['ll']['user']['token'], serialize($this)));
 	}
 
 	public function enbled(){

@@ -12,13 +12,12 @@
 */
 
 $retorna_page = '';
-
-//Configurações basicas da instalação
-$installData = file_get_contents('opt/install/install.ll',0,null,null);
-$installData = json_decode($installData);
-
 // VERIFICA SE EXISTE ARQUIVO LLCONF.LL , SE NÃO EXISTIR CRIA UM VAZIO
 if(!file_exists('etc/llconf.ll')){
+	//Configurações basicas da instalação
+	$installData = file_get_contents('opt/install/install.ll',0,null,null);
+	$installData = json_decode($installData);
+	
 	$in = '<?xml version="1.0" encoding="utf-8"?>'."\n"
 			.'<configuracoes>'."\n"
 				."\t".'<idiomas>'."\n"
@@ -40,10 +39,13 @@ if(!file_exists('etc/llconf.ll')){
 	
 	chmod('etc/llconf.ll', 0777);
 	
-	//$_SESSION['ll']['user']['tema'] = $installData->tema;
+	$tema_default = $installData->tema;
+	$tema_path = 'opt/install/'.$installData->tema.'/' ;
+} else {
+	/* carrega as configurações basicas do sistema */
+	require_once('includes/carrega_conf.php');
+	require_once('opt/persona/persona.php');
 }
-
-
 
 if(!empty($_SESSION['ll_url'])){
 	if($_SESSION['ll_url'] != "?")
@@ -52,18 +54,14 @@ if(!empty($_SESSION['ll_url'])){
 	unset($_SESSION['ll_url']);
 }
 
-/* carrega as configurações basicas do sistema */
-require_once('includes/carrega_conf.php');
 
 /***********************************************	SETA O TEMA PADRAO	*/
-require_once('opt/persona/persona.php');
-
-if(isset($_ll['conf']->grupo->{$_SESSION['ll']['user']['grupo']}->tema)){
+if(isset($_ll['conf']->grupo) && isset($_ll['conf']->grupo->{$_SESSION['ll']['user']['grupo']}->tema))
 	if(file_exists($_ll['conf']->temas->{$tema_default})){
 		$tema_default = $_ll['conf']->grupo->{$_SESSION['ll']['user']['grupo']}->tema;
 		$tema_path = (string) $_ll['conf']->temas->{$tema_default};
 	}
-}
+
 
 if($_SESSION['ll']['user']['tema'] == 'default'){
 	$_SESSION['ll']['user']['tema'] = array('id' => $tema_default);
