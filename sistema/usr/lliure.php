@@ -277,7 +277,8 @@ class lliure {
 			$loaded=false;
 		
 		if(!$loaded ){
-			require_once $load['caminho'];
+			if(!empty($load['caminho']) && !is_array($load['caminho']))
+				require_once $load['caminho'];
 			
 			if(!empty($load['css']) && !is_array($load['css']))
 				$load['css'] = explode(';', $load['css']);

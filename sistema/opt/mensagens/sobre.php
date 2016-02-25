@@ -19,7 +19,7 @@ if(($_ll = lltoObject('../../etc/llconf.ll')) == false)
 ?>
 
 <div id="llSobre">
-	<h1><img src="imagens/layout/logo_sobre.png" alt="lliure" /></h1>
+	<h1><img src="opt/mensagens/img/logo_sobre.png" alt="lliure" /></h1>
 	<span class="sigla">Web Application Platform</span>
 	<span class="versao">Versão <?php echo  $_ll->versao;?></span>
 	

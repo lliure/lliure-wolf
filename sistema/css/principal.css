@@ -37,9 +37,13 @@
 	
 	#topo .left a.addDesktop{
 		position: absolute;
-		bottom: 6px;
-		left: 200px;
+		top: 10px;
+		left: 4px;
+		padding: 3px;
 		z-index: 100;
+		color: #fff;
+		font-size: 1.2em;
+		
 		}
 	
 	#topo .right div.menu{
@@ -72,6 +76,7 @@
 	border-radius: 6px 6px 0 0;
 	background: #EDEDED;
 	top: -6px;
+	margin-bottom: -6px;
 	}
 	
 		
@@ -82,7 +87,7 @@
 	height: 25px;
 	left: 0;
 	text-align: right;
-	z-index: 200;
+	z-index: 2000;
 	}
 		
 	#ll_rodape  a{

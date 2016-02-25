@@ -33,10 +33,14 @@ $aplicativo->setNome('tags')
 			->js('api/tags/script.js')
 			->addApi();
 			
-			
 $aplicativo->setNome('parsedown')
 			->setCaminho('api/parsedown/parsedown.php')
-			->addApi();			
+			->addApi();
+			
+$aplicativo->setNome('jfbox')
+			->js('api/jfbox/jquery.jfbox.js')
+			->css('api/jfbox/jfbox.css')
+			->addApi();
 
 $aplicativo->setNome('Midias')
 			->setCaminho('api/midias/inicio.php')

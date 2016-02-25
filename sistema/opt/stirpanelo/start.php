@@ -25,7 +25,7 @@ echo app_bar('Painel de controle', $botoes);
 		
 		<div class="listp">
 			<div class="inter">
-				<a href="?opt=user"><img src="imagens/layout/users.png" alt="" /></a>
+				<a href="?opt=user"><img src="opt/stirpanelo/img/users.png" alt="" /></a>
 				<a href="?opt=user"><span>Usuários</span></a>
 			</div>
 		</div>	
@@ -35,7 +35,7 @@ echo app_bar('Painel de controle', $botoes);
 			?>
 			<div class="listp">
 				<div class="inter link_idioma">
-					<a href="opt/idiomas/idiomas.php"><img src="imagens/layout/language.png" alt="" /></a>
+					<a href="opt/idiomas/idiomas.php"><img src="opt/stirpanelo/img/language.png" alt="" /></a>
 					<a href="opt/idiomas/idiomas.php"><span>Idiomas</span></a>
 				</div>
 			</div>
@@ -46,7 +46,7 @@ echo app_bar('Painel de controle', $botoes);
 	
 		<div class="listp">
 			<div class="inter">
-				<a href="opt/mensagens/sobre.php" class="llSobre"><img src="imagens/layout/info.png" alt="" /></a>
+				<a href="opt/mensagens/sobre.php" class="llSobre"><img src="opt/stirpanelo/img/info.png" alt="" /></a>
 				<a href="opt/mensagens/sobre.php" class="llSobre"><span>Sobre</span></a>
 			</div>
 		</div>	
