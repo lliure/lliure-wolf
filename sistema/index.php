@@ -220,7 +220,8 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 			}
 
 		} else {
-			$_ll[$get[0]]['pagina'] = "opt/stirpanelo/ne_trovi.php";
+			$get[0] = 'opt';
+			$_GET[$get[0]] = 'stirpanelo';
 		}
 
 		break;
