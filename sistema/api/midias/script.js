@@ -340,6 +340,7 @@ api.Midias.sendFilesBuffer = [];
 			var action = contesto.attr('data-action');
 			var files = {};
 			var corte  = (contesto.attr('data-corte') && contesto.attr('data-cortes')? (contesto.attr('data-corte')+ '-'+ contesto.attr('data-cortes').split('-').shift()) : null);
+			$(contesto).trigger('star.midias.api');
 			$.each(this.files, function(index, file){
 				if (index >= total)return false;
 				api.Midias.sendFileToServer({
