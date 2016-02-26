@@ -210,9 +210,8 @@ class aplimo{
 	function header(){
 		global $_ll;
 		$aktivigi_class = ' aktivigi';
-		$_ll['titulo'] = $this->nome;
-		
-		
+		$_ll['titulo'] = strip_tags($this->nome);
+	
 		$this->class_sub = null;
 		$this->class_li = null;
 		

@@ -598,7 +598,7 @@ function jf_ota($obj)
 
 function jf_encode($key, $data){
 	if(empty($key))
-		trigger_error("A chave do encode não foi definido", E_USER_ERROR);
+		trigger_error("A chave do criptografia não foi definida", E_USER_ERROR);
 	
 	$return = mcrypt_encrypt(MCRYPT_BLOWFISH, $key, $data, MCRYPT_MODE_ECB);
 	$return = base64_encode($return);
@@ -606,6 +606,9 @@ function jf_encode($key, $data){
 }
 
 function jf_decode($key, $data){
+	if(empty($key))
+		trigger_error("A chave da descriptografia não foi definida", E_USER_ERROR);
+	
 	$data = base64_decode($data);
 	$return = mcrypt_decrypt(MCRYPT_BLOWFISH, $key, $data, MCRYPT_MODE_ECB);
 	return $return;
