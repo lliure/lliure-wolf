@@ -1,7 +1,7 @@
 <?php
 
 /* @var $midias Midias */
-header ('Content-type: text/html; charset=ISO-8859-1'); require_once 'header.php';
+header ('Content-type: text/html; charset=ISO-8859-1'); require_once dirname(__FILE__). '/../load.php';
 
 if(isset($_GET['removidos']))
 	$midias->removidos($_GET['removidos']);
@@ -16,11 +16,11 @@ if(isset($_GET['corte']))
 
 require_once 'diretorio.php';?>
 
-<div id="api_midias" data-pagina="midias"<?php echo $midias->enbled();?>>
+<div id="api_midias_repositorio" data-pagina="midias"<?php echo $midias->enbled();?>>
 	<div class="topo">
 		<h2><?php echo $midias->titulo();?></h2>
 		<form id="midias-form-topo" class="form">
-			<input id="upload-input" class="upload-input" type="file" name="img" multiple/>
+			<input id="api-midias-upload-input" class="upload-input" type="file" name="img" multiple="multiple"/>
 			<fieldset>
 				<div class="direrio">
 					<input class="div" readonly="readonly" type="test" value="<?php echo $midias->pastaRef();?>"/>
@@ -29,7 +29,7 @@ require_once 'diretorio.php';?>
 					<input id="midias-pesquisa" type="text" placeholder="Pesquisa" />
 				</div>
 				<div class="upload botoes">
-					<button class="confirm" type="button">UpLoad</button>
+					<button id="api-midias-repositorio-upload" class="confirm" type="button">UpLoad</button>
 				</div>
 			</fieldset>
 		</form>
@@ -51,7 +51,7 @@ require_once 'diretorio.php';?>
 			<div class="colu right">
 				<div id="midias-arquivos-selecionadas">
 					<div class="icones files"></div>
-					<div class="total"></div>
+					<div class="dados"></div>
 				</div>
 			</div>
 		</div>
@@ -84,9 +84,13 @@ require_once 'diretorio.php';?>
 			</form>
 		</div>
 	</div>
-	<?php echo $midias->construirSelecionados();?>
+	<?php // echo $midias->construirSelecionados(); ?>
 </div>
 
 <script type="text/javascript">
-	$('#api_midias').midias();
+
+	// $('#api_midias').midias();
+
+	api.Midias._repositorio();
+
 </script>

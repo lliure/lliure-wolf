@@ -1,14 +1,21 @@
 ;if(typeof api === 'undefined')api={};
 
 api.Midias = {};
+api.Midias.urlUpload = 'onserver.php?api=midias&p=upload';		//	link base de uploads dos arquivos
+api.Midias.contesto = null;										//	contexto atual de dados para uploads
+api.Midias.sendFiles = 0;										//	arquivos subindo atualmente
+api.Midias.sendFilesBuffer = [];								//	buff de armasemanto de arquivos para upload
+api.Midias.sendFilesMax = 5;									//	maximo de arquivos upados simultaniamente.
 api.Midias.sendFileToServer = function(settings){
-	if(settings && api.Midias.sendFiles >= 5){
+	if(settings && api.Midias.sendFiles >= api.Midias.sendFilesMax){
+		settings.contesto = api.Midias.contesto;
 		api.Midias.sendFilesBuffer.push(settings);
 	}else{
 		if(!settings && api.Midias.sendFilesBuffer.length > 0)
 			settings = api.Midias.sendFilesBuffer.shift();
 		if(settings){
 			api.Midias.sendFiles += 1;
+			var contexto = settings.contesto || api.Midias.contesto;
 			var formData = new FormData();
 			formData.append('file', settings.file);
 			$.ajax({
@@ -19,7 +26,7 @@ api.Midias.sendFileToServer = function(settings){
 					}, false);}
 					return xhrobj;
 				},
-				url: 'api/midias/upload.php?m=' + api.Midias.contesto.attr('data-action'),
+				url: api.Midias.urlUpload + '&m=' + contexto.attr('data-action'),
 				type: "POST",
 				dataType: 'json',
 				contentType: false,
@@ -40,9 +47,28 @@ api.Midias.sendFileToServer = function(settings){
 	}
 	function ifEnd(end){
 		if(api.Midias.sendFiles <= 0)end();
-		else api.Midias.sendFileToServer();
-	}
+		else api.Midias.sendFileToServer();}
 };
+api.Midias.difernciar = function(itens, lista, contesto){
+	contesto = contesto || api.Midias.contesto;
+	var i, inseridos = [], removidos = [], name = contesto.attr('data-api-midias');
+	$.each(itens, function(index, dados){
+		if((i = lista.indexOf(index)) < 0)
+			inseridos.push({name: name + '[inseridos][' + (index.split(':').shift()) + ']', value: index.split(':').pop()});
+		else
+			lista.splice(i, 1);
+	});
+	$.each(lista, function(index, valeu){
+		removidos.push({name: name + '[removidos][' + (valeu.split(':').shift()) + ']', value: valeu.split(':').pop()});
+	});
+	return {'inseridos': inseridos, 'removidos': removidos};
+};
+
+
+
+
+
+
 api.Midias.dezenhaInput = function(files){
 	var length = Object.keys(files).length;
 	var ordem = Object.keys(files).sort();
@@ -115,20 +141,6 @@ api.Midias.inputsProcessa = function(contesto){
 	});
 	var inp = decodeURI(contesto.attr('data-dados')).split(';'); inp.pop();
 	api.Midias.atualizaInputs(api.Midias.difernciar(fotos, inp, contesto), contesto);
-};
-api.Midias.difernciar = function(itens, lista, contesto){
-	contesto = contesto || api.Midias.contesto;
-	var i, inseridos = [], removidos = [], name = contesto.attr('data-api-midias');
-	$.each(itens, function(index, dados){
-		if((i = lista.indexOf(index)) < 0)
-			inseridos.push({name: name + '[inseridos][' + (index.split(':').shift()) + ']', value: index.split(':').pop()});
-		else
-			lista.splice(i, 1);
-	});
-	$.each(lista, function(index, valeu){
-		removidos.push({name: name + '[removidos][' + (valeu.split(':').shift()) + ']', value: valeu.split(':').pop()});
-	});
-	return {'inseridos': inseridos, 'removidos': removidos};
 };
 api.Midias.atualizaInputs = function(opcoes, contesto){
 	contesto = contesto || api.Midias.contesto;
@@ -203,9 +215,6 @@ api.Midias.redimencionar = function(dimensoesUm, dimensoesDois, tipo){
 	}
 	return f;
 };
-api.Midias.contesto = null;
-api.Midias.sendFiles = 0;
-api.Midias.sendFilesBuffer = [];
 
 (function($, d, w){
 	
@@ -324,9 +333,7 @@ api.Midias.sendFilesBuffer = [];
 		});
 
 		$('[data-api-midias]:not(.api-midias)').prepend(
-			$('<input>', {type: 'file'}).css({
-				display: 'none'
-			})
+			$('<input>', {type: 'file'}).css({ display: 'none' })
 		).click(function(){
 			api.Midias.contesto = $(this);
 			api.Midias.contesto.find('input[type="file"]').click();
@@ -334,6 +341,7 @@ api.Midias.sendFilesBuffer = [];
 
 		$('[data-api-midias]:not(.api-midias) input[type="file"]').click(function(event){
 			event.stopPropagation();
+
 		}).change(function(event){
 			var contesto = api.Midias.contesto;
 			var total = parseInt(contesto.attr('data-quant-total'));

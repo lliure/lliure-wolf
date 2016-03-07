@@ -1,12 +1,21 @@
 <?php
 
+ll::add('api/midias/css/jquery.jcrop.min.css');
+ll::add('api/midias/css/estilo.css');
+
+ll::add('api/midias/js/jquery.color.js');
+ll::add('api/midias/js/jquery.jcrop.js');
+ll::add('api/midias/js/script.js');
+
+
 if(!defined('MIDIAS_BASEPATH')) define('MIDIAS_BASEPATH', realpath(dirname(__FILE__). '/../../'));
 if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
 
 require_once MIDIAS_BASEPATH. '/etc/bdconf.php';
 require_once MIDIAS_BASEPATH. '/includes/functions.php';
 
-//difine('MIDIAS_CORTES', array('c', 'o', 'm', 'p', 'r', 'a'));
+define('MIDIAS_CORTES', 'c o m p r a');
+define('MIDIAS_IMAGENS', 'png jpg gif');
 
 class Midias{
 
@@ -17,11 +26,15 @@ class Midias{
 		ModeloPequeno = 'pequeno',
 		ModeloGrande = 'grande',
 
+		//Modos de comportamento do botao
+		ModoUpload 		= 'upload',			//	modo simples de subida de arquivo
+		ModoRepositorio = 'repositorio',	//	modo que abre uma tela para escolher arquivos ja online.
+
 		//tipos
-		TiposImagens = 0;
+		TipoImagens = 0;							// ->tipos(Midias::TipoImagens)
 
 	private static $tiposPreDefinidos = array(
-		'png jpg gif'			// Midias::TiposImagens
+		'png jpg gif'
 	);
 
 	private
@@ -29,6 +42,7 @@ class Midias{
 		$dica = '',
 		$name = '',
 		$modelo = null,
+		$modo = null,
 		$tipos = null,
 		$corte = '',
 		$cortes = array('c', 'o', 'm', 'p', 'r', 'a'),
@@ -44,40 +58,34 @@ class Midias{
 		$removidos = array();
 
 
-	public function tipos($tipos = null) {
+	public function tipos($tipos = null){
 		if($tipos !== NULL)
 			$this->tipos = is_numeric($tipos)? self::$tiposPreDefinidos[$tipos]: $tipos;
-
 		else
 			return is_array($this->tipos)? implode(' ', $this->tipos): $this->tipos;
-
 		return $this;
 	}
 
 	public function corte($width = null, $height = null){
 		if($width !== NULL && $height !== NULL)
 			$this->corte = $width. '-'. $height;
-
 		else
 			return $this->corte;
-
 		return $this;
 	}
 
-	public function cortes(array $cortes = NULL){
+	public function cortes($cortes = NULL){
 		if($cortes !== NULL)
-			$this->cortes = $cortes;
-
+			$this->cortes = (is_string($cortes)? explode(' ', $cortes) : $cortes);
 		else
 			return $this->cortes;
-
 		return $this;
 	}
 
 	public function quantidade($star = NULL, $length = NULL) {
 		if($star !== NULL && $length !== NULL ){
 			$this->quantidadeStar = ($star >= 0? $star: 0);
-			$this->quantidadeLength = ($length >= 1? $length: 1);
+			$this->quantidadeLength = ($length == 0? 0: ($length >= 1? $length: 1));
 
 		}elseif($star !== NULL){
 			$this->quantidadeStar = 0;
@@ -101,10 +109,8 @@ class Midias{
 	public function rais($rais = NULL){
 		if($rais !== NULL)
 			$this->rais = $rais;
-
 		else
 			return $this->rais;
-
 		$this->dirExtar();
 		return $this;
 	}
@@ -112,10 +118,8 @@ class Midias{
 	public function diretorio($diretorio = NULL){
 		if($diretorio !== NULL)
 			$this->diretorio = $diretorio;
-
 		else
 			return $this->diretorio;
-
 		$this->dirExtar();
 		return $this;
 	}
@@ -123,7 +127,7 @@ class Midias{
 	private function dirExtar(){
 		$varVazia = array();
 		$this->pasta = realpath($this->rais(). DS . ($dir = $this->diretorio() && !empty($dir)? $dir. DS: ''));
-		$this->pastaRef = str_repeat('../', preg_match_all('/\\|\//', SISTEMA, $varVazia) + 1). str_replace('\\', '/', substr($this->pasta, (strlen(MIDIAS_BASEPATH) - strlen(SISTEMA))));
+		$this->pastaRef = str_repeat('../', preg_match_all('/\\|\//', SISTEMA, $varVazia) + 1). str_replace('\\', '/', substr($this->pasta(), (strlen(MIDIAS_BASEPATH) - strlen(SISTEMA))));
 	}
 
 	public function pasta(){
@@ -137,17 +141,22 @@ class Midias{
 	public function name($name = NULL){
 		if($name !== NULL)
 			$this->name = $name;
-
 		else
 			return $this->name;
+		return $this;
+	}
 
+	public function modo($modo = NULL){
+		if($modo !== NULL)
+			$this->modo = $modo;
+		else
+			return ($this->modo === null? self::ModoRepositorio: $this->modo);
 		return $this;
 	}
 
 	public function modelo($modelo = NULL){
 		if($modelo === NULL)
 			return ($this->modelo === null? ($this->quantidadeTotal <= 1? self::ModeloPequeno: self::ModeloGrande): $this->modelo);
-
 		$this->modelo = ($modelo == self::ModeloPequeno? $modelo: ($modelo == self::ModeloGrande? $modelo: null));
 		return $this;
 	}
@@ -202,20 +211,16 @@ class Midias{
 	public function dica($dica = NULL){
 		if($dica !== NULL)
 			$this->dica = $dica;
-
 		else
 			return $this->dica;
-
 		return $this;
 	}
 
 	public function titulo($titulo = NULL){
 		if($titulo !== NULL)
 			$this->titulo = $titulo;
-
 		else
 			return $this->titulo;
-
 		return $this;
 	}
 
@@ -223,11 +228,10 @@ class Midias{
 	public function __toString(){
 		$t = (($t = count($this->dados())) <= $this->quantidadeTotal? $t: $this->quantidadeTotal);
 		return '
-			<div class="input api-midias api-midias-'. $this->modelo(). '" data-total-parcial="'. count($this->dados()). '"'. $this->enbled(). '>
-				<input class="api-midias-input-file" type="file"'. ($this->quantidadeTotal > 1? ' multiple': ''). '/>
+			<div class="input api-midias api-midias-'. $this->modelo(). '" data-total-parcial="'. count($this->dados()). '">
 				<div class="api-midias-botoes">
-					<button class="api-midias-upload" type="button" disabled="disabled" title="Upload"><i class="fa fa-upload"></i></i></button><br/>
-					<button class="api-midias-servidor" type="button" disabled="disabled" title="Servidor"><i class="fa fa-server"></i></button>
+					'. //<button class="api-midias-upload" type="button" disabled="disabled" title="Upload"><i class="fa fa-upload"></i></i></button><br/>
+					'<button class="api-midias-servidor" type="button" title="Servidor" data-contexto="div.api-midias" '. $this->enbled(). '><i class="fa fa-server"></i></button>
 				</div>
 				<div class="api-midias-content"'. ($this->modelo() == self::ModeloGrande || $t == 1? '': ' style="display: none"'). '>
 					'. $this->icones(). '
@@ -250,10 +254,10 @@ class Midias{
 			$r .= '
 					<div class="api-midias-file" data-name="'. $nome. '" data-tamanho="'. $tamanho. ($corte !== null? ' data-corte="' . $corte. '"': '') . '">
 						<div class="api-midias-icone">
-							<div class="api-midias-img"'. (in_array($ext, explode(' ', self::$tiposPreDefinidos[self::TiposImagens]))? '': ' style="display: none;"'). '>
+							<div class="api-midias-img"'. (in_array($ext, explode(' ', self::$tiposPreDefinidos[self::TipoImagens]))? '': ' style="display: none;"'). '>
 								<img src="'. $this->pastaRef(). '/'. ($corte !== null? $corte. '/': '') . $file . '" alt=""/>
 							</div>
-							<div class="api-midias-generico"'. (in_array($ext, explode(' ', self::$tiposPreDefinidos[self::TiposImagens]))? ' style="display: none;"': ''). '>
+							<div class="api-midias-generico"'. (in_array($ext, explode(' ', self::$tiposPreDefinidos[self::TipoImagens]))? ' style="display: none;"': ''). '>
 								<i class="fa fa-file"></i>
 								<div class="api-midias-etc">'. $ext. '</div>
 							</div>
@@ -317,9 +321,10 @@ class Midias{
 
 	public function enbled(){
 		$r  = ' data-api-midias="' . $this->name(). '"';
-		$r .= ' data-quant-start="'. $this->quantidadeStar(). '"';
+		$r .= ' data-modo="'. $this->modo() . '"';
 		$r .= ' data-pasta="'. $this->pasta . '"';
 		$r .= ' data-pastaRef="'. $this->pastaRef . '"';
+		$r .= ' data-quant-start="'. $this->quantidadeStar(). '"';
 		$r .= ' data-quant-length="'. $this->quantidadeLength(). '"';
 		$r .= ' data-quant-total="'. $this->quantidade(). '"';
 		$r .= ' data-corte="'. $this->corte(). '"';
@@ -332,9 +337,8 @@ class Midias{
 
 	private function dadosImplode($dados){
 		$r = array();
-		foreach ($dados as $id => $arquivo){
+		foreach ($dados as $id => $arquivo)
 			$r[] = $id. ':'. urldecode((!empty($this->dados[$arquivo])? $this->dados[$arquivo]. '/': ''). $arquivo);
-		}
 		return implode(';', $r). ';';
 	}
 

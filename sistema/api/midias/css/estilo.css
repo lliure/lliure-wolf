@@ -1,0 +1,915 @@
+/************* IMPUT ****************/
+
+.api-midias {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.api-midias.api-midias-grande {
+    height: 60px !important;
+}
+
+.api-midias .api-midias-input-file {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    color: transparent !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    background: none !important;
+    visibility: hidden !important;
+}
+
+.api-midias .api-midias-botoes {
+    position: absolute;
+    margin: 0 !important;
+    padding: 0 !important;
+    left: 0;
+    z-index: 20;
+}
+
+.api-midias .api-midias-botoes button {
+    margin: 0;
+    padding: 0;
+    width: 28px;
+    height: 28px;
+    line-height: 30px;
+    font-size: 16px;
+    text-align: center;
+    background: none;
+    border: none;
+    border-radius: 0;
+    color: inherit;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 1);
+}
+
+.api-midias .api-midias-botoes button[disabled] {
+    opacity: 0.6;
+}
+
+.api-midias .api-midias-botoes br {
+    display: none;
+}
+
+.api-midias.api-midias-grande .api-midias-botoes br {
+    display: inline;
+}
+
+.api-midias .api-midias-content {
+    position: relative;
+    margin: 0 !important;
+    padding: 0 !important;
+    padding-left: 35px !important;
+    z-index: 10;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.api-midias.api-midias-grande .api-midias-content {
+    padding-left: 35px !important;
+}
+
+.api-midias.api-midias-pequeno .api-midias-content {
+    padding-left: 70px !important;
+}
+
+.api-midias .api-midias-content .api-midias-file {
+    position: relative;
+    margin: 0 !important;
+    padding: 9px !important;
+    padding-left: 0 !important;
+    display: inline-block;
+}
+
+.api-midias.api-midias-pequeno .api-midias-content .api-midias-file {
+    padding-top: 7px !important;
+    padding-bottom: 5px !important;
+    line-height: 35px;
+}
+
+.api-midias .api-midias-content .api-midias-file .api-midias-icone {
+    position: relative;
+    margin: 0 !important;
+    padding: 0 !important;
+    float: left;
+    display: inline-block;
+}
+
+.api-midias.api-midias-grande[data-total-parcial="1"] .api-midias-content .api-midias-file .api-midias-icone {
+    margin-right: 10px !important;
+}
+
+.api-midias.api-midias-pequeno .api-midias-content .api-midias-file .api-midias-icone {
+    display: none;
+}
+
+.api-midias .api-midias-content .api-midias-file .api-midias-generico {
+    margin: 0 !important;
+    padding: 0 !important;
+    float: left;
+    position: relative;
+    height: 40px;
+    width: 40px;
+    font-size: 40px;
+    text-align: center;
+}
+
+.api-midias .api-midias-content .api-midias-file .api-midias-generico .api-midias-etc {
+    margin: auto 0 !important;
+    padding: 0 3px !important;
+    float: left;
+    position: absolute;
+    top: 14px;
+    bottom: 0;
+    left: -2px;
+    height: 22px;
+    font-size: 15px;
+    line-height: 1em;
+    background-color: rgb(102, 102, 102);
+    border: 2px solid #fff;
+    color: #fff;
+    border-radius: 3px;
+}
+
+.api-midias .api-midias-content .api-midias-file .api-midias-img {
+    margin: 0 !important;
+    padding: 0 !important;
+    float: left;
+    position: relative;
+}
+
+.api-midias.api-midias-pequeno .api-midias-content .api-midias-file .api-midias-img {
+    display: none;
+}
+
+.api-midias .api-midias-content .api-midias-file .api-midias-img img {
+    max-height: 40px;
+    float: left;
+}
+
+.api-midias .api-midias-content .api-midias-file .api-midias-barra-load {
+    margin: 0 !important;
+    padding: 0 !important;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 10px;
+    width: 0;
+    background-color: rgba(105, 107, 113, 0.65);
+}
+
+.api-midias .api-midias-content .api-midias-file span {
+    display: inline;
+    line-height: 1.2em;
+    white-space: nowrap;
+}
+
+.api-midias .api-midias-content .api-midias-file span.api-midias-name,
+.api-midias .api-midias-content .api-midias-file span.api-midias-dados {
+    display: none;
+}
+
+.api-midias[data-total-parcial="1"] .api-midias-content .api-midias-file span.api-midias-name,
+.api-midias.api-midias-pequeno .api-midias-content .api-midias-file span.api-midias-name {
+    display: inline;
+    font-weight: bold;
+    font-size: 1.8em;
+    line-height: 1.5em;
+}
+
+.api-midias.api-midias-pequeno .api-midias-content .api-midias-file span.api-midias-name {
+    font-size: 1.4em;
+    font-weight: normal;
+    line-height: 1em;
+}
+
+.api-midias.api-midias-grande[data-total-parcial="1"] .api-midias-content .api-midias-file span.api-midias-dados {
+    display: inline;
+    font-size: 1.1em;
+}
+
+.api-midias.api-midias-pequeno .api-midias-content .api-midias-file .api-midias-br-nome {
+    display: none;
+}
+
+.api-midias .api-midias-multfiles {
+    position: relative;
+    font-size: 1.2em;
+    margin: 0 !important;
+    padding: 0 !important;
+    z-index: 10;
+}
+
+.api-midias.api-midias-grande .api-midias-multfiles {
+    padding-left: 35px !important;
+}
+
+.api-midias.api-midias-pequeno .api-midias-multfiles {
+    padding-left: 70px !important;
+}
+
+/******************* ESTRUTURA *****************/
+
+#api_midias_repositorio {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#api_midias_repositorio .scroll {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+#api_midias_repositorio div {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#api_midias_repositorio .topo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    z-index: 300;
+    border-bottom: 1px solid #bbb;
+}
+
+#api_midias_repositorio .baixo {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    z-index: 200;
+    border-top: 1px solid #bbb;
+}
+
+#api_midias_repositorio .meio {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 80px 0 50px;
+    z-index: 100;
+    border: none;
+}
+
+#api_midias_repositorio .meio.topo {
+    padding-top: 0;
+}
+
+#api_midias_repositorio .meio.baixo {
+    padding-bottom: 0;
+}
+
+#api_midias_repositorio .meio .main {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+}
+
+#api_midias_repositorio .colu{
+    position: relative;
+    height: 100%;
+    width: 200px;
+    z-index: 100;
+}
+
+#api_midias_repositorio .colu.right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    z-index: 200;
+    border-left: 1px solid #bbb;
+}
+
+#api_midias_repositorio .colu.left {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    z-index: 200;
+    border-right: 1px solid #bbb;
+}
+
+#api_midias_repositorio .colu.center{
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+    padding: 0 200px;
+    border: none;
+}
+
+#api_midias_repositorio .colu.center.left {
+    padding-left: 0;
+}
+
+#api_midias_repositorio .colu.center.right {
+    padding-right: 0;
+}
+
+#api_midias_repositorio .colu .content {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    float: left;
+}
+
+/****************** CONTEUDOS *****************/
+
+#api_midias_repositorio .topo form.form {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    float: left;
+    width: 100%;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#api_midias_repositorio .topo form.form input.upload-input {
+    width: 0;
+    height: 0;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+}
+
+#api_midias_repositorio .topo form.form fieldset {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    float: left;
+    width: 100%;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#api_midias_repositorio .topo form.form fieldset div {
+    position: relative;
+    margin: 0;
+    float: left;
+    width: 100%;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#api_midias_repositorio .topo form.form fieldset div input,
+#api_midias_repositorio .topo form.form fieldset div .input {
+    width: 100%;
+}
+
+#api_midias_repositorio .topo form.form fieldset div.direrio {
+    width: 100%;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-right: 294px;
+}
+
+#api_midias_repositorio .topo form.form fieldset div.pesquisa {
+    position: absolute;
+    top: 0;
+    right: 84px;
+    width: 200px;
+}
+
+#api_midias_repositorio .topo form.form fieldset div.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: auto;
+}
+
+#api_midias_repositorio .topo form.form fieldset div.upload button {
+    margin: 0;
+}
+
+#api_midias_repositorio .baixo .linha {
+    margin-top: 17px;
+    line-height: 30px;
+}
+
+#api_midias_repositorio .baixo .linha form.form {
+    float: right;
+    width: auto;
+}
+
+#api_midias_repositorio .baixo .linha form.form div.botoes {
+    margin: 0 -3px 0 0;
+}
+
+#api_midias_files {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#api_midias_files .solte-aqui {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 3px dashed #bbb;
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #bbb;
+    background-color: rgba(0, 0, 0, 0.11);
+    text-align: center;
+    z-index: 200;
+}
+
+#api_midias_files .solte-aqui .line {
+    height: 100%;
+}
+
+#api_midias_files .solte-aqui .ausilio {
+    display: inline;
+    width: 0;
+    height: 100%;
+    vertical-align: middle;
+}
+
+
+
+
+
+
+
+.files {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: 5px 0;
+}
+
+.files .file{
+    width: 150px;
+    height: 150px;
+    margin: 5px;
+    position: relative;
+
+    overflow: hidden;
+
+    border: 1px solid #aaa;
+
+    display: inline-block;
+    background-color: transparent;
+    padding: 0;
+    color: #666;
+    font-size: 1.25em;
+}
+
+.files .file.isImage{
+    background-image: url("../css/bg-transparente.png");
+    background-position: center;
+}
+
+.files .file:focus,
+.files .file.celec{
+    outline: #4d90fe solid 1px;
+    border-color: #4d90fe;
+}
+
+.files .file .ico{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 100%;
+    height: 100%;
+}
+
+.files .file .ico .pos{
+    width: 100%;
+    height: 100%;
+
+    -webkit-transform:  translate(-50%, -50%);
+    -moz-transform:     translate(-50%, -50%);
+    -ms-transform:      translate(-50%, -50%);
+    -o-transform:       translate(-50%, -50%);
+    transform:          translate(-50%, -50%);
+}
+
+.files .file .ico .img-thumb{
+    width: 100%;
+    height: 100%;
+
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.files .file .mark{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+}
+
+.files .file .mark > span{
+    position: absolute;
+    top: 0;
+    height: 25px;
+    width: 25px;
+    line-height: 25px;
+    font-size: 1.2em;
+    text-align: center;
+    border: 1px solid #aaa;
+    border-top: none;
+    background-color: rgba(240, 240, 240, 0.85);
+    display: none;
+}
+
+.files .file:hover .mark > span,
+.files .file:focus .mark > span{
+    display: block;
+}
+
+.files .file .mark > span > i{
+    line-height: inherit;
+    font-size: inherit;
+}
+
+.files .file .mark .checkbox{
+    left: 0;
+    border-left: none;
+    text-align: left;
+    padding-left: 6px;
+}
+
+.files .file.celec .mark .checkbox{
+    border-color: #4d90fe;
+    background-color: rgba(131, 178, 255, 0.85);
+    color: #fff;
+}
+
+.files .file.celec .mark .checkbox{
+    display: block;
+}
+
+.files .file .mark .checkbox > i,
+.files .file.celec .mark .checkbox .unchecked{
+    display: none;
+}
+
+.files .file.celec .mark .checkbox .checked,
+.files .file .mark .checkbox .unchecked{
+    display: inline;
+}
+
+.files .file .mark .deletar{
+    right: 0;
+    border-right: none;
+}
+
+.files .file .mark > span.erro{
+    left: 50%;
+
+    -webkit-transform:  translateX(-50%);
+    -moz-transform:     translateX(-50%);
+    -ms-transform:      translateX(-50%);
+    -o-transform:       translateX(-50%);
+    transform:          translateX(-50%);
+
+    display: none;
+}
+
+.files .file.erro .mark > span.erro{
+    display: block;
+}
+
+
+/*
+.files .file .mark .deletar,
+.files .file .mark .checkbox{
+    position: absolute;
+    right: 0;
+    width: 22px;
+    height: 22px;
+    border: none !important;
+    display: none;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.files .file .mark .checkbox{
+    top: 0;
+    border-top-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.files .file .mark .deletar {
+    bottom: 0;
+    border-top-right-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+
+.files .file .mark .api-midias-barra-load {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    border: none !important;
+    opacity: 0.35;
+}
+
+.files .file .mark .load {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: none !important;
+    background-image: url(../../imagens/jfbox/loading.gif);
+    background-repeat: no-repeat;
+    background-position: center;
+    display: none;
+}
+
+.files .file .mark .erro {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: none !important;
+    background-image: url(../../imagens/icones/bug.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    display: none;
+    opacity: 0.5;
+}
+
+.files .file.erro .mark .erro{
+    display: block;
+}
+
+.files .file .mark.celec .checkbox,
+.files .file .mark:hover .checkbox,
+.files .file .mark:hover .deletar{
+    display: block;
+}
+
+.files .file.celec .mark .checkbox{
+
+}
+
+.files .file.erro .mark .checkbox,
+.files .file.erro .mark .deletar {
+    display: none;
+}
+
+.files .file .mark,
+.files .file .mark .deletar,
+.files .file .mark .api-midias-barra-load,
+.files .file .mark .load,
+.files .file .mark .checkbox,
+.files .file .mark .erro {
+    border-radius: 4px;
+    background-color: #F5F5F5;
+    border: 1px solid #E4E4E4;
+}
+
+.files .file .mark:hover,
+.files .file .mark:hover .checkbox {
+    background-color: #FaFaFa;
+    border-color: #EfEfEf;
+}
+
+.files .file .mark:active,
+.files .file .mark:active .checkbox {
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+.files .file .mark .img-ico {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.files .file .mark .base-corte .img-ico {
+    max-width: none;
+    max-height: none;
+    position: absolute;
+}
+*/
+
+.files .file .nome{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 5px;
+
+    border-top: 1px solid #aaa;
+    background-color: rgba(240, 240, 240, 0.85);
+
+    line-height: 1.2em;
+}
+
+.files .file:focus .nome,
+.files .file.celec .nome{
+    border-color: #4d90fe;
+    background-color: rgba(131, 178, 255, 0.85);
+    color: #fff;
+}
+
+#api-midias-icosToCortar .files .file .mark .load,
+#api-midias-icosToCortar .files .file .mark .checkbox,
+#api-midias-icosToCortar .files .file .mark .deletar,
+#api-midias-icosCortardos .files .file .mark .load,
+#api-midias-icosCortardos .files .file .mark .deletar,
+#api-midias-icosCortardos .files .file .mark .checkbox {
+    display: none;
+}
+
+
+
+
+
+
+
+
+#api-midias-areaCorte {
+    float: left;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    min-width: 100%;
+    padding: 10px;
+    overflow: hidden;
+    background-color: #FFFFFF;
+}
+
+#api-midias-areaCorte .area-de-corte {
+    float: left;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    min-width: 100%;
+    position: relative;
+}
+
+#api-midias-areaCorte .area-de-corte .area-de-corte-main {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    left: 50%;
+    right: 50%;
+    float: left;
+}
+
+#api-midias-areaCorte .area-de-corte .area-de-corte-main .area-de-corte-main-main {
+    position: relative;
+    width: auto;
+    height: auto;
+    float: left;
+}
+
+#api-midias-areaCorte .area-de-corte .area-de-corte-main .area-de-corte-main-main .imgToCorte {
+    float: left;
+    width: 100%;
+    height: 100%;
+    margin-left: -50%;
+    background-image: url(bg-transparente.png);
+    background-position: center;
+}
+
+#api-midias-areaCorte .area-de-corte .area-de-corte-main .area-de-corte-main-main .imgToCorte img {
+    float: left;
+    width: 100%;
+    height: 100%;
+}
+
+#menu-corte {
+}
+
+#menu-corte form.form fieldset div div.input,
+#menu-corte form.form fieldset div input,
+#menu-corte form.form fieldset div textarea,
+#menu-corte form.form fieldset div select,
+#menu-corte form.form fieldset div span {
+    width: auto !important;
+    display: inline;
+}
+
+#midias-arquivos-selecionadas {
+    float: left;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#midias-arquivos-selecionadas .icones{
+    float: left;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    position: relative;
+}
+
+#midias-arquivos-selecionadas .icones .file{
+    outline: none;
+}
+
+#midias-arquivos-selecionadas .icones .file:focus{
+    border-color: #aaa;
+}
+
+#midias-arquivos-selecionadas .icones .file .mark,
+#midias-arquivos-selecionadas .icones .file .nome{
+    display: none;
+}
+
+/* #midias-arquivos-selecionadas .icones .p-0 {
+    position: absolute;
+    top: 0;
+    left: 5px;
+    z-index: 300;
+}
+
+#midias-arquivos-selecionadas .icones .p-1 {
+    position: absolute;
+    top: 13px;
+    left: 18px;
+    z-index: 200;
+}
+
+#midias-arquivos-selecionadas .icones .p-2 {
+    position: absolute;
+    top: 26px;
+    left: 31px;
+    z-index: 100;
+} */
+
+#midias-arquivos-selecionadas .dados{
+    float: left;
+    width: 100%;
+    position: relative;
+}
+
+#midias-arquivos-selecionadas .dados table{
+    float: left;
+    width: 100%;
+    position: relative;
+}
+
+#midias-arquivos-selecionadas .dados table td{
+    font-size: 1.25em;
+    line-height: 1.5;
+    padding: 0 5px;
+}
+
+#midias-arquivos-selecionadas .dados table td:first-child{
+    font-weight: 600;
+    width: 70px;
+}
+
+#midias-msg-del {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+    z-index: 400;
+    display: none;
+}
+
+#midias-msg-del .box {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 350px;
+    margin: 0 auto;
+    border-radius: 4px;
+    background-color: #F5F5F5;
+    border: 1px solid #E4E4E4;
+    -webkit-box-shadow: 2px 2px 2px -1px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 2px 2px 2px -1px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 2px 2px -1px rgba(0, 0, 0, 0.1);
+    padding: 22px 22px 45px;
+    text-align: left;
+}

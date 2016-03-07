@@ -263,7 +263,8 @@ class lliure {
 	}
 
 	private static function loadComponente($type, $name){
-		if(file_exists($f = ($type. '/'. $name. '/'. $name. '.php')))
+		if (file_exists($f = ($type. '/'. $name. '/inicio.php'))
+		|| (file_exists($f = ($type. '/'. $name. '/'. $name. '.php'))))
 			return require_once $f;
 	}
 
