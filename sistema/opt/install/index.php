@@ -20,7 +20,7 @@ case 'index':
 	<head>
 		<title>Intalador lliure</title>
 		
-		<link rel="stylesheet" type="text/css" href="../css/base.css">
+		<link rel="stylesheet" type="text/css" href="../../css/base.css">
 		<link rel="stylesheet" type="text/css" href="css.css">
 		
 	</head>
@@ -112,7 +112,7 @@ case 'instalar':
 	
 	if(!file_exists('../../etc/bdconf.php')){				
 		if(empty($_POST['host']) || empty($_POST['login']) || empty($_POST['tabela']) || !isset($_POST['uploads']) || !isset($_POST['etc']) || jf_token($_POST['token']) != true){
-			echo 'Por favor preencha todos os campos, <a href="index.php">voltar</a>';
+			echo 'Por favor preencha todos os campos/requisitos, <a href="index.php">voltar</a>';
 			break;
 		}
 		

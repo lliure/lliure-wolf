@@ -23,12 +23,14 @@ echo app_bar('Painel de usuários', $botoes);
 if(empty($_GET['user'])){
 	$navegador = new navigi();	
 	$navegador->tabela = PREFIXO.'lliure_admin';
-	$navegador->query = 'select * from '.$navegador->tabela.' where login != "'.$_ll['user']['login'].'"'.(ll_tsecuryt() ? '' : ' and grupo != "dev"').' order by nome ASC';
+	
+	$navegador->query = 'select * from '.$navegador->tabela.' where login is null || login != "'.$_ll['user']['login'].'"'.(ll_tsecuryt() ? '' : ' and grupo != "dev"').' order by nome ASC';
+	
 	$navegador->delete = true;
 
 	$navegador->config = array(
 			'link' => $_ll['opt']['home'].'&user=',
-			'ico' => 'imagens/layout/user.png'
+			'fa' => 'fa-user'
 			);
 	$navegador->monta();
 	?>

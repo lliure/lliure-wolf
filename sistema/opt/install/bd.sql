@@ -10,7 +10,7 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Copiando estrutura para tabela lliure_6.ll_lliure_admin
+-- Copiando estrutura para tabela ll_lliure_admin
 CREATE TABLE IF NOT EXISTS `ll_lliure_admin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `login` varchar(200) NULL,
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `ll_lliure_admin` (
   UNIQUE KEY `login` (`login`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela lliure_6.ll_lliure_admin: ~1 rows (aproximadamente)
+-- Copiando dados para a tabela ll_lliure_admin: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `ll_lliure_admin` DISABLE KEYS */;
 INSERT INTO `ll_lliure_admin` (`id`, `login`, `senha`, `nome`, `email`, `twitter`, `foto`, `grupo`, `themer`) VALUES
 	(1, 'dev', '0beb32fac408c864385802e9be24ee4c', 'Desenvolvedor', NULL, NULL, NULL, 'dev', 'default');
@@ -48,7 +48,7 @@ ENGINE=InnoDB
 AUTO_INCREMENT=1000000001
 ;
 
--- Copiando estrutura para tabela lliure_6.ll_lliure_desktop
+-- Copiando estrutura para tabela ll_lliure_desktop
 CREATE TABLE IF NOT EXISTS `ll_lliure_desktop` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(30) NOT NULL,
@@ -57,12 +57,12 @@ CREATE TABLE IF NOT EXISTS `ll_lliure_desktop` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela lliure_6.ll_lliure_desktop: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela ll_lliure_desktop: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `ll_lliure_desktop` DISABLE KEYS */;
 /*!40000 ALTER TABLE `ll_lliure_desktop` ENABLE KEYS */;
 
 
--- Copiando estrutura para tabela lliure_6.ll_lliure_apps
+-- Copiando estrutura para tabela ll_lliure_apps
 CREATE TABLE IF NOT EXISTS `ll_lliure_apps` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(200) NOT NULL,
@@ -71,14 +71,7 @@ CREATE TABLE IF NOT EXISTS `ll_lliure_apps` (
   UNIQUE KEY `pasta` (`pasta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela lliure_6.ll_lliure_apps: ~0 rows (aproximadamente)
-/*!40000 ALTER TABLE `ll_lliure_apps` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ll_lliure_apps` ENABLE KEYS */;
 
-
--- Copiando dados para a tabela lliure_6.ll_lliure_start: ~0 rows (aproximadamente)
-/*!40000 ALTER TABLE `ll_lliure_start` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ll_lliure_start` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

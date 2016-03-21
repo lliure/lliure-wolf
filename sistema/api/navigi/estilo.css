@@ -67,8 +67,12 @@ div.listpSelct {
 		width: 32px;
 		height: 32px;
 		vertical-align: middle;
-		display: table-cell;
+		display: table-cell;		
 		}		
+		
+	div.navigi_item span.navigi_ico i.fa{
+		font-size: 32px;
+		}
 		
 	div.navigi_item span.navigi_ico img{
 		vertical-align: middle;

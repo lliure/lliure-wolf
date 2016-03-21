@@ -77,7 +77,7 @@ body{
 		color: #555;	
 		font-size: 1.1em;
 		display: block;
-		font-weight: bold;
+		font-weight: 400;
 		margin: 0 0 0.5em;
 		}
 		
@@ -124,7 +124,7 @@ body{
 			border: 1px solid #008A17;
 			color: #FFFFFF;
 			text-shadow: 0 1px rgba(0, 0, 0, 0.1);
-			font-weight: bold;
+			font-weight: 400;
 			}
 		
 		#login form .botao button:hover{

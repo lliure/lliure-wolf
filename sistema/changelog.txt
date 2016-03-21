@@ -1,6 +1,7 @@
 Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure),  Módulos e API nativas
 
 #### 8.0 Clumber Spaniel (25/02/2016)
+- [update] Navigi trabalhando com Font wearsome (utilizar atributo 'fa' ao invés de 'ico')
 - [update] Descontinuada ferramenta de acesso rápido
 - [update] Criada nova API Vigile para o gerenciamento de alertas
 - [update] Removidos alguns arquivos de font da opt open-sans afim de ficar mais leve o sistema
@@ -18,6 +19,7 @@ Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure),  
 - [update] Atualização na api tinyMCE para versão 4.x
 - [update] Entrada de GET api adicionada ao sistema (?api=nome_da_api)
 - [update] Gerenciamento_de_api movido e renomeado para usr/lliure.php
+- [bug] Correções na opt user
 - [bug] Correções na seleção de charset
 - [bug] Correções na API de fotos
 

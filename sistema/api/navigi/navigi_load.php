@@ -108,7 +108,7 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 					.'permicao="'.$dados['permicao'].'" '
 					.'nome="'.$dados['coluna'].'"> '
 					 
-				.'<span class="navigi_ico"><span><img src="'.$dados['ico'].'" alt="'.$dados['coluna'].'" /></span></span>'
+				.'<span class="navigi_ico"><span>'.(isset($dados['fa']) ? '<i class="fa '.$dados['fa'].'"></i>' : '<img src="'.$dados['ico'].'" alt="'.$dados['coluna'].'" />').'</span></span>'
 				.'<span id="nome_'.$dados['id'].'" class="navigi_nome">'.htmlspecialchars($dados['coluna'], ENT_COMPAT, 'ISO-8859-1', true).'</span>'
 			.'</div>';
 

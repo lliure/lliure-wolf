@@ -29,7 +29,6 @@ require_once('opt/persona/persona.php');
 
 	<body>
 	<div id="login">
-		<img src="<?php echo $tema_path.'login/logo.png'?>" class="logo" alt="lliure" />
 		<?php
 		if(isset($_GET['rt']) && $_GET['rt'] == 'falha')
 			echo '<span class="mensagem">Login e/ou senha incorreto(s). Tente novamente</span>';
@@ -37,6 +36,9 @@ require_once('opt/persona/persona.php');
 		$_SESSION['token'] = uniqid(md5(time()));
 		jf_token('novo');
 		?>
+		
+		<img src="<?php echo $tema_path.'login/logo.png'?>" class="logo" alt="lliure" />
+
 		
 		<div id="loginBox">
 			<form method="post" action="nli.php?r=login" id="form">

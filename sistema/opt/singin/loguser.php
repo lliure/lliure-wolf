@@ -20,7 +20,9 @@ case 'logout':
 	break;
 	
 case 'login':
-	if(isset($_SESSION['logado'])){	
+	//session_destroy(); 	die();
+
+	if(isset($_SESSION['ll']['user'])){	
 		header('location: nli.php?r=rotinas');
 	} elseif(!empty($_POST)){
 		$falha = true;
