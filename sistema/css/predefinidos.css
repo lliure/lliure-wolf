@@ -117,8 +117,8 @@ form.form fieldset{
 		clear: both;
 		}
 		
-		form.form fieldset > div.column,
-		form.form fieldset > div.colunas{
+		form.form fieldset  div.column,
+		form.form fieldset  div.colunas{
 			display: -webkit-flex;
 			display: flex;
 			align-items: flex-start;
