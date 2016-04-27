@@ -74,26 +74,31 @@ class lliure {
 				return false;
 		}
 		
-		$user = mysql_query('select id from '.PREFIXO.'lliure_autenticacao where login = "'.$login.'" limit 1');
-		if(mysql_num_rows($user) > 0){
+		$user = @mysql_query('select id from '.PREFIXO.'lliure_autenticacao where login = "'.$login.'" limit 1');
+		if(@mysql_num_rows($user) > 0){
 			$user = mysql_fetch_array($user);
 			$user = $user['id'];
 		} else{
-			mysql_query('INSERT INTO '.PREFIXO.'lliure_autenticacao (login, nome, cadastro, grupo, tema) VALUES ("'.$login.'", "'.$nome.'", "'.time().'", "'.$grupo.'", "'.$tema.'")');
+			@mysql_query('INSERT INTO '.PREFIXO.'lliure_autenticacao (login, nome, cadastro, grupo, tema) VALUES ("'.$login.'", "'.$nome.'", "'.time().'", "'.$grupo.'", "'.$tema.'")');
 			$user = mysql_insert_id();
 		}
 			
-		
-		$_SESSION['ll']['user'] = array(
-			'id' => $user,
-			'login' => $login,
-			'nome' => $nome,
-			'grupo' => $grupo,
-			'tema' => $tema,
-			'token' => self::token('novo')
-			);
-		
-		mysql_query('UPDATE '.PREFIXO.'lliure_autenticacao SET ultimoacesso="'.time().'" WHERE  id="'.$user.'";');
+		if(isset($user) && !empty($user)) {		
+			$_SESSION['ll']['user'] = array(
+				'id' => $user,
+				'login' => $login,
+				'nome' => $nome,
+				'grupo' => $grupo,
+				'tema' => $tema,
+				'token' => self::token('novo')
+				);
+			
+			mysql_query('UPDATE '.PREFIXO.'lliure_autenticacao SET ultimoacesso="'.time().'" WHERE  id="'.$user.'";');
+			
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	/* Revoga a autenticação do usuário no sistema */

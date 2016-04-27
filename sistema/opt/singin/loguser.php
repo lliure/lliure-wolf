@@ -63,10 +63,17 @@ case 'login':
 			}
 			
 			if(isset($dadosLogin)){
-				lliure::autentica($dadosLogin['login'], $dadosLogin['nome'], $dadosLogin['grupo'], $dadosLogin['themer']);
+				$falha = false;
+				
+				if(lliure::autentica($dadosLogin['login'], $dadosLogin['nome'], $dadosLogin['grupo'], $dadosLogin['themer']) == false){
+					$falha = true;
+					echo 'Erro: Falha na autenticação de usuário. usr lliure::autentica';
+					die();
+				}
+					
 		
 				
-				$falha = false;
+				
 			}
 		}
 	
