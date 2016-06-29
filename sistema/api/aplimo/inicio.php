@@ -53,6 +53,12 @@ Documentação
 	Define os links do sub-menu criado
 	$aplikajo->sub_menu_item('Clientes', 'clientes');
 
+	
+	
+	
+	***********	Exemplo HC Menu
+	
+	$this->hc_menu_item('a', array('url' => $_ll['app']['home'].'&apm=jogo&sapm=estadio', 'texto' => 'Listar todos'));
 */
 
 
@@ -305,12 +311,20 @@ class aplimo{
 		
 		$apm_load  = 'api/aplimo/ne_trovi.php';
 		
-        if(isset($_GET['sapm']) && file_exists(self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/' . $_GET['sapm'] . '.php'))
-			$apm_load = self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/' . $_GET['sapm'] . '.php';
-		elseif(isset($_GET['apm']) && file_exists(self::$basePath . $_GET['apm'] . '/' . $_GET['apm'] . '.php'))
-			$apm_load = self::$basePath . $_GET['apm'] . '/' . $_GET['apm'] . '.php';
-		elseif(!isset($_GET['sapm']) && file_exists(self::$basePath . 'home/home.php'))
+		if(isset($_GET['p']))
+			$page = $_GET['p'];
+		elseif(isset($_GET['sapm']))
+			$page = $_GET['sapm'];
+		else
+			$page = $_GET['apm'];
+		
+        if(isset($_GET['sapm']) && file_exists(self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/' . $page . '.php')){
+			$apm_load = self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/' . $page . '.php';
+		} elseif(isset($_GET['apm']) && file_exists(self::$basePath . $_GET['apm'] . '/' . $page . '.php')) {
+			$apm_load = self::$basePath . $_GET['apm'] . '/' . $page . '.php';
+		} elseif(!isset($_GET['sapm']) && file_exists(self::$basePath . 'home/home.php')){
 			$apm_load = self::$basePath . 'home/home.php';
+		}
 			
 		
 		require_once($apm_load);

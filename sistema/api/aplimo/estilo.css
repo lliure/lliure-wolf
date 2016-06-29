@@ -62,8 +62,9 @@
 		float: left;
 		position: relative;
 		z-index: 100;
-		padding: 10px 20px 20px;
-		border-radius: 0 6px 0 0;		
+		padding: 10px 20px 0;
+		border-radius: 0 6px 0 0;
+		
 		}
 		
 			
@@ -187,6 +188,7 @@
 	
 	.corpo .menu{
 		background: #222222;
+		margin-bottom: -20px;
 		}
 	
 		.corpo .menu .ul{
