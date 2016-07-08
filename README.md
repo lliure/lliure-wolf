@@ -3,7 +3,9 @@ lliure wolf
 
 > 8.0 (Clumber Spaniel)
 
-#### 8.0 Wolf (11/02/2016)
+#### 8.0 Wolf (08/07/2016)
+- [update] recurso de pesquisa adicionado à API navigi
+- [update] Navigi trabalhando com Font wearsome (utilizar atributo 'fa' ao invés de 'ico')
 - [update] Descontinuada ferramenta de acesso rápido
 - [update] Criada nova API Vigile para o gerenciamento de alertas
 - [update] Removidos alguns arquivos de font da opt open-sans afim de ficar mais leve o sistema
