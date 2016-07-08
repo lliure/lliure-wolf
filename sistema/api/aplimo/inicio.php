@@ -67,11 +67,16 @@ class aplimo{
 	var $menu = array();
 	var $h_menu = array();
 	var $smalt = null;
+	var $apm = null;
+	var $sapm = null;
 	var $js = null;
 	private static $basePath = null;
 		
 	function __construct() {
-		global $_ll;		
+		global $_ll;
+		$this->apm = new stdClass;
+		$this->sapm = new stdClass;
+		
 		self::basePath($_ll['app']['pasta']);
 	}
 	
@@ -260,17 +265,17 @@ class aplimo{
 		}
 		
 		if(isset($_GET['apm']) && file_exists(self::$basePath . $_GET['apm'] . '/header.php')) {
-			$this->home = $_ll['app']['home'].'&apm='.$_GET['apm'];
-			$this->onserver = $_ll['app']['onserver'].'&apm='.$_GET['apm'];
-			$this->onclient = $_ll['app']['onclient'].'&apm='.$_GET['apm'];
-				
+			$this->apm->home = $_ll['app']['home'].'&apm='.$_GET['apm'];
+			$this->apm->onserver = $_ll['app']['onserver'].'&apm='.$_GET['apm'];
+			$this->apm->onclient = $_ll['app']['onclient'].'&apm='.$_GET['apm'];				
+			
 			require_once(self::$basePath . $_GET['apm'] . '/header.php');
 		}
 		
 		if(isset($_GET['sapm']) && file_exists(self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/header.php')){
-			$this->home = $_ll['app']['home'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
-			$this->onserver = $_ll['app']['onserver'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
-			$this->onclient = $_ll['app']['home'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
+			$this->sapm->home = $_ll['app']['home'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
+			$this->sapm->onserver = $_ll['app']['onserver'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
+			$this->sapm->onclient = $_ll['app']['home'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
 			
 			
 			require_once(self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/header.php');	
