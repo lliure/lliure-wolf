@@ -1,0 +1,84 @@
+div.mesquerda{
+		border: 1px solid #FCB900;
+		border-top: 7px solid #FCB900;
+		float: left;
+		width: 15%;
+		background: #FCB900;
+		}	
+
+	div.mesquerda ul li {
+		display: block;
+		}
+		
+	div.mesquerda ul li a{
+		padding: 2px 0 2px 9px;
+		margin: 0 0 1px 0;
+		font-size: 12px;
+		background: #eee;
+		display: block;
+		color: #444;
+		}
+		
+	div.mesquerda ul li a:hover{
+		background: #ddd;
+		}
+		
+div.Pcentro{
+		border: 4px solid #fff;
+		border-top: 7px solid #fff;
+		background: #fff;
+		float: right;
+		width: 80%;
+		}
+		
+td.edtdel{
+		text-align: center;
+		}
+		
+	/******************	CATEGORIA	******************/
+
+label.catbox input{
+		clear: both;
+		} 
+
+label.catbox input{
+		width: 10px;
+		float: left;
+		}
+		
+label.catbox span{
+		width: 350px;
+		float: right;
+		margin: 2px 0 1px 0;
+		}
+	/******************	RODADAS	******************/	
+select.data{
+		width: 45px;
+		}
+		
+select.datag{
+		width: 60px;
+		}
+		
+form{	width: 370px;
+		}
+label {	margin: 0 0 4px 0;
+		font-weight: bold;
+		}
+	
+label span{
+		margin: 4px 0 2px 0;
+		font-weight: 100;
+		width: 100px;
+		}
+		
+input, textarea{
+		width: 300px;
+		font-size: 11px;
+		}
+
+select{	width: 360px;	
+		}		
+
+button{	float: left;
+		}

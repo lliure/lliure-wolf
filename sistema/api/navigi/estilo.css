@@ -110,8 +110,12 @@ table.navigi_list{
 		}
 		
 		tr.navigi_tr .fa{
-			font-size: 1.6em;
+			font-size: 1.5em;
 			}
+			
+			tr.navigi_tr a{
+				color: #000;
+				}
 			
 	table.navigi_list tr td .navigi_nome{
 		position: relative;		
@@ -152,6 +156,29 @@ table.navigi_list{
 				}
 
 				
+/******		PESQUISA	*******/
+#nvg_pesquisa{
+	margin-bottom: 20px;
+	}
+	
+	#nvg_pesquisa form{
+		display: flex;
+		}
+		
+		#nvg_pesquisa form input{
+			height: 30px;
+			order: 1;
+			}
+			
+		#nvg_pesquisa form button{
+			height: 30px;
+			order: 2;
+			float: none;
+			margin-left: 3px;
+			}
+
+
+
 /******		paginacao	*******/
 #nvg_paginacao{
 			float: left;

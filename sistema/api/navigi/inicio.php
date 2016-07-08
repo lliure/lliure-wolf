@@ -103,6 +103,14 @@
 	//2 utilize um array com o arg 0 com o nome e o arg 1 com a medida da coluna caso necessário
 		ex: 'usuario' => array('nome','50px');
 
+# Pesquisa
+	para instanciar uma pesquisa utilize
+	$navigi->pesquisa = 'Id:int,Numero:str';
+	
+	por padrao todos são strings
+	$navigi->pesquisa = 'Id,Numero';
+		
+		
 #	Exemplo de utilização simples *************
 	
 	$navigi = new navigi();
@@ -122,7 +130,8 @@ class navigi{
 	/** query em mysql */
 	var $query;
 	
-	/*apagar var $pasta; */
+	/** pesquisa query em mysql */
+	var $pesquisa = false;	
 	
 	/** tabela da consulta */
 	var $tabela;
@@ -162,6 +171,48 @@ class navigi{
 			$this->configSel = $this->config['campo'];
 			unset($this->config['campo']);
 		}
+		
+		if($this->pesquisa != false && isset($_GET['pesquisa']) && !empty($_GET['pesquisa'])){
+			$termos = explode(' ', $_GET['pesquisa']);
+			
+			// fitra os valores vazios
+			foreach($termos as $chave => $valor)
+				if(!empty($valor))
+					$busca[] = $valor;
+			
+			$pesCam = explode(',', $this->pesquisa);
+			foreach($pesCam as $key => $value){
+				$pesCam[$key] = explode(':', $value);
+				
+				if(!isset($pesCam[$key][1]))
+					$pesCam[$key][1] = 'str';
+			}
+			
+			
+			$query = '(';			
+			foreach($busca as $chave => $valor){
+				$query .= ($chave != 0?' and':'').' (';
+				
+				foreach($pesCam as $key => $campo){
+					$query .= ($key != 0?' or':'');
+					
+					switch($campo[1]){
+					case 'str':
+						$query .= ' '.$campo[0].' like "%'.$valor.'%"';
+						break;
+					case 'int':
+						$query .= ' '.$campo[0].' = "'.$valor.'"';
+						break;
+					}
+				}				
+				$query .= ')';
+			}
+			$query .= ')';
+			
+			
+			if(strpos($this->query, 'where') !== false)
+				$this->query = 'select * from ('.$this->query.') as qry where '.$query;
+		}
 				
 		if($this->paginacao != false){
 			$pAtual = 1;
@@ -179,7 +230,7 @@ class navigi{
 				
 			$tPaginas = ceil($tReg / $this->paginacao);
 				
-			$this->query = $this->query.' limit '.$inicio.','.$this->paginacao;
+			$this->query = $this->query . ' limit ' . $inicio . ',' . $this->paginacao;
 			
 			$url = jf_monta_link($_GET, 'nvg_pg');
 			$this->paginacao = array('pAtual' => $pAtual,'tPaginas' => $tPaginas, 'tReg' => $tReg, 'url' => $url);
@@ -254,10 +305,15 @@ class navigi{
 		
 		$encriptado = jf_encode($_ll['user']['token'], $navigi);		
 	
-		if(!$echo)
+		if(!$echo){
+			if($this->pesquisa != false){
+				echo '<div id="nvg_pesquisa"><form action="onserver.php?api=navigi&ac=pesquisa" method="post"><input name="url" value="'.jf_monta_link($_GET, array('nvg_pg', 'pesquisa')).'" type="hidden"><input placeholder="Pesquisar" name="pesquisa" value="'.(isset($_GET['pesquisa']) ? $_GET['pesquisa'] : '').'" /> <button type="submit" class="aplm_botao">Buscar</button> </form></div>';
+			}
+			
 			echo '<div id="navigi" token="'.$encriptado.'"></div>';
-		else
+		} else {
 			return '<div id="navigi" token="'.$encriptado.'"></div>';
+		}
 	}
 }
 
