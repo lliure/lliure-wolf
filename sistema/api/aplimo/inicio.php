@@ -1,5 +1,4 @@
 <?php
-
 /**
 *
 * API Aplimo - lliure
@@ -10,6 +9,10 @@
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
+
+ll::add('api/aplimo/estilo.css', 'css');
+ll::add('api/aplimo/script.js', 'js');
+
 
 /* 
 
@@ -67,16 +70,11 @@ class aplimo{
 	var $menu = array();
 	var $h_menu = array();
 	var $smalt = null;
-	var $apm = null;
-	var $sapm = null;
 	var $js = null;
 	private static $basePath = null;
 		
 	function __construct() {
-		global $_ll;
-		$this->apm = new stdClass;
-		$this->sapm = new stdClass;
-		
+		global $_ll;		
 		self::basePath($_ll['app']['pasta']);
 	}
 	
@@ -265,17 +263,17 @@ class aplimo{
 		}
 		
 		if(isset($_GET['apm']) && file_exists(self::$basePath . $_GET['apm'] . '/header.php')) {
-			$this->apm->home = $_ll['app']['home'].'&apm='.$_GET['apm'];
-			$this->apm->onserver = $_ll['app']['onserver'].'&apm='.$_GET['apm'];
-			$this->apm->onclient = $_ll['app']['onclient'].'&apm='.$_GET['apm'];				
-			
+			$this->home = $_ll['app']['home'].'&apm='.$_GET['apm'];
+			$this->onserver = $_ll['app']['onserver'].'&apm='.$_GET['apm'];
+			$this->onclient = $_ll['app']['onclient'].'&apm='.$_GET['apm'];
+				
 			require_once(self::$basePath . $_GET['apm'] . '/header.php');
 		}
 		
 		if(isset($_GET['sapm']) && file_exists(self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/header.php')){
-			$this->sapm->home = $_ll['app']['home'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
-			$this->sapm->onserver = $_ll['app']['onserver'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
-			$this->sapm->onclient = $_ll['app']['home'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
+			$this->home = $_ll['app']['home'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
+			$this->onserver = $_ll['app']['onserver'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
+			$this->onclient = $_ll['app']['home'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
 			
 			
 			require_once(self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/header.php');	
@@ -402,7 +400,7 @@ class aplimo{
 		</div>
 		
 		
-		<script src="js/jquery.jf_inputext.js" type="text/javascript" /></script>
+		<script src="js/jquery.prod-novo-impostoext.js" type="text/javascript" /></script>
 		<script>		
 			$('.menu ul li span').click(function(){	
 				var box = $(this).closest('li').find('ul');

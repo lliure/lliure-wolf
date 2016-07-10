@@ -11,11 +11,10 @@
 * @revisao 16/07/2014 Rodrigo Dechen: colocaçao de Type Casting nas configurações de host de disparo
 */
 
-require_once("class.phpmailer.php");
+require_once("PHPMailerAutoload.php");
 
-if(!defined('ll_dir')){
+if(!defined('ll_dir'))
 	define("ll_dir", (realpath(dirname(__FILE__). DIRECTORY_SEPARATOR. '..'. DIRECTORY_SEPARATOR. '..'. DIRECTORY_SEPARATOR). DIRECTORY_SEPARATOR));
-}
 
 function limpaMail($in){
 	if(strstr($in, '<')){

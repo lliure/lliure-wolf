@@ -10,6 +10,8 @@
 *
 */
 
+lliure::add('api/navigi/estilo.css', 'css');
+lliure::add('api/navigi/script.js', 'js');
 
 /*	***	Documentação da função ***
 	
