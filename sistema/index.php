@@ -256,7 +256,7 @@ if($_ll['mode_operacion'] == 'normal'){
 	lliure::add('opt/font-awesome/css/font-awesome.min.css');
 
 	if(isset($_ll[$get[0]]['pasta'])  && file_exists($_ll[$get[0]]['pasta'].'estilo.css'))
-		lliure::add($_ll[$get[0]]['pasta'].'estilo.css', 20);
+		lliure::add($_ll[$get[0]]['pasta'].'estilo.css', 'css', 20);
 
 	lliure::inicia('appbar');
 	lliure::inicia('fileup');
