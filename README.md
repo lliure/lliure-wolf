@@ -73,7 +73,7 @@ No lliure você encontra algumas partes são elas *usr*, *opt*, *api* e *app*
 ## ChangeLog 
 *8.x (Clumber Spaniel)*
 
-```php
+```txt
 #### 8.0 Clumber Spaniel (09/07/2016)
 - [update] metodo lliure::add reformulado para que cada parametro seja designado para o que foi pensado
 - [update] metodo lliure::add agora ganhou um 4º parametro referente a dependência do script
