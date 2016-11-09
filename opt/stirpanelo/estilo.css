@@ -1,0 +1,66 @@
+.painelCtrl{
+
+}
+
+.painelCtrl .bloco{
+    clear: both;
+    margin-bottom: 20px;
+    float: left;
+}
+
+div.listp {
+    padding: 4px;
+    margin-right: 4px;
+    z-index: 10;
+    position: relative;
+    float: left;
+    border-radius: 7px;
+}
+
+div.listp:hover{
+    background: #e7e7e7;
+}
+
+div.listp .inter{
+    width: 93px;
+    height: 67px;
+    float: left;
+    text-align: center;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+div.listp .inter span{
+    display: block;
+    margin: 5px 0 0 0;
+    height: 27px;
+    overflow: hidden;
+    line-height: 13px;
+}
+
+div.listp .inter input{
+    width: 92px;
+    padding: 3px 0;
+    background: #f5f5f5;
+    border: none;
+    font-size: inherit;
+    color: #555;
+}
+
+div.listp .inter .install-icone{
+    position: relative;
+    display: inline-block;
+}
+
+div.listp .inter .install-icone i{
+    font-size: 32px;
+    color: #eec56e;
+}
+
+div.listp .inter .install-icone img{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 55%;
+    height: 55%;
+}

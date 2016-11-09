@@ -1,6 +1,6 @@
 <?php
 require_once('../../etc/bdconf.php');
-require_once('../../includes/jf.funcoes.php');
+require_once('../../usr/stuff/jf.funcoes.php');
 
 if (!empty($_FILES)) {
 	$targetPath = '../../../'.  strstr($_REQUEST['folder'], 'uploads/') . '/';

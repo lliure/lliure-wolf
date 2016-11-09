@@ -2,10 +2,10 @@
 *
 * API navigi - lliure
 *
-* @Versão 6.0
+* @VersÃ£o 6.0
 * @Pacote lliure
 * @Entre em contato com o desenvolvedor <jomadee@glliure.com.br> http://www.lliure.com.br/
-* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
+* @LicenÃ§a http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
@@ -22,10 +22,9 @@ function navigi_start(){
 	$('#navigi').html('<span class="load"><img src="api/navigi/img/load.gif" alt=""/></span>');
 	
 	navigi_token = $('#navigi').attr('token');
-	$('#navigi').load('api/navigi/navigi_load.php',{token: navigi_token},function(){
-			$('#navigi').navigi();
-		}
-	);
+	$('#navigi').load('onclient.php?api=navigi',{token: navigi_token},function(){
+		$('#navigi').navigi();
+	});
 }
 
 navigi_selecionado = null;
@@ -81,9 +80,9 @@ jQuery.fn.extend({
 			click: function(event){
 				var href = $(this).attr('href');
 				var tamanho = $(this).attr('rel');				
-				tamanho = tamanho.split("x")
+				tamanho = tamanho.split("x");
 				
-				$().jfbox({carrega: href, width: tamanho[0], height: tamanho[1]});
+				jfBox({url: href, width: tamanho[0], height: tamanho[1]}).open();
 				return false;
 			}
 		});
@@ -184,7 +183,7 @@ $('html').jfkey('esc', function(){
 });
 
 
-/***************************************			FUNÇÕES			***************************************/
+/***************************************			FUNÃ‡Ã•ES			***************************************/
 
 function navigi_limpAllEvent(){
 	if(navigi_selecionado != null){
@@ -209,9 +208,9 @@ function navigi_apaga(id){
 				jfAlert('Registro excluido com sucesso!', 0.7);
 				$('#'+id).remove();
 			} else if(e == 403)
-				jfAlert('Você não tem permissão para excluir esse registro!', 2);
+				jfAlert('VocÃª nÃ£o tem permissÃ£o para excluir esse registro!', 2);
 			else if(e == 412)
-				jfAlert('Não foi possível excluir esse registro!', 2);
+				jfAlert('NÃ£o foi possÃ­vel excluir esse registro!', 2);
 			else
 				alert(e);
 				
@@ -233,7 +232,7 @@ function navigi_rename(id, texto, seletor){
 			$('#'+id).find('.navigi_nome').html(texto);
 			$('#'+id).attr({nome: texto});			
 		} else if(e == 403)
-				jfAlert('Você não tem permissão para alterar esse registro!', 2);
+				jfAlert('VocÃª nÃ£o tem permissÃ£o para alterar esse registro!', 2);
 			else
 				alert(e);
 	});

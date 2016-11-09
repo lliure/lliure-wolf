@@ -1,383 +1,378 @@
 <?php
 /**
-*
-* Inicia��o do lliure
-*
-* @Vers�o do lliure 8.0
-* @Pacote lliure
-*
-* Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
-* Licen�a http://opensource.org/licenses/gpl-license.php GNU Public License
-*
-*/
-header('Content-Type: text/html; charset=iso-8859-1');
+ * Iniciação do lliure
+ *
+ * @Versão do lliure 8.0
+ * @Pacote lliure
+ *
+ * Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
+ * Licença http://opensource.org/licenses/gpl-license.php GNU Public License
+ */
 
-if(!file_exists("etc/bdconf.php"))
-	header('location: opt/install/index.php');
+//echo '<pre>'. print_r($_SERVER, true). '</pre>'; // die();
+//header('Content-Type: text/html; charset=iso-8859-1');
+//if(!file_exists("etc/bdconf.php")) header('location: opt/install/index.php');
 
-require_once("etc/bdconf.php");
+/** verifica o status de instalação e carrega bdconf se existir */
+if(!($ll_install =! file_exists($f = realpath(dirname(__FILE__). '/etc/bdconf.php'))) == true) require_once $f;
+require_once("usr/stuff/functions.php");
 require_once("usr/lliure.php");
-require_once("includes/functions.php");
+require_once('usr/stuff/carrega_conf.php');
 
-/* Identifica o diret�rio atual do sistema */
-ll_dir();
 
-if(!lliure::autentica()) {
-	$_SESSION['ll_url'] = jf_monta_link($_GET);
-	header('location: nli.php');
+/** Define as bases da url */
+$_ll['url']['local']     = ($_SERVER['HTTP_HOST'] . '/');
+$_ll['url']['host']      = (isset($_SERVER['REQUEST_SCHEME'])? $_SERVER['REQUEST_SCHEME']: (isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS'])? 'https' : 'http')). '://';
+$_ll['url']['path']      = (trim(dirname($_SERVER['PHP_SELF']), '\\/'));
+$_ll['url']['path']     .= (!empty($_ll['url']['path'])? '/': '');
+$_ll['url']['request']   = (ltrim($_SERVER['REQUEST_URI'], '\\/'));
+$_ll['url']['request']   = (explode('?', $_ll['url']['request'], 2));
+$_ll['url']['get']       = ( isset($_ll['url']['request'][1])? '?'. $_ll['url']['request'][1]: '');
+$_ll['url']['request']   = (!empty($_ll['url']['request'][0])?      $_ll['url']['request'][0]: '');
+
+$_ll['url']['request']   = (!empty($_ll['url']['request'])? explode('/', $_ll['url']['request']): array());
+$_ll['url']['query'] 	 = array_splice($_ll['url']['request'], (count((!empty($_ll['url']['path'])? explode('/', trim($_ll['url']['path'], '\\/')): array()))));
+
+$_ll['url']['request']   = implode('/', $_ll['url']['request']);
+$_ll['url']['get'] 	 	 = implode('/', $_ll['url']['query']) . $_ll['url']['get'];
+$_ll['url']['endereco']  = $_ll['url']['host'];
+$_ll['url']['host']     .= $_ll['url']['local'];
+$_ll['url']['real']      = $_ll['url']['host']. $_ll['url']['path'];
+$_ll['url']['local']    .= (!empty($_ll['url']['request'])? $_ll['url']['request']. '/': '');
+$_ll['url']['endereco'] .= $_ll['url']['local'];
+$_ll['url']['full']      = $_ll['url']['endereco']. $_ll['url']['get'];
+
+
+/** quando carregando o sistema, retorna os scripts carregados e os dados precessados de url. */
+if(!($_ll['insystem'] = (dirname(realpath($_SERVER["SCRIPT_FILENAME"])) == dirname(realpath(__FILE__))))) return $_ll;
+
+
+/** configura o charset do sitema */
+header('Content-Type: text/html; charset=UTF-8');
+
+
+/** Define a base para selecionar o app */
+$_ll['enter_mode']      = (isset($_ll['enter_mode'])? $_ll['enter_mode']: 'wli');
+$_ll['operation_mode']  = (isset($_ll['operation_mode'])? $_ll['operation_mode']: 'x');
+$_ll['operation_type']  = FALSE;
+$_ll['operation_load']  = FALSE;
+$_ll['operation_types'] = array('opt', 'api', 'app');
+$_ll['ling'] = ll_ling();
+$_ll['install'] = false;
+$_ll['titulo'] = 'lliure Wap';
+
+
+/** Inicia a seção do sistema */
+ll::usr('sessionfix');
+
+
+/** Define o tema do sistema */
+ll::usr('persona');
+
+
+$arrURL = $_ll['url']['query'];
+$UA = (isset($_ll['tema']['exec']) && $_ll['tema']['exec'] == URL_AMIGAVEL);
+if($UA) for ($i = 0; $i <= count($arrURL) -1; $i++){
+
+	// monta os get quando uma chave foi configurada
+	if(strpos($arrURL[$i], '=') !== false){
+		$va = explode('=', $arrURL[$i], 2);
+		$_GET[$va[0]] = $va[1];
+
+		// monta os gets a partir de suas posisoes
+	} else
+		$_GET[$i] = $arrURL[$i]; //monta os get
+
+// carrega o $_GET no $arrURL
+} $arrURL = $_GET;
+
+
+/** Define o enter mode */
+foreach ($arrURL as $k => $v){
+	if(!($k === 'nli' || $v === 'nli')) continue;
+	$_ll['enter_mode'] = 'nli';
+	unset($arrURL[$k]); break;
 }
 
-$_ll['user'] = $_SESSION['ll']['user'];
 
+if ($_ll['operation_type'] === false){
+	foreach ($arrURL as $k => $v){
 
-require_once('includes/carrega_conf.php');
+		if(!(($c = array_search($k, $_ll['operation_types'], true)) !== false
+		||  (($c = array_search($v, $_ll['operation_types'], true)) !== false)))
+			continue;
 
-if(!isset($_ll['mode_operacion']))
-	$_ll['mode_operacion'] = 'normal';
-
-
-if(!isset($_ll['conf']->grupo->{$_ll['user']['grupo']}->execucao)){
-	$_ll['conf']->grupo = new stdClass;
-	$_ll['conf']->grupo->$_ll['user']['grupo'] = new stdClass;
-	$_ll['conf']->grupo->{$_ll['user']['grupo']}->execucao = URL_NORMAL;
-}
-
-/******************************************************		TRATAM URL	*/
-$uArray = $_SERVER['REQUEST_URI'];
-$_ll['url']['endereco'] = (isset($_SERVER['HTTPS']) ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST'];
-$_ll['url']['real'] = $_ll['url']['endereco'].str_replace(array('onserver.php', 'onclient.php', 'index.php'), '', $_SERVER['PHP_SELF']);
-
-$_ll['url']['endereco'] = explode("/", $_ll['url']['endereco'].$uArray);
-
-$uArray = explode("/", $uArray);
-$nReal = explode('/', $_ll['url']['real']);
-
-$uArray = array_slice($uArray, count($nReal)-3);
-
-$_ll['url']['endereco'] = array_slice($_ll['url']['endereco'], 0, count($uArray) * -1);
-$_ll['url']['endereco'] = implode('/', $_ll['url']['endereco']).'/';
-
-if($_ll['conf']->grupo->{$_ll['user']['grupo']}->execucao == URL_AMIGAVEL){
-	for ($i = 0; $i <= count($uArray)-1; $i++) {
-		if(strpos($uArray[$i], '=') != false){
-			$va = explode('=', $uArray[$i]);
-			$_GET[$va[0]] = $va[1]; //monta os get
-		} else {
-			$_GET[$i] = $uArray[$i]; //monta os get
-		}
+		if($_ll['operation_types'][$c] === $k) $_ll['operation_load'] = $v;
+		$_ll['operation_type'] = $_ll['operation_types'][$c];
+		//unset($arrURL[$k]); break;
 	}
 }
 
-if(!empty($uArray))
-	$_ll['url']['get'] = implode('/', $uArray);
 
-if($_ll['mode_operacion'] == 'normal' && ($url = ll_gourl($_ll['url']['get'], $_ll['conf']->grupo->{$_ll['user']['grupo']}->execucao)) && $url !== false)
-	header('location: '.$_ll['url']['endereco'].$url);
+/** define o modo de operação do sistema [onserver, onclient]; */
+foreach ($arrURL as $k => $v){
+	if(!($k === 'onclient' || $v === 'onclient')) continue;
+	$_ll['operation_mode'] = 'oc';
+	unset($arrURL[$k]); break;}
 
-/******************************************************							*/
+foreach ($arrURL as $k => $v){
+	if(!($k === 'onserver' || $v === 'onserver')) continue;
+	$_ll['operation_mode'] = 'os';
+	unset($arrURL[$k]); break;}
 
-$_ll['css'] = array();
-$_ll['js'] = array();
 
-$_ll['ling'] = ll_ling();
+// Isso tem de ser revisto.
+/** Define o operation_load se ainda não existir */
+//if($_ll['operation_load'] === false)
+//	$_ll['operation_load'] = array_shift($arrURL);
 
-require_once 'includes/api.inc.php';
 
-$_ll['app']['header'] = null;
-$_ll['app']['pagina'] = "opt/mensagens/permissao.php";
+/** caso esteja no modo de inatalação, mas a url não seja a de instalação, redireciona para ela. */
+if($ll_install && !($_ll['operation_type'] == 'opt' && $_ll['operation_load'] == 'install')){
+	$_SESSION['ll']['retorno'] = $_ll['url']['full'];
+	header('location: nli.php?opt=install');}
 
-$_ll['titulo'] = 'lliure Wap';
 
+/** Muda a url a partir do modo de execução */
+if(!$ll_install && $_ll['operation_mode'] == 'x' && (($url = ll_gourl($_ll['url']['get'], $_ll['tema']['exec'])) !== false))
+	header('location: '.$_ll['url']['endereco']. $url);
+
+
+
+// volta o $arrURL para $_GET
+$_GET = $arrURL;
+
+
+
+//echo '<pre>'. print_r($_ll, true). '</pre>';
+//echo '<pre>'. print_r($_GET, true). '</pre>';
+//echo '<pre>'. print_r($arrURL, true). '</pre>';
+//echo '<pre>'. ll_gourl($_ll['url']['get'], $_ll['tema']['exec']). '</pre>'; die();
+
+
+if($_ll['enter_mode'] == 'wli'){
+	if(!lliure::autentica()){
+		$_SESSION['ll']['retorno'] = $_ll['url']['full'];
+		header('location: nli.php');
+	}
+} else {
+	if (!isset($_SESSION['ll']['user']) || empty($_SESSION['ll']['user'])){
+		ll::usr('token');
+		$_SESSION['ll']['user'] = array(
+			'id' => null,
+			'login' => null,
+			'nome' => 'Anonimo',
+			'grupo' => 'nli',
+			'tema' => $_ll['tema']['name'],
+			'token' => Token::create()
+		);
+	}
+}
+$_ll['user'] = &$_SESSION['ll']['user'];
+
+
+
+$_ll['desktop'] = false;
 $get = array_keys($_GET);
 
-if(!isset($_GET['app']) && !isset($_GET['opt']) && isset($_ll['conf']->grupo->{$_ll['user']['grupo']}->desktop)){
-	$desk = explode('=', $_ll['conf']->grupo->{$_ll['user']['grupo']}->desktop);
-	$get[0] = 'desk';
-	$desk['app'] = $desk[1];
+//if(!isset($_GET['app']) && !isset($_GET['api']) && !isset($_GET['opt'])){
+if($_ll['operation_load'] === false){
+
+	$desk = explode('=', $_ll['tema']['home_wli']);
+	if($_ll['enter_mode'] == 'nli')
+		$desk = explode('=', $_ll['tema']['home_nli']);
+
+	if(isset($_ll['conf']->grupo->{$_ll['user']['grupo']}->desktop))
+		$desk = explode('=', $_ll['conf']->grupo->{$_ll['user']['grupo']}->desktop);
+
+	$_GET[$desk[0]] = $desk[1];
+	$get[0] = $desk[0];
+
+	$_ll['desktop'] = true;
+	$_ll['operation_type'] = $desk[0];
+	$_ll['operation_load'] = $desk[1];
 }
 
-switch(isset($get[0]) ? $get[0] : 'desk' ){
-	case 'desk':
-		$get[0] = 'app';
 
-		$_ll['app']['pagina'] = "opt/desktop/desktop.php";
-		$_ll['app']['header'] = 'opt/desktop/desktop.header.php';
+//////////////////////////////////////////////////////////////////////////////////////
+///////////////////			Seguramça (isso vai mudar)		//////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+/* $ll_segok = false;
 
+if($_ll['enter_mode'] == 'nli')
+	$ll_segok = true;
 
-		if(isset($desk['app'])){
-			$_GET['app'] = $desk['app'];
-		} else {
-			break;
-		}
+elseif (ll_tsecuryt())
+	$ll_segok = true;
 
-	case 'app':
-		if(!empty($_GET['app'])
-			&& (file_exists('app/'.$_GET['app']))){
+elseif (($config = @simplexml_load_file($_ll['operation_type']. '/'. $_ll['operation_load']. '/sys/config.ll')) === false)
+	$ll_segok = true;
 
-			$urlApp = '?app='.$_GET['app'];
-			if(isset($desk))
-				$urlApp = '?';
+elseif ($config->seguranca == 'public')
+	$ll_segok = true;
 
-			$_ll['app']['home'] = $_ll['url']['endereco'].'index.php'.$urlApp;
-			$_ll['app']['onserver'] = $_ll['url']['endereco'].'onserver.php'.$urlApp;
-			$_ll['app']['onclient'] = $_ll['url']['endereco'].'onclient.php'.$urlApp;
-			$_ll['app']['pasta'] = 'app/'.$_GET['app'].'/';
+elseif ((ll_securyt($_GET['app']) == true) || (ll_tsecuryt($config->seguranca)))
+	$ll_segok = true;
 
-			$_ll['app']['sen_html'] = $_ll['app']['onclient'];
-			$llAppHome = $_ll['app']['home'];
-			$llAppOnServer = $_ll['app']['onserver'];
-			$llAppSenHtml = $_ll['app']['onclient'];
-			$llAppPasta = $_ll['app']['pasta'];
+if (!$ll_segok){
+	$_ll['operation_type'] = 'opt';
+	$_ll['operation_load'] = 'mensagens';
+} */
 
-			/**		Controle de abertura de p�ginas		**/
-			switch($_ll['mode_operacion']){
-
-			case 'onserver':
-				$_ll['app']['pagina'] = $_ll['app']['pasta'].'onserver.php';
-				$_ll['app']['header'] = $_ll['app']['pasta'].'header.php';
-				break;
-
-			case 'onclient':
-			case 'sen_html':
-				$_ll['app']['pagina'] = $_ll['app']['pasta'].'onclient.php';
-
-				/*{*/
-				if(!file_exists($_ll['app']['pagina']))
-					$_ll['app']['pagina'] = $_ll['app']['pasta'].'sen_html.php';
-				/*}*/
-
-				$_ll['app']['header'] = $_ll['app']['pasta'].'header.php';
-				break;
-
-			case 'normal':
-				$ll_segok = false;
-
-				if(ll_tsecuryt() == false){
-					if(($config = @simplexml_load_file($_ll['app']['pasta'].'/sys/config.ll')) !== false){
-						if($config->seguranca != 'public' && ((ll_securyt($_GET['app']) == true) || (ll_tsecuryt($config->seguranca))))
-							$ll_segok = true;
-						elseif($config->seguranca == 'public')
-							$ll_segok = true;
-
-					} else {
-						$ll_segok = true;
-					}
-				} else {
-					$ll_segok = true;
-				}
-
-				if($ll_segok){
-					$_ll['app']['pagina'] = $_ll['app']['pasta'].'start.php';
-
-					$_ll['app']['header'] = $_ll['app']['pasta'].'header.php';
-				}
-
-				break;
-			}
-
-		} elseif(ll_tsecuryt('admin')) {
-			$_ll['app']['pagina'] = "opt/stirpanelo/ne_trovi.php";
-		}
-		break;
+if($_ll['enter_mode'] != 'nli') ll::usr('liberacao');
+if(!($_ll['liberado'] = ($_ll['enter_mode'] == 'nli' || Liberacao::test($_ll['operation_type'], $_ll['operation_load'])))){
+	$_ll['desktop'] = false;
+	$_ll['operation_type'] = 'opt';
+	$_ll['operation_load'] = 'mensagens';
+	$_ll['mensagens'] = 'detido';}
+//////////////////////////////////////////////////////////////////////////////////////
 
 
-	case 'painel':
-		$get[0] = 'opt';
-		$_GET[$get[0]] = 'stirpanelo';
-
-	case 'opt':
-	case 'api':
-
-		if(!empty($_GET[$get[0]])
-			&& (file_exists($get[0].'/'.$_GET[$get[0]]))){
-
-			$_ll[$get[0]]['home'] = 'index.php?'.$get[0].'='.$_GET[$get[0]];
-			$_ll[$get[0]]['onserver'] = 'onserver.php?'.$get[0].'='.$_GET[$get[0]];
-			$_ll[$get[0]]['onclient'] = 'onclient.php?'.$get[0].'='.$_GET[$get[0]];
-			$_ll[$get[0]]['pasta'] = $get[0].'/'.$_GET[$get[0]].'/';
 
 
-			/**		Controle de abertura de p�ginas		**/
-			$_ll[$get[0]]['header'] = $_ll[$get[0]]['pasta'].'header.php';
-
-			switch($_ll['mode_operacion']){
-
-			case 'onserver':
-				$_ll[$get[0]]['pagina'] = $_ll[$get[0]]['pasta'].'onserver.php';
-				break;
-
-			case 'onclient':
-				$_ll[$get[0]]['pagina'] = $_ll[$get[0]]['pasta'].'onclient.php';
-				break;
-
-			case 'normal':
-				$ll_segok = true;
-
-				if($ll_segok){
-					$_ll[$get[0]]['pagina'] = $_ll['opt']['pasta'].'start.php';
-				}
-				break;
-			}
-
-		} else {
-			$get[0] = 'opt';
-			$_GET[$get[0]] = 'stirpanelo';
-		}
-
-		break;
+/** carrega as configuração do app */
+ll::confg_app($_ll['operation_type'], $_ll['operation_load'], true);
 
 
-	default:
-		$get[0] = 'app';
-		break;
-}
-/*****/
+/* Define os dados do APP da requisição */
+$k = '?'. $_ll['operation_type']. '='. $_ll['operation_load'];
 
-if($_ll['mode_operacion'] == 'normal'){
+/** entradas padrões para wli */
+$_ll[$_ll['operation_type']]['home'] = $_ll['url']['endereco']. $k;
+$_ll[$_ll['operation_type']]['onserver'] = $_ll['url']['endereco']. 'onserver.php'. $k;
+$_ll[$_ll['operation_type']]['onclient'] = $_ll['url']['endereco']. 'onclient.php'. $k;
+//script para retro compatibilidade. retirar no 9{
+//$_ll[$_ll['operation_type']]['sen_html'] = $_ll['url']['endereco']. 'sen_html.php'. $k;
+//}
+$_ll[$_ll['operation_type']]['pasta'] = $_ll['operation_type']. '/'. $_ll['operation_load']. '/';
 
-	lliure::add('js/jquery.js');
-	lliure::add('api/tinymce/tinymce.min.js');
-	lliure::add('js/jquery-ui.js');
-	lliure::add('js/funcoes.js');
-	lliure::add('js/jquery.jfkey.js');
-	lliure::add('js/jquery.easing.js');
+/** entradas padrões para nli */
+$_ll[$_ll['operation_type']]['nli']['home'] = $_ll['url']['endereco']. 'nli.php'. $k;
+$_ll[$_ll['operation_type']]['nli']['onserver'] = $_ll['url']['endereco']. 'nli.os.php'. $k;
+$_ll[$_ll['operation_type']]['nli']['onclient'] = $_ll['url']['endereco']. 'nli.oc.php'. $k;
 
-	lliure::add('css/base.css');
-	lliure::add('opt/open-sans/open-sans.css');
+//script para retro compatibilidade. retirar no 9{
+//$_ll[$_ll['operation_type']]['nli']['sen_html'] = $_ll['url']['endereco']. 'nli.oc.php'. $k;
+//}
 
-	lliure::add('css/principal.css');
-
-	lliure::add($_ll['user']['tema']['path'].'estilo.css');
-
-	lliure::add('css/paginas.css');
-	lliure::add('css/predefinidos.css');
+$_ll[$_ll['operation_type']]['nli']['pasta'] = $_ll['operation_type']. '/'. $_ll['operation_load']. '/nli/';
 
 
-	lliure::add('opt/font-awesome/css/font-awesome.min.css');
+$_ll[$_ll['operation_type']]['header'] = array(
+	$_ll[$_ll['operation_type']]['pasta']. (($_ll['enter_mode'] == 'nli')? 'nli/': ''). ($_ll['operation_load']). ('.hd.php'),
+	$_ll[$_ll['operation_type']]['pasta']. (($_ll['enter_mode'] == 'nli')? 'nli/': ''). ('header.php')
+);
 
-	if(isset($_ll[$get[0]]['pasta'])  && file_exists($_ll[$get[0]]['pasta'].'estilo.css'))
-		lliure::add($_ll[$get[0]]['pasta'].'estilo.css', 'css', 20);
+$_ll[$_ll['operation_type']]['pagina'] = array(
+	$_ll[$_ll['operation_type']]['pasta']. (($_ll['enter_mode'] == 'nli')? 'nli/': ''). ($_ll['operation_load']). '.'. ($_ll['operation_mode']). ('.php'),
+	$_ll[$_ll['operation_type']]['pasta']. (($_ll['enter_mode'] == 'nli')? 'nli/': ''). (array_search($_ll['operation_mode'], array('start' => 'x', 'onserver' => 'os', 'onclient' => 'oc')). '.php')
+);
 
-	lliure::inicia('appbar');
-	lliure::inicia('fileup');
-	lliure::inicia('jfbox');
+
+//script para retro compatibilidade. retirar no 9{
+//if($_ll['operation_mode'] == 'oc')
+//	$_ll[$_ll['operation_type']]['pagina'][] = $_ll[$_ll['operation_type']]['pasta']. (($_ll['enter_mode'] == 'nli')? 'nli/': '').  ('sen_html.php');
+//}
+
+
+//echo '<pre>'. print_r($get, true). '</pre>';
+//echo '<pre>'. print_r($_GET, true). '</pre>';
+
+
+/** Configuração do main meu normalmente usado na barra superior */
+ll::menu(array(
+	ll::menuItem($_ll['url']['endereco'], 'Home'),
+	ll::menuItem($_ll['url']['endereco']. '?opt=user&en=minhaconta', 'Minha conta'),
+	((ll::valida())? ll::menuItem($_ll['url']['endereco']. '?opt=stirpanelo', 'Painel de controle'): array()),
+	ll::menuItem($_ll['url']['endereco']. 'nli.os.php?opt=singin&ac=logout', 'Sair'),
+));
+
+
+if($_ll['operation_mode'] == 'x'){
+
+	ll::usr('open-sans');
+	ll::usr('font-awesome');
+	ll::usr('normalize');
+	ll::usr('bootstrap');
+	ll::usr('sessionfix');
+
+
+	/** carrega o estilo do layout */
+	if($_ll['enter_mode'] == 'wli') {
+		if (!empty($_ll['tema']['wli']['css'])) lliure::add($_ll['tema']['wli']['css'], 'css', 5);
+
+	} else
+		if (!empty($_ll['tema']['nli']['css'])) lliure::add($_ll['tema']['nli']['css'], 'css', 5);
+
+	/** carrega o estilo da pagina */
+	if($_ll['enter_mode'] == 'wli') {
+		if(isset($_ll[$_ll['operation_type']]['pasta']) && file_exists($f = $_ll[$_ll['operation_type']]['pasta']. 'estilo.css')) ll::add($f, 'css');
+
+	} else
+		if(isset($_ll[$_ll['operation_type']]['nli']['pasta']) && file_exists($f = $_ll[$_ll['operation_type']]['nli']['pasta']. 'estilo.css')) ll::add($f, 'css');
+
 }
 
-/*******************************		Header			*/
-if($_ll[$get[0]]['header'] != null)
-	if(file_exists($_ll[$get[0]]['header']))
-		require_once($_ll[$get[0]]['header']);
+
+/** carrega o heder do layout */
+if($_ll['enter_mode'] == 'wli') {
+	if (!empty($_ll['tema']['wli']['hd'])) require_once $_ll['tema']['wli']['hd'];
+
+} else
+	if (!empty($_ll['tema']['nli']['hd'])) require_once $_ll['tema']['nli']['hd'];
 
 
-/*******************************		On Server		*/
-if($_ll['mode_operacion'] == 'onserver'){
-	require_once($_ll[$get[0]]['pagina']);
-	die();
-}
+//echo '<pre>'. print_r($get, true). '</pre>';
+//echo '<pre>'. print_r($_ll, true). '</pre>';
 
-/*******************************		On Client		*/
-if($_ll['mode_operacion'] == 'onclient'){
-	require_once($_ll[$get[0]]['pagina']);
-	die();
-}
 
-//Inicia o hist�rico
-ll_historico('inicia');
-?>
+/** boot */
+if(file_exists($f = ($_ll[$_ll['operation_type']]['pasta']. (($_ll['enter_mode'] == 'nli')? 'nli/': ''). 'boot.php')))
+	require_once $f;
 
+/** Header */
+if($_ll[$_ll['operation_type']]['header'] != null)
+	foreach ($_ll[$_ll['operation_type']]['header'] as $f)
+		if(file_exists($f)) require_once($f);
+
+
+/** On Server | On Client */
+if($_ll['operation_mode'] == 'os' || $_ll['operation_mode'] == 'oc'){
+	foreach ($_ll[$_ll['operation_type']]['pagina'] as $f)
+		if(file_exists($f)) require_once($f); die(); }
+
+
+//echo '<pre>'. print_r($_ll, true). '</pre>'; //die();
+
+
+//Inicia o históico
+ll_historico('inicia'); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br">
 <head>
-	<base href="<?php echo $_ll['url']['real']?>" />
-	<meta name="url" content="<?php echo $_ll['url']['real']?>" />
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+	<base href="<?php echo $_ll['url']['endereco']; ?>" />
+	<meta charset="utf-8">
+	<meta name="url" content="<?php echo $_ll['url']['endereco']; ?>" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="SHORTCUT ICON" href="usr/img/favicon.ico" type="image/x-icon" />
 	<meta name="author" content="Jeison Frasson" />
 	<meta name="DC.creator.address" content="lliure@lliure.com.br" />
 
-	<?php lliure::header();?>
-
-</head>
-
-<body>
-<div id="tudo">
-	<div id="topo">
-		<div class="left">
-			<a href="index.php" class="logoSistema"><img src="usr/img/blank.gif"/></a>
-			<?php
-			if(!empty($_GET) &&  ll_tsecuryt()){
-				$keyGet = array_keys($_GET);
-				if($keyGet['0'] == 'app' && !empty($_GET['app'])){
-					?>
-					<a href="javascript: void(0);" class="addDesktop" title="Adicionar este local ao desktop"><i class="fa fa-share-square  fa-rotate-90"></i></a>
-					<?php
-				}
-			}
-			?>
-		</div>
-
-		<div class="right">
-			<div class="menu">
-				<ul>
-					<?php
-					echo '<li><a href="index.php">Home</a></li>'
-						.'<li><a href="?opt=user&en=minhaconta">Minha conta</a></li>'
-						.(ll_tsecuryt('admin') ? '<li><a href="?painel">Painel de controle</a></li>' : '')
-						.'<li><a href="nli.php?r=logout">Sair</a></li>';
-					?>
-				</ul>
-			</div>
-
-		</div>
-	</div>
-
-	<div id="conteudo">
-		<?php
-		$carrega = 'opt/stirpanelo/ne_trovi.php';
-
-		if(file_exists($_ll[$get[0]]['pagina']))
-			$carrega = $_ll[$get[0]]['pagina'];
-
-		require_once($carrega);
-		?>
-		<div class="both"></div>
-	</div>
-
-	<div id="ll_rodape">
-		<a href="http://www.lliure.com.br"><?php echo 'lliure '.$_ll['conf']->versao;?></a>
-	</div>
-</div>
-
-<?php lliure::footer(); ?>
-
-</body>
-
-<head>
 	<title><?php echo $_ll['titulo']?></title>
 
-	<script type="text/javascript">
-		$(function(){
-			<?php
-			ll_alert();
-			?>
+	<?php require_once ll::header();?>
 
-			$('.addDesktop').click(function(){
-				ll_addDesk();
-			});
-
-			ll_load('load');
-			ll_sessionFix();
-
-			$('#topo .right div.start').mouseenter(function(){
-				var size = $("#appRapido").find("li").size()*52;
-				$("#appRapido").css({width: size});
-
-				$(this).stop().animate({width: size+20}, 500, 'easeInOutQuart');
-			}).mouseleave(function(){
-			  $(this).stop().animate({width: '20'}, 500, 'easeInOutQuart');
-			});
-		});
-	</script>
 </head>
+<body>
 
+<?php if($_ll['enter_mode'] == 'wli')
+	require_once $_ll['tema']['wli']['x'];
+
+else
+	require_once $_ll['tema']['nli']['x']; ?>
+
+<?php require_once ll::footer(); ?>
+
+</body>
 </html>

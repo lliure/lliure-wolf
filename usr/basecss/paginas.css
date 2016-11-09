@@ -1,0 +1,87 @@
+/**
+*
+* Configurações de páginas
+*
+* @Versão do lliure 8.0
+* @Pacote lliure
+*
+* Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
+* Licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
+
+/*******************************************		Desktop 					*****/
+div.bodyhome{
+	float: left;
+	z-index: 13;
+	position: relative;
+	width: 100%;
+	padding-top: 17px;
+	}
+	
+	div.bodyhome .listp{
+		cursor: pointer;
+		}
+
+		div.bodyhome .inter img{
+			width: 32px;
+			}
+			
+		.listp .inter a:hover{
+			color: #555;
+			}
+
+
+
+/******************************************* Permição *****/
+#permicao{
+	text-align: center;
+	}
+	
+	#permicao .box{
+		width: 480px;
+		height: 200px;
+		margin: 0 auto;
+		background: #e7e7e7;
+		position: relative;
+		border-radius: 10px;
+		}
+		
+		#permicao .box img{
+			position: absolute;
+			left: 10px;
+			top: 30px;
+			}
+
+		#permicao .box span{
+			position: absolute;
+			font-size: 16px;
+			color: #777;
+			font-weight: bold;
+			left: 150px;
+			top: 75px;
+			width: 300px;
+			}
+
+
+/***************************		Acesso rápido		*****/
+.ARbox{
+	background: #ddd;
+	padding: 8px 15px;
+	font-size: 12px;
+	margin-bottom: 20px;
+	border-radius: 5px;
+	}
+	
+	.ARbox span{
+		float: left;
+		position: relative;
+		margin: 7px;
+		}
+		
+		.ARbox span a{
+			display: none;
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			}

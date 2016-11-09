@@ -1,9 +1,9 @@
 # lliure WAP
 
-# @Vers„o 8.0
+# @Vers√£o 8.0
 # @Desenvolvedor Jeison Frasson <lliure@lliure.com.br>
 # @Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
-# @LicenÁa http://opensource.org/licenses/gpl-license.php GNU Public License
+# @Licen√ßa http://opensource.org/licenses/gpl-license.php GNU Public License
 
 ErrorDocument 404 /404.php 
 
@@ -12,6 +12,6 @@ Options -Indexes
 RewriteEngine on 
 
 #RewriteCond %{SCRIPT_FILENAME} !-f
-RewriteCond %{SCRIPT_FILENAME} !-d
+#RewriteCond %{SCRIPT_FILENAME} !-d
 
-RewriteRule !\.(js|ico|txt|gif|jpg|png|css|php|pdf|htaccess|swf|svg|otf|eot|ttf|woff|woff2)$ index.php [NC]
+RewriteRule !\.(js|ico|txt|gif|jpg|png|css|php|pdf|htaccess|swf|svg|otf|eot|ttf|woff|woff2|map)$ index.php [NC]

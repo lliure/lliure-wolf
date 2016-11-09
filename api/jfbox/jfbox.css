@@ -9,6 +9,7 @@
 *
 */
 
+/*
 #jfboxFundo {
 	position:absolute;
 	left:0;
@@ -83,3 +84,91 @@
 		font-size: 12px;
 		border-radius: 10px 10px 10px 10px;
 		}
+
+*/
+
+#jfBoxModal{}
+
+#jfBoxModal #jfBoxLoad{
+
+	position: absolute;
+	top: 35px;
+	left: 0;
+	right: 0;
+
+	color: #fff;
+	text-align: center;
+
+	opacity: 0;
+	transition: opacity .3s ease-out;
+
+	pointer-events: none !important;
+}
+
+#jfBoxModal.loading #jfBoxLoad{
+	opacity: 1;
+}
+
+#jfBoxModal #jfBoxLock{
+	position: absolute;
+	top: 0; bottom: auto;
+	left: 0; right: auto;
+	width: 0;
+	height: 0;
+	background-color: transparent;
+	z-index: 1500;
+}
+
+#jfBoxModal[data-lock="on"] #jfBoxLock{
+	bottom: 0;
+	right: 0;
+	width: auto;
+	height: auto;
+}
+
+#jfBoxModal .modal-dialog{
+	-webkit-transition: none !important;
+	-moz-transition: 	none !important;
+	-ms-transition: 	none !important;
+	-o-transition: 		none !important;
+	transition: 		none !important;
+	transform: 			none !important;
+
+	z-index: 1600;
+}
+
+#jfBoxModal .modal-dialog .modal-content{
+	-webkit-transition: -webkit-transform .3s ease-out, opacity .3s ease-out;
+	-o-transition: 		-o-transform 	  .3s ease-out, opacity .3s ease-out;
+	transition: 		transform 		  .3s ease-out, opacity .3s ease-out;
+
+	opacity: 0;
+	min-height: inherit;
+
+	-webkit-transform: 	translate(0, -20px);
+	-ms-transform: 		translate(0, -20px);
+	-o-transform: 		translate(0, -20px);
+	transform: 			translate(0, -20px);
+}
+
+#jfBoxModal.load .modal-dialog .modal-content{
+	opacity: 1;
+	-webkit-transform: 	translate(0, 0);
+	-ms-transform: 		translate(0, 0);
+	-o-transform: 		translate(0, 0);
+	transform: 			translate(0, 0);
+}
+
+#jfBoxModal .modal-dialog.modal-full{
+	margin: 0 !important;
+	width: 100% !important;
+	height: 100% !important;
+	padding: 15px !important;
+	pointer-events: none !important;
+}
+
+#jfBoxModal .modal-dialog.modal-full .modal-content{
+	width: 100%  !important;
+	min-height: 100%  !important;
+	pointer-events: all  !important;
+}

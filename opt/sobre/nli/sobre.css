@@ -1,0 +1,51 @@
+
+
+
+
+.llSobre_box{
+}
+
+#llSobre h1{
+    margin-bottom: 2px;
+}
+
+.llSobre_box .sigla{
+    display: block;
+    margin: 4px 0 20px;
+    font-size: 0.8em;
+    color: #777;
+}
+
+.llSobre_box .versao{
+    display: block;
+    margin-bottom: 20px;
+}
+
+.llSobre_box .desenvolvido{
+    font-size: 0.8em;
+    position: absolute;
+    bottom: 46px;
+    left: 25px;
+    color: #777;
+}
+
+.llSobre_box .rodape{
+    background: #e7e7e7;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-radius: 0 0 4px 4px;
+    width: 100%;
+    border-top: 1px solid #bbb;
+}
+
+.llSobre_box .rodape .container-fluid{
+    padding: 13px 25px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.llSobre_box .rodape .container-fluid span{
+    text-align: center;
+    font-size: 1.1em;
+}

@@ -5,8 +5,6 @@
 
 function vigile($texto, $modo = 'top', $local = null){
 	$_SESSION['vigile']['texto'] = $texto;
-
-	$_SESSION['vigile']['texto'] = $texto;
 	
 	switch($modo){
 	case 'local':

@@ -3,15 +3,14 @@
 *
 * lliure WAP
 *
-* @Vers„o 7.0
+* @Vers√£o 7.0
 * @Pacote lliure
 * @Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
-* @LicenÁa http://opensource.org/licenses/gpl-license.php GNU Public License
+* @Licen√ßa http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
-header("Content-Type: text/html; charset=ISO-8859-1",true);
-$_ll['mode_operacion'] = 'onclient';
+
+//$_ll['operation_mode'] = 'oc';
+
+$_GET = array_merge(array('onclient' => 'onclient'), $_GET);
 require_once('index.php');
-?>
-
-

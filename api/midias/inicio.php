@@ -1,12 +1,5 @@
 <?php
 
-ll::add('api/midias/css/jquery.jcrop.min.css');
-ll::add('api/midias/css/estilo.css');
-
-ll::add('api/midias/js/jquery.color.js');
-ll::add('api/midias/js/jquery.jcrop.js');
-ll::add('api/midias/js/script.js');
-
 
 if(!defined('MIDIAS_BASEPATH')) define('MIDIAS_BASEPATH', realpath(dirname(__FILE__). '/../../'));
 if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);

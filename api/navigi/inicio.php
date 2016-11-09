@@ -3,17 +3,14 @@
 *
 * API navigi - lliure
 *
-* @Vers„o 8.0
+* @Vers√£o 8.0
 * @Pacote lliure
 * @Entre em contato com o desenvolvedor <jomadee@glliure.com.br> http://www.lliure.com.br/
-* @LicenÁa http://opensource.org/licenses/gpl-license.php GNU Public License
+* @Licen√ßa http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
-lliure::add('api/navigi/estilo.css', 'css');
-lliure::add('api/navigi/script.js', 'js');
-
-/*	***	DocumentaÁ„o da funÁ„o ***
+/*	***	Documenta√ß√£o da fun√ß√£o ***
 	
 	Para iniciar a classe
 	$navegador = new navigi();
@@ -24,37 +21,37 @@ lliure::add('api/navigi/script.js', 'js');
 	Definendo a query para consulta
 	$navegador->query = 'select * from '.$navegador->tabela;
 
-	Define como ser· a exibiÁ„o. por ser "lista" ou "icone"
+	Define como ser√° a exibi√ß√£o. por ser "lista" ou "icone"
 	$navegador->exibicao = 'icone';
 
-	Define as cofiguraÁıes da navegaÁ„o
+	Define as cofigura√ß√µes da navega√ß√£o
 	$navegador->config = (array) $config;
 
 	Para rodar a classe
 	$navegador->monta();
 
 	###
-	OpÁ„o "config", essa È a mais complicada pois È nela que difinimos como vai ser o icone o clique duplo e a divercidade da busca...
+	Op√ß√£o "config", essa √© a mais complicada pois √© nela que difinimos como vai ser o icone o clique duplo e a divercidade da busca...
 
-	Assim ficaria uma configuraÁ„o mais simples, no caso apenas vamos direcionar o duplo clique  para uma p·gina (visualizar) que tenha o id "X" (por padr„o o jfnav pesquisa o campo "id" e adiciona no final da url)
+	Assim ficaria uma configura√ß√£o mais simples, no caso apenas vamos direcionar o duplo clique  para uma p√°gina (visualizar) que tenha o id "X" (por padr√£o o jfnav pesquisa o campo "id" e adiciona no final da url)
 	$navegador->config = array(
 				'link' => '?app=meuapp&pagina=visualizar&id='
 				);
 
-#	Para alterar o icone padr„o adicione 'ico' => 'img/meuico.png' onde o endereÁo comeÁa a contar apartir da raiz do aplicativo
-	exemplo da utilizaÁ„o
+#	Para alterar o icone padr√£o adicione 'ico' => 'img/meuico.png' onde o endere√ßo come√ßa a contar apartir da raiz do aplicativo
+	exemplo da utiliza√ß√£o
 	$navegador->config = array(
 				'link' => '?app=meuapp&pagina=visualizar&id=',
 				'ico' => 'img/meuico.png'
 				);	
 
-#	Alterando a coluna de exibiÁ„o (por padr„o se chama nome), desta forma vamos definir que a coluna que vamos consultar ser· "cor" ao invÈs de "nome"
+#	Alterando a coluna de exibi√ß√£o (por padr√£o se chama nome), desta forma vamos definir que a coluna que vamos consultar ser√° "cor" ao inv√©s de "nome"
 		$navegador->config = array(
 				'link' => '?app=meuapp&pagina=visualizar&id=',
 				'coluna' => 'cor'
 				);
 
-#	Exemplo de montagem do config com tabelas anexadas, isso È usado para quando a coluna principal estiver em outra tabela (um exemplo È quando utilizamos multidiomas), o "as_id" nada mais È que o id da FK para quando for fazer o rename realizar na tabela correta e com o id correto
+#	Exemplo de montagem do config com tabelas anexadas, isso √© usado para quando a coluna principal estiver em outra tabela (um exemplo √© quando utilizamos multidiomas), o "as_id" nada mais √© que o id da FK para quando for fazer o rename realizar na tabela correta e com o id correto
 	$navegador->config = array(
 			'link' => '?app=meuapp&pagina=visualizar&id=',
 			'ico' => 'img/meuico.png',
@@ -64,7 +61,7 @@ lliure::add('api/navigi/script.js', 'js');
 			);
 	
 #	Consultando mais de um tipo de registro
-	para este fim vocÍ tera que usar da mesma forma que a de cima porem dentro de arrays, e usar o parametro 'configSel' para definir o campo que diferencia um do outro, e os indices dos array de configuraÁ„o ser· a diferenÁa
+	para este fim voc√™ tera que usar da mesma forma que a de cima porem dentro de arrays, e usar o parametro 'configSel' para definir o campo que diferencia um do outro, e os indices dos array de configura√ß√£o ser√° a diferen√ßa
 
 	$navegador->configSel = 'tipo';
 	$navegador->config['produto'] =  array (
@@ -77,13 +74,13 @@ lliure::add('api/navigi/script.js', 'js');
 				'ico' => 'img/outroico.png'
 				);
 	
-#	Para habilitar a funÁ„o "apagar" passe como "true" o paramentro 'delete'
+#	Para habilitar a fun√ß√£o "apagar" passe como "true" o paramentro 'delete'
 	$navegador->delete = true;
 	
-#	Para habilitar a funÁ„o "renomear" passe como "true" o paramentro 'rename'
+#	Para habilitar a fun√ß√£o "renomear" passe como "true" o paramentro 'rename'
 	$navigi->rename = true;
 	
-#	Trabalhando com botıes auxiliares
+#	Trabalhando com bot√µes auxiliares
 	use 'ico' para definir o icone do botao
 		'link' para definir o link ao clicar
 		'modal' em caso de abertura de modal, sendo "Largura X Altura" ex: 250x100, para que fique automatico use a palavra "auto"
@@ -100,20 +97,20 @@ lliure::add('api/navigi/script.js', 'js');
 								'id' => 'Pedido',								
 								'coluna' => 'Data'
 							);
-	//1 lembrando que essas s„o as duas padrıes utilizadas pelo sistema, caso adicione mais, as mesmo ser„o carregadas no modo lista com seus respectivos conteudos
+	//1 lembrando que essas s√£o as duas padr√µes utilizadas pelo sistema, caso adicione mais, as mesmo ser√£o carregadas no modo lista com seus respectivos conteudos
 	
-	//2 utilize um array com o arg 0 com o nome e o arg 1 com a medida da coluna caso necess·rio
+	//2 utilize um array com o arg 0 com o nome e o arg 1 com a medida da coluna caso necess√°rio
 		ex: 'usuario' => array('nome','50px');
 
 # Pesquisa
 	para instanciar uma pesquisa utilize
 	$navigi->pesquisa = 'Id:int,Numero:str';
 	
-	por padrao todos s„o strings
+	por padrao todos s√£o strings
 	$navigi->pesquisa = 'Id,Numero';
 		
 		
-#	Exemplo de utilizaÁ„o simples *************
+#	Exemplo de utiliza√ß√£o simples *************
 	
 	$navigi = new navigi();
 	$navigi->tabela = PREFIXO.'app';
@@ -140,7 +137,7 @@ class navigi{
 	
 	/*apagar var $objetos; */
 	
-	/** configuraÁıes: ico; link; tabela; as_id, botao: array()*/
+	/** configura√ß√µes: ico; link; tabela; as_id, botao: array()*/
 	var $config;
 	
 	/** true,false */
@@ -155,7 +152,7 @@ class navigi{
 	/** true,false */
 	var $rename = false;	
 	
-	/** string // nome do campo que faz a diferenciaÁ„o dos dados listados */
+	/** string // nome do campo que faz a diferencia√ß√£o dos dados listados */
 	var $configSel = false; 	
 	
 	/** false,1,n */	
@@ -165,10 +162,10 @@ class navigi{
 	var $etiqueta = null;
 	var $cell = null;
 
-	function monta($echo = false){
+	public function monta($echo = false){
 		global $_ll;
 		
-		/** Retro compatibilidade para verÁıes antigas*/
+		/** Retro compatibilidade para ver√ß√µes antigas*/
 		if(isset($this->config['campo'])){
 			$this->configSel = $this->config['campo'];
 			unset($this->config['campo']);
@@ -233,7 +230,7 @@ class navigi{
 			$tPaginas = ceil($tReg / $this->paginacao);
 				
 			$this->query = $this->query . ' limit ' . $inicio . ',' . $this->paginacao;
-			
+
 			$url = jf_monta_link($_GET, 'nvg_pg');
 			$this->paginacao = array('pAtual' => $pAtual,'tPaginas' => $tPaginas, 'tReg' => $tReg, 'url' => $url);
 		}
@@ -241,18 +238,18 @@ class navigi{
 		/** caso tenha botoes na configuracao muda a exibicao para lista*/
 		if(isset($this->config['botao']))
 			$this->exibicao = 'lista';
-		
-		
+
+
 		$navigi = array(
-						'tabela' => $this->tabela,
-						'query' => $this->query,
-						'debug' => $this->debug,
-						'delete' => $this->delete,
-						'rename' => $this->rename,
-						'configSel' => $this->configSel,
-						'paginacao' => $this->paginacao,
-						'exibicao' => $this->exibicao
-						);
+			'tabela'    => $this->tabela,
+			'query'     => $this->query,
+			'debug'     => $this->debug,
+			'delete'    => $this->delete,
+			'rename'    => $this->rename,
+			'configSel' => $this->configSel,
+			'paginacao' => $this->paginacao,
+			'exibicao'  => $this->exibicao,
+		);
 		
 		
 		/*apagar
@@ -308,9 +305,20 @@ class navigi{
 		$encriptado = jf_encode($_ll['user']['token'], $navigi);		
 	
 		if(!$echo){
-			if($this->pesquisa != false){
-				echo '<div id="nvg_pesquisa"><form action="onserver.php?api=navigi&ac=pesquisa" method="post"><input name="url" value="'.jf_monta_link($_GET, array('nvg_pg', 'pesquisa')).'" type="hidden"><input placeholder="Pesquisar" name="pesquisa" value="'.(isset($_GET['pesquisa']) ? $_GET['pesquisa'] : '').'" /> <button type="submit" class="aplm_botao">Buscar</button> </form></div>';
-			}
+			if($this->pesquisa != false) echo
+			'<div>'.
+				'<form class="form-inline" action="onserver.php?api=navigi&ac=pesquisa" method="post">'.
+					'<input name="url" value="'.jf_monta_link($_GET, array('nvg_pg', 'pesquisa')).'" type="hidden">'.
+					'<div class="form-group">'.
+						'<label class="hidden-sm hidden-md hidden-lg">Pesquisar</label>'.
+						'<input class="form-control" placeholder="Pesquisar" name="pesquisa" value="'.(isset($_GET['pesquisa']) ? $_GET['pesquisa'] : '').'" >'.
+					'</div>'.
+					'<div class="form-group text-right" style="margin-bottom: 0;">'.
+						'&nbsp;<button type="submit" class="btn btn-default">Buscar</button>'.
+					'</div>'.
+				'</form><br>'.
+			'</div>';
+
 			
 			echo '<div id="navigi" token="'.$encriptado.'"></div>';
 		} else {

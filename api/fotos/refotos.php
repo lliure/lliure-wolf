@@ -3,15 +3,15 @@
 *
 * lliure WAP
 *
-* @Versão 6.0
+* @Versï¿½o 6.0
 * @Pacote lliure
 * @Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
-* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
+* @Licenï¿½a http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 header("Content-Type: text/html; charset=ISO-8859-1",true);
-require_once("../../etc/bdconf.php"); 
-require_once("../../includes/jf.funcoes.php"); 
+require_once("../../etc/bdconf.php");
+require_once('../../usr/stuff/jf.funcoes.php');
 
 $tabelaAtu = PREFIXO.$_GET['tabela'];
 
@@ -23,7 +23,7 @@ if(!empty($_POST)){
 	
 	mLupdate($tabelaAtu, $campos, $alter);
 	?>
-	<div style="text-align: center; font-size: 11px; margin-top: 120px;">Descrição alterada com sucesso!</div>
+	<div style="text-align: center; font-size: 11px; margin-top: 120px;">Descriï¿½ï¿½o alterada com sucesso!</div>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			setTimeout("fechaJfbox()", 1000);

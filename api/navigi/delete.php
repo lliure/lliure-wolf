@@ -3,12 +3,12 @@
 *
 * Apaga registros
 *
-* @Vers„o do lliure 8.0
+* @Vers√£o do lliure 8.0
 * @Pacote lliure
 * @Sub-pacote navigi
 *
 * Entre em contato com o desenvolvedor <jomadee@glliure.com.br> http://www.lliure.com.br/
-* LicenÁa http://opensource.org/licenses/gpl-license.php GNU Public License
+* Licen√ßa http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 header("Content-Type: text/html; charset=ISO-8859-1", true);

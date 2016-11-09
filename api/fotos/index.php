@@ -3,23 +3,23 @@
 *
 * lliure WAP
 *
-* @Versão 6.0
+* @Versï¿½o 6.0
 * @Pacote lliure
 * @Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
-* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
+* @Licenï¿½a http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
 /*
-por padrao a tabela listada pela galeria é formada se seguinte forma ['id', '$galeriaAPI['ligacaoCampo']', 'foto', 'descricao'];
+por padrao a tabela listada pela galeria ï¿½ formada se seguinte forma ['id', '$galeriaAPI['ligacaoCampo']', 'foto', 'descricao'];
 
-$galeriaAPI['tabela'] é a tabela pai
-$galeriaAPI['ligacaoCampo'] é o campo em que fica o id de referencia a tabela pai
-$galeriaAPI['ligacaoId'] é o id que faz referencia a tabela pai
+$galeriaAPI['tabela'] ï¿½ a tabela pai
+$galeriaAPI['ligacaoCampo'] ï¿½ o campo em que fica o id de referencia a tabela pai
+$galeriaAPI['ligacaoId'] ï¿½ o id que faz referencia a tabela pai
 
-$galeriaAPI['capaCampo'] é o campo que está na tabela pai que faz referencia a foto principal
+$galeriaAPI['capaCampo'] ï¿½ o campo que estï¿½ na tabela pai que faz referencia a foto principal
 
-$galeriaAPI['dir'] é o diretório onde vão ser armazenadas as imagens
+$galeriaAPI['dir'] ï¿½ o diretï¿½rio onde vï¿½o ser armazenadas as imagens
 */
 
 
@@ -45,7 +45,7 @@ function carregaFotos(){
 }
 
 $(function(){
-	carregaFotos();		
+	carregaFotos();
 	
 	$('#foto_file_').uploadify({
 		'uploader'  : 'api/fotos/uploadify.swf',

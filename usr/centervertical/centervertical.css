@@ -1,0 +1,67 @@
+.centerVertical,
+.centerVertical-xs{
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+
+    -webkit-transform:  translateY(-50%);
+    -moz-transform:     translateY(-50%);
+    -ms-transform:      translateY(-50%);
+    transform:          translateY(-50%);
+}
+
+@media (min-width: 768px){
+    .centerVertical-sm{
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+
+        -webkit-transform:  translateY(-50%);
+        -moz-transform:     translateY(-50%);
+        -ms-transform:      translateY(-50%);
+        transform:          translateY(-50%);
+    }
+}
+
+@media (min-width: 992px) {
+    .centerVertical-md{
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+
+        -webkit-transform:  translateY(-50%);
+        -moz-transform:     translateY(-50%);
+        -ms-transform:      translateY(-50%);
+        transform:          translateY(-50%);
+    }
+}
+
+@media (min-width: 1200px) {
+    .centerVertical-lg{
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+
+        -webkit-transform:  translateY(-50%);
+        -moz-transform:     translateY(-50%);
+        -ms-transform:      translateY(-50%);
+        transform:          translateY(-50%);
+    }
+}
+
+.centerVerticalTable{
+    width: 100%;
+    display: table;
+    position: static;
+    vertical-align: middle;
+}
+
+.centerVerticalTable > .centerVerticalBody{
+    display: table-cell;
+    vertical-align: middle;
+    position: static;
+}

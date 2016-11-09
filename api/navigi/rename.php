@@ -3,10 +3,10 @@
 *
 * API navigi - lliure
 *
-* @Vers„o 6.0
+* @Vers√£o 6.0
 * @Pacote lliure
 * @Entre em contato com o desenvolvedor <jomadee@glliure.com.br> http://www.lliure.com.br/
-* @LicenÁa http://opensource.org/licenses/gpl-license.php GNU Public License
+* @Licen√ßa http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 header("Content-Type: text/html; charset=ISO-8859-1", true);

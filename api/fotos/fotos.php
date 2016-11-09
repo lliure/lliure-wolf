@@ -3,15 +3,15 @@
 *
 * lliure WAP
 *
-* @Versão 6.0
+* @Versï¿½o 6.0
 * @Pacote lliure
 * @Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
-* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
+* @Licenï¿½a http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
 require_once('../../etc/bdconf.php');
-require_once('../../includes/jf.funcoes.php');
+require_once('../../usr/stuff/jf.funcoes.php');
 
 extract($_GET);
 

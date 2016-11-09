@@ -1,0 +1,2 @@
+INSERT INTO `ll_lliure_admin` (`id`, `login`, `senha`, `nome`, `email`, `twitter`, `foto`, `grupo`, `themer`) VALUES
+	(1, 'dev', 'fceec77726313a9f32590ebcc5552c48', 'Desenvolvedor', NULL, NULL, NULL, 'dev', 'default');

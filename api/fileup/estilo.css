@@ -9,8 +9,44 @@
 *
 */
 
+
+.fileUpBloco{}
+
+.fileUpBloco .fileUpBloco-btn-del{}
+
+.fileUpBloco input[type="file"]{
+	visibility: hidden !important;
+	height: 0 !important;
+	width: 0 !important;
+	opacity: 0 !important;
+	display: none !important;
+}
+
+.fileUpBloco.fileUpBlocoDel .fileUpBloco-input{
+	color: rgba(0, 0, 0, .4);
+	text-decoration: line-through;
+}
+
+.fileUpBloco .fileUpBloco-btn-up .fa.fa-upload,
+.fileUpBloco .fileUpBloco-btn-del .fa.fa-trash-o{
+	line-height: inherit !important;
+	position: relative;
+}
+
+.fileUpBloco .fileUpBloco-btn-del .fa.fa-check{
+	position: absolute;
+	right:  -4px;
+	bottom:  0;
+	font-size: .75em;
+	display: none;
+}
+
+.fileUpBloco.fileUpBlocoDel .fileUpBloco-btn-del .fa.fa-check{
+	display: block;
+}
+
 	
-.fileUpBloco{
+/* .fileUpBloco{
 	}
 	
 	.fileUpItem{
@@ -63,3 +99,5 @@
 				margin: 5px 0 0 5px;
 				float: left;
 				}
+
+*/

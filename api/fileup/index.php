@@ -1,6 +1,5 @@
 <?php
 /**
-*
 * API Fileup - Plugin CMS
 *
 * @Versão 8.0
@@ -9,4 +8,3 @@
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
-?>
