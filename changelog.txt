@@ -1,5 +1,18 @@
 Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure),  Módulos e API nativas
 
+#### 9.0 Wolf
+- [update] definição "x" criada, responsavel pela parte visual de um módulo
+- [update] twitter Bootstrap como framework front-end
+- [update] ativação permanente do persona, responsavel pelo gerenciamento total de layout
+- [update] reformulação de ops
+- [update] reformulação de apis
+- [update] api anext, para anexo de aplicativos
+- [update] api select2, para gerenciamento de tag e selects
+- [update] reformulação do funcionamento de ambiente NLI
+
+
+
+
 #### 8.0 Clumber Spaniel (08/07/2016)
 - [update] recurso de pesquisa adicionado à API navigi
 - [update] Navigi trabalhando com Font wearsome (utilizar atributo 'fa' ao invés de 'ico')
