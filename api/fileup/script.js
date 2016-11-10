@@ -5,10 +5,12 @@
             return (str + '').replace(new RegExp('[.\\\\+?\\[\\^\\]$(){}=!<>|:\\-*]', 'g'), '\\$&');}
 
         var body = $('body');
-        body.find('.fileUpBloco-btn-up').click(function(){
+
+        body.on('click', '.fileUpBloco-btn-up', function(){
             $(this).closest('.fileUpBloco').find(':input[type="file"]').click();
         });
-        body.find('.fileUpBloco :input[type="file"]').change(function(){
+
+        body.on('change', '.fileUpBloco :input[type="file"]', function(){
             var bas = $(this).closest('.fileUpBloco');
             var ext = '.' + $(this).val().split('.').pop();
             var mit = (this.files.length >= 1? this.files[0].type: '');
@@ -28,7 +30,7 @@
                 $(this).val();
             }
         });
-        body.find('.fileUpBloco-btn-del').click(function(){
+        body.on('click', '.fileUpBloco-btn-del', function(){
             var bas = $(this).closest('.fileUpBloco');
             var del = !parseInt(bas.find(':input[name="fileUp[del][]"]').val());
             bas.toggleClass('fileUpBlocoDel', del);

@@ -1,6 +1,10 @@
 Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure),  Módulos e API nativas
 
 #### 9.0 Wolf
+- [new] maskplugin foi adicionado como usr. v1.14.0
+- [update] separado do basejs o maskedinput é uma usr agora; v1.4.0
+- [bug] adicionado arquivo boot em usr/menta e usr/metaclass
+- [bug] correão de ligação de eventos do fileup.
 - [update] definição "x" criada, responsavel pela parte visual de um módulo
 - [update] twitter Bootstrap como framework front-end
 - [update] ativação permanente do persona, responsavel pelo gerenciamento total de layout
