@@ -8,7 +8,9 @@
 * @Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
-*/ ?>
+*/
+
+?>
 
 <div class="container">
 	<div class="row">
@@ -92,48 +94,48 @@
 							<fieldset>
 								<div class="form-group">
 									<div class="row">
-										<label for="formInstalInputHost" class="col-sm-2 control-label">Host</label>
-										<div class="col-sm-10">
+										<label for="formInstalInputHost" class="col-sm-3 control-label">Host</label>
+										<div class="col-sm-9">
 											<input type="text" name="host" class="form-control" id="formInstalInputHost" placeholder="EXP: site.com ou 192.168.0.1">
 										</div>
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="row">
-										<label for="formInstalInputLogin" class="col-sm-2 control-label">Login</label>
-										<div class="col-sm-10">
+										<label for="formInstalInputLogin" class="col-sm-3 control-label">Login</label>
+										<div class="col-sm-9">
 											<input type="text" name="login" class="form-control" id="formInstalInputLogin" placeholder="EXP: root">
 										</div>
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="row">
-										<label for="formInstalInputSenha" class="col-sm-2 control-label">Password</label>
-										<div class="col-sm-10">
+										<label for="formInstalInputSenha" class="col-sm-3 control-label">Senha</label>
+										<div class="col-sm-9">
 											<input type="password" name="senha" class="form-control" id="formInstalInputSenha">
 										</div>
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="row">
-										<label for="formInstalInputTabela" class="col-sm-2 control-label">Tabela</label>
-										<div class="col-sm-10">
+										<label for="formInstalInputTabela" class="col-sm-3 control-label">Banco de dados</label>
+										<div class="col-sm-9">
 											<input type="text" name="tabela" class="form-control" id="formInstalInputTabela" placeholder="EXP: lliure">
 										</div>
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="row">
-										<label for="formInstalInputPrefixo" class="col-sm-2 control-label">Prefixo</label>
-										<div class="col-sm-10">
+										<label for="formInstalInputPrefixo" class="col-sm-3 control-label">Prefixo</label>
+										<div class="col-sm-9">
 											<input type="text" name="prefixo" class="form-control" id="formInstalInputPrefixo" value="ll_">
 										</div>
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="row">
-										<label for="formInstalInputPrefixo" class="col-sm-2 control-label"><br class="hidden-xs"/>Usuário</label>
-										<div class="col-sm-10">
+										<label for="formInstalInputPrefixo" class="col-sm-3 control-label"><br class="hidden-xs"/>Usuário</label>
+										<div class="col-sm-9">
 											<div class="radio">
 												<label>
 													<input type="radio" name="user[type]" value="defalt" checked>
@@ -153,16 +155,16 @@
 									<h2 style="margin-top: 0;">Usuário DEV</h2>
 									<div class="form-group">
 										<div class="row">
-											<label for="formInstalInputLogin" class="col-sm-2 control-label">Login</label>
-											<div class="col-sm-10">
+											<label for="formInstalInputLogin" class="col-sm-3 control-label">Login</label>
+											<div class="col-sm-9">
 												<input type="text" name="user[login]" class="form-control" id="formInstalInputLogin" placeholder="EXP: root">
 											</div>
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="row">
-											<label for="formInstalInputSenha" class="col-sm-2 control-label">Password</label>
-											<div class="col-sm-10">
+											<label for="formInstalInputSenha" class="col-sm-3 control-label">Senha</label>
+											<div class="col-sm-9">
 												<input type="password" name="user[senha]" class="form-control" id="formInstalInputSenha">
 											</div>
 										</div>

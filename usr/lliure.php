@@ -3,13 +3,13 @@
 
 /**
  *
- * Classe de implementação do lliure
+ * Classe de implementaï¿½ï¿½o do lliure
  *
- * @Versão do lliure 8.0
+ * @Versï¿½o do lliure 8.0
  * @Pacote lliure
  *
  * Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
- * Licença http://opensource.org/licenses/gpl-license.php GNU Public License
+ * Licenï¿½a http://opensource.org/licenses/gpl-license.php GNU Public License
  *
  */
 
@@ -45,20 +45,20 @@ class lliure {
 	}
 
 	/**
-	 * json_encode alternativo com opção de compactar 
+	 * json_encode alternativo com opï¿½ï¿½o de compactar 
 	 *
 	 * @param $array
 	 * @param bool $compacto
 	 * @return string
 	 */
-	public function json_encode($array, $compacto = true){
+	static public function json_encode($array, $compacto = true){
 		return self::arrayToJsonRecursive($array, $compacto);
 	}
 
 	/**
 	 * @param $array array parar convercao
 	 * @param bool $c [true: Compacto, false: descompactado (identado)]
-	 * @param string $t Tabulação
+	 * @param string $t Tabulaï¿½ï¿½o
 	 * @return string string json
 	 */
 	private static function arrayToJsonRecursive($array, $c = false, $t = ''){
@@ -91,16 +91,16 @@ class lliure {
 	}
 
 	/**
-	 * Carrega as configurações do modulo.
-	 * lliure 9.0 tomara como padão confg.ll como nome padrão para o arquivo
+	 * Carrega as configuraï¿½ï¿½es do modulo.
+	 * lliure 9.0 tomara como padï¿½o confg.ll como nome padrï¿½o para o arquivo
 	 * e seu conteuto seja um json.
 	 *
-	 * ainda é compativel com xml (mas não é mais recomendado)
+	 * ainda ï¿½ compativel com xml (mas nï¿½o ï¿½ mais recomendado)
 	 *
 	 * @param string $operation_type tipo do modulo
 	 * @param string $operation_load modulo
-	 * @param bool $load_confs [true: registra, false: não registra] no $_ll
-	 * @return array|stdClass as congurações do modulo
+	 * @param bool $load_confs [true: registra, false: nï¿½o registra] no $_ll
+	 * @return array|stdClass as conguraï¿½ï¿½es do modulo
 	 */
 	public static function confg_app(
 		$operation_type,
@@ -135,6 +135,7 @@ class lliure {
 					(file_exists(realpath(dirname(__FILE__). "/../". ($f = "$operation_type/$operation_load/sys/ico.png"))))? $f:
 					('usr/img/icon_defaulto.png')))
 			), $confs);
+
 			$confs = json_decode(self::json_encode($confs));
 
 			if($load_confs) $_ll[$operation_type]['conf'] = $confs;
@@ -145,7 +146,7 @@ class lliure {
 	}
 
 	/**
-	 * Valida se o usuario é de um grupo
+	 * Valida se o usuario ï¿½ de um grupo
 	 * @param string|array|null $grupo
 	 * @return bool
 	 */
@@ -160,7 +161,7 @@ class lliure {
 	}
 
 	/**
-	 * Faz autenticão do usúio no sistema
+	 * Faz autenticï¿½o do usï¿½io no sistema
 	 *
 	 * @param null $login
 	 * @param null $nome
@@ -170,7 +171,7 @@ class lliure {
 	 */
 	public static function autentica($login = null, $nome = null, $grupo = 'user', $tema = 'default'){
 		if($login === null){
-			if(isset($_SESSION['ll']['user']))
+			if(isset($_SESSION['ll']['user']) && !empty($_SESSION['ll']['user']['login']))
 				return true;
 			else
 				return false;
@@ -202,7 +203,7 @@ class lliure {
 
 	}
 	
-	/* Revoga a autenticação do usúrio no sistema */
+	/* Revoga a autenticaï¿½ï¿½o do usï¿½rio no sistema */
 	public static function desautentica(){
 		unset($_SESSION['ll']['user']);
 		return true;
@@ -223,15 +224,15 @@ class lliure {
 	 * carregando scripts e estilos, marcando o tipo e mudando a prioridade.
 	 * lliure::add('app/teste/estilo.css.php', 'css', 15);
 	 *
-	 * @OBS.: as prioridades serven para determinar quando seu arquivo aparecera. a prioridade padrão é 10,
+	 * @OBS.: as prioridades serven para determinar quando seu arquivo aparecera. a prioridade padrï¿½o ï¿½ 10,
 	 * e quanrto menor este numero, mais para o inicio do documento seu arquivo aparecera. Procure sempre
-	 * usar prioridades de valor maior que 10 pos abaixo disto é reservado para o sistema.
+	 * usar prioridades de valor maior que 10 pos abaixo disto ï¿½ reservado para o sistema.
 	 *
 	 * fixando tags personalisados no heder.
 	 * lliure::add(array('http-equiv' => 'Content-Type', 'content' => 'text/html; charset=iso-8859-1'), 'meta');
 	 *
 	 * carregando um arquivo .php.
-	 * lliure::add('app/teste/teste.php'); //faz um require no arquivo no começo do documento (requere)
+	 * lliure::add('app/teste/teste.php'); //faz um require no arquivo no comeï¿½o do documento (requere)
 	 *
 	 * carregando uma call (chamado a uma funcao ou metodo estatico).
 	 * lliure::add('func_teste', 'call'); //carrega uma funcao especifica
@@ -317,8 +318,8 @@ class lliure {
 	}
 
 	/**
-	 * Devolve o caminho do arquivo que processa os scrits do cabeçalho
-	 * Usado na conatrução de layouts para o sistema.
+	 * Devolve o caminho do arquivo que processa os scrits do cabeï¿½alho
+	 * Usado na conatruï¿½ï¿½o de layouts para o sistema.
 	 *
 	 * Modo de usar:
 	 * <?php require_once ll::header(); ?>
@@ -331,7 +332,7 @@ class lliure {
 
 	/**
 	 * Devolve o caminho do arquivo que processa os scrits do conteudo
-	 * Usado na conatrução de layouts para o sistema.
+	 * Usado na conatruï¿½ï¿½o de layouts para o sistema.
 	 * 
 	 * Modo de usar:
 	 * <?php require_once ll::content(); ?>
@@ -343,8 +344,8 @@ class lliure {
 	}
 
 	/**
-	 * Devolve o caminho do arquivo que processa os scrits do rodapé
-	 * Usado na conatrução de layouts para o sistema.
+	 * Devolve o caminho do arquivo que processa os scrits do rodapï¿½
+	 * Usado na conatruï¿½ï¿½o de layouts para o sistema.
 	 *
 	 * Modo de usar:
 	 * <?php require_once ll::footer(); ?>
@@ -365,7 +366,7 @@ class lliure {
 	}
 
 	/**
-	 * rederiza todos os documentos da lista no footer, isto é,
+	 * rederiza todos os documentos da lista no footer, isto ï¿½,
 	 * escreve todos os style, script e ou
 	 */
 	public static function renderFooter(){
@@ -387,9 +388,9 @@ class lliure {
 		$bl = "\r\n";
 		$l = array();
 
-		foreach($ds as $p => $is) // Documentos, posição, índices
-		foreach($is as $i => $ts) // Índices, índice, Tipos
-		foreach($ts as $t => $f){ // Tipos, Tipos, função
+		foreach($ds as $p => $is) // Documentos, posiï¿½ï¿½o, ï¿½ndices
+		foreach($is as $i => $ts) // ï¿½ndices, ï¿½ndice, Tipos
+		foreach($ts as $t => $f){ // Tipos, Tipos, funï¿½ï¿½o
 			//if(!($t == 'php' || $t == 'call')) $f = (preg_match('/^http/', trim($f)) > 0? '': $_ll['url']['real']). $f;
 
 			switch ($t){
@@ -497,7 +498,7 @@ class lliure {
 	 *
 	 *      lliure::menuGrupo('paginas', 'Menu', array(
 	 *          lliure::menuSubGrupo('jogo', ['trophy', 'Jogos'], array(
-	 *              lliure::menuItem('estadio', 'Ginásios'),
+	 *              lliure::menuItem('estadio', 'Ginï¿½sios'),
 	 *              lliure::menuItem('equipe', 'Equipes'),
 	 *              lliure::menuItem('rodada', 'Rodadas'),
 	 *              lliure::menuItem('categorias', 'Categorias'),
@@ -642,8 +643,8 @@ class lliure {
 	 */
 	public function denied($mod){
 		global $_ll;
-		echo 'Você não tem permissão para acessar está página! <br/>';
-		echo '<a href="' . $_ll['url']['real'] . '">Retornar a área de trabalho</a>';
+		echo 'Vocï¿½ nï¿½o tem permissï¿½o para acessar estï¿½ pï¿½gina! <br/>';
+		echo '<a href="' . $_ll['url']['real'] . '">Retornar a ï¿½rea de trabalho</a>';
 		die();
 	}
 
@@ -659,5 +660,5 @@ class ll extends lliure{}
 
 
 
-/* Identifica o diretório atual do sistema */
+/* Identifica o diretï¿½rio atual do sistema */
 ll_dir();
