@@ -2,19 +2,16 @@
 /**
  * Iniciação do lliure
  *
- * @Versão do lliure 9 e outro texto
+ * @Versão do lliure 9.x
  * @Pacote lliure
- *         
- *         
- *         asdsad
  *
  * Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
  * Licença http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 
-//echo '<pre>'. print_r($_SERVER, true). '</pre>'; // die();
-//header('Content-Type: text/html; charset=iso-8859-1');
-//if(!file_exists("etc/bdconf.php")) header('location: opt/install/index.php');
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 /** verifica o status de instalação e carrega bdconf se existir */
 if(!($ll_install =! file_exists($f = realpath(dirname(__FILE__). '/etc/bdconf.php'))) == true) require_once $f;
