@@ -1,3 +1,3 @@
 <?php
 
-ll::add('usr/gridsystem/gridsystem.css', 'css', 1);
+ll::add(__DIR__. '/gridsystem.css', 'css', 1);

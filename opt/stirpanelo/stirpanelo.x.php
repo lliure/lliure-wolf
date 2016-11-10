@@ -85,7 +85,7 @@ echo app_bar('Painel de controle', $botoes); ?>
 				<?php foreach($appFolder as $chave => $file) { ?>
 					<?php if (ll::valida()){
 						$confs = array_merge(array(
-							'ico' => 'opt/instalilo/ico.png',
+							'ico' => 'opt/stirpanelo/icon_defaulto.png',
 							'nome' => $file,
 						), ll::ota(ll::confg_app('app', $file))); ?>
 						<div class="listp">

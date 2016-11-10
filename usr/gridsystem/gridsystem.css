@@ -44,7 +44,7 @@ html, body{
 		width: 1170px;
 	}
 }
-@media (max-width: 767.999999px) {
+/* @media (max-width: 767.999999px) {
 	.hidden-xs {
 		display: inline !important;
 	}
@@ -63,7 +63,7 @@ html, body{
 	.hidden-lg {
 		display: inline !important;
 	}
-}
+} */
 .row{
 	margin-right: -15px;
 	margin-left:  -15px;

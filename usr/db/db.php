@@ -688,15 +688,14 @@ class DB {
 
         foreach ($array as $value){
             $w = '';
-            if ($where !== NULL){
+            if ($where !== NULL)
                 $w = $this->prepare($where, $value);
-            }else{
-                foreach ($value as $chave => $valor)
-                    if (is_string($chave))
-                        $w .= ($w=''?'':' and ').$chave.' '. (self::is_null($valor)? 'IS NULL' : '= "'.$valor.'"');
-            }
 
-            $this->exec('DELETE FROM '.$this.' WHERE '.$w.' ;', true);
+            else
+                foreach ($value as $chave => $valor)
+                    if (is_string($chave)) $w .= ($w=''?'':' and ').$chave.' '. (self::is_null($valor)? 'IS NULL' : '= "'.$valor.'"');
+
+            $this->exec('DELETE FROM '.$this.' WHERE '. $w. ' ;', true);
         }
         $this->clierTemps();
     }

@@ -231,7 +231,7 @@ class navigi{
 				
 			$this->query = $this->query . ' limit ' . $inicio . ',' . $this->paginacao;
 
-			$url = jf_monta_link($_GET, 'nvg_pg');
+			$url = $_ll['app']['home']. jf_monta_link($_GET, 'nvg_pg');
 			$this->paginacao = array('pAtual' => $pAtual,'tPaginas' => $tPaginas, 'tReg' => $tReg, 'url' => $url);
 		}
 		
