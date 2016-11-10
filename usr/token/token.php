@@ -3,7 +3,7 @@
 /**
  * Gerencia a criação e validções de tokens.
  */
-final class Token extends Senha{
+final class Token{
 
 	/**
 	 * Retorna um tokem. em cada chamada a este metdo um tokem diferente baseado
@@ -11,7 +11,7 @@ final class Token extends Senha{
 	 * @return string
 	 */
 	final static function get(){
-		return parent::create(($_SESSION['ll']['token'] = ((isset($_SESSION['ll']['token']))? $_SESSION['ll']['token']: self::create())));
+		return Senha::create(($_SESSION['ll']['token'] = ((isset($_SESSION['ll']['token']))? $_SESSION['ll']['token']: self::create())));
 	}
 
 	/**
@@ -20,7 +20,7 @@ final class Token extends Senha{
 	 * @return boolean
 	 */
 	final static function valid($token){
-		return (isset($_SESSION['ll']['token']) && parent::valid($_SESSION['ll']['token'], $token));
+		return (isset($_SESSION['ll']['token']) && Senha::valid($_SESSION['ll']['token'], $token));
 	}
 
 	/**
@@ -28,7 +28,7 @@ final class Token extends Senha{
 	 * @return string
 	 */
 	final public static function create(){
-		return (parent::create(rand(1000, 9999). ':8080'));
+		return (Senha::create(rand(1000, 9999). ':8080'));
 	}
 	
 }

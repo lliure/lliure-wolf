@@ -11,7 +11,6 @@
 <br>
 <div class="container-fluid">
 	<div class="bodyhome">
-
 		<?php $navegador = new navigi();
 		$navegador->tabela = PREFIXO."lliure_desktop";
 		$navegador->query = 'select * from '.$navegador->tabela.' order by nome asc';
@@ -23,6 +22,5 @@
 		}
 
 		$navegador->monta(); ?>
-
 	</div>
 </div>

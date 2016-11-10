@@ -1,6 +1,6 @@
 <?php
 
-ll::add(__DIR__. '/wli.css.php?cor=0078D7', 'css', 5);
+ll::add(__DIR__. '/wli.css.php?cor=94324b', 'css', 5);
 ll::add(__DIR__. '/script.js', 'js', 5);
 
 

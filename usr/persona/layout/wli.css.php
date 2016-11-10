@@ -176,6 +176,10 @@ body{
     width: 100%;
 }
 
+textarea{
+    resize: vertical;
+}
+
 #lliurelogo{
     display: inline-block;
 }

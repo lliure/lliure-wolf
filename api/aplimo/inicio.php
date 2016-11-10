@@ -75,7 +75,7 @@ class aplimo {
     private $pageFile = false;
 
 
-    function __construct(){
+    function __construct($botaoHome = true){
         global $_ll;
         self::basePath($_ll['app']['pasta']);
 
@@ -97,6 +97,7 @@ class aplimo {
             ));
         }
 
+        if($botaoHome)
         self::menuNovo(array(
             self::menuItem('home', ['home', 'Home']),
         ));
@@ -453,31 +454,27 @@ class aplimo {
 
     function header(){
 
-        global $_ll;
-        $_ll['titulo'] = strip_tags($this->nome) . " | " . $_ll['titulo'];
-
-        if(!isset($_GET['apm']))
-            $_GET['apm'] = self::menuDefineGetApm($this->menuNovo);
+        global $_ll; $_ll['titulo'] = strip_tags($this->nome) . " | " . $_ll['titulo'];
+        if(!isset($_GET['apm'])) $_GET['apm'] = self::menuDefineGetApm($this->menuNovo);
 
         $this->pagePath = explode('>', $_GET['apm']);
         $this->pageFile = array_pop($this->pagePath);
         $this->pagePath = implode('/', $this->pagePath);
         $this->pagePath .= ((!empty($this->pagePath))? '/': ''). $this->pageFile;
 
+        $this->apm = new stdClass();
+        $this->apm->home = $_ll['app']['home'] . '&apm=' . $_GET['apm'];
+        $this->apm->onserver = $_ll['app']['onserver'] . '&apm=' . $_GET['apm'];
+        $this->apm->onclient = $_ll['app']['onclient'] . '&apm=' . $_GET['apm'];
+
+        $this->sapm = new stdClass();
+        $this->sapm->home = $_ll['app']['home'] . '&apm=' . $_GET['apm'];
+        $this->sapm->onserver = $_ll['app']['onserver'] . '&apm=' . $_GET['apm'];
+        $this->sapm->onclient = $_ll['app']['onclient'] . '&apm=' . $_GET['apm'];
+
         if((file_exists($f = self::$basePath . "{$this->pagePath}/{$this->pageFile}.hd.php")||
-            file_exists($f = self::$basePath . "{$this->pagePath}/header.php"))){
-
-            $this->apm = new stdClass();
-            $this->apm->home = $_ll['app']['home'] . '&apm=' . $_GET['apm'];
-            $this->apm->onserver = $_ll['app']['onserver'] . '&apm=' . $_GET['apm'];
-            $this->apm->onclient = $_ll['app']['onclient'] . '&apm=' . $_GET['apm'];
-
-            $this->sapm = new stdClass();
-            $this->sapm->home = $_ll['app']['home'] . '&apm=' . $_GET['apm'];
-            $this->sapm->onserver = $_ll['app']['onserver'] . '&apm=' . $_GET['apm'];
-            $this->sapm->onclient = $_ll['app']['onclient'] . '&apm=' . $_GET['apm'];
-
-            require_once($f);}
+            file_exists($f = self::$basePath . "{$this->pagePath}/header.php")))
+            require_once($f);
 
     }
 

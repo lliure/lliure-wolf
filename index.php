@@ -104,7 +104,8 @@ if ($_ll['operation_type'] === false){
 
 		if($_ll['operation_types'][$c] === $k) $_ll['operation_load'] = $v;
 		$_ll['operation_type'] = $_ll['operation_types'][$c];
-		//unset($arrURL[$k]); break;
+		unset($arrURL[$k]);
+		break;
 	}
 }
 
