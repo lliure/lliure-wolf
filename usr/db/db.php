@@ -1,8 +1,6 @@
 <?php
 /**
  * Description of db
- *
- * @author Rodrigo
  */
 
 class DB {
@@ -13,7 +11,7 @@ class DB {
 
     protected static
 
-        /** garda a conecÁ„o com o banco de dados; */
+        /** garda a conec√ß√£o com o banco de dados; */
         $DB = NULL, $type = NULL;
 
     protected
@@ -93,14 +91,14 @@ class DB {
                 self::$type = self::PDO; return self::$DB;
 
             } catch (PDOException $e){
-                throw new Exception('Falha de conex„o: ' . $e->getMessage(), 1, $e);}
+                throw new Exception('Falha de conex√£o: ' . $e->getMessage(), 1, $e);}
 
         }else{
             if((self::$DB = @mysql_connect($bdconf['hostName'], $bdconf['userName'], $bdconf['password'])) === FALSE)
-                throw new Exception('<strong>N„o foi possivel realizar a conex„o com banco de dados</strong><br>verifique as configuraÁıes do arquivo bdconf.php em /etc', 1);
+                throw new Exception('<strong>N√£o foi possivel realizar a conex√£o com banco de dados</strong><br>verifique as configura√ß√µes do arquivo bdconf.php em /etc', 1);
 
             if(mysql_select_db($bdconf['tableName'], self::$DB) === false)
-                throw new Exception('<strong>N„o foi possivel localizar a tabela no banco de dados</strong><br>verifique as configuraÁıes do arquivo bdconf.php em /etc', 2);;
+                throw new Exception('<strong>N√£o foi possivel localizar a tabela no banco de dados</strong><br>verifique as configura√ß√µes do arquivo bdconf.php em /etc', 2);;
             
             self::$type = self::MYSQL;
             return self::$DB;
@@ -169,32 +167,32 @@ class DB {
         }elseif(is_string($sql)){
             $sql = @get_magic_quotes_gpc() ? stripslashes($sql) : $sql;
             //$sql = function_exists('mysql_real_escape_string') ? mysql_real_escape_string($sql) : mysql_escape_string($sql);
-            $sql = trim($sql); # Remove espaÁos vazios.
-            $sql = addslashes($sql); # Adiciona barras invertidas ‡ uma string.
+            $sql = trim($sql); # Remove espa√ßos vazios.
+            $sql = addslashes($sql); # Adiciona barras invertidas √† uma string.
         }
         return $sql;
     }
 
     /**Retorna uma string com todas as <b><i>ShortTegs</i></b> subsistidas por seu
-     * correspondente valor contido no array de dados, isto È, localiza-se um
-     * Ìndice no array de dados com a teg, e ela substituida por esse valor.
+     * correspondente valor contido no array de dados, isto √©, localiza-se um
+     * √≠ndice no array de dados com a teg, e ela substituida por esse valor.
      *
      * As <b><i>ShortTegs</i></b> podem conter 1 ou 2 parametros, se pasar 1 parametro
-     * a funÁ„o localiza a Key no array de dados e subistitue ela na string.
+     * a fun√ß√£o localiza a Key no array de dados e subistitue ela na string.
      *
      * EXP.:
-     * $dados = array('id' => 1, 'texto' => 'Ol· mundo!');
+     * $dados = array('id' => 1, 'texto' => 'Ol√° mundo!');
      * echo '//SAIRA '. echo db::prepare(' id = [id] AND texto = "[texto]" ', $dados);
      *
      * -------------------------------------------------------------------------------
-     * //SAIDA id = 1 AND texto "Ol· mundo!"
+     * //SAIDA id = 1 AND texto "Ol√° mundo!"
      * -------------------------------------------------------------------------------
      *
      * Cada Key teve seu respequitivo valor inserido onde
      *
      *
      * Se pasar 2 parametros, o primeiro sera o comparador e o segundo sera a key,
-     * logo a funÁao ira analizar o tipo do dado que a key aponta e adequara o
+     * logo a fun√ßao ira analizar o tipo do dado que a key aponta e adequara o
      * comparador ao tipo.
      *
      * EXP.:
@@ -207,11 +205,11 @@ class DB {
      * //ARRAY Array ( [nome] => Nome Fulano [idade] => 20 )
      * -------------------------------------------------------------------------------
      *
-     * No exemplo acima [= id] quer a key id e como ela È um numero a funÁ„o colocou
-     * entre '"' (aspas). [= texto] quer a key texto mas como o texto È igual a null e o
-     * comparador usado foi o "=" (igual) a funÁ„o comverteu para IS. [!= tags] quer a
-     * key tags mas como as tags s„o um array a funÁ„o tranforma ela em um IN e como o
-     * comparador quer uma "!=" (diferenÁa) ele colocao o NOT antes da fumÁ„o.
+     * No exemplo acima [= id] quer a key id e como ela √© um numero a fun√ß√£o colocou
+     * entre '"' (aspas). [= texto] quer a key texto mas como o texto √© igual a null e o
+     * comparador usado foi o "=" (igual) a fun√ß√£o comverteu para IS. [!= tags] quer a
+     * key tags mas como as tags s√£o um array a fun√ß√£o tranforma ela em um IN e como o
+     * comparador quer uma "!=" (diferen√ßa) ele colocao o NOT antes da fum√ß√£o.
      *
      * Comparador obitido crusando o tipo do dado e o comparador pasado.
      *
@@ -236,12 +234,12 @@ class DB {
      *   NOT_LIKE   | NOT IN("1", "2") | NOT IS NULL |  != TRUE   | NOT LIKE "%texto%" |  != "10"  |
      *
      *
-     * O array <b>$dados</b> È passado por referencia, e para cada <b><i>ShortTegs</i></b>
-     * encontada o indice e removido do array, isto È, este metodo retira do seu
-     * array os indices que coresponder?com as ShortTeg, A n„o ser que o parametro
+     * O array <b>$dados</b> √© passado por referencia, e para cada <b><i>ShortTegs</i></b>
+     * encontada o indice e removido do array, isto √©, este metodo retira do seu
+     * array os indices que coresponder?com as ShortTeg, A n√£o ser que o parametro
      * <i>$naoDeletar</i> estjaa <b>TRUE</b>, neste caso, ele nao remove os indices.
      *
-     * o comparador LIKE e NOT_LIKE tem variaÁ„o que tir„o o "%" do comeÁo e final da string.
+     * o comparador LIKE e NOT_LIKE tem varia√ß√£o que tir√£o o "%" do come√ßo e final da string.
      * como: LIKE_[LEFR|RIGHT|CLEAR].
      * - LIKE_LEFR gera: LIKE "%texto";
      * - LIKE_RIGHT gera: LIKE "texto%";
@@ -249,7 +247,7 @@ class DB {
      *
      * @param String $stringShortTag A string contendo as ShortTegs exp.: "id='[id]'"
      * @param array $dados o array com os dados a serem subistituidas.
-     * @param boolean $naoDeletar caso ele seta <b>TRUE</b> n„o s„o deletados os <br/>
+     * @param boolean $naoDeletar caso ele seta <b>TRUE</b> n√£o s√£o deletados os <br/>
      * indices.
      *
      * @return String A sting com as ShortTegs subistituidas.
@@ -257,8 +255,8 @@ class DB {
      * @version 2
      *
      * ##[12/07/2016]
-     * - reformulado o modo de procurar short tegs quando a Class ShortTag n„o existir.
-     * - adicionado o comparador LIKE e suas variaÁıes
+     * - reformulado o modo de procurar short tegs quando a Class ShortTag n√£o existir.
+     * - adicionado o comparador LIKE e suas varia√ß√µes
      */
     final protected static function prepare($stringShortTag, array &$dados, $naoDeletar = FALSE){
 
@@ -365,7 +363,7 @@ class DB {
     /**
      * O ID gerado para uma coluna AUTO_INCREMENT pela consulta anterior em caso<br/>
      * de sucesso, 0 se a consulta anterior n?o gerar um valor AUTO_INCREMENT,<br/>
-     * ou FALSE se n?o houver conex?o MySQL foi criado.
+     * ou FALSE se n?o houver conex√£o MySQL foi criado.
      * @return int
      */
     final static function insert_id(){
@@ -377,7 +375,7 @@ class DB {
     }
 
     /**
-     * Apelido da funÁ„o <b><i>insert_id</i></b>.
+     * Apelido da fun√ß√£o <b><i>insert_id</i></b>.
      * @return type
      */
     final static function lastInsertId(){
@@ -385,7 +383,7 @@ class DB {
     }
 
     /**
-     * Executa consulta ao banco de dados que n„o geram resultado.
+     * Executa consulta ao banco de dados que n√£o geram resultado.
      * @param string $query A consulta SQL para executar (normalmente um INSERT, UPDATE, ou DELETE).
      * @return int Retorna a quantitade de leinhas afetadas.
      * @throws Exception caso ocorra algum erro com a sql.
@@ -431,7 +429,7 @@ class DB {
      * Execulta uma query que tenha um resulta como SELECT.
      *
      * @param string $query a query a ser execultada.
-     * @param bool $persistir Se $persistir for TRUE n„o limpa as modificaÁıes
+     * @param bool $persistir Se $persistir for TRUE n√£o limpa as modifica√ß√µes
      * temporaria do nome da tabela.
      * @return array um result em formato de array.
      *
@@ -493,9 +491,9 @@ class DB {
 
     /**
      * REPLACE funciona exatamente como INSERT, exceto que se uma velha linha
-     * na tabela tem o mesmo valor que uma nova linha para uma chave prim·ria
-     * ou um Ìndice ˙nico, a velha linha È excluÌda antes da nova linha ser
-     * inseridaπ
+     * na tabela tem o mesmo valor que uma nova linha para uma chave prim√°ria
+     * ou um √≠ndice √∫nico, a velha linha √© exclu√≠da antes da nova linha ser
+     * inserida¬π
      *
      * Cria um REPLACE com os dados pasados no array.
      * Este array pode ser passado de duas formas.
