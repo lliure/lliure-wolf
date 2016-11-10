@@ -2,8 +2,11 @@
 /**
  * Iniciação do lliure
  *
- * @Versão do lliure 8.0
+ * @Versão do lliure 9 e outro texto
  * @Pacote lliure
+ *         
+ *         
+ *         asdsad
  *
  * Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
  * Licença http://opensource.org/licenses/gpl-license.php GNU Public License
