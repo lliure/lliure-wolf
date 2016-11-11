@@ -1,6 +1,8 @@
 Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure),  Módulos e API nativas
 
 #### 9.0 Wolf
+- [update] reformulção na construção do menu de conteudo do aplimo, e familiar a mobile.
+- [update] reformulção na construção do menu lateral do aplimo, possibilitando grupos e subgrupos infinitos, e familiar a mobile.
 - [update] font-awesome para verção v4.7.0;
 - [bug] careção da url de retorno de pesquisa do navigi, e de adição do filtro na query.
 - [bug] correção no delete do db, não alto gerava corretamente o WHERE.
@@ -8,14 +10,14 @@ Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure),  
 - [new] maskplugin foi adicionado como usr; v1.14.0
 - [update] separado do basejs o maskedinput é uma usr agora; v1.4.0
 - [bug] adicionado arquivo boot em usr/menta e usr/metaclass
-- [bug] correão de ligação de eventos do fileup.
+- [bug] correão de ligação jquery dos eventos do fileup (de bind para on).
 - [update] definição "x" criada, responsavel pela parte visual de um módulo
 - [update] twitter Bootstrap como framework front-end
 - [update] ativação permanente do persona, responsavel pelo gerenciamento total de layout
 - [update] reformulação de ops
 - [update] reformulação de apis
-- [update] api anext, para anexo de aplicativos
-- [update] api select2, para gerenciamento de tag e selects
+- [new] api anext, para anexo de aplicativos
+- [new] api select2, para gerenciamento de tag e selects
 - [update] reformulação do funcionamento de ambiente NLI
 
 
