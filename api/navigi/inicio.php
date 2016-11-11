@@ -186,31 +186,29 @@ class navigi{
 				if(!isset($pesCam[$key][1]))
 					$pesCam[$key][1] = 'str';
 			}
-			
-			
-			$query = '(';			
+
+			$query = '(';
 			foreach($busca as $chave => $valor){
-				$query .= ($chave != 0?' and':'').' (';
-				
+				$query .= ($chave != 0? ' AND ': '') . '(';
+
 				foreach($pesCam as $key => $campo){
-					$query .= ($key != 0?' or':'');
-					
+					$query .= ($key != 0? ' OR ': '');
+
 					switch($campo[1]){
-					case 'str':
-						$query .= ' '.$campo[0].' like "%'.$valor.'%"';
-						break;
-					case 'int':
-						$query .= ' '.$campo[0].' = "'.$valor.'"';
-						break;
+						case 'str':
+							$query .= ' ' . $campo[0] . ' like "%' . $valor . '%"';
+							break;
+						case 'int':
+							$query .= ' ' . $campo[0] . ' = "' . $valor . '"';
+							break;
 					}
-				}				
+				}
 				$query .= ')';
 			}
 			$query .= ')';
-			
-			
-			if(strpos($this->query, 'where') !== false)
-				$this->query = 'select * from ('.$this->query.') as qry where '.$query;
+
+			//if(strpos($this->query, 'where') !== false)
+			$this->query = 'select * from ('.$this->query.') as qry where '.$query;
 		}
 				
 		if($this->paginacao != false){
