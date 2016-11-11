@@ -681,19 +681,18 @@ class DB {
         $array = self::antiInjection($array);
 
         $keys = array_keys($array);
-        if (!is_array($array[$keys[0]]))
+        if(!is_array($array[$keys[0]]))
             $array = array($array);
 
-        foreach ($array as $value){
+        foreach($array as $value){
             $w = '';
-            if ($where !== NULL)
+            if($where !== NULL)
                 $w = $this->prepare($where, $value);
 
-            else
-                foreach ($value as $chave => $valor)
-                    if (is_string($chave)) $w .= ($w=''?'':' and ').$chave.' '. (self::is_null($valor)? 'IS NULL' : '= "'.$valor.'"');
+            else foreach($value as $chave => $valor)
+                if(is_string($chave)) $w .= ($w == ''? '': ' and ') . $chave . ' ' . (self::is_null($valor)? 'IS NULL': '= "' . $valor . '"');
 
-            $this->exec('DELETE FROM '.$this.' WHERE '. $w. ' ;', true);
+            $this->exec("DELETE FROM {$this} WHERE {$w};", true);
         }
         $this->clierTemps();
     }
