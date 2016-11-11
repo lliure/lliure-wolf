@@ -18,7 +18,6 @@
             exs = (!!exs? exs.split(','): false);
             if(!exs || exs.find(function(v){
                 var reg = new RegExp(quote(v).replace(/\\\*$/, '.*'));
-                console.log(ext, mit, reg, reg.test(ext) || reg.test(mit));
                 return reg.test(ext) || reg.test(mit);
             }) != undefined){
                 $(bas).find('.fileUpBloco-input').val($(this).val().split(/[\\/]/im).pop());
