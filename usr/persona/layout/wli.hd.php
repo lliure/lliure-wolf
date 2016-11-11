@@ -31,9 +31,9 @@ class personaLayout{
     private static function montaMenuSubGrupo($item, $pfLink = '', $nivel = 1, $context = 'lliure-topo-menu'){
         $c = ((!empty($context))? $context. '-': ''). $item['pasta'];
         $l = ((!empty($pfLink))? $pfLink. '>': ''). $item['pasta'];
-        list($nome, $attrs) = self::montaMenuSeparaNome($item);
+        list($nome, $attrs) = self::montaMenuSeparaNome($item['attrs']);
         $attrs['id'] = ((isset($attrs['id']))? $attrs['id']: $c);
-        $attrs['class'] = "dropdown". ((isset($attrs['class']))? ' '. $attrs['class']: ''); ?>
+        $attrs['class'] = "dropdown". ((isset($attrs['class']))? " {$attrs['class']}": ''); ?>
         <li <?php echo ll::implodeMeta($attrs); ?>>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <?php self::montaMeneNome($nome); ?> <span class="caret"></span>
@@ -45,7 +45,7 @@ class personaLayout{
                             self::montaMenuSubGrupo($i, $l, ($nivel + 1), $c);
                         break;
                         case 'item':
-                            self::montaMenuItem($i, $l, ($nivel + 1));
+                            self::montaMenuItem($i, $l, ($nivel + 1), $c);
                         break;
                     }
                 } ?>
@@ -55,27 +55,27 @@ class personaLayout{
 
     private static function montaMenuItem($item, $pfLink = '', $nivel = 1, $context = 'lliure-topo-menu'){
         global $_ll;
-        $c = ((!empty($context))? $context. '-': ''). ((isset($item['item']['pasta']))? $item['item']['pasta']: '');
-        $l = ((isset($item['item']['url']))? $item['item']['url']: $_ll['app']['home'] . '&apm=' . ((!empty($pfLink))? $pfLink. '>': '') . $item['item']['pasta']);
-        list($nome, $attrs) = self::montaMenuSeparaNome($item['item']);
-        $attrs['id'] = ((isset($attrs['id']))? $attrs['id']: $c); ?>
+        $c = ((!empty($context))? $context. '-': ''). ((isset($item['pasta']))? $item['pasta']: '');
+        list($nome, $attrs) = self::montaMenuSeparaNome($item['attrs']);
+        $attrs = array_merge(['id' => $c, 'href' => $item['url']], $attrs);
+        $attrs['class'] = "lliure-topo-menu-nivel-{$nivel}". ((isset($attrs['class']))? " {$attrs['class']}": '');
+        $l = ((!empty($attrs['href']))? $attrs['href']:
+            $_ll['app']['home']. '&p='. ((!empty($pfLink))? $pfLink. '>': '').
+            ((isset($attrs['pasta']))? $attrs['pasta']: $item['pasta']));
+        unset($attrs['pasta']); ?>
         <li <?php echo ll::implodeMeta($attrs); ?>>
             <a class="ll_background-400-hover" href="<?php echo $l; ?>"><?php self::montaMeneNome($nome); ?></a>
         </li>
     <?php }
 
-    private static function montaMenuSeparaNome($item){
-        $attrs = array(); $nome = '';
-        if(is_array($item['nome'])){
-            if(isset($item['nome']['fa'], $item['nome']['nome'])){
-                $nome['fa'] = $item['nome']['fa'];
-                $nome['nome'] = $item['nome']['nome'];
-            }elseif(isset($item['nome']['nome']))
-                $nome = $item['nome']['nome'];
-            unset($item['nome']['fa'], $item['nome']['nome']);
-            $attrs = $item['nome'];
-        }else
-            $nome = $item['nome'];
+    private static function montaMenuSeparaNome(array $attrs){
+        $nome = '';
+        if(isset($attrs['fa'], $attrs['nome'])){
+            $nome['fa']   = $attrs['fa'];
+            $nome['nome'] = $attrs['nome'];
+        }elseif(isset($attrs['nome']))
+            $nome = $attrs['nome'];
+        unset($attrs['fa'], $attrs['nome']);
         return array($nome, $attrs);
     }
 

@@ -15,7 +15,7 @@
 
 class lliure {
 	public static $apis = array();
-	
+
 	/**
 	 * @return stdClass
 	 */
@@ -45,7 +45,7 @@ class lliure {
 	}
 
 	/**
-	 * json_encode alternativo com op��o de compactar 
+	 * json_encode alternativo com op��o de compactar
 	 *
 	 * @param $array
 	 * @param bool $compacto
@@ -176,7 +176,7 @@ class lliure {
 			else
 				return false;
 		}
-		
+
 		$usQu = @mysql_query('SELECT id from '.PREFIXO.'lliure_autenticacao where login = "'.$login.'" limit 1');
 		if(@mysql_num_rows($usQu) > 0){
 			$user = mysql_fetch_array($usQu);
@@ -202,7 +202,7 @@ class lliure {
 		return true;
 
 	}
-	
+
 	/* Revoga a autentica��o do us�rio no sistema */
 	public static function desautentica(){
 		unset($_SESSION['ll']['user']);
@@ -323,7 +323,7 @@ class lliure {
 	 *
 	 * Modo de usar:
 	 * <?php require_once ll::header(); ?>
-	 * 
+	 *
 	 * @return string
 	 */
 	public static function header(){
@@ -333,10 +333,10 @@ class lliure {
 	/**
 	 * Devolve o caminho do arquivo que processa os scrits do conteudo
 	 * Usado na conatru��o de layouts para o sistema.
-	 * 
+	 *
 	 * Modo de usar:
 	 * <?php require_once ll::content(); ?>
-	 * 
+	 *
 	 * @return string
 	 */
 	public static function content(){
@@ -349,7 +349,7 @@ class lliure {
 	 *
 	 * Modo de usar:
 	 * <?php require_once ll::footer(); ?>
-	 * 
+	 *
 	 * @return string
 	 */
 	public static function footer(){
@@ -455,10 +455,7 @@ class lliure {
 		return self::loadComponent('opt', $name);
 	}
 
-	private static function loadComponent(
-		$type,
-		$name
-	){
+	private static function loadComponent($type, $name){
 		global $_ll;
 		$name = strtolower($name);
 		if (file_exists($f = ($_ll['dir']. $type. '/'. $name. '/' .($a =  'boot' ). '.php'))
@@ -541,61 +538,72 @@ class lliure {
 		global $_ll; self::menuPulular($_ll['mainMenu'], $itens);}
 
 	private static function menuPulular(&$lista, $itens){
-		foreach($itens as &$item){
+		foreach($itens as $k => $item){
 			switch(isset($item['type'])? $item['type']: null){
-				case 'grupo': case 'subGrupo':
-					$lista[$item['pasta']]['type'] = $item['type'];
-					$lista[$item['pasta']]['nome'] = ((!!$item['nome'])? $item['nome']: $lista[$item['pasta']]['nome']);
-					$lista[$item['pasta']]['pasta'] = $item['pasta'];
-					$lista[$item['pasta']]['active'] = $item['active'];
-					if(isset($lista[$item['pasta']]))
-						self::menuPulular($lista[$item['pasta']]['itens'], $item['itens']);
-					else
-						$lista[$item['pasta']]['itens'] = $item['pasta'];
+				case 'grupo':
+				case 'subGrupo':
+					$lista[$item['pasta']]['type'] = ((isset($lista[$item['pasta']]['type']))? $lista[$item['pasta']]['type']: $item['type']);
+					$lista[$item['pasta']]['active'] = ((isset($lista[$item['pasta']]['active']))? $lista[$item['pasta']]['active']: $item['active']);
+					$lista[$item['pasta']]['pasta'] = ((isset($lista[$item['pasta']]['pasta']))? $lista[$item['pasta']]['pasta']: $item['pasta']);
+					$lista[$item['pasta']]['attrs'] = ((!isset($lista[$item['pasta']]['attrs']))? $item['attrs']: ((is_array($item['attrs']))? array_merge($lista[$item['pasta']]['attrs'], $item['attrs']): $lista[$item['pasta']]['attrs']));
+					self::menuPulular($lista[$item['pasta']]['itens'], ((!!$item['itens'])? $item['itens']: array()));
 				break;
 				case 'item':
-					$lista[] = $item;
+					if($item['pasta'] !== null)
+						$lista[$item['pasta']]['attrs'] = array_merge($lista[$item['pasta']]['attrs'], $item['attrs']);
+					else
+						$lista[] = array_merge($item, ['pasta' => $k]);
 				break;
 			}
 		}
 	}
 
-	public static function menuSubGrupo($pasta, $nome = null, array $itens = array()){
-		if((!$itens && isset($nome[0], $nome[0]['type']))){
-			$itens = $nome;
-			$nome = '';}
-		if(is_array($nome) && isset($nome[0], $nome[1])){
-			$nome['fa'] = $nome[0];
-			$nome['nome'] = $nome[1];
-			unset($nome[0], $nome[1]);}
+	public static function menuSubGrupo($pasta, $attrs = null, array $itens = null){
+        if(!$itens){
+            $itens = $attrs;
+            $attrs = [];
+        }
+        if(is_array($attrs) && isset($attrs[0], $attrs[1])){
+            $attrs['fa'] = $attrs[0];
+            $attrs['nome'] = $attrs[1];
+            unset($attrs[0], $attrs[1]);
+        }
+        if(!is_array($attrs))
+            $attrs = ['nome' => $attrs];
 		return array(
-			'type'   => 'subGrupo',
-			'active' => false,
-			'nome'   => $nome,
-			'pasta'  => $pasta,
+            'type'   => 'subGrupo',
+            'active' => false,
+            'pasta'  => $pasta,
+			'attrs'  => $attrs,
 			'itens'  => $itens,
 		);
 	}
 
-	public static function menuGrupo($pasta, $nome = null, array $itens = array()){
-		$item = self::menuSubGrupo($pasta, $nome, $itens);
+	public static function menuGrupo($pasta, $attrs = null, array $itens = null){
+		$item = self::menuSubGrupo($pasta, $attrs, $itens);
 		$item['type'] = 'grupo';
 		return $item;
 	}
 
-	public static function menuItem($url, $nome, array $attrs = array()){
-		if(is_array($nome) && isset($nome[0], $nome[1])){
-			$nome['fa'] = $nome[0];
-			$nome['nome'] = $nome[1];
-			unset($nome[0], $nome[1]);}
+	public static function menuItem($url, $attrs = array()){
+        $pasta = null;
+        if(is_array($attrs) && isset($attrs[0], $attrs[1])){
+            $attrs['fa'] = $attrs[0];
+            $attrs['nome'] = $attrs[1];
+            unset($attrs[0], $attrs[1]);
+        }
+        if(!is_array($attrs))
+            $attrs = ['nome' => $attrs];
+        if(gettype($url) == "integer"){
+            $pasta = $url;
+            $url = null;
+        }
 		return array(
 			'type'   => 'item',
-			'active' => false,
-			'item'   => array(
-				'url'  => $url,
-				'nome'  => $nome,
-				'attrs' => $attrs,
-			),
+            'active' => false,
+            'pasta'  => $pasta,
+            'url'    => $url,
+            'attrs'  => $attrs,
 		);
 	}
 
@@ -636,14 +644,14 @@ class lliure {
 			$obj[$k] = self::ota($v);
 		return $obj;
 	}
-	
-	
+
+
 	/**
 	 * Bloqueio
 	 */
 	public function denied($mod){
 		global $_ll;
-		echo 'Voc� n�o tem permiss�o para acessar est� p�gina! <br/>';
+		echo 'Você não tem permissão para acessar está página! <br/>';
 		echo '<a href="' . $_ll['url']['real'] . '">Retornar a �rea de trabalho</a>';
 		die();
 	}

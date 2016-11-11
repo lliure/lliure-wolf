@@ -80,19 +80,15 @@ class aplimo {
         self::basePath($_ll['app']['pasta']);
 
         self::menuNovo(array(
-            self::menuGrupo('lliure', ['nome' => 'lliure', 'class' => 'hidden-sm hidden-md hidden-lg']),
+            self::menuGrupo('lliure', ['nome' => 'Sistema', 'class' => 'hidden-sm hidden-md hidden-lg'], [])
         ));
 
         foreach($_ll['mainMenu'] as $item){
             self::menuNovo(array(
                 self::menuGrupo('lliure', array(
-                    self::menuItem(array_merge(
-                        $item['item'],
-                        array('attrs' => array_merge(
-                            $item['item']['attrs'],
-                            ((isset($item['item']['attrs']['class']))? array('class' => $item['item']['attrs']['class']. ' hidden-sm hidden-md hidden-lg'): array('class' => 'hidden-sm hidden-md hidden-lg'))
-                        ))
-                    ))
+                    self::menuItem(array_merge_recursive($item, ['attrs' =>
+                        ((isset($item['attrs']['class']))? ['class' => "{$item['item']['attrs']['class']} hidden-sm hidden-md hidden-lg"]: ['class' => 'hidden-sm hidden-md hidden-lg'])
+                    ]))
                 )),
             ));
         }
@@ -195,65 +191,73 @@ class aplimo {
     }
 
     private static function novoMenuPulular(&$lista, $itens){
-        foreach($itens as $item){
-            switch($item['type']){
-                case 'grupo': case 'subGrupo':
-                    $lista[$item['pasta']]['type'] = $item['type'];
-                    $lista[$item['pasta']]['nome'] = ((!!$item['nome'])? $item['nome']: $lista[$item['pasta']]['nome']);
-                    $lista[$item['pasta']]['pasta'] = $item['pasta'];
-                    $lista[$item['pasta']]['active'] = $item['active'];
-                    if(isset($lista[$item['pasta']]))
-                        self::novoMenuPulular($lista[$item['pasta']]['itens'], $item['itens']);
-                    else
-                        $lista[$item['pasta']]['itens'] = $item['pasta'];
+        foreach($itens as $k => $item){
+            switch(isset($item['type'])? $item['type']: null){
+                case 'grupo':
+                case 'subGrupo':
+                    $lista[$item['pasta']]['type'] = ((isset($lista[$item['pasta']]['type']))? $lista[$item['pasta']]['type']: $item['type']);
+                    $lista[$item['pasta']]['active'] = ((isset($lista[$item['pasta']]['active']))? $lista[$item['pasta']]['active']: $item['active']);
+                    $lista[$item['pasta']]['pasta'] = ((isset($lista[$item['pasta']]['pasta']))? $lista[$item['pasta']]['pasta']: $item['pasta']);
+                    $lista[$item['pasta']]['attrs'] = ((!isset($lista[$item['pasta']]['attrs']))? $item['attrs']: ((is_array($item['attrs']))? array_merge($lista[$item['pasta']]['attrs'], $item['attrs']): $lista[$item['pasta']]['attrs']));
+                    self::novoMenuPulular($lista[$item['pasta']]['itens'], ((!!$item['itens'])? $item['itens']: array()));
                 break;
                 case 'item':
-                    $lista[] = $item;
+
+                    $lista[$item['pasta']]['type'] = ((isset($lista[$item['pasta']]['type']))? $lista[$item['pasta']]['type']: $item['type']);
+                    $lista[$item['pasta']]['active'] = ((isset($lista[$item['pasta']]['active']))? $lista[$item['pasta']]['active']: $item['active']);
+                    $lista[$item['pasta']]['pasta'] = ((isset($lista[$item['pasta']]['pasta']))? $lista[$item['pasta']]['pasta']: $item['pasta']);
+                    if(isset($item['url'])) $lista[$item['pasta']]['url'] = ((isset($lista[$item['pasta']]['url']))? $lista[$item['pasta']]['url']: $item['url']);
+                    $lista[$item['pasta']]['attrs'] = array_merge(((isset($lista[$item['pasta']]['attrs']))? $lista[$item['pasta']]['attrs']: array()), $item['attrs']);
                 break;
             }
         }
     }
 
-    public function menuSubGrupo($pasta, $nome, array $itens = array()){
-        if((!$itens && isset($nome[0], $nome[0]['type']))){
-            $itens = $nome;
-            $nome = '';}
-
-        if(is_array($nome) && isset($nome[0], $nome[1])){
-            $nome['fa'] = $nome[0];
-            $nome['nome'] = $nome[1];
-            unset($nome[0], $nome[1]);}
-
+    public function menuSubGrupo($pasta, $attrs, array $itens = null){
+        if(!$itens){
+            $itens = $attrs;
+            $attrs = [];
+        }
+        if(is_array($attrs) && isset($attrs[0], $attrs[1])){
+            $attrs['fa'] = $attrs[0];
+            $attrs['nome'] = $attrs[1];
+            unset($attrs[0], $attrs[1]);
+        }
+        if(!is_array($attrs))
+            $attrs = ['nome' => $attrs];
         return array(
             'type'   => 'subGrupo',
             'active' => false,
-            'nome'   => $nome,
             'pasta'  => $pasta,
+            'attrs'  => $attrs,
             'itens'  => $itens,
         );
     }
 
-    public function menuGrupo($pasta, $nome, array $itens = array()){
-        $item = self::menuSubGrupo($pasta, $nome, $itens);
+    public function menuGrupo($pasta, $attrs, array $itens = null){
+        $item = self::menuSubGrupo($pasta, $attrs, $itens);
         $item['type'] = 'grupo';
         return $item;
     }
 
-    public function menuItem($pasta, $nome = null, array $attrs = array()){
+    public function menuItem($pasta, $attrs = null){
 
-        if(is_array($nome) && isset($nome[0], $nome[1])){
-            $nome['fa'] = $nome[0];
-            $nome['nome'] = $nome[1];
-            unset($nome[0], $nome[1]);}
+        if(is_array($attrs) && isset($attrs[0], $attrs[1])){
+            $attrs['fa'] = $attrs[0];
+            $attrs['nome'] = $attrs[1];
+            unset($attrs[0], $attrs[1]);
+
+        }if(!is_array($attrs) && !empty($attrs))
+            $attrs = ['nome' => $attrs];
+
+        elseif($attrs === null)
+            return $pasta;
 
         return array(
             'type'   => 'item',
             'active' => false,
-            'item'   => ((is_array($pasta))? $pasta: array(
-                'nome'  => $nome,
-                'pasta' => $pasta,
-                'attrs' => $attrs,
-            )),
+            'pasta'  => $pasta,
+            'attrs'  => $attrs,
         );
     }
 
@@ -505,29 +509,6 @@ class aplimo {
     private function start(){
         global $_ll;
 
-        /*$apm_load = 'api/aplimo/ne_trovi.php';
-
-        if(isset($_GET['p']))
-            $page = $_GET['p'];
-
-        elseif(isset($_GET['sapm']))
-            $page = $_GET['sapm'];
-
-        else
-            $page = $_GET['apm'];
-
-        if(isset($_GET['sapm']) && file_exists(self::$basePath . $_GET['apm'] . '/' . $_GET['sapm'] . '/' . $page . '.php')){
-            $apm_load = self::$basePath . $_GET['apm'] . '/' . $_GET['sapm'] . '/' . $page . '.php';
-
-        }elseif(isset($_GET['apm']) && file_exists(self::$basePath . $_GET['apm'] . '/' . $page . '.php')){
-            $apm_load = self::$basePath . $_GET['apm'] . '/' . $page . '.php';
-
-        }elseif(!isset($_GET['sapm']) && file_exists(self::$basePath . 'home/home.php')){
-            $apm_load = self::$basePath . 'home/home.php';
-        }
-
-        require_once($apm_load);*/
-
         if($this->pagePath === false){
             echo ('Comando aplimo::header() ainda não foi executado'); return null;}
 
@@ -607,7 +588,7 @@ class aplimo {
 
                 break;
                 case 'item':
-                    if(isset($item['item']['pasta']) && (((!!$prefUrl)? $prefUrl. '/': ''). $item['item']['pasta']) == $this->pagePath && ($item['item']['pasta'] == $this->pageFile || (isset($item['item']['attrs']['mark']) && in_array($this->pageFile, $item['item']['attrs']['mark']))))
+                    if(isset($item['pasta']) && (((!!$prefUrl)? $prefUrl. '/': ''). $item['pasta']) == $this->pagePath && ($item['pasta'] == $this->pageFile || (isset($item['attrs']['mark']) && in_array($this->pageFile, $item['attrs']['mark']))))
                         $ret = $menu[$pasta]['active'] = true;
 
                 break;
@@ -617,10 +598,10 @@ class aplimo {
     }
 
     private function montaMenuGrupo($item){
-        list($nome, $attrs) = self::montaMenuSeparaNome($item);
+        list($nome, $attrs) = self::montaMenuSeparaNome($item['attrs']);
         $attrsToBot = $attrsToTop = $attrs;
-        $attrsToTop['class'] = "apm-menu-grupo-header". (($item['active'])? ' apm-menu-item-active': ''). ((isset($attrs['class']))? ' '. $attrs['class']: '');
-        $attrsToBot['class'] = "apm-menu-grupo-footer". (($item['active'])? ' apm-menu-item-active': ''). ((isset($attrs['class']))? ' '. $attrs['class']: ''); ?>
+        $attrsToTop['class'] = "apm-menu-grupo-header". (($item['active'])? ' apm-menu-item-active': ''). ((isset($attrs['class']))? " {$attrs['class']}": '');
+        $attrsToBot['class'] = "apm-menu-grupo-footer". (($item['active'])? ' apm-menu-item-active': ''). ((isset($attrs['class']))? " {$attrs['class']}": ''); ?>
         <li <?php echo ll::implodeMeta($attrsToTop); ?>>
             <div><?php self::montaMeneNome($nome); ?></div>
         </li>
@@ -640,8 +621,8 @@ class aplimo {
     private function montaMenuSubGrupo($item, $pfLink = '', $nivel = 1, $context = 'main'){
         $c = ((!empty($context))? $context. '-': ''). $item['pasta'];
         $l = ((!empty($pfLink))? $pfLink. '>': ''). $item['pasta'];
-        list($nome, $attrs) = self::montaMenuSeparaNome($item);
-        $attrs['class'] = "panel panel-default". (($item['active'])? ' apm-menu-item-active': ''). ((isset($attrs['class']))? ' '. $attrs['class']: '') ?>
+        list($nome, $attrs) = self::montaMenuSeparaNome($item['attrs']);
+        $attrs['class'] = "panel panel-default". (($item['active'])? ' apm-menu-item-active': ''). ((isset($attrs['class']))? " {$attrs['class']}": '') ?>
         <li <?php echo ll::implodeMeta($attrs); ?>>
             <a class="<?php echo (($item['active'])? 'apm-menu-item-active': 'collapsed'); ?>" data-toggle="collapse" data-parent="#apm-menu-panel-group-<?php echo $context; ?>" href="#apm-menu-accordion-<?php echo $c; ?>">
                 <div class="panel-heading ll_background-hover<?php echo (($item['active'])? ' ll_background-500': ''); ?>" style="padding-left: <?php echo (15 * min($nivel, 3)); ?>px">
@@ -671,29 +652,24 @@ class aplimo {
 
     private function montaMenuItem($item, $pfLink = '', $nivel = 1){
         global $_ll;
-        $l = ((isset($item['item']['url']))? $item['item']['url']: ($_ll['app']['home'] . '&apm=' . ((!empty($pfLink))? $pfLink. '>': '') . $item['item']['pasta']));
-        list($nome, $attrs) = self::montaMenuSeparaNome($item['item']);
-        $attrs = array_merge($attrs, $item['item']['attrs']);
-        $attrs['class'] = "list-group-item". (($item['active'])? ' apm-menu-item-active': ''). ((isset($attrs['class']))? ' '. $attrs['class']: ''); ?>
+        $l = ((isset($item['url']))? $item['url']: ($_ll['app']['home'] . '&apm=' . ((!empty($pfLink))? $pfLink. '>': '') . $item['pasta']));
+        list($nome, $attrs) = self::montaMenuSeparaNome($item['attrs']); unset($attrs['mark']); $attrs = array_merge(['href' => $l], $attrs);
+        $attrs['class'] = "list-group-item". (($item['active'])? ' apm-menu-item-active': ''). ((isset($attrs['class']))? " {$attrs['class']}": ''); ?>
         <li <?php echo ll::implodeMeta($attrs); ?>>
-            <a class="ll_background-hover<?php echo (($item['active'])? ' ll_background-500': ''); ?>" href="<?php echo $l; ?>" style="padding-left: <?php echo (15 * min($nivel, 3)); ?>px">
+            <a class="ll_background-hover<?php echo (($item['active'])? ' ll_background-500': ''); ?>" href="<?php echo $attrs['href']; ?>" style="padding-left: <?php echo (15 * min($nivel, 3)); ?>px">
                 <?php self::montaMeneNome($nome); ?>
             </a>
         </li>
     <?php }
 
-    private function montaMenuSeparaNome($item){
-        $attrs = array(); $nome = '';
-        if(is_array($item['nome'])){
-            if(isset($item['nome']['fa'], $item['nome']['nome'])){
-                $nome['fa'] = $item['nome']['fa'];
-                $nome['nome'] = $item['nome']['nome'];
-            }elseif(isset($item['nome']['nome']))
-                $nome = $item['nome']['nome'];
-            unset($item['nome']['fa'], $item['nome']['nome']);
-            $attrs = $item['nome'];
-        }else
-            $nome = $item['nome'];
+    private function montaMenuSeparaNome(array $attrs){
+        $nome = '';
+        if(isset($attrs['fa'], $attrs['nome'])){
+            $nome['fa']   = $attrs['fa'];
+            $nome['nome'] = $attrs['nome'];
+        }elseif(isset($attrs['nome']))
+            $nome = $attrs['nome'];
+        unset($attrs['fa'], $attrs['nome']);
         return array($nome, $attrs);
     }
 
@@ -701,7 +677,7 @@ class aplimo {
         echo ((is_array($nome))? "<i class=\"fa fa-{$nome['fa']}\"></i> {$nome['nome']}": $nome);}
 
 
-    
+
     private function hdMenuMonta(){ global $_ll; ?>
         <nav id="apm-h-menu" class="navbar navbar-default<?php echo ((empty($this->hdMenuLeft) && empty($this->hdMenuRigth))? ' apm-h-menu-empty': ''); ?>">
             <div class="navbar-header">
