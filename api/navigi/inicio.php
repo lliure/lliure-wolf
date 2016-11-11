@@ -308,7 +308,7 @@ class navigi{
 			if($this->pesquisa != false) echo
 			'<div>'.
 				'<form class="form-inline" action="onserver.php?api=navigi&ac=pesquisa" method="post">'.
-					'<input name="url" value="'.jf_monta_link($_GET, array('nvg_pg', 'pesquisa')).'" type="hidden">'.
+					'<input name="url" value="'. $_ll['app']['home']. '&' . substr(jf_monta_link($_GET, array('nvg_pg', 'pesquisa')), 1).'" type="hidden">'.
 					'<div class="form-group">'.
 						'<label class="hidden-sm hidden-md hidden-lg">Pesquisar</label>'.
 						'<input class="form-control" placeholder="Pesquisar" name="pesquisa" value="'.(isset($_GET['pesquisa']) ? $_GET['pesquisa'] : '').'" >'.
