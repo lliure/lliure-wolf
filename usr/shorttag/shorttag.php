@@ -141,7 +141,7 @@ class ShortTag{
             $offset = $i['offset'];
             if(!!($dif % 2)) continue;
             $i['shortTag'] = self::Explode($parts[2], $equalizer, $separator);
-            if(preg_match(($query2 = '/^[^\\0]*?\\[\\\\'. preg_quote($i['shortTag'][0]). '\\]/m'), ($sub = substr($testo, $offset)), $conts) > 0) {
+            if(isset($i['shortTag'][0]) && preg_match(($query2 = '/^[^\\0]*?\\[\\\\'. preg_quote($i['shortTag'][0]). '\\]/m'), ($sub = substr($testo, $offset)), $conts) > 0) {
                 $i['shortTag'] = self::Explode($parts[2]. $conts[0], $equalizer, $separator);
                 $i['length'  ] = strlen($parts[2] . $conts[0]);
                 $i['offset'  ] = $i['start'] + $i['length'];
