@@ -195,10 +195,10 @@ class aplimo {
             switch(isset($item['type'])? $item['type']: null){
                 case 'grupo':
                 case 'subGrupo':
-                    $lista[$item['pasta']]['type'] = ((isset($lista[$item['pasta']]['type']))? $lista[$item['pasta']]['type']: $item['type']);
+                    $lista[$item['pasta']]['type']   = ((isset($lista[$item['pasta']]['type']))?   $lista[$item['pasta']]['type']:   $item['type']);
                     $lista[$item['pasta']]['active'] = ((isset($lista[$item['pasta']]['active']))? $lista[$item['pasta']]['active']: $item['active']);
-                    $lista[$item['pasta']]['pasta'] = ((isset($lista[$item['pasta']]['pasta']))? $lista[$item['pasta']]['pasta']: $item['pasta']);
-                    $lista[$item['pasta']]['attrs'] = ((!isset($lista[$item['pasta']]['attrs']))? $item['attrs']: ((is_array($item['attrs']))? array_merge($lista[$item['pasta']]['attrs'], $item['attrs']): $lista[$item['pasta']]['attrs']));
+                    $lista[$item['pasta']]['pasta']  = ((isset($lista[$item['pasta']]['pasta']))?  $lista[$item['pasta']]['pasta']:  $item['pasta']);
+                    $lista[$item['pasta']]['attrs']  = ((!isset($lista[$item['pasta']]['attrs']))? $item['attrs']: ((is_array($item['attrs']))? array_merge($lista[$item['pasta']]['attrs'], $item['attrs']): $lista[$item['pasta']]['attrs']));
                     self::novoMenuPulular($lista[$item['pasta']]['itens'], ((!!$item['itens'])? $item['itens']: array()));
                 break;
                 case 'item':
@@ -214,7 +214,7 @@ class aplimo {
     }
 
     public function menuSubGrupo($pasta, $attrs, array $itens = null){
-        if(!$itens){
+        if($itens === null){
             $itens = $attrs;
             $attrs = [];
         }
@@ -225,6 +225,7 @@ class aplimo {
         }
         if(!is_array($attrs))
             $attrs = ['nome' => $attrs];
+
         return array(
             'type'   => 'subGrupo',
             'active' => false,
@@ -450,7 +451,7 @@ class aplimo {
                     if(($url = self::menuDefineGetApm($item['itens'], ((!!$prefUrl)? $prefUrl. '>': ''). $item['pasta']))) return $url;
                 break;
                 case 'item':
-                    return ((isset($item['item']['pasta']))? ((!!$prefUrl)? $prefUrl. '>': ''). $item['item']['pasta']: false);
+                    return ((gettype($item['pasta']) == "string")? ((!!$prefUrl)? $prefUrl. '>': ''). $item['pasta']: false);
                 break;
             }
         } return false;

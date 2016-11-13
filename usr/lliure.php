@@ -559,7 +559,7 @@ class lliure {
 	}
 
 	public static function menuSubGrupo($pasta, $attrs = null, array $itens = null){
-        if(!$itens){
+        if($itens === null){
             $itens = $attrs;
             $attrs = [];
         }
