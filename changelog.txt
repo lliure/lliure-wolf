@@ -1,7 +1,7 @@
 Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure),  Módulos e API nativas
 
 #### 9.0 Wolf
-- [new] api Datepiker, para crição de campos de data (que funcionem no firefox).
+- [new] api datepicker, para crição de campos de data (que funcionem no firefox).
 - [bug] shottag: no Search e no Explode dava erro quando não encontrava um chave 0 na shotteg.
 - [update][pendente] reformulação do jfbox para usar o modal do bootstrap e usar jquery.deferred como callback de respostas
 - [update] reformulção na construção do menu de conteudo do aplimo, e familiar a mobile.
