@@ -282,17 +282,15 @@ class lliure {
 		if(is_string($file) && ($type == 'js' || $type == 'css')){
 
 			$f = parse_url($file);
-			$base = explode(DIRECTORY_SEPARATOR, realpath(dirname($_SERVER['DOCUMENT_ROOT']. $_SERVER['PHP_SELF'])));
-			$arfl = explode(DIRECTORY_SEPARATOR, ($a = realpath($f['path'])));
+			if(!(isset($f['host']))){
 
-			if(empty($arfl)) return false;
+				$base = explode(DIRECTORY_SEPARATOR, realpath(dirname($_SERVER['DOCUMENT_ROOT']. $_SERVER['PHP_SELF'])));
+				$arfl = explode(DIRECTORY_SEPARATOR, (realpath($f['path'])));
 
-			foreach ($base as $k => $v)
-				if($base[$k] == $arfl[$k])
-					unset($base[$k], $arfl[$k]);
-				else
-					break;
-			$file = str_repeat('../', count($base)). implode('/', $arfl). ((isset($f['query']))? '?'. $f['query']: '');}
+				if(empty($arfl)) return false;
+
+				foreach ($base as $k => $v) if($base[$k] == $arfl[$k]) unset($base[$k], $arfl[$k]); else break;
+				$file = str_repeat('../', count($base)). implode('/', $arfl). ((isset($f['query']))? '?'. $f['query']: '');}}
 
 
 		if($type == 'call' && is_array($file) && isset($file[0]) && strpos($file[0], '::') !== false)
