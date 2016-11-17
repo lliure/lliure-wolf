@@ -9,7 +9,7 @@ Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure),  
 - [update] font-awesome para verção v4.7.0;
 - [bug] careção da url de retorno de pesquisa do navigi, e de adição do filtro na query.
 - [bug] correção no delete do db, não alto gerava corretamente o WHERE.
-- [update] fileup: formar uma array quando passar varios compos com o mesmo nome;
+- [update] fileup: atributo name agora interpreta multiníveis, exp.: 'name' => 'galeria[princila][]';
 - [new] maskplugin foi adicionado como usr; v1.14.0
 - [update] separado do basejs o maskedinput é uma usr agora; v1.4.0
 - [bug] adicionado arquivo boot em usr/menta e usr/metaclass
