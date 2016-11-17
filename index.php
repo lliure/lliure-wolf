@@ -294,32 +294,6 @@ ll::menu(array(
 ));
 
 
-if ($_ll['operation_mode'] == 'x') {
-
-    ll::usr('open-sans');
-    ll::usr('font-awesome');
-    ll::usr('normalize');
-    ll::usr('bootstrap');
-    ll::usr('sessionfix');
-
-
-    /** carrega o estilo do layout */
-    if ($_ll['enter_mode'] == 'wli') {
-        if (!empty($_ll['tema']['wli']['css'])) lliure::add($_ll['tema']['wli']['css'], 'css', 5);
-
-    } else
-        if (!empty($_ll['tema']['nli']['css'])) lliure::add($_ll['tema']['nli']['css'], 'css', 5);
-
-    /** carrega o estilo da pagina */
-    if ($_ll['enter_mode'] == 'wli') {
-        if (isset($_ll[$_ll['operation_type']]['pasta']) && file_exists($f = $_ll[$_ll['operation_type']]['pasta'] . 'estilo.css')) ll::add($f, 'css');
-
-    } else
-        if (isset($_ll[$_ll['operation_type']]['nli']['pasta']) && file_exists($f = $_ll[$_ll['operation_type']]['nli']['pasta'] . 'estilo.css')) ll::add($f, 'css');
-
-}
-
-
 /** carrega o heder do layout */
 if ($_ll['enter_mode'] == 'wli') {
     if (!empty($_ll['tema']['wli']['hd'])) require_once $_ll['tema']['wli']['hd'];
@@ -347,6 +321,31 @@ if ($_ll['operation_mode'] == 'os' || $_ll['operation_mode'] == 'oc') {
     foreach ($_ll[$_ll['operation_type']]['pagina'] as $f)
         if (file_exists($f)) require_once($f);
     die();
+}
+
+
+if ($_ll['operation_mode'] == 'x'){
+
+    ll::usr('open-sans');
+    ll::usr('font-awesome');
+    ll::usr('normalize');
+    ll::usr('bootstrap');
+    ll::usr('sessionfix');
+
+    /** carrega o estilo do layout */
+    if ($_ll['enter_mode'] == 'wli') {
+        if (!empty($_ll['tema']['wli']['css'])) lliure::add($_ll['tema']['wli']['css'], 'css', 5);
+
+    } else
+        if (!empty($_ll['tema']['nli']['css'])) lliure::add($_ll['tema']['nli']['css'], 'css', 5);
+
+    /** carrega o estilo da pagina */
+    if ($_ll['enter_mode'] == 'wli') {
+        if (isset($_ll[$_ll['operation_type']]['pasta']) && file_exists($f = $_ll[$_ll['operation_type']]['pasta'] . 'estilo.css')) ll::add($f, 'css');
+
+    } else
+        if (isset($_ll[$_ll['operation_type']]['nli']['pasta']) && file_exists($f = $_ll[$_ll['operation_type']]['nli']['pasta'] . 'estilo.css')) ll::add($f, 'css');
+
 }
 
 
