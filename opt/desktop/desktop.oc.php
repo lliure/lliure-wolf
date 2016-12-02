@@ -3,44 +3,57 @@
 *
 * lliure WAP
 *
-* @Vers„o 6.0
+* @Vers√£o 6.0
 * @Pacote lliure
 * @Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
-* @LicenÁa http://opensource.org/licenses/gpl-license.php GNU Public License
+* @Licen√ßa http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
-header("Content-Type: text/html; charset=ISO-8859-1",true);
-require_once("../../etc/bdconf.php"); 
-require_once("../../includes/jf.funcoes.php");
 
-switch(isset($_GET['ac']) ? $_GET['ac'] : 'erro' ){
-case 'addDesktop':
-	$url = array_reverse($_SESSION['historicoNav']);
-	$url = $url[0];
+switch(isset($_GET['ac']) ? $_GET['ac'] : 'erro'){ case 'addDesktop': ?>
 
-	$pasta = explode("&", $url);
-	$pasta = explode("=", $pasta['0']);
-	$pasta = $pasta['1'];
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<h4 class="modal-title ll_color">Adicionar ao desktop</h4>
+	</div>
+	<form class="jfbox" action="onserver.php?opt=desktop&ac=addDesktop">
+		<div class="modal-body">
+			<label>Nome</label>
+			<input type="text" class="form-control" name="nome">
+			<small>Adicione o link da pagina atual no desktop usando o nome acima.</small>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+			<button type="submit" class="btn btn-primary btn-lliure">Criar</button>
+		</div>
+	</form>
 
-	$tabela = PREFIXO."lliure_desktop";
-	$dados['nome'] = jf_iconv2($_POST['nome']);
-	$dados['link'] = $url;
-	$dados['imagem'] = "app/".$pasta."/sys/ico.png";
+<?php break; case 'addDesktopError': ?>
 
-	if(!file_exists('../../'.$dados['imagem']))
-		$dados['imagem'] = "opt/stirpanelo/icon_defaulto.png";
-		
-	jf_insert($tabela, $dados);
-	?>
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<h4 class="modal-title ll_color">Adicionar ao desktop</h4>
+	</div>
+	<div class="modal-body">
+		<p>Ouve um erro ao tentar add esta pagina no desktop.</p>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+	</div>
 
-	<script type="text/javascript">
-		jfAlert('<?php echo 'A p·gina <strong>'.$dados['nome'].'</strong> foi adicionada com sucesso ao seu desktop!'; ?>', 0.7);
-	</script>
-	<?php
-	break;
-	
-default:
-case 'erro':	
-	break;
-}
-?>
+<?php break; case 'addDesktopSuccess': ?>
+
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<h4 class="modal-title ll_color">Adicionar ao desktop</h4>
+	</div>
+	<div class="modal-body">
+		<p>Esta pagina foi adicionado ao desktop com sucesso.</p>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+	</div>
+
+<?php break; default: case 'erro':
+
+break;}

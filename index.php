@@ -226,8 +226,13 @@ if (!$ll_segok){
 	$_ll['operation_load'] = 'mensagens';
 } */
 
+$livres = [
+    'rotinas',
+    'mensagens',
+    'sessionfix',
+];
 if ($_ll['enter_mode'] != 'nli') ll::usr('liberacao');
-if (!($_ll['liberado'] = ($_ll['enter_mode'] == 'nli' || Liberacao::test($_ll['operation_type'], $_ll['operation_load'])))) {
+if (!($_ll['liberado'] = (($_ll['enter_mode'] == 'nli') || ($_ll['operation_type'] == 'api') || ($_ll['operation_type'] == 'opt' && in_array($_ll['operation_load'], $livres)) || Liberacao::test($_ll['operation_type'], $_ll['operation_load'])))) {
     $_ll['desktop'] = false;
     $_ll['operation_type'] = 'opt';
     $_ll['operation_load'] = 'mensagens';

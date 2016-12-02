@@ -1,3 +1,3 @@
 <?php
 
-ll::add('usr/centervertical/centervertical.css', 'css', 3);
+ll::add(__DIR__. '/centervertical.css', 'css', 3);

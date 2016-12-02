@@ -1,3 +1,3 @@
 <?php
 
-ll::add('usr/open-sans/open-sans.css', 'css', 0);
+ll::add(__DIR__. '/open-sans.css', 'css', 0);

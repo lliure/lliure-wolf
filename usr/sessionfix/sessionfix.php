@@ -24,10 +24,6 @@ if (is_session_started() === FALSE) session_start();
 
 final class sessionFix{ static public function script($link){ echo'
 <script type="text/javascript">
-    $(function(){
-       setInterval(function(){
-            $.get("'. $link. '");
-        }, 1000*60*10);
-    });
+    (function($){ $(function(){ setInterval(function(){ $.get("'. $link. '"); }, 1000*60*10); });})(jQuery); 
 </script>
 ';}}

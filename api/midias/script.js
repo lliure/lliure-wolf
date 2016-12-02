@@ -521,7 +521,7 @@ api.Midias.sendFilesBuffer = [];
 				deletar = $(this).closest('.file');
 			});
 			
-			$('#midias-msg-del button.canselar', self).click(function(e){
+			$('#midias-msg-del button.Cancelar', self).click(function(e){
 				deletar = null;
 				$('#midias-msg-del', self).hide();
 			});

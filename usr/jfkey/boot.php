@@ -1,4 +1,4 @@
 <?php
 
 ll::usr('jquery');
-ll::add('usr/jfkey/jquery.jfkey.js', 'js', 1);
+ll::add(__DIR__. '/jquery.jfkey.js', 'js', 1);

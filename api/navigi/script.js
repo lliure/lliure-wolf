@@ -203,18 +203,16 @@ function navigi_limpAllEvent(){
 
 function navigi_apaga(id){
 	if(confirm('Tem certeza que deseja apagar este registro?'))
-		$.post('api/navigi/delete.php', {id: id, token: navigi_token}, function(e){
+		$.post('onserver.php?api=navigi&ac=delete', {id: id, token: navigi_token}, function(e){
 			if(e == ''){
-				jfAlert('Registro excluido com sucesso!', 0.7);
+				/* jfAlert('Registro excluido com sucesso!', 0.7) */;
 				$('#'+id).remove();
 			} else if(e == 403)
-				jfAlert('Você não tem permissão para excluir esse registro!', 2);
+				/* jfAlert('Você não tem permissão para excluir esse registro!', 2) */;
 			else if(e == 412)
-				jfAlert('Não foi possível excluir esse registro!', 2);
+				/* jfAlert('Não foi possível excluir esse registro!', 2) */;
 			else
 				alert(e);
-				
-			
 		});
 }
 
@@ -227,12 +225,12 @@ function navigi_edit(){
 
 function navigi_rename(id, texto, seletor){
 	var as_id = $('#'+id).attr('as_id');
-	$.post('api/navigi/rename.php', {id: as_id, texto: texto, seletor: seletor, token: navigi_token},function(e){
+	$.post('onserver.php?api=navigi&ac=rename', {id: as_id, texto: texto, seletor: seletor, token: navigi_token},function(e){
 		if(e == ''){
 			$('#'+id).find('.navigi_nome').html(texto);
 			$('#'+id).attr({nome: texto});			
 		} else if(e == 403)
-				jfAlert('Você não tem permissão para alterar esse registro!', 2);
+				/* jfAlert('Você não tem permissão para alterar esse registro!', 2) */;
 			else
 				alert(e);
 	});

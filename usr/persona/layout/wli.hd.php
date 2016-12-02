@@ -1,6 +1,8 @@
 <?php
 
-ll::add(__DIR__. '/wli.css.php?cor=94324b', 'css', 5);
+ll::api('jfbox');
+$color = ((isset($_ll['conf']->grupo->{$_ll['tema']['local']}->color))?$_ll['conf']->grupo->{$_ll['tema']['local']}->color: '94324b');
+ll::add(__DIR__. '/wli.css.php?cor='. $color, 'css', 5);
 ll::add(__DIR__. '/script.js', 'js', 5);
 
 

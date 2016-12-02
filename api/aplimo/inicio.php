@@ -142,6 +142,110 @@ class aplimo {
 
 
     /**
+     * @deprecated
+     */
+    function hc_menu($texto, $mod, $tipo = 'a', $orientacao = null, $class = null, $compl = null){
+        $name = null;
+
+        switch($tipo){
+            case 'a':
+            case 'botao':
+                $data['url'] = $mod;
+
+            break; case 'input':
+            $data['name'] = $class;
+            $data['url'] = $compl;
+
+            case 'botao_js':
+                $data['js'] = $mod;
+
+            break;
+        }
+
+        $data['texto'] = $texto;
+        $data['align'] = $orientacao;
+        $data['adjunct'] = $compl;
+        $data['class'] = $class;
+
+        //$data = json_encode($data, true);
+        $this->hc_menu_item($tipo, $data);
+    }
+
+    /**
+     * @deprecated
+     * Exemplo de utlização
+     * $this->hc_menu_item('a', '{"texto": "teste", "url": "http://google.com"}');
+     *
+     * $this->hc_menu_item('a', array("texto" => "teste", "url" => "http://google.com"));
+     *
+     * $type: passe o tipo do menu pode ser
+     * 			   a: link comum
+     * 		botao_js: para um botão com ação javascrip
+     * 		   input: para criar um input
+     */
+    function hc_menu_item($type = 'a', $data = null){
+
+        if(!is_array($data)){
+            $data = utf8_encode($data);
+            $data = json_decode($data, true);}
+
+        $item = array(
+            'tipo'    => $type,
+            'texto'   => $data['texto'],
+            'url'     => isset($data['url'])? $data['url']: null,
+            'align'   => isset($data['align'])? $data['align']: 'right',
+            'class'   => isset($data['class'])? $data['class']: null,
+            'adjunct' => isset($data['adjunct'])? $data['adjunct']: '',
+            'name'    => isset($data['name'])? $data['name']: null,
+            'js'      => isset($data['js'])? $data['js']: null,
+        );
+
+        //$tmp_menu = array_keys($this->hc_menu);
+        //return array_shift($tmp_menu);
+
+        switch($item['tipo']){
+            case 'a':
+
+                if($item['align'] == 'right') self::hdMenuRigth(array(
+                    self::hdMenuA($item['texto'], $item['url'], array('class' => $item['class']))
+                )); else self::hdMenuLeft(array(
+                    self::hdMenuA($item['texto'], $item['url'], array('class' => $item['class']))
+                ));
+
+            break;
+            case 'botao':
+            case 'botao_js':
+                $this->js .= $item['js'];
+
+                $attrs = ShortTag::Explode("[{$item['adjunct']}]");
+                $attrs['class'] = ((isset($attrs['class']))? $attrs['class']. ' ': ''). $item['class'];
+
+                if($item['align'] == 'right') self::hdMenuRigth(array(
+                    self::hdMenuButton($item['texto'], $attrs)
+                )); else self::hdMenuLeft(array(
+                    self::hdMenuButton($item['texto'], $attrs)
+                ));
+
+            break;
+            case 'input':
+                $this->js .= $item['js'];
+                $input = self::hdMenuForm($item['texto'], $item['url'], array(
+                    'form' => array(
+                        'class'  => $item['class'],
+                    ),
+                    'input' => array(
+                        'name'  => $item['name'],
+                        'value' => (isset($_GET[$item['name']])? $_GET[$item['name']]: ''),
+                    ),
+                ));
+                if($item['align'] == 'right') self::hdMenuRigth(array($input));else self::hdMenuLeft(array($input));
+            break;
+        }
+    }
+
+
+
+    /**
      *  $aplimo = new aplimo();
      *  $aplimo->menuNovo(array(
      *
@@ -192,23 +296,19 @@ class aplimo {
 
     private static function novoMenuPulular(&$lista, $itens){
         foreach($itens as $k => $item){
-            switch(isset($item['type'])? $item['type']: null){
-                case 'grupo':
-                case 'subGrupo':
-                    $lista[$item['pasta']]['type']   = ((isset($lista[$item['pasta']]['type']))?   $lista[$item['pasta']]['type']:   $item['type']);
-                    $lista[$item['pasta']]['active'] = ((isset($lista[$item['pasta']]['active']))? $lista[$item['pasta']]['active']: $item['active']);
-                    $lista[$item['pasta']]['pasta']  = ((isset($lista[$item['pasta']]['pasta']))?  $lista[$item['pasta']]['pasta']:  $item['pasta']);
-                    $lista[$item['pasta']]['attrs']  = ((!isset($lista[$item['pasta']]['attrs']))? $item['attrs']: ((is_array($item['attrs']))? array_merge($lista[$item['pasta']]['attrs'], $item['attrs']): $lista[$item['pasta']]['attrs']));
-                    self::novoMenuPulular($lista[$item['pasta']]['itens'], ((!!$item['itens'])? $item['itens']: array()));
-                break;
-                case 'item':
-
-                    $lista[$item['pasta']]['type'] = ((isset($lista[$item['pasta']]['type']))? $lista[$item['pasta']]['type']: $item['type']);
-                    $lista[$item['pasta']]['active'] = ((isset($lista[$item['pasta']]['active']))? $lista[$item['pasta']]['active']: $item['active']);
-                    $lista[$item['pasta']]['pasta'] = ((isset($lista[$item['pasta']]['pasta']))? $lista[$item['pasta']]['pasta']: $item['pasta']);
-                    if(isset($item['url'])) $lista[$item['pasta']]['url'] = ((isset($lista[$item['pasta']]['url']))? $lista[$item['pasta']]['url']: $item['url']);
-                    $lista[$item['pasta']]['attrs'] = array_merge(((isset($lista[$item['pasta']]['attrs']))? $lista[$item['pasta']]['attrs']: array()), $item['attrs']);
-                break;
+            switch(isset($item['type'])? $item['type']: null){ case 'grupo': case 'subGrupo':
+                $lista[$item['pasta']]['type']   = ((isset($lista[$item['pasta']]['type']))?   $lista[$item['pasta']]['type']:   $item['type']);
+                $lista[$item['pasta']]['active'] = ((isset($lista[$item['pasta']]['active']))? $lista[$item['pasta']]['active']: $item['active']);
+                $lista[$item['pasta']]['pasta']  = ((isset($lista[$item['pasta']]['pasta']))?  $lista[$item['pasta']]['pasta']:  $item['pasta']);
+                $lista[$item['pasta']]['attrs']  = ((!isset($lista[$item['pasta']]['attrs']))? $item['attrs']: ((is_array($item['attrs']))? array_merge($lista[$item['pasta']]['attrs'], $item['attrs']): $lista[$item['pasta']]['attrs']));
+                self::novoMenuPulular($lista[$item['pasta']]['itens'], ((!!$item['itens'])? $item['itens']: array()));
+                
+            break; case 'item':
+                $lista[$item['pasta']]['type'] = ((isset($lista[$item['pasta']]['type']))? $lista[$item['pasta']]['type']: $item['type']);
+                $lista[$item['pasta']]['active'] = ((isset($lista[$item['pasta']]['active']))? $lista[$item['pasta']]['active']: $item['active']);
+                $lista[$item['pasta']]['pasta'] = ((isset($lista[$item['pasta']]['pasta']))? $lista[$item['pasta']]['pasta']: $item['pasta']);
+                if(isset($item['url'])) $lista[$item['pasta']]['url'] = ((isset($lista[$item['pasta']]['url']))? $lista[$item['pasta']]['url']: $item['url']);
+                $lista[$item['pasta']]['attrs'] = array_merge(((isset($lista[$item['pasta']]['attrs']))? $lista[$item['pasta']]['attrs']: array()), $item['attrs']);
             }
         }
     }
@@ -340,121 +440,22 @@ class aplimo {
 
 
 
-    /**
-     * @deprecated
-     */
-    function hc_menu($texto, $mod, $tipo = 'a', $orientacao = null, $class = null, $compl = null){
-        $name = null;
-
-        switch($tipo){
-            case 'a':
-            case 'botao':
-                $data['url'] = $mod;
-
-            break; case 'input':
-                $data['name'] = $class;
-                $data['url'] = $compl;
-
-            case 'botao_js':
-                $data['js'] = $mod;
-
-            break;
-        }
-
-        $data['texto'] = $texto;
-        $data['align'] = $orientacao;
-        $data['adjunct'] = $compl;
-        $data['class'] = $class;
-
-        //$data = json_encode($data, true);
-        $this->hc_menu_item($tipo, $data);
-    }
-
-    /**
-     * @deprecated
-     * Exemplo de utlização
-     * $this->hc_menu_item('a', '{"texto": "teste", "url": "http://google.com"}');
-     *
-     * $this->hc_menu_item('a', array("texto" => "teste", "url" => "http://google.com"));
-     *
-     * $type: passe o tipo do menu pode ser
-     * 			   a: link comum
-     * 		botao_js: para um botão com ação javascrip
-     * 		   input: para criar um input
-     */
-    function hc_menu_item($type = 'a', $data = null){
-
-        if(!is_array($data)){
-            $data = utf8_encode($data);
-            $data = json_decode($data, true);}
-
-        $item = array(
-            'tipo'    => $type,
-            'texto'   => $data['texto'],
-            'url'     => isset($data['url'])? $data['url']: null,
-            'align'   => isset($data['align'])? $data['align']: 'right',
-            'class'   => isset($data['class'])? $data['class']: null,
-            'adjunct' => isset($data['adjunct'])? $data['adjunct']: '',
-            'name'    => isset($data['name'])? $data['name']: null,
-            'js'      => isset($data['js'])? $data['js']: null,
-        );
-
-        //$tmp_menu = array_keys($this->hc_menu);
-        //return array_shift($tmp_menu);
-
-        switch($item['tipo']){
-            case 'a':
-
-                if($item['align'] == 'right') self::hdMenuRigth(array(
-                    self::hdMenuA($item['texto'], $item['url'], array('class' => $item['class']))
-                )); else self::hdMenuLeft(array(
-                    self::hdMenuA($item['texto'], $item['url'], array('class' => $item['class']))
-                ));
-
-            break;
-            case 'botao':
-            case 'botao_js':
-                $this->js .= $item['js'];
-
-                $attrs = ShortTag::Explode("[{$item['adjunct']}]");
-                $attrs['class'] = ((isset($attrs['class']))? $attrs['class']. ' ': ''). $item['class'];
-
-                if($item['align'] == 'right') self::hdMenuRigth(array(
-                    self::hdMenuButton($item['texto'], $attrs)
-                )); else self::hdMenuLeft(array(
-                    self::hdMenuButton($item['texto'], $attrs)
-                ));
-                
-            break;
-            case 'input':
-                $this->js .= $item['js'];
-                $input = self::hdMenuForm($item['texto'], $item['url'], array(
-                    'form' => array(
-                        'class'  => $item['class'],
-                    ),
-                    'input' => array(
-                        'name'  => $item['name'],
-                        'value' => (isset($_GET[$item['name']])? $_GET[$item['name']]: ''),
-                    ),
-                ));
-                if($item['align'] == 'right') self::hdMenuRigth(array($input));else self::hdMenuLeft(array($input));
-            break;
-        }
-    }
-
-
-
-    private function menuDefineGetApm(&$menu, $prefUrl = false){
+    private function menuDefineGetApm(&$menu, $prefUrl = false, $home = false){
+        $page = false;
         foreach($menu as $item){
             switch($item['type']){
                 case 'grupo': case 'subGrupo':
-                    if(($url = self::menuDefineGetApm($item['itens'], ((!!$prefUrl)? $prefUrl. '>': ''). $item['pasta']))) return $url;
+                    $page = ((!!$page)? $page: self::menuDefineGetApm($item['itens'], ((!!$prefUrl)? $prefUrl. '>': ''). $item['pasta']));
+                    $home = ((!!$home)? $home: self::menuDefineGetApm($item['itens'], ((!!$prefUrl)? $prefUrl. '>': ''). $item['pasta'], $home));
+
                 break;
                 case 'item':
-                    return ((gettype($item['pasta']) == "string")? ((!!$prefUrl)? $prefUrl. '>': ''). $item['pasta']: false);
+                    $page = ((!!$page)? $page: ((gettype($item['pasta']) == "string")? ((!!$prefUrl)? $prefUrl. '>': ''). $item['pasta']: false));
+                    $home = ((!!$home)? $home: ((isset($item['attrs']['home']) && is_string($item['attrs']['home']))? $item['attrs']['home']: ((gettype($item['pasta']) == "string")? ((!!$prefUrl)? $prefUrl. '>': ''). $item['pasta']: false)));
+
                 break;
             }
-        } return false;
+        } return ((!$home)? $page: $home);
     }
 
     function header(){
@@ -589,8 +590,15 @@ class aplimo {
 
                 break;
                 case 'item':
-                    if(isset($item['pasta']) && (((!!$prefUrl)? $prefUrl. '/': ''). $item['pasta']) == $this->pagePath && ($item['pasta'] == $this->pageFile || (isset($item['attrs']['mark']) && in_array($this->pageFile, $item['attrs']['mark']))))
+                    if(isset($item['pasta']) && (((!!$prefUrl)? $prefUrl. '/': ''). $item['pasta']) == $this->pagePath && ($item['pasta'] == $this->pageFile))
                         $ret = $menu[$pasta]['active'] = true;
+
+                    if(!$ret && isset($item['attrs']['mark'])) if((is_array($item['attrs']['mark']) && !empty($marks = $item['attrs']['mark'])) || (is_string($item['attrs']['mark']) && !!($marks = explode(',', $item['attrs']['mark'])))) foreach($marks as $k => $m){
+                        if(is_numeric($k) && $this->pageFile == $m)
+                            $ret = $menu[$pasta]['active'] = true;
+                        elseif(is_string($k) && isset($_GET[$k]) && ($_GET[$k] == $menu[$pasta]['pasta']))
+                            $ret = $menu[$pasta]['active'] = true;
+                    }
 
                 break;
             }
@@ -655,9 +663,11 @@ class aplimo {
         global $_ll;
         $l = ((isset($item['url']))? $item['url']: ($_ll['app']['home'] . '&apm=' . ((!empty($pfLink))? $pfLink. '>': '') . $item['pasta']));
         list($nome, $attrs) = self::montaMenuSeparaNome($item['attrs']); unset($attrs['mark']); $attrs = array_merge(['href' => $l], $attrs);
-        $attrs['class'] = "list-group-item". (($item['active'])? ' apm-menu-item-active': ''). ((isset($attrs['class']))? " {$attrs['class']}": ''); ?>
+        $attrs['class'] = "list-group-item". (($item['active'])? ' apm-menu-item-active': ''). ((isset($attrs['class']))? " {$attrs['class']}": '');
+        $query = (($q = ((isset($attrs['query']))? ((is_string($attrs['query']))? $attrs['query']: ((is_array($attrs['query']))? http_build_query($attrs['query']): null)) : null)) && !empty($q)? '&'.$q: '');
+        unset($attrs['query'], $attrs['home']); ?>
         <li <?php echo ll::implodeMeta($attrs); ?>>
-            <a class="ll_background-hover<?php echo (($item['active'])? ' ll_background-500': ''); ?>" href="<?php echo $attrs['href']; ?>" style="padding-left: <?php echo (15 * min($nivel, 3)); ?>px">
+            <a class="ll_background-hover<?php echo (($item['active'])? ' ll_background-500': ''); ?>" href="<?php echo $attrs['href']. $query; ?>" style="padding-left: <?php echo (15 * min($nivel, 3)); ?>px">
                 <?php self::montaMeneNome($nome); ?>
             </a>
         </li>

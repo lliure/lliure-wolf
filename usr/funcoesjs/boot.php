@@ -1,4 +1,4 @@
 <?php
 
 ll::usr('jquery');
-ll::add('usr/funcoesjs/funcoes.js', 'js', 1);
+ll::add(__DIR__. '/funcoes.js', 'js', 1);

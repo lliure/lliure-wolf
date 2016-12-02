@@ -75,7 +75,7 @@ echo app_bar('Painel de controle', $botoes); ?>
 
 						<div class="listp">
 							<div class="inter">
-								<a href="?app=<?php echo $file; ?>"><img src="<?php echo $confs['ico']; ?>" alt="<?php echo $confs['nome']; ?>" /></a>
+								<a href="?app=<?php echo $file; ?>"><img src="<?php echo $confs['ico']; ?>" alt="<?php echo $confs['nome']; ?>"  style="max-width: 32px;"/></a>
 								<a href="?app=<?php echo $file; ?>"><span><?php echo $confs['nome']; ?></span></a>
 							</div>
 						</div>
@@ -91,7 +91,7 @@ echo app_bar('Painel de controle', $botoes); ?>
 						<div class="listp">
 							<div class="inter">
 								<a href="onclient.php?opt=instalilo&app=<?php echo $file ?>" class="install install-icone">
-									<i class="fa fa-archive"></i><img src="<?php echo $confs['ico']; ?>" alt="<?php echo $confs['nome']; ?>"/>
+									<i class="fa fa-archive"></i><img src="<?php echo $confs['ico']; ?>" alt="<?php echo $confs['nome']; ?>" style="max-width: 32px;"/>
 								</a>
 								<a href="onclient.php?opt=instalilo&app=<?php echo $file ?>" class="install"><span><?php echo $confs['nome']; ?></span></a>
 							</div>

@@ -56,6 +56,7 @@ class Liberacao extends DB{
             'operation_load' => $operation_load,
             'login' => $login,
         )));
+        if(empty($liberation)) return false;
         return Senha::valid("$login/$operation_type/$operation_load", $liberation['hash']);
     }
 

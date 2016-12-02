@@ -76,6 +76,7 @@ div.listpSelct {
 		
 	div.navigi_item span.navigi_ico img{
 		vertical-align: middle;
+		max-width: 100%;
 		}
 		
 	div.navigi_item span.navigi_nome{

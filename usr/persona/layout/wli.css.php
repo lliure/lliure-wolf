@@ -245,19 +245,18 @@ textarea{
     position: relative;
 }
 
+#ll_topo > .navbar.navbar-default > .container-fluid > .navbar-header > #lliurelogoMargen{
+    float: left;
+    margin-left: 34px;
+    min-height: 1px;
+}
+
 #ll_topo > .navbar.navbar-default > .container-fluid > .navbar-header > .navbar-brand{
     height: 34px;
     line-height: 34px;
     padding: 8px 10px;
     position: relative;
-    margin-left: 34px;
-}
-
-@media (min-width: 768px) {
-    #ll_topo > .navbar.navbar-default > .container-fluid > .navbar-header > .navbar-brand {
-        padding-left: 0;
-        margin-left: 0;
-    }
+    margin-left: 0;
 }
 
 

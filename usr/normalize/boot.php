@@ -1,3 +1,3 @@
 <?php
 
-ll::add('usr/normalize/normalize.css', 'css', 0);
+ll::add(__DIR__. '/normalize.css', 'css', 0);

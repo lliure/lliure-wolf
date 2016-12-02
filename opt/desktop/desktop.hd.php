@@ -9,3 +9,6 @@
  * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
  *
  */
+
+ll::opt('desktop');
+$desktop = new Desktop();

@@ -78,7 +78,7 @@ require_once 'diretorio.php';?>
 			<form class="form">
 				<fieldset></fieldset>
 				<div class="botoes" style="text-align: right;">
-					<button class="canselar" type="button">Canselar</button>
+					<button class="Cancelar" type="button">Cancelar</button>
 					<button class="confirm apagar" type="button">Apagar</button>
 				</div>
 			</form>
