@@ -1,261 +1,457 @@
 /**
-*
-* API navigi - lliure
-*
-* @Versão 6.0
-* @Pacote lliure
-* @Entre em contato com o desenvolvedor <jomadee@glliure.com.br> http://www.lliure.com.br/
-* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
-*
-*/
+ *
+ * API navigi - lliure
+ *
+ * @Versão 6.0
+ * @Pacote lliure
+ * @Entre em contato com o desenvolvedor <jomadee@glliure.com.br> http://www.lliure.com.br/
+ * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
+ *
+ */
 
-
-$(function() {
-	navigi_start();
-});
-
-
-
+Navigi = {};
 function navigi_start(){
-	navigi_limpAllEvent();
-	
-	$('#navigi').html('<span class="load"><img src="api/navigi/img/load.gif" alt=""/></span>');
-	
-	navigi_token = $('#navigi').attr('token');
-	$('#navigi').load('onclient.php?api=navigi',{token: navigi_token},function(){
-		$('#navigi').navigi();
-	});
+    Navigi.start();
 }
 
-navigi_selecionado = null;
+(function($, Vigile, nvg){
 
-jQuery.fn.extend({
-	navigi: function (){			
-		($(this).find('.navigi_item')).bind({
-			click: function(event){
-				event.stopPropagation();
-				//alert(navigi_clickCount());			
-				
-				var id = $(this).attr('id');
-				if(navigi_clickCount() >= 5 && navigi_selecionado == id) { // duplo clique					
-					location = $(this).attr('dclick');
-				} else if($("#navigi_inp_ren").length == 1 && navigi_selecionado != id){
-					var seletor = ($('#'+navigi_selecionado).attr('seletor') == 'undefined' ? null : $('#'+navigi_selecionado).attr('seletor') );		
-					navigi_rename(navigi_selecionado, $('#navigi_inp_ren').val(), seletor);
-					
-				} else if(	(navigi_selecionado != null && navigi_selecionado == id && navigi_clickCount() > 0 && navigi_clickCount() < 5)
-							&& ($('#'+navigi_selecionado).attr('permicao') == 11 || $('#'+navigi_selecionado).attr('permicao') == 10)) {
-					navigi_edit();
-					return false;
-				} else {
-					// Clique unico //////////
-					navigi_clickCount('novo');
-					
-					$('.navigi_item').removeClass('navigi_selecionado');
-					navigi_selecionado = id;
+    $(function(){
+        var $navigi = $('#navigi');
+        if($navigi.length > 0){
+            $navigi.navigi();
+            nvg.start();
+        }
+    });
 
-					$('#'+id).addClass('navigi_selecionado');
-				}			
-			}
-		});
-		
-		($(this).find('.navigi_tr')).bind({
-			click: function(event){
-				if($(this).attr('dclick') != '')
-					location = $(this).attr('dclick');
-			}
-		});
-		
-		($(this).find('.navigi_del')).bind({			
-			click: function(event){
-				var id = $(this).parent().attr('id');
-				event.stopPropagation();
-			
-				navigi_apaga(id);
-			}
-		});
-		
-		
-		($(this).find('.navigi_bmod')).bind({			
-			click: function(event){
-				var href = $(this).attr('href');
-				var tamanho = $(this).attr('rel');				
-				tamanho = tamanho.split("x");
-				
-				jfBox({url: href, width: tamanho[0], height: tamanho[1]}).open();
-				return false;
-			}
-		});
-		
-		($(this).find('.navigi_ren')).bind({			
-			click: function(event){
-				event.stopPropagation();
-				var id = $(this).parent().attr('id');
-				navigi_limpAllEvent();
-				
-				$('#'+id).find('.navigi_nome').append('<div class="navigi_rename"><span class="nvg_ren_left">Renomear</span> <div class="nvg_ren_right"><input type="text" id="navigi_inp_lis_ren" value="'+$('#'+id).attr('nome')+'"> <div class="botoes"><span class="botao"><a href="javascript: void(0);" class="nvg_ren_ok">Renomear</a></span> <span class="botao out"><a href="javascript: navigi_limpAllEvent();">Cancelar</a></span></div> </div> </div>');
-				
-				$('.navigi_rename').click(function(event){
-					event.stopPropagation();
-				});
-				
-				$('.nvg_ren_ok').click(function(){
-					var texto = $('#navigi_inp_lis_ren').val();
-					var seletor = ($('#'+id).attr('seletor') == 'undefined' ? null : $('#'+id).attr('seletor') );	
-					navigi_rename(id, texto, seletor);
-				});
-				
-				$('.navigi_rename input').select();
-			}
-		});
-		
+    var navigi_token = '';
+    nvg.start = function() {
+        navigi_limpAllEvent();
 
-		return this;
-	}	
-});
+        var $load = $('<div class="navigi_load"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i></div>');
+        var $navigi = $('#navigi');
 
-/***************************************			EVENTOS			***************************************/
- $('html').click(function() {
-	if($('#navigi_inp_ren').length > 0){
-		var seletor = ($('#'+navigi_selecionado).attr('seletor') == 'undefined' ? null : $('#'+navigi_selecionado).attr('seletor') );	
-		navigi_rename(navigi_selecionado, $('#navigi_inp_ren').val(), seletor);
-	} else {
-		navigi_limpAllEvent();
-	}
- });
+        if($navigi.length > 0) {
+            navigi_token = $navigi.attr('token');
+            $navigi.addClass('navigi_loading').after($load);
 
-$('html').jfkey('left', function(e){
-	if(navigi_selecionado != null && $('#navigi_inp_ren').length == 0){
-		navigi_clickCount('zera');
-		$('#'+navigi_selecionado).prev().click();
-	} else {
-		return true;
-	}
-});
+            $.ajax({
+                type: "POST",
+                url: 'onclient.php?api=navigi',
+                data: {token: navigi_token},
+                success: function (r) {
+                    r = JSON.parse(r);
+                    $navigi.find('.navigi_areaIcones').html(r.list);
+                    $navigi.find('.navigi_paginacao').html(r.pagi);
+                    $navigi.removeClass('navigi_loading');
+                    $load.remove();
+                    $(window).resize();
+                }
+            });
+        }
+    };
 
-$('html').jfkey('right', function(e){
-	if(navigi_selecionado != null && $('#navigi_inp_ren').length == 0){
-		navigi_clickCount('zera');
-		$('#'+navigi_selecionado).next().click();
-	} else {
-		return true;
-	}
-});
+    var navigi_selecionado = {length: 0};
+    jQuery.fn.navigi = function(){
 
-$('html').jfkey('delete,osxdelete', function(){
-	if($('#navigi_inp_ren, #navigi_inp_lis_ren').length == 1){
-		return true;
-	} else if(navigi_selecionado != null && ($('#'+navigi_selecionado).attr('permicao') == 11 || $('#'+navigi_selecionado).attr('permicao') == 01)){
-		navigi_apaga(navigi_selecionado);
-	} else {
-		return true;
-	}
-});
+        return $(this).each(function(){
 
-$('html').jfkey('f2', function(){
-	if(navigi_selecionado != null && ($('#'+navigi_selecionado).attr('permicao') == 11 || $('#'+navigi_selecionado).attr('permicao') == 10))
-		navigi_edit();
-	else
-		return true;
-});
+            var $contexto = $(this);
 
-$('html').jfkey('enter', function(){	
-	if($('#navigi_inp_ren').length == 1){
-		var seletor = ($('#'+navigi_selecionado).attr('seletor') == 'undefined' ? null : $('#'+navigi_selecionado).attr('seletor') );		
-		navigi_rename(navigi_selecionado, $('#navigi_inp_ren').val(), seletor);
-		
-	} else if($('#navigi_inp_lis_ren').length == 1) {
-		var id = $('#navigi_inp_lis_ren').closest('tr').attr('id');
-		var texto = $('#navigi_inp_lis_ren').val();
-		var seletor = ($('#'+id).attr('seletor') == 'undefined' ? null : $('#'+id).attr('seletor') );				
-		navigi_rename(id, texto, seletor);
-		
-	} else if(navigi_selecionado != null) {
-		location = $('#'+navigi_selecionado).attr('dclick');
-		
-	} else {
-		return true;
-	}
-});
+            /* ICONE */
+            $(this).on('click', '.navigi_contextoMenu', function (e){
 
-$('html').jfkey('esc', function(){	
-	navigi_limpAllEvent();
-});
+                e.stopPropagation();
+                return false;
+
+            /* ICONE */
+            }).on('click', '.navigi_item', function (e) {
+
+                var $id = $(this);
+
+                if(!$id.hasClass('navigi_contextoMenuAberto')){
+                    if ( !!e.originalEvent )
+                        location = $id.attr('dclick');
+
+                    else {
+                        navigi_limpAllEvent();
+                        navigi_selecionado = $id.addClass('navigi_selecionado');
+                    }
+                }
+
+                taphold = false;
+                e.stopPropagation();
+                return false;
+
+            /* ICONE */
+            }).on('mouseup', '.navigi_item', function (e){
+
+                var $id = $(this).closest('.navigi_item');
+
+                if(e.which == 2){
+                    navigi_limpAllEvent();
+                    navigi_selecionado = $id.addClass('navigi_selecionado');}
+
+            /* ICONE */
+            }).on('contextmenu', '.navigi_item', function (e){
+
+                navigi_limpAllEvent();
+                var $id = $(this).closest('.navigi_item');
+                navigi_selecionado = $id.addClass('navigi_selecionado navigi_contextoMenuAberto');
+
+                e.stopPropagation();
+                return false;
+
+            /* ICONE */
+            }).on("taphold", '.navigi_item', {duration: 1200}, function(e){
+
+                navigi_limpAllEvent();
+
+                var $id = $(this).closest('.navigi_item');
+                navigi_selecionado = $id.addClass('navigi_selecionado navigi_contextoMenuAberto');
+                taphold = true;
+
+                e.stopPropagation();
+                return false;
+
+            /* ICONE */
+            }).on('click', '.navigi_menuContextoOpen', function (e){
+
+                var $id = $(this).closest('.navigi_item');
+                $id.addClass('navigi_contextoMenuAberto');
+
+                e.stopPropagation();
+                return false;
+
+            /* ICONE */
+            }).on('click', '.navigi_icone_rename', function (e){
+                if(!$(this).is(':disabled')) {
+                    var $id = $(this).closest('.navigi_item');
+                    $id.removeClass('navigi_contextoMenuAberto');
+                    navigi_edit();
+                }
+                e.stopPropagation();
+                return false;
+
+            /* ICONE */
+            }).on('click', '.navigi_icone_delete', function (e){
+                if(!$(this).is(':disabled')) {
+                    var $id = $(this).closest('.navigi_item');
+                    $id.removeClass('navigi_contextoMenuAberto');
+                    navigi_delete();
+                }
+                e.stopPropagation();
+                return false;
+
+            /* ICONE */
+            }).on('click', '.navigi_icone_open', function (e){
+
+                var $id = $(this).closest('.navigi_item');
+                location = $id.attr('dclick');
+
+                e.stopPropagation();
+                return false;
+            });
+
+            /* ICONE */
+            if($contexto.is('[data-exibicao="icone"]')){
+                function windowResize() {
+                    var width = $contexto.width();
+                    var porcen = (100 / Math.ceil(width / 150));
+                    $contexto.find('.navigi_item').css({'min-width': porcen + '%', 'max-width': porcen + '%'});
+                }
+                $(window).resize(windowResize);
+                windowResize();
+            }
+
+            /* LISTA */
+            $(this).on('click', '.navigi_tr', function (){
+                if ($(this).attr('dclick') != '')
+                    location = $(this).attr('dclick');
+
+            /* LISTA */
+            }).on('click', '.navigi_del', function (e){
+
+                var del = $(this).closest('.navigi_tr');
+                var id = del.attr('as_id');
+                navigi_apaga(id).done(function(){
+                    del.remove();
+                });
+
+                e.stopPropagation();
+                return false;
+
+            /* LISTA */
+            }).on('click', '.navigi_bmod', function (e){
+
+                var href = $(this).attr('href');
+                var tamanho = $(this).attr('rel');
+                tamanho = tamanho.split("x");
+
+                jfBox({url: href, width: tamanho[0], height: tamanho[1]}).open();
+                e.stopPropagation();
+                return false;
+
+            /* LISTA */
+            }).on('click', '.navigi_ren', function (e){
+
+                var $id = $(this).closest('.navigi_tr');
+                var id = $id.attr('as_id');
+                navigi_limpAllEvent();
+
+                var inputName, btnRename, btnCansel;
+                $id.addClass('navigi_editandoNome').find('.navigi_nome').after([
+                    $('<div>', {'class': 'navigi_rename_form', click: function(e){ e.stopPropagation(); return false; }}).append([
+                        $('<div>', {'class': 'input-group'}).append([
+                            (inputName = $('<input>', {'class': 'form-control input-sm', 'type': 'text', 'value': $id.attr('nome')})),
+                            $('<span>', {'class': 'input-group-btn'}).append([
+                                (btnRename = $('<button>', {'class': 'btn btn-default btn-sm', 'type': 'button'}).append($('<i>', {'class': 'fa fa-check'}).css({'line-height': 'inherit'}))),
+                                (btnCansel = $('<button>', {'class': 'btn btn-default btn-sm', 'type': 'button'}).append($('<i>', {'class': 'fa fa-times'}).css({'line-height': 'inherit'})))
+                            ])
+                        ])
+                    ])
+                ]);
+
+                btnCansel.click(function () {
+                    navigi_limpAllEvent();
+                });
+
+                btnRename.click(function(){
+                    var texto = inputName.val();
+                    var seletor = ((!!$id.attr('seletor'))? null: $id.attr('seletor'));
+
+                    inputName.prop('disabled', true);
+                    btnRename.prop('disabled', true);
+                    btnCansel.prop('disabled', true);
+
+                    navigi_rename(id, texto, seletor).done(function (texto){
+                        $id.find('.navigi_nome').html(texto);
+                        $id.attr({nome: texto});
+                        navigi_limpAllEvent();
+
+                    }).fail(function(){
+                        inputName.prop('disabled', false);
+                        btnRename.prop('disabled', false);
+                        btnCansel.prop('disabled', false);
+                    });
+                });
+
+                inputName.select();
+                e.stopPropagation();
+                return false;
+
+            });
+
+        });
+
+    };
+
+    /*************************************** EVENTOS ***************************************/
+    var $html = $('html');
+
+    $html.click(function (e) {
+        if(e.which == 1) navigi_limpAllEvent();
+    });
+
+    $html.jfkey('left', function (e){
+        if (navigi_selecionado.length > 0 && $('#navigi_inp_ren').length == 0){
+            if(navigi_selecionado.prev().length > 0)
+                navigi_selecionado.prev().click();
+            else
+                navigi_selecionado.siblings('.navigi_item:last-of-type').click();
+        } else {
+            return true;
+        }
+    });
+
+    $html.jfkey('right', function (e) {
+        if (navigi_selecionado.length > 0 && $('#navigi_inp_ren').length == 0){
+            if(navigi_selecionado.next('.navigi_item').length > 0)
+                navigi_selecionado.next('.navigi_item').click();
+            else
+                navigi_selecionado.siblings('.navigi_item:first-of-type').click();
+        } else
+            return true;
+    });
+
+    $html.jfkey('delete,osxdelete', function(){
+        if ($('#navigi_inp_ren, #navigi_inp_lis_ren').length == 1) {
+            return true;
+        } else if (navigi_selecionado.length > 0 && (navigi_selecionado.attr('permicao') == '11' || navigi_selecionado.attr('permicao') == '01')){
+
+            /* navigi_apaga(navigi_selecionado.attr('as_id')).done(function(){
+                navigi_selecionado.remove();
+            }); */
+
+            navigi_delete();
+
+        } else
+            return true;
+    });
+
+    $html.jfkey('f2', function (){
+        if (navigi_selecionado.length > 0 && (navigi_selecionado.attr('permicao') == '11' || navigi_selecionado.attr('permicao') == '10'))
+            navigi_edit();
+        else
+            return true;
+    });
+
+    $html.jfkey('esc', function () {
+        navigi_limpAllEvent();
+    });
 
 
-/***************************************			FUNÇÕES			***************************************/
+    /*************************************** FUNÇÕES ***************************************/
+    function navigi_limpAllEvent() {
+        if (navigi_selecionado.length > 0) {
 
-function navigi_limpAllEvent(){
-	if(navigi_selecionado != null){
-		if($('#navigi_inp_ren').length > 0){
-			$('#'+navigi_selecionado+' .navigi_nome').html($('#'+navigi_selecionado).attr('nome'));
-		}
-		
-		$('.navigi_item').removeClass('navigi_selecionado');
-		navigi_selecionado = null
-		navigi_clickCount('zera');
-	} else if($('.navigi_rename').length > 0){
-		$('.navigi_rename').fadeOut('100', function(){
-			$(this).remove();
-		});
-	}
-}
+            /* if ($('#navigi_inp_ren').length > 0){
+                $('#' + navigi_selecionado + ' .navigi_nome').html($('#' + navigi_selecionado).attr('nome'));
+            } */
 
-function navigi_apaga(id){
-	if(confirm('Tem certeza que deseja apagar este registro?'))
-		$.post('onserver.php?api=navigi&ac=delete', {id: id, token: navigi_token}, function(e){
-			if(e == ''){
-				/* jfAlert('Registro excluido com sucesso!', 0.7) */;
-				$('#'+id).remove();
-			} else if(e == 403)
-				/* jfAlert('Você não tem permissão para excluir esse registro!', 2) */;
-			else if(e == 412)
-				/* jfAlert('Não foi possível excluir esse registro!', 2) */;
-			else
-				alert(e);
-		});
-}
+            $('#navigi_inp_ren, #navigi_icone_form_deletando').remove();
+            $('.navigi_item').removeClass('navigi_selecionado navigi_editandoNome navigi_contextoMenuAberto navigi_itemDeletando');
+            navigi_selecionado = {length: 0};
 
-function navigi_edit(){
-	$('#'+navigi_selecionado+' .navigi_nome').html('<input value="'+$('#'+navigi_selecionado).attr('nome')+'" id="navigi_inp_ren"/>');
-	$('#'+navigi_selecionado+' input').select().click(function(e){
-		e.stopPropagation();
-	});
-}
+        } else if ($('.navigi_tr .navigi_rename_form').length > 0) {
 
-function navigi_rename(id, texto, seletor){
-	var as_id = $('#'+id).attr('as_id');
-	$.post('onserver.php?api=navigi&ac=rename', {id: as_id, texto: texto, seletor: seletor, token: navigi_token},function(e){
-		if(e == ''){
-			$('#'+id).find('.navigi_nome').html(texto);
-			$('#'+id).attr({nome: texto});			
-		} else if(e == 403)
-				/* jfAlert('Você não tem permissão para alterar esse registro!', 2) */;
-			else
-				alert(e);
-	});
-}
+            $('.navigi_tr').removeClass('navigi_selecionado navigi_editandoNome');
+            $('.navigi_tr .navigi_rename_form').remove();
 
-navigi_vcc = null;
-function navigi_clickCount(acao){
-	if(acao == 'novo'){
-		navigi_vcc = 6;
-		navigi_clickCount('start');
-	} else if(acao == 'start'){
-		navigi_vcc--;
-		
-		if(navigi_vcc < 0)
-			navigi_vcc = 0;
-		
-		if(navigi_vcc > 0)
-			setTimeout(function(){
-				navigi_clickCount('start');
-			}, 500);
-	} else if(acao == 'zera'){
-		navigi_vcc = null;
-	} else {
-		return navigi_vcc;
-	}
-	
-	return false;
-}
+        }
+    }
+
+    function navigi_delete(){
+
+        var btnConfirm, btnCansel;
+        var formEditName = $('<div>', {id: 'navigi_icone_form_deletando', class: 'text-left'}).append([
+            $('<div>', {'class': 'alert alert-warning well-sm'}).css({'margin-bottom': 5}).html('<small><strong>Cuidado!</strong> Deseja realmente apagar este item.</small>'),
+            $('<div>', {'class': 'text-right'}).append([
+                $('<div>', {'class': 'btn-group'}).append([
+                    (btnConfirm = $('<button>', {type: "button", class: "btn btn-default btn-sm"}).append($('<i>', {'class': 'fa fa-trash-o'}).css({'line-height': 'inherit'}))),
+                    (btnCansel = $('<button>', {type: "button", class: "btn btn-default btn-sm"}).append($('<i>', {'class': 'fa fa-times'}).css({'line-height': 'inherit'})))
+                ])
+            ])
+        ]);
+
+        formEditName.on('contextmenu click', function(e){ e.stopPropagation(); return false; });
+
+        navigi_selecionado.addClass('navigi_itemDeletando').find('.navigi_contextoMenu').after(formEditName);
+
+        btnCansel.click(function(e){
+            if(!$(this).is(':disabled')){
+                navigi_selecionado.removeClass('navigi_itemDeletando');
+                formEditName.remove();
+            }
+            e.stopPropagation(); return false;
+        });
+
+        btnConfirm.click(function(e){
+            if(!$(this).is(':disabled')){
+
+                btnConfirm.prop('disabled', true);
+                btnCansel.prop('disabled', true);
+
+                var as_id = navigi_selecionado.attr('as_id');
+
+                navigi_apaga(as_id).done(function(){
+                    navigi_selecionado.remove();
+                    navigi_limpAllEvent();
+
+                }).fail(function(){
+                    btnConfirm.prop('disabled', false);
+                    btnCansel.prop('disabled', false);
+                });
+            }
+            e.stopPropagation(); return false;
+        });
+    }
+
+    function navigi_apaga(id){
+        var dfd = $.Deferred();
+        $.post('onserver.php?api=navigi&ac=delete', {id: id, token: navigi_token}, function (e) {
+            if(e == ''){
+                Vigile().success('Registro excluido com sucesso!');  dfd.resolve();
+
+            }else if (e == 403){
+                Vigile().info('Você não tem permissão para excluir esse registro!'); dfd.reject();
+
+            }else if (e == 412){
+                Vigile().warning('Não foi possível excluir esse registro!'); dfd.reject();
+
+            }else{
+                Vigile().warning(e); dfd.reject()}
+        });
+        return dfd;
+    }
+
+    function navigi_edit() {
+
+        var inputName, btnRename, btnCansel;
+        var formEditName = $('<div>', {id: 'navigi_inp_ren', class: 'text-left'}).append([
+            $('<div>', {'class': 'form-group'}).append([
+                $('<label>', {}).html('Nome'),
+                (inputName = $('<input>', {type: "email", class: "form-control text-left input-sm", 'value': navigi_selecionado.find('.navigi_nome').html()}))
+            ]),
+            $('<div>', {'class': 'text-right'}).append([
+                $('<div>', {'class': 'btn-group'}).append([
+                    (btnRename = $('<button>', {type: "button", class: "btn btn-default btn-sm"}).append($('<i>', {'class': 'fa fa-check'}).css({'line-height': 'inherit'}))),
+                    (btnCansel = $('<button>', {type: "button", class: "btn btn-default btn-sm"}).append($('<i>', {'class': 'fa fa-times'}).css({'line-height': 'inherit'})))
+                ])
+            ])
+        ]);
+
+        formEditName.on('contextmenu click', function(e){ e.stopPropagation(); return false; });
+
+        navigi_selecionado.addClass('navigi_editandoNome').find('.navigi_contextoMenu').after(formEditName);
+
+        btnCansel.click(function(e){
+            if(!$(this).is(':disabled')){
+                navigi_selecionado.removeClass('navigi_editandoNome');
+                formEditName.remove();
+            }
+            e.stopPropagation(); return false;
+        });
+
+        btnRename.click(function(e){
+            if(!$(this).is(':disabled')){
+
+                inputName.prop('disabled', true);
+                btnRename.prop('disabled', true);
+                btnCansel.prop('disabled', true);
+
+                var seletor = ((!!navigi_selecionado.attr('seletor'))? null: navigi_selecionado.attr('seletor'));
+                var as_id = navigi_selecionado.attr('as_id');
+
+                navigi_rename(as_id, inputName.val(), seletor).done(function(nome){
+                    navigi_selecionado.find('.navigi_nome').html(nome);
+                    navigi_selecionado.removeClass('navigi_editandoNome');
+                    formEditName.remove();
+
+                }).fail(function(){
+                    inputName.prop('disabled', false);
+                    btnRename.prop('disabled', false);
+                    btnCansel.prop('disabled', false);
+                });
+            }
+            e.stopPropagation(); return false;
+        });
+    }
+
+    function navigi_rename(as_id, texto, seletor){
+        var dfd = $.Deferred();
+        $.post('onserver.php?api=navigi&ac=rename', {id: as_id, texto: texto, seletor: seletor, token: navigi_token}, function(e){
+            if (e == '') {
+                Vigile().success('Nome alterado com sucesso!'); dfd.resolve(texto);
+
+            } else if (e == 403) {
+                Vigile().warning('Você não tem permissão para alterar esse registro!'); dfd.reject();
+
+            }else{
+                Vigile().warning(e); dfd.reject();
+            }
+        });
+        return dfd.promise();
+    }
+
+})(jQuery, Vigile, Navigi);

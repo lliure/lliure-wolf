@@ -251,7 +251,7 @@ function jf_delete($tabela, $alter){
 		$del .= $chave.' = "'.$valor.'"';
 	}
 		
-	$executa = 'DELETE FROM '.$tabela.' where '.$del;	
+	$executa = 'DELETE FROM '.$tabela.' where '.$del;
 	
 	if(mysql_query($executa) != false){
 		return null;

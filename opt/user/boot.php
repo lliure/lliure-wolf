@@ -10,7 +10,7 @@ ll::api('appbar');
 ll::api('fileup');
 ll::api('navigi');
 ll::api('jfbox');
-ll::usr('ll_alert');
+ll::api('vigile');
 ll::usr('ll_load');
 
 ll::add(__DIR__. '/usuarios.css', 'css');

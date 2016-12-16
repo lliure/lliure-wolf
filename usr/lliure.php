@@ -316,8 +316,8 @@ class lliure {
 	}
 
 	/**
-	 * Devolve o caminho do arquivo que processa os scrits do cabe�alho
-	 * Usado na conatru��o de layouts para o sistema.
+	 * Devolve o caminho do arquivo que processa os scrits do cabeçalho
+	 * Usado na conatrução de layouts para o sistema.
 	 *
 	 * Modo de usar:
 	 * <?php require_once ll::header(); ?>
@@ -330,7 +330,7 @@ class lliure {
 
 	/**
 	 * Devolve o caminho do arquivo que processa os scrits do conteudo
-	 * Usado na conatru��o de layouts para o sistema.
+	 * Usado na conatrução de layouts para o sistema.
 	 *
 	 * Modo de usar:
 	 * <?php require_once ll::content(); ?>
@@ -342,8 +342,8 @@ class lliure {
 	}
 
 	/**
-	 * Devolve o caminho do arquivo que processa os scrits do rodap�
-	 * Usado na conatru��o de layouts para o sistema.
+	 * Devolve o caminho do arquivo que processa os scrits do rodapé
+	 * Usado na conatrução de layouts para o sistema.
 	 *
 	 * Modo de usar:
 	 * <?php require_once ll::footer(); ?>
@@ -364,7 +364,7 @@ class lliure {
 	}
 
 	/**
-	 * rederiza todos os documentos da lista no footer, isto �,
+	 * rederiza todos os documentos da lista no footer, isto é,
 	 * escreve todos os style, script e ou
 	 */
 	public static function renderFooter(){

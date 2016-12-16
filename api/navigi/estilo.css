@@ -10,235 +10,376 @@
 */
 
 #navigi{
-	float: left;
-	width: 100%;
-	}
-	
-	#navigi .load{
-		float: left;
-		width: 100%;
-		text-align: center;
-		}
-		
-		
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#navigi[data-exibicao="icone"]{
+    margin: -3px;
+}
+
+#navigi .load{
+    float: left;
+    width: 100%;
+    text-align: center;
+}
+
+#navigi div.navigi_areaIcones{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+
+
 /******		listagem em icones	*******/
-div.navigi_item {
-	z-index: 10;
-	position: relative;
-	float: left;
-	border-radius: 7px;
-	padding: 4px;
-	
-	width: 85px;
-	height: 65px;
-	float: left;
-	text-align: center;
-	font-size: 12px;
-	cursor: pointer;
-	
-	margin-right: 2px;
-	
-	box-sizing: content-box;
-	-moz-box-sizing: content-box;
-	-webkit-box-sizing: content-box;
-	}
+div.navigi_item{
+    flex-basis: 0;
+    flex-grow: 1;
+    position: relative;
+}
 
-	div.navigi_item:hover{
-		background: #e7e7e7;
-		}
+div.navigi_item_main{
+    position: relative;
+}
 
-	div.navigi_item.navigi_selecionado{
-			background: #d7d7d7;
-			}
-			
-div.listpSelct {	
-	padding: 3px;
-	float: left;
-	background: #C2E4F0;
-	}
-	
-	div.navigi_item span.navigi_ico{
-		display: block;
-		width: 32px;
-		margin: 0 auto;
-		}		
-		
-	div.navigi_item span.navigi_ico span{
-		width: 32px;
-		height: 32px;
-		vertical-align: middle;
-		display: table-cell;		
-		}		
-		
-	div.navigi_item span.navigi_ico i.fa{
-		font-size: 32px;
-		}
-		
-	div.navigi_item span.navigi_ico img{
-		vertical-align: middle;
-		max-width: 100%;
-		}
-		
-	div.navigi_item span.navigi_nome{
-		display: block;
-		clear: both;
-		margin: 5px 0 0 0;
-		height: 27px;
-		overflow: hidden;
-		line-height: 13px;
-		}
+div.navigi_item_padding{
+    padding: 3px;
+}
 
-	div.navigi_item input{
-		width: 85px;
-		text-align: center;
-		padding: 3px 0px;
-		background: #f5f5f5;
-		border: none;
-		font-size: inherit;
-		color: #555;
-		}
-		
+div.navigi_item_padding_main{
+    width: 100%;
+    position: relative;
+}
+
+div.navigi_item_content{
+    cursor: pointer;
+    position: relative;
+}
+
+div.navigi_item_content:hover {
+    background: rgba(0, 0, 0, .04);
+}
+
+div.navigi_item.navigi_selecionado div.navigi_item_content{
+    background: rgba(0, 0, 0, .12);
+}
+
+div.navigi_item_content .navigi_ico{
+    display: block;
+    width: 100%;
+    padding-top: 100%;
+    position: relative;
+}
+
+div.navigi_item_content .navigi_ico .navigi_fa,
+div.navigi_item_content .navigi_ico .navig_thunb{
+    /* -webkit-box-shadow: inset 0 0 15px rgba(0,0,0,.1), inset 0 0 5px rgba(0,0,0,.05); */
+    /* box-shadow:         inset 0 0 15px rgba(0,0,0,.1), inset 0 0 5px rgba(0,0,0,.05); */
+    /* background:         rgba(0, 0, 0, .04); */
+
+    border: 1px solid rgba(0, 0, 0, .15);
+}
+
+div.navigi_item_content .navigi_ico .navigi_fa{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+div.navigi_item_content .navigi_ico .navigi_fa:before{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 64px;
+}
+
+
+div.navigi_item_content .navigi_ico .navig_thunb{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* div.navigi_item_content .navigi_ico img {
+    vertical-align: middle;
+    max-width: 100%;
+} */
+
+div.navigi_item_content .navigi_nome{
+    display: block;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    clear: both;
+    height: 27px;
+    line-height: 27px;
+    overflow: hidden;
+    padding: 0 5px;
+}
+
+.navigi_menuContextoOpen{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
+    opacity: .75;
+    font-size: 1.5em;
+    display: none;
+}
+
+div.navigi_item.navigi_selecionado .navigi_menuContextoOpen{
+    display: inline-block;
+}
+
+#navigi_inp_ren,
+#navigi_icone_form_deletando,
+.navigi_contextoMenu{
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 0; right: 0;
+    background-color: rgba(255,255,255,.90);
+    padding: 5px;
+    display: none;
+
+    z-index: 10;
+}
+
+div.navigi_item.navigi_editandoNome #navigi_inp_ren,
+div.navigi_item.navigi_itemDeletando #navigi_icone_form_deletando,
+div.navigi_item.navigi_contextoMenuAberto .navigi_contextoMenu{
+    display: block;
+}
+
+.navigi_contextoMenu .btn-group-vertical{
+    width: 100%;
+}
+
+
+
 /******		listagem em lista	*******/
 table.navigi_list{
-	}
-	
-	table.navigi_list tr th.cod{	
-		width: 80px;
-		}
-		
-	tr.navigi_tr{	
-		cursor: pointer;
-		}
-		
-		tr.navigi_tr .fa{
-			font-size: 1.3em;
-			}
-			
-			tr.navigi_tr a{
-				color: #000;
-				}
-			
-	table.navigi_list tr td .navigi_nome{
-		position: relative;		
-		}		
-		
-		tr td .navigi_nome .navigi_rename{
-			background: #fff;
-			border: 1px solid #999;
-			position: absolute;
-			z-index: 200;
-			top: -10px;
-			left: 0;			
-			padding: 15px;
-			cursor: default;
-			
-			box-sizing: content-box;
-			-moz-box-sizing: content-box;
-			-webkit-box-sizing: content-box;
-			}
-			
-		tr td .navigi_nome .navigi_rename .nvg_ren_left{
-			float: left;
-			font-weight: 600;
-			font-size: 14px;
-			width: 100px;
-			padding-top: 8px;
-			}
-			
-		tr td .navigi_nome .navigi_rename .nvg_ren_right{
-			float: right;
-			}
-			
-			tr td .navigi_nome .navigi_rename .nvg_ren_right input{
-				float: left;
-				width: 238px;
-				margin-bottom: 10px;
-				height: 30px;
-				}
 
-				
-/******		PESQUISA	*******/
-#nvg_pesquisa{
-	margin-bottom: 20px;
-	}
-	
-	#nvg_pesquisa form{
-		display: flex;
-		}
-		
-		#nvg_pesquisa form input{
-			height: 30px;
-			order: 1;
-			}
-			
-		#nvg_pesquisa form button{
-			height: 30px;
-			order: 2;
-			float: none;
-			margin-left: 3px;
-			}
+}
+
+.navigi_loading table.navigi_list{
+    display: none;
+}
+
+table.navigi_list tr.navigi_tr{
+    cursor: pointer;
+}
+
+table.navigi_list tr.navigi_tr a{
+    color: #000;
+}
+
+table.navigi_list tr.navigi_tr td{
+    position: relative;
+}
+
+table.navigi_list tr.navigi_tr td .navigi_nome{
+    position: relative;
+}
+
+table.navigi_list tr.navigi_tr.navigi_editandoNome td .navigi_nome{
+    opacity: 0;
+}
+
+table.navigi_list tr.navigi_tr td .navigi_rename,
+table.navigi_list tr.navigi_tr td .navigi_rename_form{
+    background: #fff;
+    border: 1px solid #bbb;
+    position: absolute;
+
+    z-index: 200;
+    top: -2px;
+    left: 0;
+    right: 0;
+    padding: 5px;
+    cursor: default;
+}
+
+table.table.navigi_list > thead > tr > th,
+table.table.navigi_list > tbody > tr > td{
+    width: auto;
+    min-width: 1%;
+}
+
+table.table.navigi_list > thead > tr > th.navigi_cod,
+table.table.navigi_list > tbody > tr > td.navigi_cod{
+    width: 80px;
+}
+
+table.table.navigi_list > thead > tr > th.navigi_ico,
+table.table.navigi_list > tbody > tr > td.navigi_ico{
+    width: 37px;
+    text-align: center;
+}
+
+table.table.navigi_list > thead > tr > th.navigi_botoes,
+table.table.navigi_list > tbody > tr > td.navigi_botoes{
+    width: 1px;
+    padding: 2px;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-align: right;
+}
+
+table.table.navigi_list > thead > tr > th.navigi_botoes .btn-group > .btn,
+table.table.navigi_list > tbody > tr > td.navigi_botoes .btn-group > .btn{
+    float: none;
+}
 
 
 
-/******		paginacao	*******/
-#nvg_paginacao{
-			float: left;
-			padding-top: 20px;
-			}			
-			
-		#nvg_paginacao span a{
-			float: left;
-			text-align: center;
-			width: 26px;
-			line-height: 32px;
-			margin-right: 10px;
-			border: 1px solid #E0E0E0;
-			font-weight: 600;
-			font-size: 1.1em;
-			
-			border-radius: 2px;
-			
-			
-			background-image: linear-gradient(bottom, #DCDCDC 12%, #FAFAFA 56%);
-			background-image: -o-linear-gradient(bottom, #DCDCDC 12%, #FAFAFA 56%);
-			background-image: -moz-linear-gradient(bottom, #DCDCDC 12%, #FAFAFA 56%);
-			background-image: -webkit-linear-gradient(bottom, #DCDCDC 12%, #FAFAFA 56%);
-			background-image: -ms-linear-gradient(bottom, #DCDCDC 12%, #FAFAFA 56%);
+/******		PESQUISA	******
+#nvg_pesquisa {
+    margin-bottom: 20px;
+}
 
-			background-image: -webkit-gradient(
-				linear,
-				left bottom,
-				left top,
-				color-stop(0.12, #DCDCDC),
-				color-stop(0.56, #FAFAFA)
-			);
-			
-			border-color: #CCCCCC #CCCCCC #AAAAAA;
-			box-shadow: 0 0 1px #FFFFFF inset;
-			text-shadow: 0 1px 0 #FFFFFF;
-			}
-			
-		#nvg_paginacao span a:hover{
-			box-shadow: 0 0 4px #bbb;
-			}
-			
-		#nvg_paginacao span.atual a{
-		
-			background-image: linear-gradient(top, #C8C8C8 0%, #E6E6E6 100%);
-			background-image: -o-linear-gradient(top, #C8C8C8 0%, #E6E6E6 100%);
-			background-image: -moz-linear-gradient(top, #C8C8C8 0%, #E6E6E6 100%);
-			background-image: -webkit-linear-gradient(top, #C8C8C8 0%, #E6E6E6 100%);
-			background-image: -ms-linear-gradient(top, #C8C8C8 0%, #E6E6E6 100%);
+#nvg_pesquisa form {
+    display: flex;
+}
 
-			background-image: -webkit-gradient(
-				linear,
-				left top,
-				left bottom,
-				color-stop(0, #C8C8C8),
-				color-stop(1, #E6E6E6)
-			);
-			border-color: #888888 #AAAAAA #CCCCCC;
-			
-			box-shadow: 0 1px 5px #bbb inset;
-			color: #555;
-			}			
+#nvg_pesquisa form input {
+    height: 30px;
+    order: 1;
+}
+
+#nvg_pesquisa form button {
+    height: 30px;
+    order: 2;
+    float: none;
+    margin-left: 3px;
+} */
+
+
+.navigi_paginacao .pagination{
+    margin-top: 0;
+}
+
+#navigi_inp_ren{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.table-th-filter{
+    position: relative;
+}
+
+.table-th-filter .input-group{
+    position: relative;
+}
+
+.table-th-filter label{
+    position: absolute;
+    top: 50%;
+    left: 0;
+    pointer-events: none;
+    transform: translateY(-50%);
+    margin: 0;
+    padding: 0;
+    transition: top .3s, font-size .3s;
+}
+
+.table-th-filter .form-control{
+    display: block;
+    width: 100%;
+    height: auto;
+    padding: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: #555;
+    background: none;
+    border: none;
+    border-radius: 0;
+    -webkit-box-shadow: none;
+    box-shadow:         none;
+    -webkit-transition: none;
+    -o-transition:      none;
+    transition:         none;
+    outline: none;
+    opacity: 0;
+}
+
+.table-th-filter .form-control:focus,
+.table-th-filter .form-control[value]:not([value=""]){
+    opacity: 1;
+}
+
+
+.table-th-filter .form-control:focus ~ label,
+.table-th-filter .form-control[value]:not([value=""]) ~ label{
+    top: -0.5em;
+    font-size: .7em;
+}
+
+.table-th-filter .input-group-btn{}
+
+.table-th-filter .input-group-btn button.btn.btn-default{
+    margin-top:     -6px;
+    margin-right:   -6px;
+    margin-bottom:  -6px;
+    padding: 6px;
+    background: none;
+    border: none;
+    border-radius: 0;
+}
+
+.table-th-filter .input-group-btn button.btn.btn-default i.fa{
+    display: none;
+}
+
+.table-th-filter .input-group-btn button.btn.btn-default[value=""] i.fa-sort,
+.table-th-filter .input-group-btn button.btn.btn-default:not([value]) i.fa-sort,
+.table-th-filter .input-group-btn button.btn.btn-default[value="ASC"] i.fa-sort-asc,
+.table-th-filter .input-group-btn button.btn.btn-default[value="DESC"] i.fa-sort-desc{
+    display: inline-block;
+}
+
+.table-th-filter > .btn-group,
+.table-th-filter > form > .btn-group{
+}
+
+.table-th-filter .input-daterange input{
+    text-align: left;
+}
+
+.table-th-filter .input-group-addon{
+    padding: 0;
+    background: none;
+    border: none;
+    border-radius: 0;
+    opacity: 0;
+}
+
+.id-form-filter .btn-form-filter-submit{
+
+}
+
+.id-form-filter .btn-form-filter-submit i:before{
+    display: inline-block;
+    width: 1em;
+    max-width: 1em;
+}
+
+.navigi_load{
+    display: block;
+    text-align: center;
+}

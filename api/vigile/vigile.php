@@ -1,37 +1,142 @@
 <?php
 
-//lliure::add('api/vigile/script.js');
-//lliure::add('vigile_footer', 'footer');
+/**
+ * Class Vigile
+ *
+ *
+ *
 
-function vigile($texto, $modo = 'top', $local = null){
-	$_SESSION['vigile']['texto'] = $texto;
-	
-	switch($modo){
-	case 'local':
-		$_SESSION['vigile']['local'] = $local;
-		break;
-	}
+Vigile::alert('teste main');
+Vigile::success('teste 2 main');
+Vigile::info('teste 3 main');
+Vigile::warning('teste 4 main');
+Vigile::danger('teste 5 main');
+
+
+$vigile = new Vigile('top');
+$vigile->alert('teste');
+$vigile->success('teste 2');
+$vigile->info('teste 3');
+$vigile->warning('teste 4');
+$vigile->danger('teste 5');
+
+Vigile::popup('top');
+
+
+ *
+ *
+ */
+
+
+class Vigile implements Iterator{
+
+    private $key, $value;
+    protected $location, $posts = [];
+    static protected $local = [], $main = [], $types = ['alert', 'success', 'info', 'warning', 'danger'];
+
+
+
+    public function __construct($location){
+        $this->location = $location;
+        if(!isset($_SESSION['ll']['vigile'][$location])) $_SESSION['ll']['vigile'][$location] = [];
+        $this->posts =& $_SESSION['ll']['vigile']['locations'][$location];
+        self::$local[$location] =& $this;
+    }
+
+    public function __call($name, $argus){
+        $argus[1] = $this->location; self::__callStatic($name, $argus);
+    }
+
+    public static function __callStatic($name, $argus){
+        self::_alert(((in_array($name, self::$types))? $name: self::$types[0]), ((isset($argus[0]))? $argus[0]: ''), ((isset($argus[1]))? $argus[1]: [1, 0]));
+    }
+    
+    protected static function _alert($type, $msg, $local = [1, 0]){
+        if(is_string($local)) self::$local[$local]->posts[] = [
+            'type' => $type,
+            'msg' => $msg,
+        ];
+        elseif(is_array($local)) $_SESSION['ll']['vigile']['main'][] = [
+            'local' => $local,
+            'type' => $type,
+            'msg' => $msg,
+        ];
+    }
+
+
+
+    function rewind(){}
+
+    function next(){}
+
+    function valid() {
+        if(!is_array($this->posts) || empty($this->posts)){
+            $this->value = null;
+            $this->key = null;
+            return false; }
+        foreach($this->posts as $this->key => $this->value) break;
+        unset($this->posts[$this->key]);
+        return true;
+    }
+
+    function current(){
+        return $this->value;
+    }
+
+    function key(){
+        return $this->key;
+    }
+
+
+
+    public static function popup($location){?>
+        <div id="vigile-<?php echo $location; ?>">
+            <?php foreach(self::$local[$location] as $k => $alert){
+                self::popupContent($alert);
+            } ?>
+        </div>
+    <?php }
+
+    protected static function popupContent($alert){ ?>
+        <div class="alert alert-<?php echo $alert['type']; ?> alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <?php echo ((is_array($alert['msg']))? ((isset($alert['msg']['msg']))? $alert['msg']['msg']: ''): $alert['msg']); ?>
+        </div>
+    <?php }
+
+
+    public static function callout($location){ ?>
+        <div id="vigile-<?php echo $location; ?>">
+            <?php foreach(self::$local[$location] as $k => $alert){
+                self::calloutContent($alert);
+            } ?>
+        </div>
+    <?php }
+
+    protected static function calloutContent($alert){ ?>
+        <div class="callout callout-fade callout-<?php echo $alert['type']; ?>">
+            <button type="button" class="close" data-dismiss="callout" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <?php echo ((is_array($alert['msg']))? ((isset($alert['msg']['msg']))? $alert['msg']['msg']: ''): $alert['msg']); ?>
+        </div>
+    <?php }
+
+
+
+    public static function script(){ if(isset($_SESSION['ll']['vigile']['main']) && !empty($_SESSION['ll']['vigile']['main'])){ ?>
+        <script type="text/javascript">
+            (function($){
+                $(function(){<?php foreach($_SESSION['ll']['vigile']['main'] as $k => $v){ ?>
+
+                    Vigile().<?php echo $v['type']; ?>('<?php echo $v['msg'] ?>', <?php echo json_encode($v['local']); ?>);
+                <?php unset($_SESSION['ll']['vigile']['main'][$k]);} ?>});
+            })(jQuery);
+        </script>
+    <?php }}
+
 }
 
-//vg_alert('presta atenção cara', '#div1');
 
-function vigile_footer(){
-	if (isset($_SESSION['vigile']) && !empty($_SESSION['vigile'])) {
-		?>
-		<script>
-			$('<?php echo $_SESSION['vigile']['local']?>').append('<div id="vigile-alert" class="alert alert-success alert-dismissible" role="alert">'
-																		+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
-																		+'<?php echo $_SESSION['vigile']['texto']; ?>'
-																	+'</div>');
-			<?php
-			echo 'setTimeout(function(){';
-			echo '  $("#vigile-alert").fadeTo(2000, 500).slideUp(500, function(){';
-			echo '     $("#vigile-alert").alert(\'close\');';
-			echo '  });';
-			echo '}, 5000);';
-			
-			unset($_SESSION['vigile']);
-		echo '</script>';
-	}
-}
-?>

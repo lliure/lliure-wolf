@@ -3,6 +3,24 @@ switch(isset($_GET['ac']) ? $_GET['ac'] : '' ){
 	case 'pesquisa':
 
 		$pesquisa = ((!empty($_POST['pesquisa']))? $pesquisa = '&pesquisa=' . $_POST['pesquisa']: '');
+
+		if(isset($_POST['filter']) && (isset($_POST['s']) || isset($_POST['o']))){
+
+            $o = $f = [];
+
+            if(isset($_POST['s'])) foreach($_POST['s'] as $k => $v)
+                if(!empty($v)) $f['s'][$k] = rawurlencode($v);
+
+            if(isset($_POST['o'])) foreach($_POST['o'] as $k => $v)
+                if(!empty($v) && !!($v = (explode(':', $v)))) $o[$v[0]] = [$k => $v[1]];
+
+            ksort($o);
+            if(!empty($o)){ $f['o'] = [];
+                foreach($o as $k => $v) $f['o'] = array_merge($f['o'], $v); }
+
+            $pesquisa = ((!!($f = rawurldecode( http_build_query($f) )))? "&$f": '');
+        }
+
 		header('location: '. $_POST['url']. $pesquisa);
 
 	break;
@@ -12,7 +30,7 @@ switch(isset($_GET['ac']) ? $_GET['ac'] : '' ){
 
 		if($navigi['delete']){
 			$tabela = $navigi['tabela'];
-			$id = mysql_real_escape_string(substr($_POST['id'], 5));
+			$id = mysql_real_escape_string($_POST['id']);
 
 			jf_delete($tabela, array('id' => $id));
 
@@ -43,8 +61,7 @@ switch(isset($_GET['ac']) ? $_GET['ac'] : '' ){
 
 			jf_update($tabela, $dados, array('id' => $id));
 
-		} else
-			echo 403;
+		} else echo 403;
 
 	break;
 	default:

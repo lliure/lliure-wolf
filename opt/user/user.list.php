@@ -17,7 +17,7 @@ echo app_bar('Painel de usuários', $botoes); ?>
     $(function(){
         $(".criar").click(function(){
             ll_load($(this).attr('href'), function(){
-                jfAlert('Novo usuário criado com sucesso!', 1);
+                Vigile().success('Novo usuário criado com sucesso!');
                 navigi_start();
             });
             return false;
