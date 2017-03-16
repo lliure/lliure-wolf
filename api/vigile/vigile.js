@@ -31,7 +31,7 @@
     var main = [], unloading = false;
 
     function popupContent(alert){
-        var popUp = $('<div>', {'class': 'alert alert-' + alert.type + ' alert-dismissible alert-animation'}).append([
+        var popUp = $('<div>', {'class': 'alert alert-vigile alert-' + alert.type + ' alert-dismissible alert-animation'}).append([
             $('<button>', {'type': 'button', 'class': 'close', 'data-dismiss': 'alert'}).append([
                 $('<span>').html('&times;')
             ]),

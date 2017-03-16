@@ -1,0 +1,12 @@
+tinymce.init({
+        selector: "textarea",
+        plugins: [
+                "advlist autolink autosave link lists hr",
+                "code fullscreen nonbreaking"
+        ],
+
+        toolbar1: "bold italic underline strikethrough removeformat | alignleft aligncenter alignright alignjustify | bullist numlist | link unlink | code",
+
+        menubar: false,
+        toolbar_items_size: 'small'
+});

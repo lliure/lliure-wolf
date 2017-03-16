@@ -32,13 +32,13 @@ class Vigile implements Iterator{
 
     private $key, $value;
     protected $location, $posts = [];
-    static protected $local = [], $main = [], $types = ['alert', 'success', 'info', 'warning', 'danger'];
+    static protected $local = [], $load = false, $types = ['alert', 'success', 'info', 'warning', 'danger'];
 
 
 
     public function __construct($location){
         $this->location = $location;
-        if(!isset($_SESSION['ll']['vigile'][$location])) $_SESSION['ll']['vigile'][$location] = [];
+        if(!isset($_SESSION['ll']['vigile']['locations'][$location])) $_SESSION['ll']['vigile']['locations'][$location] = [];
         $this->posts =& $_SESSION['ll']['vigile']['locations'][$location];
         self::$local[$location] =& $this;
     }
@@ -90,10 +90,10 @@ class Vigile implements Iterator{
 
 
     public static function popup($location){?>
-        <div id="vigile-<?php echo $location; ?>">
-            <?php foreach(self::$local[$location] as $k => $alert){
+        <div id="<?php echo $location; ?>">
+            <?php if(isset($_SESSION['ll']['vigile']['locations'][$location])) foreach($_SESSION['ll']['vigile']['locations'][$location] as $k => $alert){
                 self::popupContent($alert);
-            } ?>
+            } unset($_SESSION['ll']['vigile']['locations'][$location]); ?>
         </div>
     <?php }
 
@@ -108,10 +108,10 @@ class Vigile implements Iterator{
 
 
     public static function callout($location){ ?>
-        <div id="vigile-<?php echo $location; ?>">
-            <?php foreach(self::$local[$location] as $k => $alert){
+        <div id="<?php echo $location; ?>">
+            <?php if(isset($_SESSION['ll']['vigile']['locations'][$location])) foreach($_SESSION['ll']['vigile']['locations'][$location] as $k => $alert){
                 self::calloutContent($alert);
-            } ?>
+            } unset($_SESSION['ll']['vigile']['locations'][$location]); ?>
         </div>
     <?php }
 
@@ -126,13 +126,18 @@ class Vigile implements Iterator{
 
 
 
-    public static function script(){ if(isset($_SESSION['ll']['vigile']['main']) && !empty($_SESSION['ll']['vigile']['main'])){ ?>
+    public static function script(){
+        if(isset($_SESSION['ll']['vigile']) && !empty($_SESSION['ll']['vigile'])){ ?>
         <script type="text/javascript">
             (function($){
-                $(function(){<?php foreach($_SESSION['ll']['vigile']['main'] as $k => $v){ ?>
+                $(function(){<?php if(isset($_SESSION['ll']['vigile']['main'])) foreach($_SESSION['ll']['vigile']['main'] as $k => $v){ ?>
 
                     Vigile().<?php echo $v['type']; ?>('<?php echo $v['msg'] ?>', <?php echo json_encode($v['local']); ?>);
-                <?php unset($_SESSION['ll']['vigile']['main'][$k]);} ?>});
+                <?php }unset($_SESSION['ll']['vigile']['main']);
+                /* foreach($_SESSION['ll']['vigile']['locations'] as $k => $v){ ?>
+
+                    $('#<?php echo $k; ?>').vigile()<?php foreach($v as $msg){?>.<?php echo $msg['type']; ?>('<?php echo $msg['msg'] ?>')<?php } unset($_SESSION['ll']['vigile']['locations'][$k]);} ?>; */ ?>
+                });
             })(jQuery);
         </script>
     <?php }}

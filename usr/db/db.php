@@ -389,7 +389,7 @@ class DB {
      * @throws Exception caso ocorra algum erro com a sql.
      */
     protected function exec($query, $persistir = FALSE){
-        if(self::$DB === NULL)self::conectar();
+        if(self::$DB === NULL) $this->conectar();
         if(!$persistir)$this->clierTemps();
         $query =& $this->setQueryList($query);
 
@@ -436,7 +436,7 @@ class DB {
      * @throws Exception
      */
     final protected function select($query, $persistir = FALSE){
-        if(self::$DB === NULL)self::conectar();
+        if(self::$DB === NULL) $this->conectar();
         if(!$persistir)$this->clierTemps();
         $query =& $this->setQueryList($query);
         try {
